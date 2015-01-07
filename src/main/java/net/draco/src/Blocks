@@ -1,0 +1,22 @@
+package mod.draco_animus.main;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
+
+public class Draco_Animus_ModBlocks {
+	
+	public static Block Charred_Ground;
+ 	public static Block Scorched_Cobblestone;	
+	
+	public static void BlockInformation() {
+			
+		Charred_Ground = new Draco_Animus_ModForgeBlocks(Material.grass).setHardness(1.0F).setResistance(3.0F).setBlockName("Charred Ground").setBlockTextureName("draco_animus:charredground").setCreativeTab(OthersDraco_Animus.TabDraco_Animus);
+		Scorched_Cobblestone = new Draco_Animus_ModForgeBlocks(Material.rock).setHardness(5.0F).setResistance(3.0F).setBlockName("Scorched Cobblestone").setBlockTextureName("draco_animus:scorchedcobblestone").setCreativeTab(OthersDraco_Animus.TabDraco_Animus);
+				
+		GameRegistry.registerBlock(Charred_Ground, "Charred Ground");
+		GameRegistry.registerBlock(Scorched_Cobblestone, "Scorched Cobblestone");
+	}
+}
