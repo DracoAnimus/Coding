@@ -3,9 +3,9 @@ package mod.draco_animus.main;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class Draco_Animus_ModForgeBlocks extends Block {
+public class BlockCharredGround extends Block {
 
-	public Draco_Animus_ModForgeBlocks(Material material) {
+	public BlockCharredGround(Material.rock material) {
 		super(material);
 		}
 
