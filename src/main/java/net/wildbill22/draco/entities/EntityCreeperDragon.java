@@ -1,5 +1,6 @@
 package net.wildbill22.draco.entities;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -9,6 +10,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
@@ -19,11 +21,15 @@ import net.wildbill22.draco.lib.LogHelper;
  *
  */
 public class EntityCreeperDragon extends EntityAnimal {
+    /** Animation time at previous tick. */
+    public float prevAnimTime;
+    /** Animation time, used to control the speed of the animation cycles (wings flapping, jaw opening, etc.) */
+    public float animTime;
 
 	public EntityCreeperDragon(World world) {
 		super(world);
 		this.getNavigator().setAvoidsWater(false);
-		this.setSize(1F, 1.6F);
+		this.setSize(1F, 1.7F);
 		
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
@@ -70,12 +76,42 @@ public class EntityCreeperDragon extends EntityAnimal {
 		return null;
 	}
 
+    /**
+     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
+     * use this to react to sunlight and start to burn.
+     */
+//    public void onLivingUpdate()
+//    {
+//        float f;
+//        float f1;
+//
+//        if (this.worldObj.isRemote)
+//        {
+//            f = MathHelper.cos(this.animTime * (float)Math.PI * 2.0F);
+//            f1 = MathHelper.cos(this.prevAnimTime * (float)Math.PI * 2.0F);
+//
+//            if (f1 <= -0.3F && f >= -0.3F)
+//            {
+//                this.worldObj.playSound(this.posX, this.posY, this.posZ, "mob.enderdragon.wings", 5.0F, 0.8F + this.rand.nextFloat() * 0.3F, false);
+//            }
+//            this.prevAnimTime = this.animTime;
+//            this.animTime += f * 0.5F;
+//        }
+//    }
+
+    @Override
+    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
+    {
+        this.playSound("mob.cow.step", 0.15F, 1.0F);
+    }
+
 	@Override
     protected String getLivingSound()
     {
-        return "mob.enderdragon.growl";
+        return "mob.cat.purr";
+//        return "mob.enderdragon.growl";
     }
-    
+      
     @Override
     protected String getHurtSound()
     {
