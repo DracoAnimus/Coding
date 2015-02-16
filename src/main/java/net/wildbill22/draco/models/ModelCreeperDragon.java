@@ -11,13 +11,13 @@ import net.minecraft.util.MathHelper;
  */
 public class ModelCreeperDragon extends ModelBase{
 	  //fields
-    ModelRenderer head;
+    ModelRenderer headBottom;
     ModelRenderer body;
     ModelRenderer leg3;
     ModelRenderer leg4;
     ModelRenderer leg1;
     ModelRenderer leg2;
-    ModelRenderer head2;
+    ModelRenderer headTop;
     ModelRenderer lWing;
     ModelRenderer rWing;
   
@@ -26,48 +26,54 @@ public class ModelCreeperDragon extends ModelBase{
     textureWidth = 128;
     textureHeight = 64;
     
-      head = new ModelRenderer(this, 0, 0);
-      head.addBox(-4.5F, -1F, -9F, 9, 5, 9);
-      head.setRotationPoint(0F, 0F, -10F);
-      head.setTextureSize(128, 64);
-      head.mirror = true;
-      setRotation(head, 0F, 0F, 0F);
       body = new ModelRenderer(this, 32, 32);
       body.addBox(-4F, -2F, -6F, 8, 4, 16);
       body.setRotationPoint(0F, 0F, -4F);
       body.setTextureSize(128, 64);
       body.mirror = true;
       setRotation(body, 0F, 0F, 0F);
+
       leg3 = new ModelRenderer(this, 0, 32);
       leg3.addBox(-4F, 0F, -2F, 4, 8, 4);
       leg3.setRotationPoint(-4F, 0F, -6F);
       leg3.setTextureSize(128, 64);
       leg3.mirror = true;
       setRotation(leg3, 0F, 0F, 0F);
+
       leg4 = new ModelRenderer(this, 0, 32);
       leg4.addBox(0F, 0F, -2F, 4, 8, 4);
       leg4.setRotationPoint(4F, 0F, -4F);
       leg4.setTextureSize(128, 64);
       leg4.mirror = true;
       setRotation(leg4, 0F, 0F, 0F);
+
       leg1 = new ModelRenderer(this, 0, 50);
       leg1.addBox(-4F, 0F, -2F, 4, 7, 4);
       leg1.setRotationPoint(-4F, 1F, 4F);
       leg1.setTextureSize(128, 64);
       leg1.mirror = true;
       setRotation(leg1, 0F, 0F, 0F);
+
       leg2 = new ModelRenderer(this, 0, 50);
       leg2.addBox(0F, 0F, -2F, 4, 7, 4);
       leg2.setRotationPoint(4F, 1F, 4F);
       leg2.setTextureSize(128, 64);
       leg2.mirror = true;
       setRotation(leg2, 0F, 0F, 0F);
-      head2 = new ModelRenderer(this, 0, 15);
-      head2.addBox(-4F, -4F, -8F, 8, 8, 8);
-      head2.setRotationPoint(0F, 0F, -10F);
-      head2.setTextureSize(128, 64);
-      head2.mirror = true;
-      setRotation(head2, 0F, 0F, 0F);
+
+      headTop = new ModelRenderer(this, 0, 15);
+      headTop.addBox(-4F, -4F, -8F, 8, 8, 8);
+      headTop.setRotationPoint(0F, 0F, -10F);
+      headTop.setTextureSize(128, 64);
+      headTop.mirror = true;
+      setRotation(headTop, 0F, 0F, 0F);
+      headBottom = new ModelRenderer(this, 0, 0);
+      headBottom.addBox(-4.5F, -1F, -9F, 9, 5, 9);
+      headBottom.setRotationPoint(0F, 0F, -10F);
+      headBottom.setTextureSize(128, 64);
+      headBottom.mirror = true;
+      setRotation(headBottom, 0F, 0F, 0F);
+
       lWing = new ModelRenderer(this, 36, 15);
       lWing.addBox(0F, -8F, -4F, 0, 8, 8);
       lWing.setRotationPoint(4F, -2F, -4F);
@@ -79,20 +85,20 @@ public class ModelCreeperDragon extends ModelBase{
       rWing.setRotationPoint(-4F, -2F, -4F);
       rWing.setTextureSize(128, 64);
       rWing.mirror = true;
-      setRotation(rWing, 0F, 0F, -0.3490659F);
+      setRotation(rWing, 0F, 0F, -0.3490659F);      
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    head.render(f5);
     body.render(f5);
     leg3.render(f5);
     leg4.render(f5);
     leg1.render(f5);
     leg2.render(f5);
-    head2.render(f5);
+    headTop.render(f5);
+    headBottom.render(f5);
     lWing.render(f5);
     rWing.render(f5);
   }
@@ -107,6 +113,10 @@ public class ModelCreeperDragon extends ModelBase{
   public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
   {
     super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    this.headBottom.rotateAngleX = f4 / (180F / (float)Math.PI);
+    this.headBottom.rotateAngleY = f3 / (180F / (float)Math.PI);
+    this.headTop.rotateAngleX = f4 / (180F / (float)Math.PI);
+    this.headTop.rotateAngleY = f3 / (180F / (float)Math.PI);
     this.lWing.rotateAngleZ = MathHelper.cos(f * 0.6662F + (float)Math.PI) * 3.0F * f1;
     this.rWing.rotateAngleZ = MathHelper.cos(f * 0.6662F) * 3.0F * f1;
     this.leg1.rotateAngleX = MathHelper.cos(f * 0.6662F) * 1.4F * f1;
