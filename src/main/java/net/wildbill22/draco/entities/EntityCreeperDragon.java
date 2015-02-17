@@ -1,5 +1,7 @@
 package net.wildbill22.draco.entities;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -11,11 +13,12 @@ import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITargetNonTamed;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,9 +26,12 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.wildbill22.draco.entities.ai.EntityAIAvoidDragon;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
@@ -35,27 +41,33 @@ import net.wildbill22.draco.lib.LogHelper;
  *
  */
 public class EntityCreeperDragon extends EntityTameable {
-
+	int lastCheckTime = 0;
+	
 	public EntityCreeperDragon(World world) {
 		super(world);
 		this.getNavigator().setAvoidsWater(false);
-		this.setSize(1.6F, 2.0F);
+		this.setSize(2.0F, 2.1F);
+        this.isImmuneToFire = true;
+        this.experienceValue = 5;
 		clearAITasks();
 		
 		// AI
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIPanic(this, 1.25D));
-        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(4, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-        this.tasks.addTask(5, new EntityAIAttackOnCollide(this, 1.0D, true));
-        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
+		int p = 1;
+        this.tasks.addTask(p++, new EntityAISwimming(this));
+//        this.tasks.addTask(p++, new EntityAIPanic(this, 1.25D));
+        this.tasks.addTask(p++, this.aiSit);
+        this.tasks.addTask(p++, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+        this.tasks.addTask(p++, new EntityAIWatchClosest(this, EntityPlayer.class, 10.0F));
+        this.tasks.addTask(p++, new EntityAIAttackOnCollide(this, 1.0D, true));
+        this.tasks.addTask(p++, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(p++, new EntityAILookIdle(this));
         
         // Target tasks
-        this.targetTasks.addTask(1, new EntityAIOwnerHurtByTarget(this));
-        this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(4, new EntityAITargetNonTamed(this, EntitySheep.class, 200, false));
+        p = 1;
+        this.targetTasks.addTask(p++, new EntityAIOwnerHurtByTarget(this));
+        this.targetTasks.addTask(p++, new EntityAIOwnerHurtTarget(this));
+        this.targetTasks.addTask(p++, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(p++, new EntityAITargetNonTamed(this, EntitySheep.class, 200, false));
 
         this.setTamed(false);
 	}
@@ -64,8 +76,7 @@ public class EntityCreeperDragon extends EntityTameable {
 	 * Clears previous AI Tasks, so the ones defined above will
 	 * actually perform.
 	 */
-	protected void clearAITasks()
-	{
+	protected void clearAITasks() {
 		tasks.taskEntries.clear();
 		targetTasks.taskEntries.clear();
 	}
@@ -74,18 +85,24 @@ public class EntityCreeperDragon extends EntityTameable {
      * Returns true if the newer Entity AI code should be run
      */
 	@Override
-    public boolean isAIEnabled()
-    {
+    public boolean isAIEnabled() {
         return true;
     }
 
+	/**
+     * Determines if an entity can despawn, used on idle far away entities
+     */
 	@Override
+    protected boolean canDespawn() {
+        return !this.isTamed() && this.ticksExisted > 2400;
+    }
+
+	@Override
+	// Note: Can not add attack damage here for a tamable, it is added in attackEntityAsMob()
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         // 0.2 to 0.3 = very slow, 0.4 = slow, 0.5 to 0.6 = normal, 0.7 = fast, 0.8 to 0.9 = very fast,	1.0 = a blur
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3D);
-        // double the attack (from base of 2.0D
-//		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4.0D);
 
 		// 10 is 5 hearts (player has 20, 10 hearts for comparison)
         if (this.isTamed()) {
@@ -95,7 +112,40 @@ public class EntityCreeperDragon extends EntityTameable {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
         }
     }
+	
+	/**
+     * Like actual Ocelots and Cats, the dragon will scare away Creepers.
+     *
+     */
+    @SuppressWarnings("unchecked")
+    public void checkForCreepers() {
+        lastCheckTime--;
+        if (lastCheckTime <= 0) {
+            lastCheckTime = 30;
+            List<EntityCreeper> creepers = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class,
+                    AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ,
+                            this.posX + 1.0D, this.posY + 1.0D,
+                            this.posZ + 1.0D).expand(16.0D, 4.0D, 16.0D));
 
+            for (EntityCreeper creeper : creepers) {
+                boolean set = true;
+                EntityAIAvoidDragon task = new EntityAIAvoidDragon(creeper, EntityCreeperDragon.class, 10.0F, 1.0, 1.3);
+
+                for (Object entry : creeper.tasks.taskEntries) {
+                    if (((EntityAITasks.EntityAITaskEntry) entry).action instanceof EntityAIAvoidDragon) {
+                        set = false;
+                        break;
+                    }
+                }
+
+                if (set) {
+                	LogHelper.info("Found creeper who doesn't know to fear the dragon :-)");
+                    creeper.tasks.addTask(3, task);
+                }
+            }
+        }
+    }
+    
 	/**
      * Called when the mob is falling. Calculates and applies fall damage.
      */
@@ -119,25 +169,13 @@ public class EntityCreeperDragon extends EntityTameable {
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
-//    public void onLivingUpdate()
-//    {
-//        float f;
-//        float f1;
-//
-//        if (this.worldObj.isRemote)
-//        {
-//            f = MathHelper.cos(this.animTime * (float)Math.PI * 2.0F);
-//            f1 = MathHelper.cos(this.prevAnimTime * (float)Math.PI * 2.0F);
-//
-//            if (f1 <= -0.3F && f >= -0.3F)
-//            {
-//                this.worldObj.playSound(this.posX, this.posY, this.posZ, "mob.enderdragon.wings", 5.0F, 0.8F + this.rand.nextFloat() * 0.3F, false);
-//            }
-//            this.prevAnimTime = this.animTime;
-//            this.animTime += f * 0.5F;
-//        }
-//    }
-
+	@Override
+	public void onLivingUpdate()
+	{
+		super.onLivingUpdate();
+		checkForCreepers();
+	}
+	
     @Override
     protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_) {
         this.playSound("mob.cow.step", 0.15F, 1.0F);
@@ -170,37 +208,42 @@ public class EntityCreeperDragon extends EntityTameable {
      */
     @Override
     protected float getSoundVolume() {
-        return 0.4F;
+        return 0.45F;
     }
 
     /**
-     * Called when the entity is attacked.
+     * Called when the entity is attacked. (Needed to attack other mobs)
      */
     @Override
-    public boolean attackEntityFrom(DamageSource p_70097_1_, float p_70097_2_)
+    public boolean attackEntityFrom(DamageSource damageSource, float damage)
     {
-        if (this.isEntityInvulnerable())
-        {
+        if (this.isEntityInvulnerable()) {
             return false;
         }
-        else
-        {
-            Entity entity = p_70097_1_.getEntity();
-//            this.aiSit.setSitting(false);
-
-            if (entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow))
-            {
-                p_70097_2_ = (p_70097_2_ + 1.0F) / 2.0F;
+        else {
+            Entity entity = damageSource.getEntity();
+            if (entity != null) {
+            	if (entity instanceof EntityPlayer) {
+            		
+            	}
+                // Reduce damage if from player
+            	else if ((entity instanceof EntityPlayer) && this.isTamed()) {
+            		damage = (damage + 1.0F) / 2.0F;
+            	}
+            	// Vulnerable to arrows
+            	else if (!(entity instanceof EntityArrow)) {
+            		damage = (damage + 1.0F) / 2.0F;
+            	}
             }
-
-            return super.attackEntityFrom(p_70097_1_, p_70097_2_);
+            return super.attackEntityFrom(damageSource, damage);
         }
     }
 
+    // I think this is needed to attack other mobs
     @Override
-    public boolean attackEntityAsMob(Entity p_70652_1_)
-    {
-        int i = this.isTamed() ? 4 : 2;
+    public boolean attackEntityAsMob(Entity p_70652_1_) {
+    	// Does 6 damage when tamed (wolves do 4), 2 when not
+        int i = this.isTamed() ? 6 : 2;
         return p_70652_1_.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
     }
 
@@ -267,8 +310,19 @@ public class EntityCreeperDragon extends EntityTameable {
         return super.interact(player);
     }
 
-//    protected boolean isValidLightLevel(){
-//    	LogHelper.info("Lighting is OK for a mob");
-//		return true;
-//    }    
+    // I think the following two functions need to be present to remember its owner:
+    
+    /**
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
+    public void writeEntityToNBT(NBTTagCompound p_70014_1_) {
+        super.writeEntityToNBT(p_70014_1_);
+    }
+
+    /**
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
+    public void readEntityFromNBT(NBTTagCompound p_70037_1_) {
+        super.readEntityFromNBT(p_70037_1_);
+    }
 }
