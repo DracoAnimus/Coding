@@ -8,7 +8,7 @@ public class ModBlocks {
 	public static Block charredGround;
  	public static Block scorchedCobblestone;	
 	
-	public static void init() {
+	public static void preInit() {
 			
 		charredGround = new BlockCharredGround();
 		scorchedCobblestone = new BlockScorchedCobblestone();

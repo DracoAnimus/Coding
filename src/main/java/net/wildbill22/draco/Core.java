@@ -3,6 +3,7 @@ package net.wildbill22.draco;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
+import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.Reference;
 import net.wildbill22.draco.proxies.CommonProxy;
 import cpw.mods.fml.common.Mod;
@@ -28,13 +29,15 @@ public class Core {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
 		Creative_Tab.OtherInfo();
-		ModBlocks.init();
+		ModBlocks.preInit();
 		ModEntities.preInit();
+		ModWeapons.preInit();
 		dracoProxy.registerRenderer();
 	}
 
 	@EventHandler
 	public static void Init(FMLInitializationEvent event) {
 		ModCraftingRecipes.init();		
+		ModWeapons.init();
 	}
 }

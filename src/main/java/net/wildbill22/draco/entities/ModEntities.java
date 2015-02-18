@@ -2,6 +2,7 @@ package net.wildbill22.draco.entities;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.ChestGenHooks;
 import net.wildbill22.draco.handlers.EntityHandler;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
@@ -11,8 +12,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
  */
 public class ModEntities {
 
-	public static void preInit()
-	{
+	public static void preInit() {
 		//Overworld
 		EntityHandler.registerMonsters(EntityCreeperDragon.class, "creeperDragon");
 		EntityHandler.registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
@@ -20,11 +20,10 @@ public class ModEntities {
 		addMobSpawns();
 	}
 
-	public static void addMobSpawns()
-	{
+	public static void addMobSpawns() {
 		//Overworld
 		/**
-		 * Weigthed Probability info:
+		 * Weighted Probability info:
 		 * 
 		 * CREATURE (day): Cows (8), Pigs (10), Chickens (10), Sheep (12)
 		 * MONSTER (night): All 100 except Endermen (10), and Witches (5)

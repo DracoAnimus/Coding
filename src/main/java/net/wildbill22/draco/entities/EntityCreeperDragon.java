@@ -280,8 +280,8 @@ public class EntityCreeperDragon extends EntityTameable {
                 }
             }
         }
-        // Tame the dragon with a bone?
-        else if (itemstack != null && itemstack.getItem() == Items.bone) {
+        // Tame the dragon with gunpowder
+        else if (itemstack != null && itemstack.getItem() == Items.gunpowder) {
             if (!player.capabilities.isCreativeMode) {
                 --itemstack.stackSize;
             }

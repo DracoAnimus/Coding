@@ -1,6 +1,8 @@
+item.wildbill22_draco_dragonSlayerSword.name=Dragon Slayer Sword
+
 tile.charredGround.name=Charred Ground
 tile.scorchedCobblestone.name=Scorched Cobblestone
 
-entity.wildbill22_draco.creeperDragon.name=Creeper Dragon
+entity.wildbill22_draco.creeperDragon.name=Crepitus Draco
 
 itemGroup.Draco_Animus=Draco Animus
