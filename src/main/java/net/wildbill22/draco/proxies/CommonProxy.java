@@ -7,9 +7,9 @@ package net.wildbill22.draco.proxies;
  */
 public class CommonProxy 
 {
-	public void registerRenderer(){
-	}
+	public void registerRenderer(){}
 	
-	public void registerTileEntitySpecialRenderer(){
-	}
+	public void registerTileEntitySpecialRenderer(){}
+	
+	public void registerSounds() {}
 }

@@ -1,17 +1,12 @@
 package net.wildbill22.draco.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.wildbill22.draco.Creative_Tab;
-import net.wildbill22.draco.lib.Reference;
+import net.wildbill22.draco.lib.REFERENCE;
 
-public class BlockCharredGround extends Block {
+public class BlockCharredGround extends ModBlocks {
 
-	public BlockCharredGround() {
-		super(Material.grass);
-		setBlockName("charredGround");
-		setBlockTextureName(Reference.MODID + ":" + getUnlocalizedName().substring(5));
-		setCreativeTab(Creative_Tab.TabDraco_Animus);
+	public BlockCharredGround(String unlocalizedname, String texturename) {
+		super(unlocalizedname, texturename, Material.grass);
 //		setStepSound(soundTypeStone);
 		setHardness(1.0F);
 		setResistance(3.0F);

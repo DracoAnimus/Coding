@@ -1,11 +1,16 @@
 package net.wildbill22.draco.lib;
 
-public class Reference 
+public class REFERENCE 
 {
 	public static final String MODID = "wildbill22_draco";
 	public static final String NAME = "Draco Animus";
 	public static final String VERSION = "v0.0.3";	
 
-	public static String Texture_Path = MODID + ":";
-	public static String Unlocalized_Path = MODID + "_"; 
+	public static final String Texture_Path = MODID + ":";
+	public static final String Unlocalized_Path = MODID + "_";
+	
+	// Mobs
+	public static class ENTITY {
+		public static final String GUARD_NAME = "guard";
+	}
 }

@@ -1,8 +1,23 @@
+#Items
 item.wildbill22_draco_dragonSlayerSword.name=Dragon Slayer Sword
+item.wildbill22_draco_dragonScales.name=Dragon Scales
+item.wildbill22_draco_spear.name=Spear
+item.wildbill22_draco_longSword.name=Long Sword
+item.wildbill22_draco_battleAxe.name=Battle Axe
+item.wildbill22_draco_mace.name=Mace
+item.wildbill22_draco_goldCoin.name=Gold Coin
 
+#Blocks (tiles)
 tile.charredGround.name=Charred Ground
 tile.scorchedCobblestone.name=Scorched Cobblestone
+tile.temporaryHoard.name=Temporary Hoard
 
+#Entities
 entity.wildbill22_draco.creeperDragon.name=Crepitus Draco
+entity.wildbill22_draco.guard.name=Guard
 
+#General
 itemGroup.Draco_Animus=Draco Animus
+category.wildbill22_draco.balance=Balance settings
+category.wildbill22_draco.balance_level=Level up balance settings
+category.wildbill22_draco.balance.tooltip=Level up balance settings

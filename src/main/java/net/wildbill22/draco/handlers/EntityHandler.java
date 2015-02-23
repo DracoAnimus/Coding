@@ -12,10 +12,6 @@ import cpw.mods.fml.common.registry.EntityRegistry;
  */
 public class EntityHandler 
 {
-	public static void registerMonsters(Class<? extends Entity> entity, String name){
-		EntityRegistry.registerModEntity(entity, name, 5, Core.instance, 10, 10, true);
-	}	
-
 	@SuppressWarnings("unchecked")
 	public static void registerEntityEgg(Class<? extends Entity> entity, int primaryColor, int secondaryColor){
 		int entityId = EntityRegistry.findGlobalUniqueEntityId();

@@ -13,14 +13,14 @@ import net.wildbill22.draco.entities.EntityCreeperDragon;
 import java.util.List;
 
 /**
- * Created by Darkona on 12/10/2014.
+ * Created by Darkona on 12/10/2014 orginally, adapted by wildbill22 for draco.
  */
 public class EntityAIAvoidDragon extends EntityAIBase
 {
     public final IEntitySelector field_98218_a = new AvoidEntitySelector(this);
 
     /**
-     * The com.darkona.adventurebackpack.entity we are attached to
+     * The entity we are attached to
      */
     public EntityCreature theEntity;
     private double farSpeed;
@@ -29,33 +29,31 @@ public class EntityAIAvoidDragon extends EntityAIBase
     private float distanceFromEntity;
 
     /**
-     * The PathEntity of our com.darkona.adventurebackpack.entity
-     */
+     * The PathEntity
+    */
     private PathEntity entityPathEntity;
 
     /**
-     * The PathNavigate of our com.darkona.adventurebackpack.entity
+     * The PathNavigate of entity
      */
     private PathNavigate entityPathNavigate;
 
     /**
-     * The class of the com.darkona.adventurebackpack.entity we should avoid
+     * The class of the entity we should avoid
      */
     @SuppressWarnings("rawtypes")
 	private Class targetEntityClass;
 
-//    public EntityAIAvoidDragon(EntityCreature par1EntityCreature, Class par2Class, float par3, double par4, double par6, String colorName)
     @SuppressWarnings("rawtypes")
-	public EntityAIAvoidDragon(EntityCreature par1EntityCreature, Class par2Class, float par3, double par4, double par6)
+	public EntityAIAvoidDragon(EntityCreature par1EntityCreature, Class targetClass, float distance, double par4, double par6)
     {
         this.theEntity = par1EntityCreature;
-        this.targetEntityClass = par2Class;
-        this.distanceFromEntity = par3;
+        this.targetEntityClass = targetClass;
+        this.distanceFromEntity = distance;
         this.farSpeed = par4;
         this.nearSpeed = par6;
         this.entityPathNavigate = par1EntityCreature.getNavigator();
         this.setMutexBits(1);
-//        this.backpackName = colorName;
     }
 
     /**

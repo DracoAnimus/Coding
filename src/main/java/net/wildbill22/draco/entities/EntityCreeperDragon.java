@@ -29,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.ai.EntityAIAvoidDragon;
@@ -46,20 +47,23 @@ public class EntityCreeperDragon extends EntityTameable {
 	public EntityCreeperDragon(World world) {
 		super(world);
 		this.getNavigator().setAvoidsWater(false);
-		this.setSize(2.0F, 2.1F);
+		this.setSize(1.8F, 1.9F);
         this.isImmuneToFire = true;
         this.experienceValue = 5;
-		clearAITasks();
+        // If this was the player, could have:
+        // player.capabilities.isFlying = true;
+        // player.capabilities.allowFlying = true;
+//		clearAITasks();
 		
 		// AI
 		int p = 1;
         this.tasks.addTask(p++, new EntityAISwimming(this));
 //        this.tasks.addTask(p++, new EntityAIPanic(this, 1.25D));
-        this.tasks.addTask(p++, this.aiSit);
+        this.tasks.addTask(p++, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(p++, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(p++, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(p++, new EntityAIWatchClosest(this, EntityPlayer.class, 10.0F));
-        this.tasks.addTask(p++, new EntityAIAttackOnCollide(this, 1.0D, true));
-        this.tasks.addTask(p++, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(p++, this.aiSit);
         this.tasks.addTask(p++, new EntityAILookIdle(this));
         
         // Target tasks
@@ -129,7 +133,7 @@ public class EntityCreeperDragon extends EntityTameable {
 
             for (EntityCreeper creeper : creepers) {
                 boolean set = true;
-                EntityAIAvoidDragon task = new EntityAIAvoidDragon(creeper, EntityCreeperDragon.class, 10.0F, 1.0, 1.3);
+                EntityAIAvoidDragon task = new EntityAIAvoidDragon(creeper, EntityCreeperDragon.class, 14.0F, 1.0, 1.3);
 
                 for (Object entry : creeper.tasks.taskEntries) {
                     if (((EntityAITasks.EntityAITaskEntry) entry).action instanceof EntityAIAvoidDragon) {
@@ -241,10 +245,11 @@ public class EntityCreeperDragon extends EntityTameable {
 
     // I think this is needed to attack other mobs
     @Override
-    public boolean attackEntityAsMob(Entity p_70652_1_) {
+    public boolean attackEntityAsMob(Entity entity) {
     	// Does 6 damage when tamed (wolves do 4), 2 when not
         int i = this.isTamed() ? 6 : 2;
-        return p_70652_1_.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
+		//	entity.setFire(3);
+        return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
     }
 
     @Override
@@ -306,6 +311,9 @@ public class EntityCreeperDragon extends EntityTameable {
                 }
             }
             return true;
+        }
+        else {
+			player.addChatMessage(new ChatComponentText("Tame the dragon with gunpowder"));
         }
         return super.interact(player);
     }

@@ -7,7 +7,7 @@ import cpw.mods.fml.common.FMLLog;
 
 public class LogHelper
 { 
-	public static void log(Level logLevel, Object object){FMLLog.log(Reference.NAME, logLevel, String.valueOf(object));} 
+	public static void log(Level logLevel, Object object){FMLLog.log(REFERENCE.NAME, logLevel, String.valueOf(object));} 
       
     public static void all(Object object) {log(Level.ALL, object);} 
     public static void debug(Object object){log(Level.DEBUG, object);} 
