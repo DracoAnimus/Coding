@@ -1,10 +1,16 @@
 package net.wildbill22.draco.entities;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.Core;
+import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
+import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
-import net.wildbill22.draco.handlers.EntityHandler;
+import net.wildbill22.draco.handlers.EntityJoinWorldEventHandler;
+import net.wildbill22.draco.handlers.EntityLivingSwawnEventHandler;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -18,11 +24,17 @@ public class ModEntities {
 	
 	public static void preInit() {
 		// Overworld eggs
-		EntityHandler.registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
+		registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
+		registerEntityEgg(EntitySilverDragon.class, 0xd8bb9d, 0xa73c1a);
 		
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, "creeperDragon", ++modEntityID, Core.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityGuard.class, REFERENCE.ENTITY.GUARD_NAME, ++modEntityID, Core.instance, 64, 10, true);
+	
+		// Overworld mod entities event handlers
+//    	MinecraftForge.EVENT_BUS.register(new EntityLivingSwawnEventHandler()); // This one doesn't work for guards
+    	MinecraftForge.EVENT_BUS.register(new EntityJoinWorldEventHandler()); // For Guards 
 
 		// Overworld Throwables
 		// the two numbers are tracking range and update frequency, don't change these
@@ -45,9 +57,27 @@ public class ModEntities {
 		 * at all, plus crashes.
 		 */
 		EntityRegistry.addSpawn(EntityCreeperDragon.class, 55, 1, 2, EnumCreatureType.creature, BiomeGenBase.plains, BiomeGenBase.forest, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, BiomeGenBase.roofedForest, BiomeGenBase.desert);
-		// TBD: Needs to match all the village biomes somehow
+		// TODO: Needs to match all the village biomes somehow
 		EntityRegistry.addSpawn(EntityGuard.class, BALANCE.MOBPROP.GUARD_SPAWN_PROB, 1, 2, EnumCreatureType.creature, BiomeGenBase.plains, BiomeGenBase.forest, 
 				BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.forestHills, BiomeGenBase.jungle, 
 				BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, BiomeGenBase.roofedForest, BiomeGenBase.desert);
 	}
+	
+    static int startEntityId = 300;
+    
+    @SuppressWarnings("unchecked")
+    public static void registerEntityEgg(Class<? extends Entity> entity, int primaryColor, int secondaryColor) {
+    	int id = getUniqueEntityId();
+    	EntityList.IDtoClassMapping.put(id, entity);
+    	EntityList.entityEggs.put(id, new EntityList.EntityEggInfo(id, primaryColor, secondaryColor));
+    }
+        
+    public static int getUniqueEntityId() {
+    	do {
+    		startEntityId++;
+    	}
+    	while (EntityList.getStringFromID(startEntityId) != null);
+
+    	return startEntityId;
+    }
 }
