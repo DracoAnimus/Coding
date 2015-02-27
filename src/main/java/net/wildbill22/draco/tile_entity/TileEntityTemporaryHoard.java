@@ -34,6 +34,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
+	@Override
     public void setInventorySlotContents(int par1, ItemStack itemstack){
     	if (itemstack.getItem() == ModItems.goldCoin) {
 	    	this.chestContents[par1] = itemstack;
@@ -42,7 +43,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	    	}
 	    	this.markDirty();
     	}
-    	else {
+    	else {    		
     		// TODO: Add chat message as to why it won't add
 //    		this.getWorldObj().playerEntities;
     		// Find closest?
@@ -50,7 +51,6 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     	}
     }
     
-
     // Original stuff from Treasure Chest:
     
 	@Override
@@ -61,6 +61,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	/**
      * Returns the name of the inventory
      */
+	@Override
     public String getInventoryName() {
         return this.hasCustomInventoryName() ? this.customName : ModBlocks.TEMPORARY_HOARD_TEXTURENAME;
     }
@@ -68,6 +69,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     /**
      * Returns if the inventory is named
      */
+	@Override
     public boolean hasCustomInventoryName()
     {
         return this.customName != null && this.customName.length() > 0;
@@ -78,11 +80,13 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 //    	return 40;
 //    }
 
+	@Override
     public void func_145976_a(String p_145976_1_)
     {
         this.customName = p_145976_1_;
     }
 
+	@Override
     public void readFromNBT(NBTTagCompound p_145839_1_) {
         super.readFromNBT(p_145839_1_);
         
@@ -103,6 +107,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         }        
     }
 
+	@Override
     public void writeToNBT(NBTTagCompound p_145841_1_) {
         super.writeToNBT(p_145841_1_);
         
@@ -122,39 +127,39 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         }
     }
 
-    private void func_145978_a(TileEntityTemporaryHoard p_145978_1_, int p_145978_2_)
+    private void func_145978_a(TileEntityTemporaryHoard entity, int side)
     {
-        if (p_145978_1_.isInvalid())
+        if (entity.isInvalid())
         {
             this.adjacentChestChecked = false;
         }
         else if (this.adjacentChestChecked)
         {
-            switch (p_145978_2_)
+            switch (side)
             {
                 case 0:
-                    if (this.adjacentChestZPos != p_145978_1_)
+                    if (this.adjacentChestZPos != entity)
                     {
                         this.adjacentChestChecked = false;
                     }
 
                     break;
                 case 1:
-                    if (this.adjacentChestXNeg != p_145978_1_)
+                    if (this.adjacentChestXNeg != entity)
                     {
                         this.adjacentChestChecked = false;
                     }
 
                     break;
                 case 2:
-                    if (this.adjacentChestZNeg != p_145978_1_)
+                    if (this.adjacentChestZNeg != entity)
                     {
                         this.adjacentChestChecked = false;
                     }
 
                     break;
                 case 3:
-                    if (this.adjacentChestXPos != p_145978_1_)
+                    if (this.adjacentChestXPos != entity)
                     {
                         this.adjacentChestChecked = false;
                     }
@@ -165,6 +170,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     /**
      * Performs the check for adjacent chests to determine if this chest is double or not.
      */
+	@Override
     public void checkForAdjacentChests()
     {
         if (!this.adjacentChestChecked)
@@ -228,6 +234,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         }
     }
     
+	@Override
     public int func_145980_j()
     {
         if (this.cachedChestType == -1)
@@ -242,25 +249,27 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         return this.cachedChestType;
     }
     
-    public ItemStack getStackInSlot(int par1) {
-    	return this.chestContents[par1];
+	@Override
+    public ItemStack getStackInSlot(int slot) {
+    	return this.chestContents[slot];
     }
     
-    public ItemStack decrStackSize(int par1, int par2) {
-        if (this.chestContents[par1] != null) {
+	@Override
+    public ItemStack decrStackSize(int slot, int maxItems) {
+        if (this.chestContents[slot] != null) {
             ItemStack itemstack;
 
-            if (this.chestContents[par1].stackSize <= par2) {
-                itemstack = this.chestContents[par1];
-                this.chestContents[par1] = null;
+            if (this.chestContents[slot].stackSize <= maxItems) {
+                itemstack = this.chestContents[slot];
+                this.chestContents[slot] = null;
                 this.markDirty();
                 return itemstack;
             }
             else {
-                itemstack = this.chestContents[par1].splitStack(par2);
+                itemstack = this.chestContents[slot].splitStack(maxItems);
 
-                if (this.chestContents[par1].stackSize == 0) {
-                    this.chestContents[par1] = null;
+                if (this.chestContents[slot].stackSize == 0) {
+                    this.chestContents[slot] = null;
                 }
 
                 this.markDirty();
@@ -271,10 +280,11 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         }
     }
     
-    public ItemStack getStackInSlotOnClosing(int par1){
-    	if(this.chestContents[par1] != null){
-    		ItemStack itemstack = this.chestContents[par1];
-    		this.chestContents[par1] = null;
+	@Override
+    public ItemStack getStackInSlotOnClosing(int slot){
+    	if(this.chestContents[slot] != null){
+    		ItemStack itemstack = this.chestContents[slot];
+    		this.chestContents[slot] = null;
     		return itemstack;
     	}
     	else{
@@ -282,6 +292,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     	}
     }
     
+	@Override
     public int getInventoryStackLimit() {
         return 64;
     }

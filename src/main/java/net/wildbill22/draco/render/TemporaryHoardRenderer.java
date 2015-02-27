@@ -43,40 +43,40 @@ public class TemporaryHoardRenderer extends TileEntitySpecialRenderer {
 //        }
     }
 
-    public void renderTileEntityAt(TileEntityTemporaryHoard p_147500_1_, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_)
+    public void renderTileEntityAt(TileEntityTemporaryHoard chestEntity, double p_147500_2_, double p_147500_4_, double p_147500_6_, float p_147500_8_)
     {
         int i;
 
-        if (!p_147500_1_.hasWorldObj())
+        if (!chestEntity.hasWorldObj())
         {
             i = 0;
         }
         else
         {
-            Block block = p_147500_1_.getBlockType();
-            i = p_147500_1_.getBlockMetadata();
+            Block block = chestEntity.getBlockType();
+            i = chestEntity.getBlockMetadata();
 
             if (block instanceof TemporaryHoard && i == 0)
             {
                 try
                 {
-                ((TemporaryHoard)block).func_149954_e(p_147500_1_.getWorldObj(), p_147500_1_.xCoord, p_147500_1_.yCoord, p_147500_1_.zCoord);
+                ((TemporaryHoard)block).func_149954_e(chestEntity.getWorldObj(), chestEntity.xCoord, chestEntity.yCoord, chestEntity.zCoord);
                 }
                 catch (ClassCastException e)
                 {
-                    FMLLog.severe("Attempted to render a chest at %d,  %d, %d that was not a chest", p_147500_1_.xCoord, p_147500_1_.yCoord, p_147500_1_.zCoord);
+                    FMLLog.severe("Attempted to render a chest at %d,  %d, %d that was not a chest", chestEntity.xCoord, chestEntity.yCoord, chestEntity.zCoord);
                 }
-                i = p_147500_1_.getBlockMetadata();
+                i = chestEntity.getBlockMetadata();
             }
 
-            p_147500_1_.checkForAdjacentChests();
+            chestEntity.checkForAdjacentChests();
         }
 
-        if (p_147500_1_.adjacentChestZNeg == null && p_147500_1_.adjacentChestXNeg == null)
+        if (chestEntity.adjacentChestZNeg == null && chestEntity.adjacentChestXNeg == null)
         {
             ModelChest modelchest;
 
-            if (p_147500_1_.adjacentChestXPos == null && p_147500_1_.adjacentChestZPos == null)
+            if (chestEntity.adjacentChestXPos == null && chestEntity.adjacentChestZPos == null)
             {
                 modelchest = this.singleChest;
                 this.bindTexture(singleChestTexture);
@@ -115,24 +115,24 @@ public class TemporaryHoardRenderer extends TileEntitySpecialRenderer {
                 short1 = -90;
             }
 
-            if (i == 2 && p_147500_1_.adjacentChestXPos != null)
+            if (i == 2 && chestEntity.adjacentChestXPos != null)
             {
                 GL11.glTranslatef(1.0F, 0.0F, 0.0F);
             }
 
-            if (i == 5 && p_147500_1_.adjacentChestZPos != null)
+            if (i == 5 && chestEntity.adjacentChestZPos != null)
             {
                 GL11.glTranslatef(0.0F, 0.0F, -1.0F);
             }
 
             GL11.glRotatef((float)short1, 0.0F, 1.0F, 0.0F);
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-            float f1 = p_147500_1_.prevLidAngle + (p_147500_1_.lidAngle - p_147500_1_.prevLidAngle) * p_147500_8_;
+            float f1 = chestEntity.prevLidAngle + (chestEntity.lidAngle - chestEntity.prevLidAngle) * p_147500_8_;
             float f2;
 
-            if (p_147500_1_.adjacentChestZNeg != null)
+            if (chestEntity.adjacentChestZNeg != null)
             {
-                f2 = p_147500_1_.adjacentChestZNeg.prevLidAngle + (p_147500_1_.adjacentChestZNeg.lidAngle - p_147500_1_.adjacentChestZNeg.prevLidAngle) * p_147500_8_;
+                f2 = chestEntity.adjacentChestZNeg.prevLidAngle + (chestEntity.adjacentChestZNeg.lidAngle - chestEntity.adjacentChestZNeg.prevLidAngle) * p_147500_8_;
 
                 if (f2 > f1)
                 {
@@ -140,9 +140,9 @@ public class TemporaryHoardRenderer extends TileEntitySpecialRenderer {
                 }
             }
 
-            if (p_147500_1_.adjacentChestXNeg != null)
+            if (chestEntity.adjacentChestXNeg != null)
             {
-                f2 = p_147500_1_.adjacentChestXNeg.prevLidAngle + (p_147500_1_.adjacentChestXNeg.lidAngle - p_147500_1_.adjacentChestXNeg.prevLidAngle) * p_147500_8_;
+                f2 = chestEntity.adjacentChestXNeg.prevLidAngle + (chestEntity.adjacentChestXNeg.lidAngle - chestEntity.adjacentChestXNeg.prevLidAngle) * p_147500_8_;
 
                 if (f2 > f1)
                 {
