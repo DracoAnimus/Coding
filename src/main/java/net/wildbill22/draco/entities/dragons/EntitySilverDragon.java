@@ -1,6 +1,4 @@
-package net.wildbill22.draco.entities;
-
-import java.util.List;
+package net.wildbill22.draco.entities.dragons;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -15,10 +13,8 @@ import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
 import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITargetNonTamed;
-import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,11 +24,9 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.wildbill22.draco.entities.ai.EntityAIAvoidDragon;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
@@ -41,10 +35,10 @@ import net.wildbill22.draco.lib.LogHelper;
  * First we will make it passive, latter may extend EntityMob
  *
  */
-public class EntityCreeperDragon extends EntityTameable {
+public class EntitySilverDragon extends EntityTameable {
 	int lastCheckTime = 0;
 	
-	public EntityCreeperDragon(World world) {
+	public EntitySilverDragon(World world) {
 		super(world);
 		this.getNavigator().setAvoidsWater(false);
 		this.setSize(1.8F, 1.9F);
@@ -58,7 +52,6 @@ public class EntityCreeperDragon extends EntityTameable {
 		// AI
 		int p = 1;
         this.tasks.addTask(p++, new EntityAISwimming(this));
-//        this.tasks.addTask(p++, new EntityAIPanic(this, 1.25D));
         this.tasks.addTask(p++, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(p++, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(p++, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
@@ -110,43 +103,10 @@ public class EntityCreeperDragon extends EntityTameable {
 
 		// 10 is 5 hearts (player has 20, 10 hearts for comparison)
         if (this.isTamed()) {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0D);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(35.0D);
         }
         else {
             this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-        }
-    }
-	
-	/**
-     * Like actual Ocelots and Cats, the dragon will scare away Creepers.
-     *
-     */
-    @SuppressWarnings("unchecked")
-    public void checkForCreepers() {
-        lastCheckTime--;
-        if (lastCheckTime <= 0) {
-            lastCheckTime = 30;
-            List<EntityCreeper> creepers = this.worldObj.getEntitiesWithinAABB(EntityCreeper.class,
-                    AxisAlignedBB.getBoundingBox(this.posX, this.posY, this.posZ,
-                            this.posX + 1.0D, this.posY + 1.0D,
-                            this.posZ + 1.0D).expand(16.0D, 4.0D, 16.0D));
-
-            for (EntityCreeper creeper : creepers) {
-                boolean set = true;
-                EntityAIAvoidDragon task = new EntityAIAvoidDragon(creeper, EntityCreeperDragon.class, 14.0F, 1.0, 1.3);
-
-                for (Object entry : creeper.tasks.taskEntries) {
-                    if (((EntityAITasks.EntityAITaskEntry) entry).action instanceof EntityAIAvoidDragon) {
-                        set = false;
-                        break;
-                    }
-                }
-
-                if (set) {
-                	LogHelper.info("Found creeper who doesn't know to fear the dragon :-)");
-                    creeper.tasks.addTask(3, task);
-                }
-            }
         }
     }
     
@@ -174,10 +134,8 @@ public class EntityCreeperDragon extends EntityTameable {
      * use this to react to sunlight and start to burn.
      */
 	@Override
-	public void onLivingUpdate()
-	{
+	public void onLivingUpdate(){
 		super.onLivingUpdate();
-		checkForCreepers();
 	}
 	
     @Override
@@ -191,7 +149,6 @@ public class EntityCreeperDragon extends EntityTameable {
             return "mob.cat.purr";        	
         else
         	return "mob.wolf.growl";        
-        	// return "mob.enderdragon.growl";
     }
       
     @Override

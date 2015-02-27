@@ -4,13 +4,16 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.wildbill22.draco.blocks.ModBlocks;
-import net.wildbill22.draco.entities.EntityCreeperDragon;
 import net.wildbill22.draco.entities.EntitySpear;
+import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
+import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.models.ModelCreeperDragon;
+import net.wildbill22.draco.models.ModelSilverDragon;
 import net.wildbill22.draco.render.RenderCreeperDragon;
 import net.wildbill22.draco.render.RenderGuard;
+import net.wildbill22.draco.render.RenderSilverDragon;
 import net.wildbill22.draco.render.RenderSpear;
 import net.wildbill22.draco.render.TemporaryHoardRenderer;
 import net.wildbill22.draco.render.item.ItemRendererTemporaryHoard;
@@ -29,6 +32,8 @@ public class ClientProxy extends CommonProxy
 		//Entities, the 0.5F is the shadow size
 		RenderingRegistry.registerEntityRenderingHandler(EntityCreeperDragon.class, 
 				new RenderCreeperDragon(new ModelCreeperDragon(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySilverDragon.class, 
+				new RenderSilverDragon(new ModelSilverDragon(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGuard.class,	new RenderGuard(new ModelBiped(), 0.5F));
 		
 		// Throwable entities

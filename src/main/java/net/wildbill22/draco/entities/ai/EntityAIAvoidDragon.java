@@ -8,7 +8,7 @@ import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.Vec3;
-import net.wildbill22.draco.entities.EntityCreeperDragon;
+import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 
 import java.util.List;
 

@@ -14,12 +14,14 @@ public final class BALANCE {
 		public static double GUARD_MAX_HEALTH;
 		@DefaultDouble(value = 5.0D, comment = "Attack damage")
 		public static double GUARD_ATTACK_DAMAGE;
-		@DefaultDouble(value = 0.35F, comment = "Movement speed")
+		@DefaultDouble(value = 0.35F, comment = "Guard movement speed")
 		public static double GUARD_MOVEMENT_SPEED;
 		@DefaultInt(value = 75, comment = "Probability of spawning")
 		public static int GUARD_SPAWN_PROB;
 		@DefaultInt(value = 6, comment = "Maximum number of guards that will spawn in a village")
 		public static int GUARD_MAX_PER_VILLAGE;
+		@DefaultDouble(value = 0.20F, comment = "Knight movement speed")
+		public static double KNIGHT_MOVEMENT_SPEED;
 	}
 	
 	// Mob behavior

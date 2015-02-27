@@ -5,8 +5,10 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.BALANCE;
@@ -37,8 +39,8 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 		}
 
 		int r = v.getVillageRadius();
-		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(v.getCenter().posX - r, surfaceY - 10, v.getCenter().posZ - r, 
-				v.getCenter().posX + r,	surfaceY + 25, v.getCenter().posZ + r);
+		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(v.getCenter().posX - r, surfaceY - 20, v.getCenter().posZ - r, 
+				v.getCenter().posX + r,	surfaceY + 35, v.getCenter().posZ + r);
 
 		int spawnedGuards = world.getEntitiesWithinAABB(EntityGuard.class, box).size();
 		if (spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE){
@@ -50,7 +52,9 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 		for (int i = 1; i < (BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE * 2) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE; i++) {
 			int x1 = v.getCenter().posX + world.rand.nextInt((int) (1.2 * r)) - (int) (0.6 * r);
 			int z1 = v.getCenter().posZ + world.rand.nextInt((int) (1.2 * r)) - (int) (0.6 * r);
-
+			// Don't spawn in well
+			if (x1 <  MathHelper.abs_int(v.getCenter().posX) + 3 && z1 < MathHelper.abs_int(v.getCenter().posZ) + 3)
+				continue;
 			int y1 = world.getHeightValue(x1, z1);
 			if (v.isInRange(x1, y1, z1)) {
 //				LogHelper.info("WorldGen: going to spawn Guard!");
@@ -64,8 +68,9 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 				((EntityGuard) e).setFoundHome();
 				if (((EntityGuard) e).getCanSpawnHere()) {
 					((EntityGuard) e).setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
+					((EntityGuard) e).setGuardTypePerBiome(world);
 					world.spawnEntityInWorld(e);
-//					LogHelper.info("WorldGen: Spawned guard at: " + x1 + " " + y1 + " " + z1);
+					LogHelper.info("WorldGen: Spawned guard at: " + x1 + " " + y1 + " " + z1);
 					spawnedGuards++;
 				} else {
 					e.setDead();
