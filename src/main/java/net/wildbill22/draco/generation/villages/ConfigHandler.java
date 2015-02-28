@@ -86,8 +86,15 @@ public class ConfigHandler {
 				Block replacement = Block.getBlockFromName(m.group(2));
 
 				String condition = m.group(3);
-				LogHelper.info("ConfigHandler: Will replace " + b.getUnlocalizedName() + " with " + replacement.getUnlocalizedName() + " where "
+				if (b != null && replacement != null && condition != null)
+					LogHelper.info("ConfigHandler: Will replace " + b.getUnlocalizedName() + " with " + replacement.getUnlocalizedName() + " where "
 						+ condition);
+				else if (b == null)
+					LogHelper.info("ConfigHandler: Block: " + m.group(1) + " could not be found!");
+				else if (replacement == null)
+					LogHelper.error("ConfigHandler: Replacement: " + m.group(2) + " block not found!");
+				else if (condition == null)
+					LogHelper.error("ConfigHandler: Condition: " + m.group(3) + " not found!");
 				if (b.equals(replacement))
 					continue;
 

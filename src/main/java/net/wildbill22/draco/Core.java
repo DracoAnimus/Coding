@@ -47,6 +47,7 @@ public class Core {
 		ModEntities.preInit();
 		ModWeapons.preInit();
 		dracoProxy.registerRenderer();
+		VillageBiomes.preInit(event);
 	}
 
 	@EventHandler

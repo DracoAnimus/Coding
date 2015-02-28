@@ -6,6 +6,8 @@ item.wildbill22_draco_longSword.name=Long Sword
 item.wildbill22_draco_battleAxe.name=Battle Axe
 item.wildbill22_draco_mace.name=Mace
 item.wildbill22_draco_goldCoin.name=Gold Coin
+item.wildbill22_draco_longBow.name=Long Bow
+item.wildbill22_draco_crossbow.name=Crossbow
 
 #Blocks (tiles)
 tile.charredGround.name=Charred Ground
