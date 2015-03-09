@@ -20,11 +20,11 @@ public class ModWeapons {
 	
 	// Weapons
 	public static Item dragonSlayerSword = new ItemDragonSlayerSword(dragonsBreath, "dragonSlayerSword");
-	public static Item longSword = new ItemLongSword(LONGSWORD, "longSword");
-	public static Item battleAxe = new ItemLongSword(BATTLEAXE, "battleAxe");
-	public static Item mace = new ItemLongSword(MACE, "mace");
-	public static Item longBow = new ItemLongBow("longBow");
-	public static Item crossbow = new ItemCrossbow("crossbow");
+	public static Item longSword = new ItemLongSword(LONGSWORD);
+	public static Item battleAxe = new ItemBattleAxe(BATTLEAXE);
+	public static Item mace = new ItemMace(MACE);
+	public static Item longBow = new ItemLongBow();
+	public static Item crossbow = new ItemCrossbow();
 	
 	public static void preInit() {
 		GameRegistry.registerItem(dragonSlayerSword, REFERENCE.MODID + dragonSlayerSword.getUnlocalizedName().substring(5));

@@ -2,14 +2,11 @@ package net.wildbill22.draco.items.weapons;
 
 import java.util.List;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.DamageSource;
 import net.wildbill22.draco.Creative_Tab;
 import net.wildbill22.draco.lib.REFERENCE;
-import net.wildbill22.draco.models.ModelCreeperDragon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -48,8 +45,8 @@ public class ItemDragonSlayerSword extends ItemSword
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		list.add("Description, TBD");
+		list.add("Description, Dragon Slayer Sword");
 		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: ???");
+		list.add("Ability: More damage to dragons.");
 	}
 }

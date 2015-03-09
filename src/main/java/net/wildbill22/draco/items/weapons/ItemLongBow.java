@@ -9,7 +9,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,11 +19,11 @@ import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemLongBow extends ItemBow
-{
+public class ItemLongBow extends ItemBow {
+	public static final String name = "longBow";
     public static final String[] bowPullIconNameArray = new String[] {"1", "2", "3"};
     private IIcon[] iconArray;
-    public ItemLongBow(String name)
+    public ItemLongBow()
     {
     	super();
 		this.setCreativeTab(Creative_Tab.TabDraco_Animus);
@@ -33,12 +32,6 @@ public class ItemLongBow extends ItemBow
         this.setMaxDamage(700);
     }
         
-
-        
-        
-    
-    
-
     /**
      * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
      */
@@ -168,26 +161,19 @@ public class ItemLongBow extends ItemBow
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister par1IconRegister)
     {
-    this.itemIcon = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "longBow");
-    this.iconArray = new IIcon[bowPullIconNameArray.length];
-
-    for (int var2 = 0; var2 < this.iconArray.length; ++var2)
-    {
-    this.iconArray[var2] = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "longBow" + bowPullIconNameArray[var2]);
-    }
+	    this.itemIcon = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "longBow");
+	    this.iconArray = new IIcon[bowPullIconNameArray.length];
+	
+	    for (int var2 = 0; var2 < this.iconArray.length; ++var2)
+	    {
+	    	this.iconArray[var2] = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "longBow" + bowPullIconNameArray[var2]);
+	    }
     }
     
-
-
-
-
     /**
      * used to cycle through icons based on their used duration, i.e. for the bow
      */
     @SideOnly(Side.CLIENT)
-
-
-
      public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining ) {
         if (usingItem == null) { return itemIcon; }
         int ticksInUse = stack.getMaxItemUseDuration() - useRemaining;
@@ -199,7 +185,7 @@ public class ItemLongBow extends ItemBow
             return iconArray[0];
         } else {
             return itemIcon;
+        }
     }
-}
 }
 

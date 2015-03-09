@@ -63,7 +63,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
      */
 	@Override
     public String getInventoryName() {
-        return this.hasCustomInventoryName() ? this.customName : ModBlocks.TEMPORARY_HOARD_TEXTURENAME;
+        return this.hasCustomInventoryName() ? this.customName : TemporaryHoard.textureName;
     }
 
     /**
@@ -93,8 +93,8 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         NBTTagList nbttaglist = p_145839_1_.getTagList("Items", 10);
         this.chestContents = new ItemStack[this.getSizeInventory()];
 
-        if (p_145839_1_.hasKey(ModBlocks.TEMPORARY_HOARD_TEXTURENAME, 8)) {
-            this.customName = p_145839_1_.getString(ModBlocks.TEMPORARY_HOARD_TEXTURENAME);
+        if (p_145839_1_.hasKey(TemporaryHoard.textureName, 8)) {
+            this.customName = p_145839_1_.getString(TemporaryHoard.textureName);
         }
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -123,7 +123,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         p_145841_1_.setTag("Items", nbttaglist);
 
         if (this.hasCustomInventoryName()) {
-            p_145841_1_.setString(ModBlocks.TEMPORARY_HOARD_TEXTURENAME, this.customName);
+            p_145841_1_.setString(TemporaryHoard.textureName, this.customName);
         }
     }
 

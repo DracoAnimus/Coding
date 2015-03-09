@@ -2,15 +2,11 @@ package net.wildbill22.draco.handlers;
 
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
-import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 
@@ -21,7 +17,7 @@ import net.wildbill22.draco.lib.LogHelper;
  * 2/24/15: It is called for vanilla hostile mobs and guards 
  *
  */
-public class EntityJoinWorldEventHandler {
+public class EntityGuardEventHandler {
 	@SubscribeEvent
 	public void onEntityJoinWorldEvent(EntityJoinWorldEvent event) {
 		if (event.entity instanceof EntityGuard){

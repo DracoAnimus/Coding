@@ -8,7 +8,7 @@ import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.REFERENCE;
 
 public class RenderGuard extends RenderBiped{
-	private static ResourceLocation resourceLocation;
+	private static ResourceLocation texture;
 	
 	public RenderGuard(ModelBiped par1ModelBiped, float shadowSize) {
 		super(par1ModelBiped, shadowSize);
@@ -16,7 +16,7 @@ public class RenderGuard extends RenderBiped{
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		resourceLocation = new ResourceLocation(REFERENCE.MODID + ((EntityGuard)entity).type.getGuardResourceKey());
-		return resourceLocation;
+		texture = new ResourceLocation(REFERENCE.MODID + ((EntityGuard)entity).type.getGuardResourceKey());
+		return texture;
 	}
 }

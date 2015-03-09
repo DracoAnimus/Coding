@@ -10,10 +10,10 @@ import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemMace extends ItemAxe
-{	
-	public ItemMace(ToolMaterial material, String name)
-	{
+public class ItemMace extends ItemAxe {	
+	public static final String name = "mace";
+
+	public ItemMace(ToolMaterial material)	{
 		super(material);
 		this.setCreativeTab(Creative_Tab.TabDraco_Animus);
 		this.setUnlocalizedName(REFERENCE.Unlocalized_Path + name);
@@ -23,10 +23,9 @@ public class ItemMace extends ItemAxe
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		list.add("Description, TBD");
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
+		list.add("Description, Mace");
 		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: ???");
+		list.add("Ability: Hit damage.");
 	}
 }

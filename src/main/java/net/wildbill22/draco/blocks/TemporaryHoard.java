@@ -31,7 +31,8 @@ import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
  * @author WILLIAM
 */ 
 public class TemporaryHoard extends BlockChest{
-
+	public static final String textureName = "temporaryHoard";
+	public static final String displayName = "Temporary Hoard";
     private final Random rand = new Random();
 
 	protected TemporaryHoard(){
@@ -312,7 +313,7 @@ public class TemporaryHoard extends BlockChest{
 	@Override
     public void registerBlockIcons(IIconRegister p_149651_1_)
     {
-        this.blockIcon = p_149651_1_.registerIcon(REFERENCE.Texture_Path + ModBlocks.TEMPORARY_HOARD_TEXTURENAME);
+        this.blockIcon = p_149651_1_.registerIcon(REFERENCE.Texture_Path + TemporaryHoard.textureName);
         LogHelper.info("Set chest icon texture to temporaryHoard!");
     }    
 }

@@ -4,13 +4,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.Core;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
-import net.wildbill22.draco.handlers.EntityJoinWorldEventHandler;
-import net.wildbill22.draco.handlers.EntityLivingSwawnEventHandler;
+import net.wildbill22.draco.items.ItemMyExplosive;
+import net.wildbill22.draco.items.ItemMyFireball;
+import net.wildbill22.draco.items.ItemSpear;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -32,14 +32,11 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityGuard.class, REFERENCE.ENTITY.GUARD_NAME, ++modEntityID, Core.instance, 64, 10, true);
 	
-		// Overworld mod entities event handlers
-//    	MinecraftForge.EVENT_BUS.register(new EntityLivingSwawnEventHandler()); // This one doesn't work for guards
-    	MinecraftForge.EVENT_BUS.register(new EntityJoinWorldEventHandler()); // For Guards 
-
-		// Overworld Throwables
-		// the two numbers are tracking range and update frequency, don't change these
-		EntityRegistry.registerModEntity(EntitySpear.class, "spear", ++modEntityID, Core.instance, 64, 10, true);
-
+		// Projectiles?
+		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityMyFireball.class, ItemMyFireball.name, ++modEntityID, Core.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityMyExplosive.class, ItemMyExplosive.name, ++modEntityID, Core.instance, 64, 10, true);
+		
 		addMobSpawns();
 	}
 

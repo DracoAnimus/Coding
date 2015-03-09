@@ -25,8 +25,9 @@ public class EntitySpear extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
-		LogHelper.info("EntitySpear landed!");
-		
+		if (!this.worldObj.isRemote)
+			LogHelper.info("EntitySpear landed!");
+			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {
 				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), ItemSpear.spearDamage);
@@ -40,8 +41,7 @@ public class EntitySpear extends EntityThrowable {
 			this.worldObj.spawnParticle("crit", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 		}
 		// Get rid of the used spear
-		if (!this.worldObj.isRemote) {
+		if (!this.worldObj.isRemote)
 			this.setDead();
-		}		
 	}
 }

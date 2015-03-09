@@ -5,17 +5,21 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.wildbill22.draco.entities.EntitySpear;
+import net.wildbill22.draco.entities.EntityMyExplosive;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemSpear extends ModItems 
+public class ItemMyExplosive extends ModItems 
 {	
-	public static final int spearDamage = 4;
-	public static final String name = "spear";
+	public static final float explosionSize = 1.0F;
+	public static final String name = "explosiveFireball";
 	
-	public ItemSpear() {
-		super(name, name);
+	public ItemMyExplosive() {
+//		super(name, name);
+
+		super(name);
+		this.setTextureName("minecraft:fireball"); // Until we get a texture
+		
 		setMaxStackSize(64);
 	}
 	
@@ -35,16 +39,22 @@ public class ItemSpear extends ModItems
 			/* This method will spawn an entity in the World, you can use with anything that extends
 			* the Entity class, in this case it's the EntitySpear class
 			*/
-			world.spawnEntityInWorld(new EntitySpear(world, player));
+			world.spawnEntityInWorld(new EntityMyExplosive(world, player));
 		}
 		return stack;
+	}
+	
+	// Add this if you want the "enchanted" look in the inventory
+	@Override
+	public boolean hasEffect(ItemStack itemStack, int pass) {
+		return true;
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Spear held by village guards.");
-		list.add("Ability: Causes thrown damage.");
+		list.add("Description: Explosive Fireball");
+		list.add("Ability: Explodes on impact!");
 	}
 }

@@ -10,10 +10,10 @@ import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemBattleAxe extends ItemAxe
-{	
-	public ItemBattleAxe(ToolMaterial material, String name)
-	{
+public class ItemBattleAxe extends ItemAxe {	
+	public static final String name = "battleAxe";
+
+	public ItemBattleAxe(ToolMaterial material)	{
 		super(material);
 		this.setCreativeTab(Creative_Tab.TabDraco_Animus);
 		this.setUnlocalizedName(REFERENCE.Unlocalized_Path + name);
@@ -23,10 +23,9 @@ public class ItemBattleAxe extends ItemAxe
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
-	{
-		list.add("Description, TBD");
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
+		list.add("Description: Battle Axe.");
 		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: ???");
+		list.add("Ability: Can kill village enemies.");
 	}
 }

@@ -56,6 +56,7 @@ public class Core {
 		ModWeapons.init();
 		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 100);
 		dracoProxy.registerSounds();
+		dracoProxy.registerSubscriptions();
 		FMLCommonHandler.instance().bus().register(new Configs());
 		if (Configs.village_gen_enabled) {
 			LogHelper.info("Registering replacer for village generation.");

@@ -8,9 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class ItemGoldCoin extends ModItems {
+	public static final String name = "goldCoin";
 
-	public ItemGoldCoin(String unlocalizedname, String texturename) {
-		super(unlocalizedname, texturename);
+	public ItemGoldCoin() {
+		super(name, name);
 	}
 	
 	// Add this if you want the "enchanted" look in the inventory

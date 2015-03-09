@@ -1,97 +1,28 @@
 package net.wildbill22.draco.entities.dragons;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFollowOwner;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIOwnerHurtByTarget;
-import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITargetNonTamed;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.pathfinding.PathEntity;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.wildbill22.draco.items.ModItems;
-import net.wildbill22.draco.lib.LogHelper;
 
 /**
  * @author WILLIAM
- * First we will make it passive, latter may extend EntityMob
  *
  */
-public class EntitySilverDragon extends EntityTameable {
+public class EntitySilverDragon extends EntityLiving {
 	int lastCheckTime = 0;
 	
 	public EntitySilverDragon(World world) {
-		super(world);
-		this.getNavigator().setAvoidsWater(false);
-		this.setSize(1.8F, 1.9F);
-        this.isImmuneToFire = true;
-        this.experienceValue = 5;
-        // If this was the player, could have:
-        // player.capabilities.isFlying = true;
-        // player.capabilities.allowFlying = true;
-//		clearAITasks();
-		
-		// AI
-		int p = 1;
-        this.tasks.addTask(p++, new EntityAISwimming(this));
-        this.tasks.addTask(p++, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(p++, new EntityAIAttackOnCollide(this, 1.0D, true));
-        this.tasks.addTask(p++, new EntityAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-        this.tasks.addTask(p++, new EntityAIWatchClosest(this, EntityPlayer.class, 10.0F));
-        this.tasks.addTask(p++, this.aiSit);
-        this.tasks.addTask(p++, new EntityAILookIdle(this));
-        
-        // Target tasks
-        p = 1;
-        this.targetTasks.addTask(p++, new EntityAIOwnerHurtByTarget(this));
-        this.targetTasks.addTask(p++, new EntityAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(p++, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(p++, new EntityAITargetNonTamed(this, EntitySheep.class, 200, false));
-
-        this.setTamed(false);
+		super(world);        
 	}
-
-	/**
-	 * Clears previous AI Tasks, so the ones defined above will
-	 * actually perform.
-	 */
-	protected void clearAITasks() {
-		tasks.taskEntries.clear();
-		targetTasks.taskEntries.clear();
-	}
-
-    /**
-     * Returns true if the newer Entity AI code should be run
-     */
-	@Override
-    public boolean isAIEnabled() {
-        return true;
-    }
 
 	/**
      * Determines if an entity can despawn, used on idle far away entities
      */
 	@Override
     protected boolean canDespawn() {
-        return !this.isTamed() && this.ticksExisted > 2400;
+        return false;
     }
 
 	@Override
@@ -102,12 +33,7 @@ public class EntitySilverDragon extends EntityTameable {
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3D);
 
 		// 10 is 5 hearts (player has 20, 10 hearts for comparison)
-        if (this.isTamed()) {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(35.0D);
-        }
-        else {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-        }
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(35.0D);
     }
     
 	/**
@@ -124,19 +50,14 @@ public class EntitySilverDragon extends EntityTameable {
 		}		
 	}
 
-	@Override
-	public EntityAgeable createChild(EntityAgeable p_90011_1_) {
-		return null;
-	}
-
     /**
      * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
      * use this to react to sunlight and start to burn.
      */
-	@Override
-	public void onLivingUpdate(){
-		super.onLivingUpdate();
-	}
+//	@Override
+//	public void onLivingUpdate(){
+//		super.onLivingUpdate();
+//	}
 	
     @Override
     protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_) {
@@ -145,10 +66,7 @@ public class EntitySilverDragon extends EntityTameable {
 
 	@Override
     protected String getLivingSound() {
-        if (this.isTamed())
-            return "mob.cat.purr";        	
-        else
-        	return "mob.wolf.growl";        
+       	return "mob.wolf.growl";        
     }
       
     @Override
@@ -170,124 +88,5 @@ public class EntitySilverDragon extends EntityTameable {
     @Override
     protected float getSoundVolume() {
         return 0.45F;
-    }
-
-    /**
-     * Called when the entity is attacked. (Needed to attack other mobs)
-     */
-    @Override
-    public boolean attackEntityFrom(DamageSource damageSource, float damage)
-    {
-        if (this.isEntityInvulnerable()) {
-            return false;
-        }
-        else {
-            Entity entity = damageSource.getEntity();
-            if (entity != null) {
-            	if (entity instanceof EntityPlayer) {
-            		
-            	}
-                // Reduce damage if from player
-            	else if ((entity instanceof EntityPlayer) && this.isTamed()) {
-            		damage = (damage + 1.0F) / 2.0F;
-            	}
-            	// Vulnerable to arrows
-            	else if (!(entity instanceof EntityArrow)) {
-            		damage = (damage + 1.0F) / 2.0F;
-            	}
-            }
-            return super.attackEntityFrom(damageSource, damage);
-        }
-    }
-
-    // I think this is needed to attack other mobs
-    @Override
-    public boolean attackEntityAsMob(Entity entity) {
-    	// Does 6 damage when tamed (wolves do 4), 2 when not
-        int i = this.isTamed() ? 6 : 2;
-		//	entity.setFire(3);
-        return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
-    }
-
-    @Override
-    public void setTamed(boolean isTamed) {
-        super.setTamed(isTamed);
-
-        if (isTamed) {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0D);
-        } else {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-        }
-    }
-
-    /**
-     * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
-     */
-    @Override
-    public boolean interact(EntityPlayer player) {
-        ItemStack itemstack = player.inventory.getCurrentItem();
-
-        if (this.isTamed()) {
-            if (itemstack != null) {
-                if (itemstack.getItem() instanceof ItemFood) {
-                    ItemFood itemfood = (ItemFood)itemstack.getItem();
-                    if (!player.capabilities.isCreativeMode) {
-                         --itemstack.stackSize;
-                    }
-                    this.heal((float)itemfood.func_150905_g(itemstack));
-                    if (itemstack.stackSize <= 0) {
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-                    }
-                    return true;
-                }
-            }
-        }
-        // Tame the dragon with gunpowder
-        else if (itemstack != null && itemstack.getItem() == Items.gunpowder) {
-            if (!player.capabilities.isCreativeMode) {
-                --itemstack.stackSize;
-            }
-            if (itemstack.stackSize <= 0) {
-                player.inventory.setInventorySlotContents(player.inventory.currentItem, (ItemStack)null);
-            }
-
-            if (!this.worldObj.isRemote) {
-                if (this.rand.nextInt(2) == 0) {
-                    this.setTamed(true);
-                    this.setPathToEntity((PathEntity)null);
-                    this.setAttackTarget((EntityLivingBase)null);
-//                    this.aiSit.setSitting(true);
-                    this.setHealth(25.0F);
-                    this.func_152115_b(player.getUniqueID().toString());
-                    this.playTameEffect(true);
-                    this.worldObj.setEntityState(this, (byte)7);
-                }
-                else {
-                    this.playTameEffect(false);
-                    this.worldObj.setEntityState(this, (byte)6);
-                }
-            }
-            return true;
-        }
-        else {
-			player.addChatMessage(new ChatComponentText("Tame the dragon with gunpowder"));
-        }
-        return super.interact(player);
-    }
-
-    // I think the following two functions need to be present to remember its owner:
-    
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
-    public void writeEntityToNBT(NBTTagCompound p_70014_1_) {
-        super.writeEntityToNBT(p_70014_1_);
-    }
-
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
-    public void readEntityFromNBT(NBTTagCompound p_70037_1_) {
-        super.readEntityFromNBT(p_70037_1_);
     }
 }

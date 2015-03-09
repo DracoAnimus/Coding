@@ -4,21 +4,16 @@ import org.lwjgl.opengl.GL11;
 
 //import sanandreasp.core.manpack.helpers.client.ItemRenderHelper;
 
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-
 import net.minecraftforge.client.IItemRenderer;
-
+import net.wildbill22.draco.render.item.ItemRenderHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-
 @SideOnly(Side.CLIENT)
-public class CrossbowRender
-    implements IItemRenderer
-
-
-{
+public class CrossbowRender implements IItemRenderer {
     @Override
     public boolean handleRenderType(ItemStack item, ItemRenderType type) {
         return type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON;

@@ -8,16 +8,17 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemDragonScales extends ModItems {
+	public static final String name = "dragonScales";
 
-	public ItemDragonScales(String unlocalizedname, String texturename) {
-		super(unlocalizedname, texturename);
+	public ItemDragonScales() {
+		super(name, name);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: TBD");
-		list.add("Ability: ???");
+		list.add("Description: Dragon Scales");
+		list.add("Ability: Dropped when a dragon is killed.");
 	}
 }

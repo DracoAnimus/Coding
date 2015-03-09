@@ -19,11 +19,11 @@ import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemCrossbow extends ItemBow
-{
+public class ItemCrossbow extends ItemBow {
+	public static final String name = "crossbow";
     public static final String[] bowPullIconNameArray = new String[] {"1", "2", "3"};
     private IIcon[] iconArray;
-    public ItemCrossbow(String name)
+    public ItemCrossbow()
     {
     	super();
 		this.setCreativeTab(Creative_Tab.TabDraco_Animus);
@@ -31,13 +31,7 @@ public class ItemCrossbow extends ItemBow
     	this.maxStackSize = 1;
         this.setMaxDamage(600);
     }
-        
-
-        
-        
-    
-    
-
+ 
     /**
      * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
      */
@@ -167,16 +161,15 @@ public class ItemCrossbow extends ItemBow
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister par1IconRegister)
     {
-    this.itemIcon = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "crossbow");
-    this.iconArray = new IIcon[bowPullIconNameArray.length];
-
-    for (int var2 = 0; var2 < this.iconArray.length; ++var2)
-    {
-    this.iconArray[var2] = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "crossbow" + bowPullIconNameArray[var2]);
-    }
+	    this.itemIcon = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "crossbow");
+	    this.iconArray = new IIcon[bowPullIconNameArray.length];
+	
+	    for (int var2 = 0; var2 < this.iconArray.length; ++var2)
+	    {
+	    	this.iconArray[var2] = par1IconRegister.registerIcon(REFERENCE.Texture_Path + "crossbow" + bowPullIconNameArray[var2]);
+	    }
     }
     
-
     /**
      * used to cycle through icons based on their used duration, i.e. for the bow
      */
@@ -192,7 +185,6 @@ public class ItemCrossbow extends ItemBow
             return iconArray[0];
         } else {
             return itemIcon;
+        }
     }
 }
-}
-

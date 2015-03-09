@@ -3,22 +3,18 @@ package net.wildbill22.draco.entities.hostile;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChunkCoordinates;
@@ -34,6 +30,7 @@ import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityGuard extends EntityMob{
 	private boolean isLookingForHome;
+
 	public enum GuardType {
 	    GUARD(0, ":textures/models/guardTexture.png"),
 	    KNIGHT(1, ":textures/models/knightTexture.png");
@@ -88,8 +85,6 @@ public class EntityGuard extends EntityMob{
 		
 		// Default to Guard
 		type = EntityGuard.GuardType.GUARD;
-		
-
 	}
 	
 	public void setGuardTypePerBiome(World world){
@@ -133,36 +128,10 @@ public class EntityGuard extends EntityMob{
 		}
 	}
 	
-	@Override
-	public void onLivingUpdate(){
-		super.onLivingUpdate();
-		// TODO: Add code to attack and fly, something like this:
-//		if (this.angerLevel <= 0)
-//		{
-//		//BAT MOVEMENT
-//		}
-//		else
-//		{
-//		if (this.angerLevel != 0)
-//		{
-//		// BLAZE MOVEMENT
-//		}
-//		}
-		
-//		if (this.attackCounter == 20)
-//		{
-//		this.worldObj.playAuxSFXAtEntity(null, 1008, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
-//		EntityLargeFireball localEntityLargeFireball = new EntityLargeFireball(this.worldObj, this, d6, d7, d8);
-//		localEntityLargeFireball.field_92057_e = this.explosionStrength;
-//		double d9 = 4.0D;
-//		Vec3 localVec3 = getLook(1.0F);
-//		localEntityLargeFireball.posX = (this.posX + localVec3.xCoord * d9);
-//		localEntityLargeFireball.posY = (this.posY + this.height / 2.0F + 0.5D);
-//		localEntityLargeFireball.posZ = (this.posZ + localVec3.zCoord * d9);
-//		this.worldObj.spawnEntityInWorld(localEntityLargeFireball);
-//		this.attackCounter = -40;
-//		}
-	}
+//	@Override
+//	public void onLivingUpdate(){
+//		super.onLivingUpdate();
+//	}
 	
 	public boolean okToSpawnNearVillage(int distanceToLook) {
 		World world = this.worldObj;
@@ -285,23 +254,23 @@ public class EntityGuard extends EntityMob{
 		}		
 	}
 	
-//    @Override
-//    protected String getLivingSound()
-//    {
-//    	return "mob.villager.idle";
-//    }
+    @Override
+    protected String getLivingSound()
+    {
+    	return "mob.villager.idle";
+    }
     
-//    @Override
-//    protected String getHurtSound()
-//    {
-//    	return "mob.villager.hit";
-//    }
+    @Override
+    protected String getHurtSound()
+    {
+    	return "mob.villager.hit";
+    }
     
-//    @Override
-//    protected String getDeathSound()
-//    {
-//    	return "mob.villager.death";
-//    }
+    @Override
+    protected String getDeathSound()
+    {
+    	return "mob.villager.death";
+    }
     
 	/**
 	 * Returns the home village if the guard has a home

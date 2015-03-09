@@ -1,4 +1,4 @@
-package net.wildbill22.draco.render;
+package net.wildbill22.draco.render.item;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;

@@ -178,6 +178,32 @@ public class EntityCreeperDragon extends EntityTameable {
 	{
 		super.onLivingUpdate();
 		checkForCreepers();
+		// TODO: Add code to attack and fly, something like this:
+//		if (this.angerLevel <= 0)
+//		{
+//		//BAT MOVEMENT
+//		}
+//		else
+//		{
+//		if (this.angerLevel != 0)
+//		{
+//		// BLAZE MOVEMENT
+//		}
+//		}
+		
+//		if (this.attackCounter == 20)
+//		{
+//		this.worldObj.playAuxSFXAtEntity(null, 1008, (int)this.posX, (int)this.posY, (int)this.posZ, 0);
+//		EntityLargeFireball localEntityLargeFireball = new EntityLargeFireball(this.worldObj, this, d6, d7, d8);
+//		localEntityLargeFireball.field_92057_e = this.explosionStrength;
+//		double d9 = 4.0D;
+//		Vec3 localVec3 = getLook(1.0F);
+//		localEntityLargeFireball.posX = (this.posX + localVec3.xCoord * d9);
+//		localEntityLargeFireball.posY = (this.posY + this.height / 2.0F + 0.5D);
+//		localEntityLargeFireball.posZ = (this.posZ + localVec3.zCoord * d9);
+//		this.worldObj.spawnEntityInWorld(localEntityLargeFireball);
+//		this.attackCounter = -40;
+//		}
 	}
 	
     @Override
