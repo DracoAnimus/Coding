@@ -1,11 +1,14 @@
 package net.wildbill22.draco.proxies;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderArrow;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.blocks.ModBlocks;
+import net.wildbill22.draco.client.gui.DragonHudOverlay;
 import net.wildbill22.draco.entities.EntityMyExplosive;
 import net.wildbill22.draco.entities.EntityMyFireball;
 import net.wildbill22.draco.entities.EntitySpear;
@@ -13,6 +16,7 @@ import net.wildbill22.draco.entities.dragons.*;
 import net.wildbill22.draco.entities.hostile.*;
 import net.wildbill22.draco.items.*;
 import net.wildbill22.draco.items.weapons.ModWeapons;
+import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.models.*;
 import net.wildbill22.draco.render.*;
 import net.wildbill22.draco.render.item.ItemRendererTemporaryHoard;
@@ -56,7 +60,15 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerTileEntitySpecialRenderer(){		
 	}
-	
+
+
 	@Override
 	public void registerSounds() {}
+	
+	@Override
+	public void registerSubscriptions() {
+		super.registerSubscriptions();
+		LogHelper.info("ClientProxy: Registering subscriptions");
+		MinecraftForge.EVENT_BUS.register(new DragonHudOverlay(Minecraft.getMinecraft()));
+	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.handlers.DragonPlayerEventHandler;
 import net.wildbill22.draco.handlers.EntityGuardEventHandler;
+import net.wildbill22.draco.lib.LogHelper;
 
 /**
  * 
@@ -43,7 +44,8 @@ public class CommonProxy {
 	public void registerSounds() {}
 	
 	public void registerSubscriptions() {
+		LogHelper.info("CommonProxy: Registering subscriptions");
 		MinecraftForge.EVENT_BUS.register(new DragonPlayerEventHandler());    // For player
-    	MinecraftForge.EVENT_BUS.register(new EntityGuardEventHandler()); // For Guards 
+    	MinecraftForge.EVENT_BUS.register(new EntityGuardEventHandler());     // For Guards 
 	}
 }

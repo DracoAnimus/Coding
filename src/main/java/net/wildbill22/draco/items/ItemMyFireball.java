@@ -12,6 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemMyFireball extends ModItems 
 {	
 	public static final float fireballDamage = 6.0F;
+	public static final int fireSeconds = 5;
 	public static final String name = "fireball";
 	
 	public ItemMyFireball() {

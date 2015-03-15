@@ -11,6 +11,7 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
+import net.wildbill22.draco.network.UpdateDragonPlayerPacket;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -21,7 +22,10 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 	
 /** 
  * @author WILLIAM
@@ -33,6 +37,8 @@ public class Core {
 
 	@SidedProxy(clientSide = "net.wildbill22.draco.proxies.ClientProxy", serverSide = "net.wildbill22.draco.proxies.CommonProxy")
 	public static CommonProxy dracoProxy;
+
+	public static SimpleNetworkWrapper modChannel;
 
 	@Instance(REFERENCE.MODID)
 	public static Core instance;
@@ -48,6 +54,7 @@ public class Core {
 		ModWeapons.preInit();
 		dracoProxy.registerRenderer();
 		VillageBiomes.preInit(event);
+		setupNetwork();
 	}
 
 	@EventHandler
@@ -67,5 +74,13 @@ public class Core {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		VillageBiomes.postInit(event);
+	}
+	
+	// For future use:
+	private void setupNetwork() {
+		modChannel = NetworkRegistry.INSTANCE.newSimpleChannel(REFERENCE.MODID);
+
+		int id = 0;
+		modChannel.registerMessage(UpdateDragonPlayerPacket.Handler.class, UpdateDragonPlayerPacket.class, id++, Side.SERVER);
 	}
 }

@@ -235,7 +235,7 @@ public class EntityGuard extends EntityMob{
 	@Override
 	protected void dropFewItems(boolean par1, int par2)
 	{
-		int var = this.rand.nextInt(5);
+		int var = this.rand.nextInt(4);
 		if (var == 0)
 		{
 			this.dropItem(Items.iron_ingot, 1);
@@ -247,7 +247,7 @@ public class EntityGuard extends EntityMob{
 			this.dropItem(ModItems.spear, 1);
 		}
 		
-		int var2 = this.rand.nextInt(25);
+		int var2 = this.rand.nextInt(5);
 		if (var2 == 0)
 		{
 			this.dropItem(ModItems.goldCoin, 1);

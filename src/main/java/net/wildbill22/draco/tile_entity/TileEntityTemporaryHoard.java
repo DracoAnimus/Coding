@@ -1,6 +1,8 @@
 package net.wildbill22.draco.tile_entity;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -8,6 +10,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ChatComponentText;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.blocks.TemporaryHoard;
+import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
@@ -43,7 +46,8 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	    	}
 	    	this.markDirty();
     	}
-    	else {    		
+    	else {
+    		// Drop stack?
     		// TODO: Add chat message as to why it won't add
 //    		this.getWorldObj().playerEntities;
     		// Find closest?

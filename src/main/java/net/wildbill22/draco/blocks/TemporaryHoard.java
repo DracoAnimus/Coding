@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
@@ -42,76 +44,55 @@ public class TemporaryHoard extends BlockChest{
 	/**
      * Called when the block is placed in the world.
      */
+    // Added saving chest location
 	@Override
-    public void onBlockPlacedBy(World world, int xPos, int yPos, int zPos, EntityLivingBase player, ItemStack chest)
-    {
+    public void onBlockPlacedBy(World world, int xPos, int yPos, int zPos, EntityLivingBase entityLB, ItemStack chest) {
         Block block = world.getBlock(xPos, yPos, zPos - 1);
         Block block1 = world.getBlock(xPos, yPos, zPos + 1);
         Block block2 = world.getBlock(xPos - 1, yPos, zPos);
         Block block3 = world.getBlock(xPos + 1, yPos, zPos);
+        
         byte b0 = 0;
-        int l = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
-
-        if (l == 0)
-        {
+        int l = MathHelper.floor_double((double)(entityLB.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+        if (l == 0) {
             b0 = 2;
         }
-
-        if (l == 1)
-        {
+        if (l == 1) {
             b0 = 5;
         }
-
-        if (l == 2)
-        {
+        if (l == 2) {
             b0 = 3;
         }
-
-        if (l == 3)
-        {
+        if (l == 3) {
             b0 = 4;
         }
 
         // Checks for regular chest, makes it play nice with a regular chest, but a regular chest doesn't have this, so it has problems
-        if (!(block instanceof BlockChest || block1 instanceof BlockChest || block2 instanceof BlockChest || block3 instanceof BlockChest))
-        {	                	
-	        if (block != this && block1 != this && block2 != this && block3 != this)
-	        {
+        if (!(block instanceof BlockChest || block1 instanceof BlockChest || block2 instanceof BlockChest || block3 instanceof BlockChest)) {	                	
+	        if (block != this && block1 != this && block2 != this && block3 != this) {
 	            world.setBlockMetadataWithNotify(xPos, yPos, zPos, b0, 3);
 	        }
-	        else
-	        {
-	            if ((block == this || block1 == this) && (b0 == 4 || b0 == 5))
-	            {
-	                if (block == this)
-	                {
+	        else {
+	            if ((block == this || block1 == this) && (b0 == 4 || b0 == 5)) {
+	                if (block == this) {
 	                    world.setBlockMetadataWithNotify(xPos, yPos, zPos - 1, b0, 3);
 	                }
-	                else
-	                {
+	                else {
 	                    world.setBlockMetadataWithNotify(xPos, yPos, zPos + 1, b0, 3);
 	                }
-	
 	                world.setBlockMetadataWithNotify(xPos, yPos, zPos, b0, 3);
 	            }
-	
-	            if ((block2 == this || block3 == this) && (b0 == 2 || b0 == 3))
-	            {
-	                if (block2 == this)
-	                {
+	            if ((block2 == this || block3 == this) && (b0 == 2 || b0 == 3)) {
+	                if (block2 == this) {
 	                    world.setBlockMetadataWithNotify(xPos - 1, yPos, zPos, b0, 3);
 	                }
-	                else
-	                {
+	                else {
 	                    world.setBlockMetadataWithNotify(xPos + 1, yPos, zPos, b0, 3);
 	                }
-	
 	                world.setBlockMetadataWithNotify(xPos, yPos, zPos, b0, 3);
 	            }
 	        }
-	
-	        if (chest.hasDisplayName())
-	        {
+	        if (chest.hasDisplayName()) {
 	            ((TileEntityTemporaryHoard)world.getTileEntity(xPos, yPos, zPos)).func_145976_a(chest.getDisplayName());
 	        }
         }
@@ -173,9 +154,9 @@ public class TemporaryHoard extends BlockChest{
     }
 
 	@Override
-    public void breakBlock(World p_149749_1_, int p_149749_2_, int p_149749_3_, int p_149749_4_, Block p_149749_5_, int p_149749_6_)
+    public void breakBlock(World world, int xPos, int yPos, int zPos, Block block, int p_149749_6_)
     {
-        TileEntityTemporaryHoard tileentitychest = (TileEntityTemporaryHoard)p_149749_1_.getTileEntity(p_149749_2_, p_149749_3_, p_149749_4_);
+        TileEntityTemporaryHoard tileentitychest = (TileEntityTemporaryHoard)world.getTileEntity(xPos, yPos, zPos);
 
         if (tileentitychest != null)
         {
@@ -189,7 +170,7 @@ public class TemporaryHoard extends BlockChest{
                     float f1 = this.rand.nextFloat() * 0.8F + 0.1F;
                     EntityItem entityitem;
 
-                    for (float f2 = this.rand.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; p_149749_1_.spawnEntityInWorld(entityitem))
+                    for (float f2 = this.rand.nextFloat() * 0.8F + 0.1F; itemstack.stackSize > 0; world.spawnEntityInWorld(entityitem))
                     {
                         int j1 = this.rand.nextInt(21) + 10;
 
@@ -199,7 +180,7 @@ public class TemporaryHoard extends BlockChest{
                         }
 
                         itemstack.stackSize -= j1;
-                        entityitem = new EntityItem(p_149749_1_, (double)((float)p_149749_2_ + f), (double)((float)p_149749_3_ + f1), (double)((float)p_149749_4_ + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
+                        entityitem = new EntityItem(world, (double)((float)xPos + f), (double)((float)yPos + f1), (double)((float)zPos + f2), new ItemStack(itemstack.getItem(), j1, itemstack.getItemDamage()));
                         float f3 = 0.05F;
                         entityitem.motionX = (double)((float)this.rand.nextGaussian() * f3);
                         entityitem.motionY = (double)((float)this.rand.nextGaussian() * f3 + 0.2F);
@@ -212,11 +193,9 @@ public class TemporaryHoard extends BlockChest{
                     }
                 }
             }
-
-            p_149749_1_.func_147453_f(p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_);
+            world.func_147453_f(xPos, yPos, zPos, block);
         }
-
-        super.breakBlock(p_149749_1_, p_149749_2_, p_149749_3_, p_149749_4_, p_149749_5_, p_149749_6_);
+        super.breakBlock(world, xPos, yPos, zPos, block, p_149749_6_);        
     }
 
 	@Override

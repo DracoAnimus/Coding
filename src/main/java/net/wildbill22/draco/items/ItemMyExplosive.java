@@ -15,8 +15,6 @@ public class ItemMyExplosive extends ModItems
 	public static final String name = "explosiveFireball";
 	
 	public ItemMyExplosive() {
-//		super(name, name);
-
 		super(name);
 		this.setTextureName("minecraft:fireball"); // Until we get a texture
 		

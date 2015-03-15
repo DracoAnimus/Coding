@@ -6,10 +6,17 @@ package net.wildbill22.draco.lib;
  */
 public final class BALANCE {
 	public static class LEVELING {
-		@DefaultInt(value = 20, comment = "Amount of coins needed for for each player dragon level")
+		@DefaultInt(value = 5, comment = "Amount of coins needed for for each player dragon level")
 		public static int TEMPORARY_HOARD_COINS_TO_NEXT_LEVEL;
 	}
+	public static class DROPS {
+		@DefaultInt(value = 70, comment = "Chance of finding diamond armor items in village chests.")
+		public static int VILLAGE_BLACKSMITH_DIAMOND_ARMOR;
+		@DefaultInt(value = 80, comment = "Chance of finding gold coins in village chests.")
+		public static int VILLAGE_BLACKSMITH_GOLD_COINS;
+	}
 	public static class MOBPROP {
+		// Properties for guards
 		@DefaultDouble(value = 35.0D, comment = "Maximum health")
 		public static double GUARD_MAX_HEALTH;
 		@DefaultDouble(value = 5.0D, comment = "Attack damage")
@@ -22,6 +29,37 @@ public final class BALANCE {
 		public static int GUARD_MAX_PER_VILLAGE;
 		@DefaultDouble(value = 0.20F, comment = "Knight movement speed")
 		public static double KNIGHT_MOVEMENT_SPEED;
+		// Properties for Player Dragon
+		@DefaultDouble(20.0D)
+		public static double DRAGON_MAX_HEALTH;
+		@DefaultDouble(5.0D)
+		public static double DRAGON_ATTACK_DAMAGE;
+	}
+
+	/**
+	 * Class to store all constants related to the player modifiers See {@link:
+	 * entity.player.PlayerModifiers#applyModifiers(int, EntityPlayer)} for impact
+	 *
+	 */
+	public static class DP_MODIFIERS {
+		@DefaultDouble(1.0D)
+		public static double HEALTH_MAX_MOD;
+		@DefaultInt(20)
+		public static int HEALTH_LCAP = 20;
+		@DefaultDouble(0.5D)
+		public static double HEALTH_TYPE;
+		@DefaultDouble(1.0D)
+		public static double STRENGTH_MAX_MOD;
+		@DefaultInt(20)
+		public static int STRENGTH_LCAP;
+		@DefaultDouble(0.5D)
+		public static double STRENGTH_TYPE;
+		@DefaultDouble(0.3D)
+		public static double SPEED_MAX_MOD;
+		@DefaultInt(15)
+		public static int SPEED_LCAP;
+		@DefaultDouble(0.5D)
+		public static double SPEED_TYPE;
 	}
 	
 	// Mob behavior

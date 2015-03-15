@@ -1,11 +1,13 @@
 package net.wildbill22.draco.items;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.Creative_Tab;
+import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -36,7 +38,24 @@ public class ModItems extends Item {
 	}
 
 	public static void init() {
-		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(goldCoin), 1, 5, 50));
+		// Mod items
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(goldCoin), 1, 10, BALANCE.DROPS.VILLAGE_BLACKSMITH_GOLD_COINS));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(fireball), 1, 10, 60));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(explosiveFireball), 1, 10, 60));
+		
+		// Other useful stuff
+		
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(Items.diamond_boots), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(Items.diamond_chestplate), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(Items.diamond_helmet), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(Items.diamond_leggings), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 	}
 	
 	/**
