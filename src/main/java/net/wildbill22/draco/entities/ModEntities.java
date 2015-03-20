@@ -31,8 +31,9 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, "creeperDragon", ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityGuard.class, REFERENCE.ENTITY.GUARD_NAME, ++modEntityID, Core.instance, 64, 10, true);
+//        EntityRegistry.registerModEntity(EnityPlayerDragon.class, "playerDragons", ++modEntityID, Core.instance, 64, 10, true);
 	
-		// Projectiles?
+		// Projectiles
 		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityMyFireball.class, ItemMyFireball.name, ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityMyExplosive.class, ItemMyExplosive.name, ++modEntityID, Core.instance, 64, 10, true);
@@ -53,11 +54,15 @@ public class ModEntities {
 		 * Make sure these balance out; if not balanced, it could cause excess spawning/not spawning
 		 * at all, plus crashes.
 		 */
-		EntityRegistry.addSpawn(EntityCreeperDragon.class, 55, 1, 2, EnumCreatureType.creature, BiomeGenBase.plains, BiomeGenBase.forest, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, BiomeGenBase.roofedForest, BiomeGenBase.desert);
+		EntityRegistry.addSpawn(EntityCreeperDragon.class, BALANCE.MOBPROP.DRAGON_SPAWN_PROB, 1, 2, EnumCreatureType.creature, 
+				BiomeGenBase.plains, BiomeGenBase.forest, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, 
+				BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, 
+				BiomeGenBase.roofedForest, BiomeGenBase.desert);
 		// TODO: Needs to match all the village biomes somehow
-		EntityRegistry.addSpawn(EntityGuard.class, BALANCE.MOBPROP.GUARD_SPAWN_PROB, 1, 2, EnumCreatureType.creature, BiomeGenBase.plains, BiomeGenBase.forest, 
-				BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, BiomeGenBase.forestHills, BiomeGenBase.jungle, 
-				BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, BiomeGenBase.roofedForest, BiomeGenBase.desert);
+		EntityRegistry.addSpawn(EntityGuard.class, BALANCE.MOBPROP.GUARD_SPAWN_PROB, 1, 2, EnumCreatureType.creature, 
+				BiomeGenBase.plains, BiomeGenBase.forest, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, 
+				BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, 
+				BiomeGenBase.roofedForest, BiomeGenBase.desert, BiomeGenBase.mesa);
 	}
 	
     static int startEntityId = 300;
