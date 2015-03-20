@@ -5,10 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.player.DragonPlayer;
-import net.wildbill22.draco.items.ItemMyExplosive;
 import net.wildbill22.draco.items.ItemMyFireball;
 import net.wildbill22.draco.lib.LogHelper;
 

@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target({ ElementType.FIELD })
 public @interface DefaultDouble {
 	String comment() default "";
-
+	String name();
 	double value();
 }

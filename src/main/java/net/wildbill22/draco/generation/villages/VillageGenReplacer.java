@@ -50,15 +50,15 @@ public class VillageGenReplacer implements IEventListener {
 
 					if (type != null) {
 						type.setAccessible(true);
-						type.setInt(e.newGen, Configs.village_size);
+						type.setInt(e.newGen, Configs.VILLAGE.village_size);
 					}
 					if (density != null) {
 						density.setAccessible(true);
-						density.setInt(e.newGen, Configs.village_density);
+						density.setInt(e.newGen, Configs.VILLAGE.village_density);
 					}
 					if (minDist != null) {
 						minDist.setAccessible(true);
-						minDist.setInt(e.newGen, Configs.village_minDist);
+						minDist.setInt(e.newGen, Configs.VILLAGE.village_minDist);
 					}
 					LogHelper.info("VillageGenReplacer: Modified MapGenVillage fields.");
 				} catch (Exception exc) {

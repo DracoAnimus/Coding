@@ -1,5 +1,7 @@
 package net.wildbill22.draco.items.weapons;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,6 +33,15 @@ public class ItemLongBow extends ItemBow {
     	this.maxStackSize = 1;
         this.setMaxDamage(700);
     }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
+		list.add("Description: Long Bow.");
+		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
+		list.add("Ability: Can kill village enemies.");
+	}
         
     /**
      * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount

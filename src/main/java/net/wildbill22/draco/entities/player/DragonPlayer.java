@@ -6,18 +6,15 @@ import java.util.Iterator;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
-import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
-import net.wildbill22.draco.network.UpdateDragonPlayerPacket;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 
@@ -211,16 +208,10 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	}
 
 	private void calculateLevel() {
-		int level = getLevel();
-		if (hoardSize < BALANCE.LEVELING.TEMPORARY_HOARD_COINS_TO_NEXT_LEVEL * 2)
-			level = 1;
-		else {
-			level = (hoardSize - (2 * level)) / BALANCE.LEVELING.TEMPORARY_HOARD_COINS_TO_NEXT_LEVEL;
-		}
-		if (level > 9)
-			level = 9;
-		if (level < 1)
-			level = 1;
+		int coinEffect = hoardSize > BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL ? BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL : hoardSize; 
+		level = (int) Math.floor((Math.pow(coinEffect, BALANCE.LEVELING.LEVEL_MOD_TYPE) / 
+				Math.pow(BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL, BALANCE.LEVELING.LEVEL_MOD_TYPE)) * BALANCE.LEVELING.MAXIMUM_LEVEL);
+		level = level == 0 ? 1 : level;
 		setLevel(level);
         LogHelper.info("DragonPlayer calculateLevel: Player is level " + level + ".");
 	}

@@ -32,19 +32,13 @@ public class EntityGuard extends EntityMob{
 	private boolean isLookingForHome;
 
 	public enum GuardType {
-	    GUARD(0, ":textures/models/guardTexture.png"),
-	    KNIGHT(1, ":textures/models/knightTexture.png");
+	    GUARD(0),
+	    KNIGHT(1);
 		private final int type;
-		private final String guardResourceKey;
 	    
-	    private GuardType(int id, String textureName) {
+	    private GuardType(int id) {
 	        this.type = id;
-	        this.guardResourceKey = textureName;
 	    }
-
-		public String getGuardResourceKey() {
-			return guardResourceKey;
-		}
 
 		public int getType() {
 			return type;

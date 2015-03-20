@@ -23,6 +23,15 @@ entity.wildbill22_draco.guard.name=Guard
 
 #General
 itemGroup.Draco_Animus=Draco Animus
+category.wildbill22_draco.balance_dragon_player_properties=Dragon Player Properties
+category.wildbill22_draco.balance_dragon_player_properties.tooltip=Dragon Player Properties
+category.wildbill22_draco.mob_properties=Mob Properties
+category.wildbill22_draco.mob_properties.tooltip=Mob Properties
+category.wildbill22_draco.chest_items=Chest Items
+category.wildbill22_draco.chest_items.tooltip=Chest Items Probabilities
+category.wildbill22_draco.village=Village settings
+category.wildbill22_draco.village.tooltip=Village settings
 category.wildbill22_draco.balance=Balance settings
-category.wildbill22_draco.balance_level=Level up balance settings
 category.wildbill22_draco.balance.tooltip=Level up balance settings
+category.wildbill22_draco.balance_level=Level up balance settings
+category.wildbill22_draco.balance_level.tooltip=Level up balance settings

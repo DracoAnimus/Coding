@@ -34,6 +34,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.ai.EntityAIAvoidDragon;
 import net.wildbill22.draco.items.ModItems;
+import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 
 /**
@@ -50,9 +51,6 @@ public class EntityCreeperDragon extends EntityTameable {
 		this.setSize(1.8F, 1.9F);
         this.isImmuneToFire = true;
         this.experienceValue = 5;
-        // If this was the player, could have:
-        // player.capabilities.isFlying = true;
-        // player.capabilities.allowFlying = true;
 //		clearAITasks();
 		
 		// AI
@@ -106,14 +104,14 @@ public class EntityCreeperDragon extends EntityTameable {
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
         // 0.2 to 0.3 = very slow, 0.4 = slow, 0.5 to 0.6 = normal, 0.7 = fast, 0.8 to 0.9 = very fast,	1.0 = a blur
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(BALANCE.MOBPROP.DRAGON_MOVEMENT_SPEED);
 
 		// 10 is 5 hearts (player has 20, 10 hearts for comparison)
         if (this.isTamed()) {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0D);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(BALANCE.MOBPROP.DRAGON_MAX_HEALTH_TAMED);
         }
         else {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(BALANCE.MOBPROP.DRAGON_MAX_HEALTH_WILD);
         }
     }
 	
@@ -273,7 +271,7 @@ public class EntityCreeperDragon extends EntityTameable {
     @Override
     public boolean attackEntityAsMob(Entity entity) {
     	// Does 6 damage when tamed (wolves do 4), 2 when not
-        int i = this.isTamed() ? 6 : 2;
+        int i = this.isTamed() ? BALANCE.MOBPROP.DRAGON_ATTACK_DAMAGE_TAMED : BALANCE.MOBPROP.DRAGON_ATTACK_DAMAGE_WILD;
 		//	entity.setFire(3);
         return entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)i);
     }
@@ -283,9 +281,9 @@ public class EntityCreeperDragon extends EntityTameable {
         super.setTamed(isTamed);
 
         if (isTamed) {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(25.0D);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(BALANCE.MOBPROP.DRAGON_MAX_HEALTH_TAMED);
         } else {
-            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+            this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(BALANCE.MOBPROP.DRAGON_MAX_HEALTH_WILD);
         }
     }
 

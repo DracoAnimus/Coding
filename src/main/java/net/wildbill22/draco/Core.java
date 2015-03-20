@@ -65,7 +65,7 @@ public class Core {
 		dracoProxy.registerSounds();
 		dracoProxy.registerSubscriptions();
 		FMLCommonHandler.instance().bus().register(new Configs());
-		if (Configs.village_gen_enabled) {
+		if (Configs.VILLAGE.village_gen_enabled) {
 			LogHelper.info("Registering replacer for village generation.");
 			MinecraftForge.TERRAIN_GEN_BUS.register(new VillageGenReplacer());
 		}

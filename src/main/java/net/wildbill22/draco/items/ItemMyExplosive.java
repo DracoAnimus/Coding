@@ -16,8 +16,7 @@ public class ItemMyExplosive extends ModItems
 	
 	public ItemMyExplosive() {
 		super(name);
-		this.setTextureName("minecraft:fireball"); // Until we get a texture
-		
+		this.setTextureName("minecraft:fireball"); // Until we get a texture	
 		setMaxStackSize(64);
 	}
 	

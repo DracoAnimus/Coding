@@ -40,22 +40,24 @@ public class ModItems extends Item {
 	public static void init() {
 		// Mod items
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(goldCoin), 1, 10, BALANCE.DROPS.VILLAGE_BLACKSMITH_GOLD_COINS));
-		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(fireball), 1, 10, 60));
-		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(explosiveFireball), 1, 10, 60));
+				new ItemStack(goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
 		
 		// Other useful stuff
 		
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_boots), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+				new ItemStack(Items.diamond_boots), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_chestplate), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+				new ItemStack(Items.diamond_chestplate), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_helmet), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+				new ItemStack(Items.diamond_helmet), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_leggings), 1, 1, BALANCE.DROPS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+				new ItemStack(Items.diamond_leggings), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 	}
 	
 	/**

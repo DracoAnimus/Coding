@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
+import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.wildbill22.draco.items.weapons.ItemDragonSlayerSword;;
@@ -36,7 +37,8 @@ public class ModWeapons {
 	}
 
 	public static void init() {
-		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(dragonSlayerSword), 1, 1, 10));
+		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+				new ItemStack(dragonSlayerSword), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DRAGON_SLAYER));
 //		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(longSword), 1, 1, 10));
 //		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(battleAxe), 1, 1, 10));
 //		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(new ItemStack(mace), 1, 1, 10));

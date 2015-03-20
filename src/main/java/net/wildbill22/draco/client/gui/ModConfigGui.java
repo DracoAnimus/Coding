@@ -15,6 +15,99 @@ import cpw.mods.fml.client.config.IConfigElement;
 
 public class ModConfigGui extends GuiConfig {
 
+	// Creates the Entry to the DP_MODIFIERS Settings
+	public static class DPPropertiesEntry extends CategoryEntry {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private static List<IConfigElement> getConfigElements() {
+			List<IConfigElement> list = new ArrayList<IConfigElement>();
+			// Add all the settings from BALANCE.DP_MODIFIERS class
+			list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_BALANCE_DP_MODIFIERS)).getChildElements());
+			return list;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public DPPropertiesEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+			super(owningScreen, owningEntryList, prop);
+		}
+
+		// Build the list of settings from BALANCE.DP_MODIFIERS class
+		@Override
+		protected GuiScreen buildChildScreen() {
+			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_BALANCE_DP_MODIFIERS, 
+					false, false, REFERENCE.NAME + " Dragon Player Properties");
+		}
+	}
+
+	// Creates the Entry to the MOBPROP Settings
+	public static class MobPropertiesEntry extends CategoryEntry {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private static List<IConfigElement> getConfigElements() {
+			List<IConfigElement> list = new ArrayList<IConfigElement>();
+			// Add all the settings from BALANCE.MOBPROP class
+			list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_BALANCE_MOBPROP)).getChildElements());
+			return list;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public MobPropertiesEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+			super(owningScreen, owningEntryList, prop);
+		}
+
+		// Build the list of settings from BALANCE.MOBPROP class
+		@Override
+		protected GuiScreen buildChildScreen() {
+			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_BALANCE_MOBPROP, 
+					false, false, REFERENCE.NAME + " Mob Properties");
+		}
+	}
+
+	// Creates the Entry to the CHEST_ITEMS Settings
+	public static class ChestItemsEntry extends CategoryEntry {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private static List<IConfigElement> getConfigElements() {
+			List<IConfigElement> list = new ArrayList<IConfigElement>();
+			// Add all the settings from BALANCE.CHEST_ITEMS class
+			list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_CHEST_ITEMS)).getChildElements());
+			return list;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public ChestItemsEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+			super(owningScreen, owningEntryList, prop);
+		}
+
+		// Build the list of settings from BALANCE.CHEST_ITEMS class
+		@Override
+		protected GuiScreen buildChildScreen() {
+			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_CHEST_ITEMS, 
+					false, false, REFERENCE.NAME + " Village Blacksmith Chest Item Probablities");
+		}
+	}
+
+	// Creates the Entry to the Village Settings
+	public static class VillageEntry extends CategoryEntry {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private static List<IConfigElement> getConfigElements() {
+			List<IConfigElement> list = new ArrayList<IConfigElement>();
+			// Add all the settings from Configs.VILLAGE class
+			list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_VILLAGE)).getChildElements());
+			return list;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public VillageEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+			super(owningScreen, owningEntryList, prop);
+		}
+
+		// Build the list of settings from Configs.VILLAGE class
+		@Override
+		protected GuiScreen buildChildScreen() {
+			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_VILLAGE, 
+					false, false, REFERENCE.NAME + " Village Settings");
+		}
+	}
+
+	// Creates the Entry to the Balance Settings
 	public static class BalanceEntry extends CategoryEntry {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		private static List<IConfigElement> getConfigElements() {
@@ -33,10 +126,11 @@ public class ModConfigGui extends GuiConfig {
 		@Override
 		protected GuiScreen buildChildScreen() {
 			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_BALANCE, 
-					false, false, REFERENCE.NAME + " Balance");
+					false, false, REFERENCE.NAME + " Balance Settings");
 		}
 	}
 
+	// Creates 2nd level Draco Animus Balance screen
 	public static class BalanceLevelEntry extends CategoryEntry {
 
 		@SuppressWarnings("rawtypes")
@@ -60,11 +154,15 @@ public class ModConfigGui extends GuiConfig {
 		}
 	}
 
+	// This creates the Initial Screen (Draco Animus Config)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static List<IConfigElement> getConfigElements() {
 		List<IConfigElement> list = new ArrayList<IConfigElement>();
 		list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_GENERAL)).getChildElements());
-		list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_VILLAGE)).getChildElements());
+		list.add(new DummyConfigElement.DummyCategoryElement("balance_dragon_player_properties", "category.wildbill22_draco.balance_dragon_player_properties", DPPropertiesEntry.class));
+		list.add(new DummyConfigElement.DummyCategoryElement("mob_properties", "category.wildbill22_draco.mob_properties", MobPropertiesEntry.class));
+		list.add(new DummyConfigElement.DummyCategoryElement("chest_items", "category.wildbill22_draco.chest_items", ChestItemsEntry.class));
+		list.add(new DummyConfigElement.DummyCategoryElement("village", "category.wildbill22_draco.village", VillageEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("balance", "category.wildbill22_draco.balance", BalanceEntry.class));
 		return list;
 	}

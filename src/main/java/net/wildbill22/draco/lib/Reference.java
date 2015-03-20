@@ -4,7 +4,7 @@ public class REFERENCE
 {
 	public static final String MODID = "wildbill22_draco";
 	public static final String NAME = "Draco Animus";
-	public static final String VERSION = "v0.0.3";	
+	public static final String VERSION = "a0.0.10";	
 
 	public static final String Texture_Path = MODID + ":";
 	public static final String Unlocalized_Path = MODID + "_";

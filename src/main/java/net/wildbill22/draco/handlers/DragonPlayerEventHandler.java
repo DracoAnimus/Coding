@@ -25,6 +25,8 @@ import net.wildbill22.draco.render.RenderSilverDragon;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class DragonPlayerEventHandler {
+	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+
 	// Add DragonPlayer properties to player
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
@@ -60,6 +62,9 @@ public class DragonPlayerEventHandler {
             }
         }
     }
+	
+	// Some other events to maybe use, that are on FMLCommonHandler.bus(), so need a separate handler
+	// PlayerEvent.PlayerRespawnEvent - maybe to fix setting can fly after dying
 
     // Added to remove chest location
 	@SubscribeEvent
@@ -126,6 +131,7 @@ public class DragonPlayerEventHandler {
 		return false;
 	}
 	
+	// On MinecraftForge.EVENT_BUS
 //	@SubscribeEvent
 //	public void onEntityWorldSave(PlayerEvent.SaveToFile event) {
 //		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
@@ -153,8 +159,6 @@ public class DragonPlayerEventHandler {
 		}
 	}
 	
-	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
-
 	// Render player as dragon if a dragon
 	@SubscribeEvent
 	public void OnPlayerRender(RenderPlayerEvent.Pre event) {

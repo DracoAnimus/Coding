@@ -7,14 +7,15 @@ import net.minecraft.util.ResourceLocation;
 import net.wildbill22.draco.lib.REFERENCE;
 
 public class RenderSpear extends RenderSnowball {
+	private static ResourceLocation texture;
 
 	public RenderSpear(Item item) {
 		super(item);
-		// TODO Auto-generated constructor stub
+		texture = new ResourceLocation(REFERENCE.MODID + ":textures/items/spear.png");
 	}
 	
 	@Override
 	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-		return new ResourceLocation(REFERENCE.MODID + ":textures/items/spear.png");
+		return texture;
 	}
 }
