@@ -3,11 +3,14 @@ package net.wildbill22.draco.entities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ItemMyExplosive;
+import net.wildbill22.draco.items.ItemMyFireball;
 import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityMyExplosive extends EntityThrowable {
@@ -77,6 +80,17 @@ public class EntityMyExplosive extends EntityThrowable {
 			explosionSize = ItemMyExplosive.explosionSize * ( 1 + DragonPlayer.get(player).getLevel() / 5);
 		else
 			explosionSize = ItemMyExplosive.explosionSize;
-		this.worldObj.newExplosion(this, movObjPos.blockX, movObjPos.blockY, movObjPos.blockZ, explosionSize, true, true);
+		Explosion explosion = this.worldObj.newExplosion(this, movObjPos.blockX, movObjPos.blockY, movObjPos.blockZ, explosionSize, true, true);
+		if (movObjPos.entityHit != null) {
+			movObjPos.entityHit.attackEntityFrom(DamageSource.setExplosionSource(explosion), explosionSize);
+			if (!movObjPos.entityHit.isImmuneToFire()) {
+				int fireSeconds;
+				if (player != null)
+					fireSeconds = ItemMyFireball.fireSeconds * (1 + DragonPlayer.get(player).getLevel() / 5);
+				else
+					fireSeconds = ItemMyFireball.fireSeconds;
+				movObjPos.entityHit.setFire(fireSeconds);
+			}
+		}
 	}
 }
