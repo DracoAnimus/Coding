@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.wildbill22.draco.Core;
+import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
@@ -28,11 +29,11 @@ public class ModEntities {
 		registerEntityEgg(EntitySilverDragon.class, 0xd8bb9d, 0xa73c1a);
 		
 		// Overworld mod entities 
-		EntityRegistry.registerModEntity(EntityCreeperDragon.class, "creeperDragon", ++modEntityID, Core.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityGuard.class, REFERENCE.ENTITY.GUARD_NAME, ++modEntityID, Core.instance, 64, 10, true);
-//        EntityRegistry.registerModEntity(EnityPlayerDragon.class, "playerDragons", ++modEntityID, Core.instance, 64, 10, true);
-	
+		EntityRegistry.registerModEntity(EntityCreeperDragon.class, "creeperDragon", ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityGuard.class, REFERENCE.ENTITY.GUARD_NAME, ++modEntityID, Core.instance, 80, 1, true);
+    	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 1, true);
+
 		// Projectiles
 		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityMyFireball.class, ItemMyFireball.name, ++modEntityID, Core.instance, 64, 10, true);
@@ -41,7 +42,7 @@ public class ModEntities {
 		addMobSpawns();
 	}
 
-	public static void addMobSpawns() {
+	private static void addMobSpawns() {
 		//Overworld
 		/**
 		 * Weighted Probability info:

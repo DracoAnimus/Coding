@@ -9,6 +9,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.client.gui.DragonHudOverlay;
+import net.wildbill22.draco.client.renders.RenderMCSilverDragon;
+import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.EntityMyExplosive;
 import net.wildbill22.draco.entities.EntityMyFireball;
 import net.wildbill22.draco.entities.EntitySpear;
@@ -39,6 +41,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntitySilverDragon.class, 
 				new RenderSilverDragon(new ModelSilverDragon(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGuard.class,	new RenderGuard(new ModelBiped(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMCSilverDragon.class, new RenderMCSilverDragon());
 		
 		// Throwable entities
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, new RenderSpear(ModItems.spear));

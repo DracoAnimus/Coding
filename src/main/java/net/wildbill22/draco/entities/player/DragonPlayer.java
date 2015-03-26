@@ -12,6 +12,8 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.wildbill22.draco.blocks.TemporaryHoard;
+import net.wildbill22.draco.common.entities.dragons.EntityMCDragon;
+import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
@@ -20,24 +22,46 @@ import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 
 public class DragonPlayer implements IExtendedEntityProperties {
 	public static final String EXT_PROP_NAME = "DragonPlayer";
-	public static final int LEVEL_WATCHER = 20;
-	
+	public static final int LEVEL_WATCHER = 20;	
 	private final EntityPlayer player;
+	private EntityMCDragon dragon =  null;
+	private World world;
+
+	public EntityMCDragon getDragon() {
+		if (dragon == null) {			
+			dragon = EntityMCDragon.EntityMCDragonFactory(dragonName, world);
+			dragon.setPlayer(player);
+		}
+		return dragon;
+	}
 	
 	// The extended player properties:
 	private boolean isDragon;
 	public boolean wasFlyingOnExit;
 	private int hoardSize;
 	private int level;        // current level, as determined by several factors
+
+	private String dragonName;
+	public String getDragonName() {
+		return dragonName;
+	}
+
+	public void setDragonName(String dragonName) {
+		if (dragonName != null && !dragonName.isEmpty())
+			this.dragonName = dragonName;
+	}
+
 	private ArrayList<NBTCoordinates> hoardList;
 	
-	public DragonPlayer(EntityPlayer player) {
+	public DragonPlayer(EntityPlayer player, World world) {
 		// Initialize some stuff
 		this.player = player;
 		this.hoardList = new ArrayList<NBTCoordinates>();
 		this.level = 1;
 		this.player.getDataWatcher().addObject(LEVEL_WATCHER, this.level);
 		this.isDragon = true;
+		this.dragonName = EntityMCSilverDragon.name;
+		this.world = world;
 		
 		// Configure some stuff that needs defaults (don't set anything that will be loaded)
 		this.setDragon(true); // Will add a way to change this, but for now, always a dragon
@@ -71,8 +95,8 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	 * 
 	 * @param player
 	 */
-	public static final void register(EntityPlayer player) {
-		player.registerExtendedProperties(DragonPlayer.EXT_PROP_NAME, new DragonPlayer(player));
+	public static final void register(EntityPlayer player, World world) {
+		player.registerExtendedProperties(DragonPlayer.EXT_PROP_NAME, new DragonPlayer(player, world));
 	}
 
 	/**
@@ -92,6 +116,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		properties.setBoolean("wasFlyingOnExit", this.getPlayer().capabilities.isFlying);
 		properties.setInteger("hoardSize", getHoardSize());
 		properties.setInteger("level", getLevel());
+		properties.setString("dragonName", getDragonName());
 
         // Hoard Locations
 		int size = hoardList.size();
@@ -109,6 +134,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 
 		// Log some settings
         LogHelper.info("DragonPlayer save: Player is " + (isDragon ? "a" : "not a") + " dragon");
+        LogHelper.info("DragonPlayer save: Player is a " + dragonName + ".");
         LogHelper.info("DragonPlayer save: Player was " + (this.getPlayer().capabilities.isFlying ? "" : "not ") + "flying");
         LogHelper.info("DragonPlayer save: Player has " + getHoardSize() + " coins.");
         LogHelper.info("DragonPlayer save: Player has " + writeIndex + " hoards.");
@@ -125,6 +151,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
         this.wasFlyingOnExit = properties.getBoolean("wasFlyingOnExit");
         setHoardSize(properties.getInteger("hoardSize"));
         setLevel(properties.getInteger("level"));
+        setDragonName(properties.getString("dragonName"));
 
         // Hoard Locations
         hoardList.clear();
@@ -142,6 +169,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 
         // Log some settings
         LogHelper.info("DragonPlayer load: Player is " + (isDragon ? "a" : "not a") + " dragon");
+        LogHelper.info("DragonPlayer load: Player is a " + dragonName + ".");
         LogHelper.info("DragonPlayer load: Player was " + (wasFlyingOnExit ? "" : "not ") + "flying");   
         LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
         LogHelper.info("DragonPlayer load: Player has " + hoardList.size() + " hoards.");
@@ -233,7 +261,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		this.level = level;
 		PlayerModifiers.applyModifiers(level, player);
 	}
-
+	
 //	public void sync(){
 //		if(!player.worldObj.isRemote){
 //	        LogHelper.info("DragonPlayer sync: About to send player level of " + level + ".");

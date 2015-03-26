@@ -7,6 +7,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -17,6 +18,9 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.wildbill22.draco.blocks.TemporaryHoard;
+import net.wildbill22.draco.client.renders.RenderMCSilverDragon;
+import net.wildbill22.draco.common.entities.dragons.EntityMCDragon;
+import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
@@ -25,13 +29,14 @@ import net.wildbill22.draco.render.RenderSilverDragon;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class DragonPlayerEventHandler {
-	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+//	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+	Render renderPlayerDragon = new RenderMCSilverDragon();
 
 	// Add DragonPlayer properties to player
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && DragonPlayer.get((EntityPlayer) event.entity) == null) {
-			DragonPlayer.register((EntityPlayer) event.entity);
+			DragonPlayer.register((EntityPlayer) event.entity, event.entity.worldObj);
 			LogHelper.info("DragonPlayerEventHandler: Registered a new DragonPlayer");
 		}
 	}

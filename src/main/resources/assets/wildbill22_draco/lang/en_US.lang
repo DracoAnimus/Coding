@@ -20,6 +20,8 @@ tile.temporaryHoard.name=Temporary Hoard
 entity.wildbill22_draco.creeperDragon.name=Crepitus Draco
 entity.wildbill22_draco.silverDragon.name=Argentum Draco
 entity.wildbill22_draco.guard.name=Guard
+entity.wildbill22_draco.hornedGoat.name=Horned Goat
+entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
 
 #General
 itemGroup.Draco_Animus=Draco Animus
