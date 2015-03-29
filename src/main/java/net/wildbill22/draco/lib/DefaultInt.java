@@ -11,4 +11,6 @@ public @interface DefaultInt {
 	String comment() default "";
 	String name();
 	int value();
+	int minValue();
+	int maxValue();
 }
