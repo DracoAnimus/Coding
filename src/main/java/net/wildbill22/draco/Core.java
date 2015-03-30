@@ -61,6 +61,8 @@ public class Core {
 	public static void Init(FMLInitializationEvent event) {
 		ModCraftingRecipes.init();		
 		ModWeapons.init();
+		ModItems.init();
+		ModBlocks.init();
 		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 100);
 		dracoProxy.registerSounds();
 		dracoProxy.registerSubscriptions();

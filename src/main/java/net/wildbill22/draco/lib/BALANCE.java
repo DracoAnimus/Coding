@@ -17,13 +17,13 @@ public final class BALANCE {
 		public static double LEVEL_MOD_TYPE;
 	}
 	public static class CHEST_ITEMS {
-		@DefaultInt(value = 70, minValue = 0, maxValue = 100, name = "Diamond Armor", 
+		@DefaultInt(value = 30, minValue = 0, maxValue = 100, name = "Diamond Armor", 
 				comment = "Chance of finding diamond armor items in village chests.")
 		public static int VILLAGE_BLACKSMITH_DIAMOND_ARMOR;
 		@DefaultInt(value = 80, minValue = 0, maxValue = 100, name = "Gold Coins", 
 				comment = "Chance of finding gold coins in village chests.")
 		public static int VILLAGE_BLACKSMITH_GOLD_COINS;
-		@DefaultInt(value = 60, minValue = 0, maxValue = 100, name = "Fireballs", 
+		@DefaultInt(value = 50, minValue = 0, maxValue = 100, name = "Fireballs", 
 				comment = "Chance of finding fireballs in village chests.")
 		public static int VILLAGE_BLACKSMITH_FIREBALLS;
 		@DefaultInt(value = 10, minValue = 0, maxValue = 100, name = "Dragon Slayer Sword", 
@@ -99,7 +99,7 @@ public final class BALANCE {
 		@DefaultDouble(value = 0.5D, minValue = 0.3D, maxValue = 1.0D, name = "Strength Modifier Type", 
 				comment = "0.5 for square root, 1 for linear")
 		public static double STRENGTH_TYPE;
-		@DefaultDouble(value = 0.3D, minValue = 0.3D, maxValue = 1.0D, name = "Speed multiplier", 
+		@DefaultDouble(value = 0.3D, minValue = 0.2D, maxValue = 1.0D, name = "Speed multiplier", 
 				comment = "(Math.pow(level, type) / Math.pow(level cap, type)) * multiplier")
 		public static double SPEED_MAX_MOD;
 		@DefaultInt(value = 15, minValue = 0, maxValue = 30, name = "Speed Level Cap", 
