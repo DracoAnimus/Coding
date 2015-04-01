@@ -38,6 +38,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     // Stuff Changed to allow only gold coins:
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+     * Allows other items, need to figure out how to make only gold coins accepted but not lose other items
      */
 	@Override
     public void setInventorySlotContents(int par1, ItemStack itemstack){
@@ -47,6 +48,13 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	    		itemstack.stackSize = this.getInventoryStackLimit();
 	    	}
 	    	this.markDirty();
+    	}
+    	else {
+	    	this.chestContents[par1] = itemstack;
+	    	if(itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()){
+	    		itemstack.stackSize = this.getInventoryStackLimit();
+	    	}
+	    	this.markDirty();    		
     	}
     }
 	

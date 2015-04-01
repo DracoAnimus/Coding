@@ -14,6 +14,7 @@ import net.minecraftforge.common.IExtendedEntityProperties;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.common.entities.dragons.EntityMCDragon;
 import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
+import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
@@ -218,21 +219,28 @@ public class DragonPlayer implements IExtendedEntityProperties {
         }
 	}
 
-	public void calculateHoardSize(World world) {
+	// Returns true if anything in chest other than gold coins
+	public boolean calculateHoardSize(World world) {
 		hoardSize = 0;
+		boolean notJustCoins = false;
 		int size = hoardList.size();
 		for (int i = 0; i < size; i++) {
 			TileEntityChest chestEntity = (TileEntityChest) world.getTileEntity(hoardList.get(i).posX, hoardList.get(i).posY, hoardList.get(i).posZ);
 			if (chestEntity instanceof TileEntityTemporaryHoard) {
 				for (int j = 0; j < chestEntity.getSizeInventory(); j++) {
 					ItemStack coins = chestEntity.getStackInSlot(j);
-					if (coins != null)
-						hoardSize += coins.stackSize;
+					if (coins != null) {
+						if (coins.getItem() != ModItems.goldCoin)
+							notJustCoins = true;
+						else
+							hoardSize += coins.stackSize;
+					}
 				}
 			}
 		}
         LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
 		calculateLevel();
+		return notJustCoins;
 	}
 
 	private void calculateLevel() {

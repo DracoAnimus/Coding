@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -96,10 +97,12 @@ public class DragonPlayerEventHandler {
 		EntityPlayer player = event.entityPlayer;
 		Block block = event.world.getBlock(event.x, event.y, event.z);
 		if (!player.worldObj.isRemote && block instanceof TemporaryHoard) {
-			DragonPlayer.get(player).calculateHoardSize(event.world);
+			if (DragonPlayer.get(player).calculateHoardSize(event.world))
+				player.addChatMessage(new ChatComponentText("Put gold coins in the hoard."));
 		}
 	}
 	
+	// Gives fireballs or explosive fireball each time you kill something when a dragon
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
 		if (event.source.getEntity() instanceof EntityPlayer) {
