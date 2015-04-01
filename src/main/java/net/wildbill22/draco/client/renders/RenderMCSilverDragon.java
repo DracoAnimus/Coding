@@ -40,7 +40,7 @@ public class RenderMCSilverDragon extends RendererLivingEntity {
 	{
 		GL11.glRotatef(180F, 0, 1F, 0F);
 		GL11.glRotatef(180F, 0, 0, 1F);
-		GL11.glTranslatef(0, modelHeight, 0);
+		GL11.glTranslatef(0, (float)modelHeight/1.5F, 0);
 	}
 
 	@Override
