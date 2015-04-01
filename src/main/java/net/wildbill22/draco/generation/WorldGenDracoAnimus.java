@@ -52,15 +52,16 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 			int x1 = v.getCenter().posX + world.rand.nextInt((int) (1.2 * r)) - (int) (0.6 * r);
 			int z1 = v.getCenter().posZ + world.rand.nextInt((int) (1.2 * r)) - (int) (0.6 * r);
 			// Don't spawn in well
-			if (x1 <  MathHelper.abs_int(v.getCenter().posX) + 3 && z1 < MathHelper.abs_int(v.getCenter().posZ) + 3)
+			int xFromCenter = MathHelper.abs_int(v.getCenter().posX - x1);
+			int zFromCenter = MathHelper.abs_int(v.getCenter().posZ - z1);
+			if (xFromCenter < 3 && zFromCenter < 3)
 				continue;
 			int y1 = world.getHeightValue(x1, z1);
 			if (v.isInRange(x1, y1, z1)) {
 //				LogHelper.info("WorldGen: going to spawn Guard!");
-				String GuardName = REFERENCE.MODID + "." + REFERENCE.ENTITY.GUARD_NAME;
-				Entity e = EntityList.createEntityByName(GuardName, world);
+				Entity e = EntityList.createEntityByName(EntityGuard.getFullName(), world);
 				if (e == null){
-					LogHelper.error("WorldGen: Could not createEntityByName: " + GuardName);
+					LogHelper.error("WorldGen: Could not createEntityByName: " + EntityGuard.getFullName());
 					return;
 				}
 				e.setLocationAndAngles(x1, y1, z1, 0.0F, 0.0F);

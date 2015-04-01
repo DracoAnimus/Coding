@@ -3,6 +3,8 @@ package net.wildbill22.draco.tile_entity;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -46,16 +48,21 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	    	}
 	    	this.markDirty();
     	}
-    	else {
-    		// Drop stack?
-    		// TODO: Add chat message as to why it won't add
-//    		this.getWorldObj().playerEntities;
-    		// Find closest?
-//			player.addChatMessage(new ChatComponentText("You can only store gold coins in the hoard"));
-    	}
     }
-    
-    // Original stuff from Treasure Chest:
+	
+    /**
+     * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
+     */
+	// Never gets called! Trying to ensure the player only puts coins in hoard.
+	@Override
+    public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
+    	if (itemstack.getItem() != ModItems.goldCoin)
+    		return false;
+    	else
+    		return true;
+    }
+
+    // *** Original stuff from Treasure Chest ***:
     
 	@Override
     public void closeInventory(){

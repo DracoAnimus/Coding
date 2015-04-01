@@ -18,6 +18,7 @@ public class ItemMyFireball extends ModItems
 	public ItemMyFireball() {
 		super(name);
 		this.setTextureName("minecraft:fireball"); // Until we get a texture		
+//		this.setTextureName("minecraft:textures/items/fireball.png"); // Until we get a texture		
 		setMaxStackSize(64);
 	}
 	

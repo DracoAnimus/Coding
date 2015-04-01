@@ -11,7 +11,7 @@ public class RenderMyFireball extends RenderSnowball {
 	public RenderMyFireball(Item item) {
 		super(item);
 //		texture = new ResourceLocation(REFERENCE.MODID + ":textures/items/fireball.png");
-		texture = new ResourceLocation("minecraft:fireball"); // Until we make a texture
+		texture = new ResourceLocation("minecraft:textures/items/fireball.png"); // Until we make a texture
 	}
 	
 	@Override

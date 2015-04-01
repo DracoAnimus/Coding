@@ -27,9 +27,15 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
+import net.wildbill22.draco.lib.REFERENCE;
 
 public class EntityGuard extends EntityMob{
 	private boolean isLookingForHome;
+	public static final String name = "guard";
+
+	public static String getFullName() {
+		return REFERENCE.MODID + "." + name;
+	}
 
 	public enum GuardType {
 	    GUARD(0),
@@ -83,7 +89,8 @@ public class EntityGuard extends EntityMob{
 	
 	public void setGuardTypePerBiome(World world){
 		BiomeGenBase biome = world.getBiomeGenForCoords((int)this.posX, (int)this.posZ);
-		if (biome == BiomeGenBase.desert || biome == BiomeGenBase.savanna) {
+		if (biome == BiomeGenBase.desert || biome == BiomeGenBase.savanna
+				|| biome == BiomeGenBase.coldTaiga || biome == BiomeGenBase.icePlains) {
 			setGuardType(EntityGuard.GuardType.KNIGHT);
 		}
 	}
@@ -248,6 +255,16 @@ public class EntityGuard extends EntityMob{
 		}		
 	}
 	
+    @Override
+    protected void dropEquipment(boolean p_82160_1_, int p_82160_2_) {
+    	// Don't drop the armor, just stuff in hand
+        ItemStack itemstack = this.getEquipmentInSlot(0);
+        boolean flag1 = this.equipmentDropChances[0] > 1.0F;
+        if (itemstack != null && (p_82160_1_ || flag1) && this.rand.nextFloat() - (float)p_82160_2_ * 0.01F < this.equipmentDropChances[0]) {
+            this.entityDropItem(itemstack, 0.0F);
+        }
+    }
+
     @Override
     protected String getLivingSound()
     {

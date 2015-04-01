@@ -31,7 +31,7 @@ public class ModEntities {
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, "creeperDragon", ++modEntityID, Core.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityGuard.class, REFERENCE.ENTITY.GUARD_NAME, ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityGuard.class, EntityGuard.name, ++modEntityID, Core.instance, 80, 1, true);
     	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 1, true);
 
 		// Projectiles
@@ -63,7 +63,8 @@ public class ModEntities {
 		EntityRegistry.addSpawn(EntityGuard.class, BALANCE.MOBPROP.GUARD_SPAWN_PROB, 1, 2, EnumCreatureType.creature, 
 				BiomeGenBase.plains, BiomeGenBase.forest, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, 
 				BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, 
-				BiomeGenBase.roofedForest, BiomeGenBase.desert, BiomeGenBase.mesa);
+				BiomeGenBase.roofedForest, BiomeGenBase.desert, BiomeGenBase.mesa, BiomeGenBase.taiga, BiomeGenBase.coldTaiga,
+				BiomeGenBase.swampland, BiomeGenBase.mushroomIsland, BiomeGenBase.savanna);
 	}
 	
     static int startEntityId = 300;
