@@ -30,8 +30,8 @@ import net.wildbill22.draco.render.RenderSilverDragon;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class DragonPlayerEventHandler {
-	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
-//	Render renderPlayerDragon = new RenderMCSilverDragon();
+//	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+	Render renderPlayerDragon = new RenderMCSilverDragon();
 
 	// Add DragonPlayer properties to player
 	@SubscribeEvent
