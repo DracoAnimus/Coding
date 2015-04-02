@@ -172,7 +172,7 @@ public class DragonPlayerEventHandler {
 	public void OnPlayerRender(RenderPlayerEvent.Pre event) {
     	if (DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
 			event.setCanceled(true);
-			renderPlayerDragon.doRender(event.entityPlayer, 0D, 0D, 0D, 0F, 0F);
+			renderPlayerDragon.doRender(event.entityPlayer, 0D, -1.4D, 0D, 0F, 0F);
     	}
 	}
 }

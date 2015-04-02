@@ -1,7 +1,6 @@
 package net.wildbill22.draco.entities.dragons;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
@@ -16,6 +15,8 @@ public class EntitySilverDragon extends EntityLiving {
 	
 	public EntitySilverDragon(World world) {
 		super(world);        
+//		this.setSize(1.0F, 1.0F);
+        this.isImmuneToFire = true;
 	}
 
 	/**

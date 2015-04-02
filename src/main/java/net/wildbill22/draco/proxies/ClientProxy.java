@@ -3,6 +3,7 @@ package net.wildbill22.draco.proxies;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderArrow;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -46,8 +47,8 @@ public class ClientProxy extends CommonProxy
 		// Throwable entities
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, new RenderSpear(ModItems.spear));
 		RenderingRegistry.registerEntityRenderingHandler(EntityArrow.class, new RenderArrow());
-		RenderingRegistry.registerEntityRenderingHandler(EntityMyFireball.class, new RenderMyFireball(ModItems.fireball));
-		RenderingRegistry.registerEntityRenderingHandler(EntityMyExplosive.class, new RenderMyExplosive(ModItems.explosiveFireball));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMyFireball.class, new RenderSnowball(ModItems.fireball));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMyExplosive.class, new RenderSnowball(ModItems.explosiveFireball));
 
 		// Special one for hoard
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporaryHoard.class, new TemporaryHoardRenderer());
