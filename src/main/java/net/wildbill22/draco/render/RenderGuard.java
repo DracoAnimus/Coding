@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
+import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
 public class RenderGuard extends RenderBiped{
@@ -15,6 +16,7 @@ public class RenderGuard extends RenderBiped{
 		texture = new ResourceLocation[2];
 		texture[0] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
 		texture[1] = new ResourceLocation(REFERENCE.MODID + ":textures/models/knightTexture.png");
+//		LogHelper.info("RenderGuard: Setting new texture");
 	}
 
 	@Override

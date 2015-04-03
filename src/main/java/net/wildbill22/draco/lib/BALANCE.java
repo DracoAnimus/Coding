@@ -17,7 +17,7 @@ public final class BALANCE {
 		public static double LEVEL_MOD_TYPE;
 	}
 	public static class CHEST_ITEMS {
-		@DefaultInt(value = 30, minValue = 0, maxValue = 100, name = "Diamond Armor", 
+		@DefaultInt(value = 20, minValue = 0, maxValue = 100, name = "Diamond Armor", 
 				comment = "Chance of finding diamond armor items in village chests.")
 		public static int VILLAGE_BLACKSMITH_DIAMOND_ARMOR;
 		@DefaultInt(value = 80, minValue = 0, maxValue = 100, name = "Gold Coins", 

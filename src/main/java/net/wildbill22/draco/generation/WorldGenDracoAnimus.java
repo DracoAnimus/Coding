@@ -12,7 +12,6 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
-import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.IWorldGenerator;
 
 /**
@@ -42,10 +41,10 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 				v.getCenter().posX + r,	surfaceY + 35, v.getCenter().posZ + r);
 
 		int spawnedGuards = world.getEntitiesWithinAABB(EntityGuard.class, box).size();
-		if (spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE){
-			LogHelper.info("WorldGen: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
-					+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
-		}
+//		if (spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE){
+//			LogHelper.info("WorldGen: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
+//					+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
+//		}
 
 		// All guards are currently spawning at the center of the village
 		for (int i = 1; i < (BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE * 2) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE; i++) {
@@ -70,7 +69,7 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 					((EntityGuard) e).setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
 					((EntityGuard) e).setGuardTypePerBiome(world);
 					world.spawnEntityInWorld(e);
-					LogHelper.info("WorldGen: Spawned guard at: " + x1 + " " + y1 + " " + z1);
+//					LogHelper.info("WorldGen: Spawned guard at: " + x1 + " " + y1 + " " + z1);
 					spawnedGuards++;
 				} else {
 					e.setDead();

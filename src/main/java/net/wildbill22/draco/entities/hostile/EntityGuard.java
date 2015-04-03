@@ -30,8 +30,9 @@ import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
 public class EntityGuard extends EntityMob{
-	private boolean isLookingForHome;
 	public static final String name = "guard";
+	private boolean isLookingForHome;
+	private Village homeVillage = null;
 
 	public static String getFullName() {
 		return REFERENCE.MODID + "." + name;
@@ -151,8 +152,8 @@ public class EntityGuard extends EntityMob{
 		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
 				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
 		if (v.isInRange(x, surfaceY, z) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE) {
-			setFoundHome();
 			setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
+			setFoundHome();
 			return true;
 		}
 		else
@@ -288,11 +289,18 @@ public class EntityGuard extends EntityMob{
 	 * 
 	 * @return village or null
 	 */
+    // TODO: This is called a lot, could be optimized somehow
 	public Village getHomeVillage() {
 		if (isLookingForHome)
 			return null;
-		ChunkCoordinates cc = this.getHomePosition();
-		return this.worldObj.villageCollectionObj.findNearestVillage(cc.posX, cc.posY, cc.posZ, 10);
+		if (homeVillage != null)
+			return homeVillage;
+		else {
+//			LogHelper.info("EntityGuard: setting home village location");
+			ChunkCoordinates cc = this.getHomePosition();
+			homeVillage = this.worldObj.villageCollectionObj.findNearestVillage(cc.posX, cc.posY, cc.posZ, 10); 
+			return homeVillage;
+		}
 	}
 
 	/**

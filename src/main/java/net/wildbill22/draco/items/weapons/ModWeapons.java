@@ -20,7 +20,7 @@ public class ModWeapons {
 	static ToolMaterial MACE = EnumHelper.addToolMaterial("MACE", 3, 1000, 9.5F, 3.5F, 10);
 	
 	// Weapons
-	public static Item dragonSlayerSword = new ItemDragonSlayerSword(dragonsBreath, "dragonSlayerSword");
+	public static Item dragonSlayerSword = new ItemDragonSlayerSword(dragonsBreath);
 	public static Item longSword = new ItemLongSword(LONGSWORD);
 	public static Item battleAxe = new ItemBattleAxe(BATTLEAXE);
 	public static Item mace = new ItemMace(MACE);
@@ -28,12 +28,12 @@ public class ModWeapons {
 	public static Item crossbow = new ItemCrossbow();
 	
 	public static void preInit() {
-		GameRegistry.registerItem(dragonSlayerSword, REFERENCE.MODID + dragonSlayerSword.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(longSword, REFERENCE.MODID + longSword.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(battleAxe, REFERENCE.MODID + battleAxe.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(mace, REFERENCE.MODID + mace.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(longBow, REFERENCE.MODID + longBow.getUnlocalizedName().substring(5));
-		GameRegistry.registerItem(crossbow, REFERENCE.MODID + crossbow.getUnlocalizedName().substring(5));
+		GameRegistry.registerItem(dragonSlayerSword, ItemDragonSlayerSword.name);
+		GameRegistry.registerItem(longSword, ItemLongSword.name);
+		GameRegistry.registerItem(battleAxe, ItemBattleAxe.name);
+		GameRegistry.registerItem(mace, ItemMace.name);
+		GameRegistry.registerItem(longBow, ItemLongBow.name);
+		GameRegistry.registerItem(crossbow, ItemCrossbow.name);
 	}
 
 	public static void init() {

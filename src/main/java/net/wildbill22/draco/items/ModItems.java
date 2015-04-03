@@ -29,7 +29,6 @@ public class ModItems extends Item {
 		fireball = new ItemMyFireball();
 		explosiveFireball = new ItemMyExplosive();
 		
-		// Is this the right location? (Yes)
 		GameRegistry.registerItem(dragonScales, ItemDragonScales.name);
 		GameRegistry.registerItem(goldCoin, ItemGoldCoin.name);
 		GameRegistry.registerItem(spear, ItemSpear.name);
@@ -47,7 +46,6 @@ public class ModItems extends Item {
 				new ItemStack(explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
 		
 		// Other useful stuff
-		
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
 				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(

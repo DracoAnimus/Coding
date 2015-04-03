@@ -2,9 +2,7 @@ package net.wildbill22.draco.proxies;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.entity.RenderArrow;
 import net.minecraft.client.renderer.entity.RenderSnowball;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
@@ -45,8 +43,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityMCSilverDragon.class, new RenderMCSilverDragon());
 		
 		// Throwable entities
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, new RenderSpear(ModItems.spear));
-		RenderingRegistry.registerEntityRenderingHandler(EntityArrow.class, new RenderArrow());
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, new RenderSnowball(ModItems.spear));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMyFireball.class, new RenderSnowball(ModItems.fireball));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMyExplosive.class, new RenderSnowball(ModItems.explosiveFireball));
 
@@ -64,7 +61,6 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerTileEntitySpecialRenderer(){		
 	}
-
 
 	@Override
 	public void registerSounds() {}

@@ -57,8 +57,8 @@ public class EntityGuardEventHandler {
 				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
 		if (v.isInRange(x, surfaceY, z) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE) {
 			EntityGuard guard = (EntityGuard) event.entity;
-			guard.setFoundHome();
 			guard.setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
+			guard.setFoundHome();
 			return true;
 		}
 		else

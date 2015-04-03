@@ -10,9 +10,10 @@ import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemDragonSlayerSword extends ItemSword
-{	
-	public ItemDragonSlayerSword(ToolMaterial material, String name)
+public class ItemDragonSlayerSword extends ItemSword {
+	public static final String name = "dragonSlayerSword";
+
+	public ItemDragonSlayerSword(ToolMaterial material)
 	{
 		super(material);
 		this.setCreativeTab(Creative_Tab.TabDraco_Animus);
