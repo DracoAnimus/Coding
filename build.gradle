@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.0.3"
+version = "0.1.0"
 group= "net.wildbill22.draco" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "DracoAnimus"
+archivesBaseName = "DracoAnimus-1.7.10"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
+    version = "1.7.10-10.13.2.1291"
     runDir = "."
     assetDir = "bin/assets"
 }
