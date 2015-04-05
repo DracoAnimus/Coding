@@ -23,7 +23,7 @@ import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 
 public class DragonPlayer implements IExtendedEntityProperties {
 	public static final String EXT_PROP_NAME = "DragonPlayer";
-	public static final int LEVEL_WATCHER = 20;	
+//	public static final int LEVEL_WATCHER = 20;
 	private final EntityPlayer player;
 	private EntityMCDragon dragon =  null;
 	private World world;
@@ -59,7 +59,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		this.player = player;
 		this.hoardList = new ArrayList<NBTCoordinates>();
 		this.level = 1;
-		this.player.getDataWatcher().addObject(LEVEL_WATCHER, this.level);
+		this.player.getDataWatcher().addObject(BALANCE.LEVEL_WATCHER, this.level);
 		this.isDragon = true;
 		this.dragonName = EntityMCSilverDragon.name;
 		this.world = world;
@@ -260,12 +260,12 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	}
 
 	public int getLevel() {
-		level = this.player.getDataWatcher().getWatchableObjectInt(LEVEL_WATCHER);
+		level = this.player.getDataWatcher().getWatchableObjectInt(BALANCE.LEVEL_WATCHER);
 		return level;
 	}
 
 	public void setLevel(int level) {
-		this.player.getDataWatcher().updateObject(LEVEL_WATCHER, level);
+		this.player.getDataWatcher().updateObject(BALANCE.LEVEL_WATCHER, level);
 		this.level = level;
 		PlayerModifiers.applyModifiers(level, player);
 	}

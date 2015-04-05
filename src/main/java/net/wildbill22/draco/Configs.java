@@ -19,6 +19,7 @@ public class Configs {
 	public static final String CATEGORY_BALANCE = "balance";
 	public static final String CATEGORY_BALANCE_LEVELING = "balance_leveling";
 	public static final String CATEGORY_BALANCE_MOBPROP = "balance_mob_properties";
+	public static final String CATEGORY_BALANCE_WILD_FIRE_DRAGON_PROP = "balance_wild_fire_dragon_properties";
 	public static final String CATEGORY_CHEST_ITEMS = "chest_items";
 	public static final String CATEGORY_BALANCE_DP_MODIFIERS = "balance_dragon_player_properties";
 	public static final String CATEGORY_VILLAGE = "village_settings";
@@ -42,6 +43,7 @@ public class Configs {
 		balanceConfiguration();
 		balanceLevelingConfiguration();
 		balanceMobpropConfiguration();
+		balanceWildDragonPropConfiguration();
 		balanceChestItemsConfiguration();
 		balanceDPModifiersConfiguration();
 		
@@ -91,10 +93,16 @@ public class Configs {
 		loadFields(cat_balance_leveling, BALANCE.LEVELING.class);
 	}
 
-	public static void balanceMobpropConfiguration() {
+	public static void balanceWildDragonPropConfiguration() {
 		ConfigCategory cat_balance_mobprop = config.getCategory(CATEGORY_BALANCE_MOBPROP);
 		cat_balance_mobprop.setComment("You can adjust the properties of the added mobs");
 		loadFields(cat_balance_mobprop, BALANCE.MOBPROP.class);		
+	}
+
+	public static void balanceMobpropConfiguration() {
+		ConfigCategory cat_balance_wild_dragon_prop = config.getCategory(CATEGORY_BALANCE_WILD_FIRE_DRAGON_PROP);
+		cat_balance_wild_dragon_prop.setComment("You can adjust the properties of the wild fire dragon");
+		loadFields(cat_balance_wild_dragon_prop, BALANCE.WILD_FIRE_DRAGON_PROP.class);		
 	}
 
 	public static void balanceChestItemsConfiguration() {

@@ -9,6 +9,7 @@ import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
+import net.wildbill22.draco.entities.hostile.EntityWildFireDragon;
 import net.wildbill22.draco.items.ItemMyExplosive;
 import net.wildbill22.draco.items.ItemMyFireball;
 import net.wildbill22.draco.items.ItemSpear;
@@ -27,12 +28,14 @@ public class ModEntities {
 		// Overworld eggs
 		registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
 		registerEntityEgg(EntitySilverDragon.class, 0xd8bb9d, 0xa73c1a);
+		registerEntityEgg(EntityWildFireDragon.class, 0xd8bb9d, 0xa83c1a);
 		
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, "creeperDragon", ++modEntityID, Core.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, "silverDragon", ++modEntityID, Core.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityGuard.class, EntityGuard.name, ++modEntityID, Core.instance, 80, 1, true);
-    	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 1, true);
+//    	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityWildFireDragon.class, "wildFireDragon", ++modEntityID, Core.instance, 80, 1, true);
 
 		// Projectiles
 		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
@@ -65,6 +68,10 @@ public class ModEntities {
 				BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, 
 				BiomeGenBase.roofedForest, BiomeGenBase.desert, BiomeGenBase.mesa, BiomeGenBase.taiga, BiomeGenBase.coldTaiga,
 				BiomeGenBase.swampland, BiomeGenBase.mushroomIsland, BiomeGenBase.savanna);
+		EntityRegistry.addSpawn(EntityWildFireDragon.class, BALANCE.WILD_FIRE_DRAGON_PROP.SPAWN_PROB, 1, 2, EnumCreatureType.creature, 
+				BiomeGenBase.plains, BiomeGenBase.forest, BiomeGenBase.birchForest, BiomeGenBase.birchForestHills, 
+				BiomeGenBase.forestHills, BiomeGenBase.jungle, BiomeGenBase.jungleEdge, BiomeGenBase.jungleHills, 
+				BiomeGenBase.roofedForest, BiomeGenBase.desert);
 	}
 	
     static int startEntityId = 300;

@@ -15,6 +15,29 @@ import cpw.mods.fml.client.config.IConfigElement;
 
 public class ModConfigGui extends GuiConfig {
 
+	// Creates the Entry to the WILD_DRAGON_PROP Settings
+	public static class WildDragonPropertiesEntry extends CategoryEntry {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private static List<IConfigElement> getConfigElements() {
+			List<IConfigElement> list = new ArrayList<IConfigElement>();
+			// Add all the settings from BALANCE.WILD_DRAGON_PROP class
+			list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_BALANCE_WILD_FIRE_DRAGON_PROP)).getChildElements());
+			return list;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public WildDragonPropertiesEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+			super(owningScreen, owningEntryList, prop);
+		}
+
+		// Build the list of settings from BALANCE.MOBPROP class
+		@Override
+		protected GuiScreen buildChildScreen() {
+			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_BALANCE_WILD_FIRE_DRAGON_PROP, 
+					false, false, REFERENCE.NAME + " Wild Fire Dragon Properties");
+		}
+	}
+
 	// Creates the Entry to the DP_MODIFIERS Settings
 	public static class DPPropertiesEntry extends CategoryEntry {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -161,6 +184,7 @@ public class ModConfigGui extends GuiConfig {
 		list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_GENERAL)).getChildElements());
 		list.add(new DummyConfigElement.DummyCategoryElement("balance_dragon_player_properties", "category.wildbill22_draco.balance_dragon_player_properties", DPPropertiesEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("mob_properties", "category.wildbill22_draco.mob_properties", MobPropertiesEntry.class));
+		list.add(new DummyConfigElement.DummyCategoryElement("wild_fire_dragon_properties", "category.wildbill22_draco.wild_fire_dragon_properties", WildDragonPropertiesEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("chest_items", "category.wildbill22_draco.chest_items", ChestItemsEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("village", "category.wildbill22_draco.village", VillageEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("balance", "category.wildbill22_draco.balance", BalanceEntry.class));

@@ -18,6 +18,7 @@ tile.temporaryHoard.name=Temporary Hoard
 
 #Entities
 entity.wildbill22_draco.creeperDragon.name=Crepitus Draco
+entity.wildbill22_draco.wildFireDragon.name=Wild Fire Dragon
 entity.wildbill22_draco.silverDragon.name=Argentum Draco
 entity.wildbill22_draco.guard.name=Guard
 entity.wildbill22_draco.hornedGoat.name=Horned Goat
@@ -29,6 +30,8 @@ category.wildbill22_draco.balance_dragon_player_properties=Dragon Player Propert
 category.wildbill22_draco.balance_dragon_player_properties.tooltip=Dragon Player Properties
 category.wildbill22_draco.mob_properties=Mob Properties
 category.wildbill22_draco.mob_properties.tooltip=Mob Properties
+category.wildbill22_draco.wild_fire_dragon_properties=Wild Fire Dragon Properties
+category.wildbill22_draco.wild_fire_dragon_properties.tooltip=Wild Fire Dragon Properties
 category.wildbill22_draco.chest_items=Chest Items
 category.wildbill22_draco.chest_items.tooltip=Chest Items Probabilities
 category.wildbill22_draco.village=Village settings

@@ -1,5 +1,7 @@
 package net.wildbill22.draco.lib;
 
+import net.minecraft.entity.SharedMonsterAttributes;
+
 /**
  * All constants which could be used to balance the mod should be stored here
  *
@@ -74,6 +76,24 @@ public final class BALANCE {
 				comment = "How far away creepers will stay from dragon")
 		public static int CREEPER_AVOID_LEVEL;
 	}
+	
+	public static class WILD_FIRE_DRAGON_PROP {
+		@DefaultDouble(value = 3.0F, minValue = 1.0D, maxValue = 10.0D, name = "Attack Damage", 
+				comment = "")
+		public static double ATTACK_DAMAGE;
+		@DefaultDouble(value = 20.0F, minValue = 10.0D, maxValue = 50.0D, name = "Follow Range", 
+				comment = "")
+		public static double FOLLOW_RANGE;
+		@DefaultDouble(value = 25.0F, minValue = 5.D, maxValue = 50.0D, name = "Max Health", 
+				comment = "")
+		public static double MAX_HEALTH;
+		@DefaultDouble(value = 0.5F, minValue = 0.1D, maxValue = 1.0D, name = "Movement Speed", 
+				comment = "")
+		public static double MOVEMENT_SPEED;
+		@DefaultInt(value = 55, minValue = 0, maxValue = 100, name = "Spawn Probability", 
+				comment = "Probability of spawning wild fire dragons")
+		public static int SPAWN_PROB;		
+	}
 
 	/**
 	 * Class to store all constants related to the player modifiers See {@link:
@@ -114,4 +134,10 @@ public final class BALANCE {
 	@DefaultBoolean(value = true, name = "Player as silver dragon initially?", 
 			comment = "Whether player should spawn initially as a silver dragon")
 	public static boolean PLAYER_AS_SILVER_DRAGON_INITIALLY;
+	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Player Level Data Watcher", 
+			comment = "If there is a conflict with another mod, this can be changed.")
+	public static int LEVEL_WATCHER;	
+	@DefaultInt(value = 21, minValue = 20, maxValue = 31, name = "Fire Dragon Data Watcher", 
+			comment = "If there is a conflict with another mod, this can be changed.")
+	public static int FIRE_DRAGON_WATCHER;	
 }
