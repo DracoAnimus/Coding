@@ -1,1 +1,4 @@
 *.db
+/bin/
+.classpath
+.project
