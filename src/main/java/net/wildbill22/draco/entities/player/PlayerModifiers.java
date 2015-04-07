@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.wildbill22.draco.lib.BALANCE;
 
 /**
- * Calculates and applies player modifiers depending on the VampireLevel
+ * Calculates and applies player modifiers depending on the Dragon Level
  * 
  * @author Maxanier
  *
@@ -21,20 +21,20 @@ public abstract class PlayerModifiers {
 		IAttributeInstance movement = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
 		rmMod(movement, speedModifierUUID);
 		m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.SPEED_LCAP, BALANCE.DP_MODIFIERS.SPEED_MAX_MOD, BALANCE.DP_MODIFIERS.SPEED_TYPE);
-		movement.applyModifier(new AttributeModifier(speedModifierUUID, "Vampire Speed Bonus", m, 2).setSaved(false));
+		movement.applyModifier(new AttributeModifier(speedModifierUUID, "Dragon Speed Bonus", m, 2).setSaved(false));
 
 		// Health modifier
 		IAttributeInstance health = p.getEntityAttribute(SharedMonsterAttributes.maxHealth);
 		rmMod(health, healthModifierUUID);
 		m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.HEALTH_LCAP, BALANCE.DP_MODIFIERS.HEALTH_MAX_MOD, BALANCE.DP_MODIFIERS.HEALTH_TYPE);
-		health.applyModifier(new AttributeModifier(healthModifierUUID, "Vampire Health Bonus", m, 2).setSaved(false));
+		health.applyModifier(new AttributeModifier(healthModifierUUID, "Dragon Health Bonus", m, 2).setSaved(false));
 
 		// Strength modifier
 		IAttributeInstance damage = p.getEntityAttribute(SharedMonsterAttributes.attackDamage);
 		rmMod(damage, damageModifierUUID);
 		m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.STRENGTH_LCAP, BALANCE.DP_MODIFIERS.STRENGTH_MAX_MOD,
 				BALANCE.DP_MODIFIERS.STRENGTH_TYPE);
-		damage.applyModifier(new AttributeModifier(damageModifierUUID, "Vampire Strength Bonus", m, 2).setSaved(false));
+		damage.applyModifier(new AttributeModifier(damageModifierUUID, "Dragon Strength Bonus", m, 2).setSaved(false));
 	}
 	
 	/**
