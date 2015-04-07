@@ -22,6 +22,7 @@ import net.minecraft.village.Village;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.ai.EntityAIDefendVillage;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
@@ -91,7 +92,8 @@ public class EntityGuard extends EntityMob{
 	public void setGuardTypePerBiome(World world){
 		BiomeGenBase biome = world.getBiomeGenForCoords((int)this.posX, (int)this.posZ);
 		if (biome == BiomeGenBase.desert || biome == BiomeGenBase.savanna
-				|| biome == BiomeGenBase.coldTaiga || biome == BiomeGenBase.icePlains) {
+				|| biome == BiomeGenBase.coldTaiga || biome == BiomeGenBase.icePlains 
+				|| biome == ModBiomes.biomeTownForest) {
 			setGuardType(EntityGuard.GuardType.KNIGHT);
 		}
 	}
@@ -149,8 +151,8 @@ public class EntityGuard extends EntityMob{
 		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(v.getCenter().posX - r, surfaceY - 20, v.getCenter().posZ - r, 
 				v.getCenter().posX + r,	surfaceY + 35, v.getCenter().posZ + r);
 		int spawnedGuards = world.getEntitiesWithinAABB(EntityGuard.class, box).size();
-		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
-				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
+//		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
+//				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
 		if (v.isInRange(x, surfaceY, z) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE) {
 			setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
 			setFoundHome();

@@ -182,5 +182,7 @@ public class Configs {
 		@DefaultInt(value = 0, minValue = 0, maxValue = 10, name = "size", 
 				comment = "NO CHANGE RECOMMENED: A higher size increases the overall spawn weight of buildings.")
 		public static int village_size;
+		@DefaultBoolean(value = true, name = "Enable Taverns", comment = "Should Taverns be added to villages?")
+		public static boolean village_taverns_enabled;		
 	}
 }

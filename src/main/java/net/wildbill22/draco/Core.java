@@ -1,12 +1,15 @@
 package net.wildbill22.draco;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
 import net.wildbill22.draco.generation.villages.VillageBiomes;
 import net.wildbill22.draco.generation.villages.VillageGenReplacer;
+import net.wildbill22.draco.generation.villages.VillageTavern;
+import net.wildbill22.draco.handlers.TavernCreationHandler;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
@@ -25,6 +28,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
 	
 /** 
@@ -52,6 +56,7 @@ public class Core {
     	ModTileEntities.modRegistry();
 		ModEntities.preInit();
 		ModWeapons.preInit();
+		ModBiomes.init();
 		dracoProxy.registerRenderer();
 		VillageBiomes.preInit(event);
 		setupNetwork();
@@ -63,13 +68,20 @@ public class Core {
 		ModWeapons.init();
 		ModItems.init();
 		ModBlocks.init();
-		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 100);
+		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 1000);
 		dracoProxy.registerSounds();
 		dracoProxy.registerSubscriptions();
 		FMLCommonHandler.instance().bus().register(new Configs());
 		if (Configs.VILLAGE.village_gen_enabled) {
 			LogHelper.info("Registering replacer for village generation.");
 			MinecraftForge.TERRAIN_GEN_BUS.register(new VillageGenReplacer());
+		}
+		// Register new village building
+		if (Configs.VILLAGE.village_taverns_enabled) {
+			VillageTavern.addVillagePiece(VillageTavern.class, "ViTav");
+	 		TavernCreationHandler tavernCreator = new TavernCreationHandler();
+			VillagerRegistry.instance().registerVillageCreationHandler(tavernCreator);
+			VillageTavern.registerTavernChest();
 		}
 	}
 

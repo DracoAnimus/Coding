@@ -1,5 +1,6 @@
 package net.wildbill22.draco.generation;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
@@ -8,7 +9,9 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -20,6 +23,11 @@ import cpw.mods.fml.common.IWorldGenerator;
  *
  */
 public class WorldGenDracoAnimus implements IWorldGenerator {
+
+//	public WorldGenDracoAnimus() {
+//		CityStructure.createStructureList();
+//	}
+
 	/**
 	 * Generates entities
 	 * 
@@ -28,7 +36,7 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 	 * @param x xCoord
 	 * @param z ZCoord
 	 */
-	private void addEntities(World world, Random random, int x, int z) {
+	private void addSurfaceEntities(World world, Random random, int x, int z) {
 
 		int surfaceY = world.getHeightValue(x, z);
 		Village v = world.villageCollectionObj.findNearestVillage(x, surfaceY, z, 16);
@@ -78,7 +86,7 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 		}
 	}
 
-	private void addStructures(World world, Random random, int x, int z) {
+	private void addSurfaceStructures(World world, Random random, int x, int z) {		
 	}
 
 	@Override
@@ -92,19 +100,16 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 		case 1:
 			generateEnd(world, random, chunkX * 16, chunkZ * 16);
 		}
-
 	}
 
 	private void generateEnd(World world, Random random, int x, int z) {
-
 	}
 
 	private void generateNether(World world, Random random, int x, int z) {
-
 	}
 
 	private void generateSurface(World world, Random random, int x, int z) {
-		addStructures(world, random, x, z);
-		addEntities(world, random, x + 8, z + 8);
-	}
+		addSurfaceStructures(world, random, x, z);
+		addSurfaceEntities(world, random, x + 8, z + 8);
+	}	
 }

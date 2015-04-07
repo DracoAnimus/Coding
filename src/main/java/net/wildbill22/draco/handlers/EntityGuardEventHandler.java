@@ -26,7 +26,7 @@ public class EntityGuardEventHandler {
 	    	if (guard.isLookingForHome()) {
 	    		if (okToSpawnNearVillage(event, 50)) {
 	    			guard.setGuardTypePerBiome(event.world);
-		    		LogHelper.info("onLivingCheckSpawnEvent: Do spawn Guard at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
+//		    		LogHelper.info("onLivingCheckSpawnEvent: Do spawn Guard at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
 	    			// If I set to ALLOW, need to do all own checks here, so use DEFAULT
 		    		event.setResult(Result.DEFAULT);
 		    	}
@@ -53,8 +53,8 @@ public class EntityGuardEventHandler {
 		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(v.getCenter().posX - r, surfaceY - 20, v.getCenter().posZ - r, 
 				v.getCenter().posX + r,	surfaceY + 35, v.getCenter().posZ + r);
 		int spawnedGuards = world.getEntitiesWithinAABB(EntityGuard.class, box).size();
-		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
-				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
+//		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
+//				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
 		if (v.isInRange(x, surfaceY, z) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE) {
 			EntityGuard guard = (EntityGuard) event.entity;
 			guard.setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);

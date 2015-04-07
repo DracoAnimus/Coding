@@ -1,5 +1,7 @@
 package net.wildbill22.draco.handlers;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.player.EntityPlayer;
@@ -109,8 +111,13 @@ public class DragonPlayerEventHandler {
 			LogHelper.info("DragonPlayerEventHandler: Player killed something!");
 			EntityPlayer player = (EntityPlayer) event.source.getEntity();
 			if (DragonPlayer.get(player).isDragon()) {
-				if (!addItemToHotbar(player.inventory, ModItems.fireball))
-					addItemToHotbar(player.inventory, ModItems.explosiveFireball);
+				int chance  = Math.max((DragonPlayer.get(player).getLevel() / 2), 1);
+				int num = new Random().nextInt(chance) + 1;
+				LogHelper.info("DragonPlayerEventHandler: Player killed something! Adding " + num + " Fireballs!");
+				for (int i = 0; i < num; i++) {
+					if (!addItemToHotbar(player.inventory, ModItems.fireball))
+						addItemToHotbar(player.inventory, ModItems.explosiveFireball);
+				}
 			}
 		}
 	}

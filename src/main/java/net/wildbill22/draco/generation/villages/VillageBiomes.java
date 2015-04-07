@@ -16,7 +16,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
  */
 public class VillageBiomes {
 
-	// TODO: add to vampirism.java
 	public static void postInit(FMLPostInitializationEvent ev) {
 		// All other mods should be done registering by now.
 		BiomeRegistrant.init();

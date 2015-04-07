@@ -28,7 +28,7 @@ public class VillageGenReplacer implements IEventListener {
 				if (!(e.newGen == e.originalGen)) {
 					LogHelper.error("VillageGenReplacer: " +
 							"The village map generator was overwritten by another mod. There might be crashes! \n The new generator class is "
-									+ e.getClass().getCanonicalName());
+							+ e.getClass().getCanonicalName());
 				}
 
 				try { // Here be reflections.
