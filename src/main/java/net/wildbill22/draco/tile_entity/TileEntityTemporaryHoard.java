@@ -9,6 +9,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -44,6 +45,37 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 			}
 
 			super.onContainerClosed(player);
+		}
+		/**
+		 * Replaces the chest inventory slots by filter slots
+		 */
+		@Override
+		protected Slot addSlotToContainer(Slot slot){
+			if(slot.inventory.equals(this.getLowerChestInventory())){
+				return super.addSlotToContainer(new CoinSlot(slot));
+			}
+			return super.addSlotToContainer(slot);
+
+		}
+		
+		/**
+		 * Filter Slot which clones an existing slot, but only allows gold coins
+		 */
+		public static class CoinSlot extends Slot{
+
+			public CoinSlot(Slot slot) {
+				super(slot.inventory, slot.getSlotIndex(),slot.xDisplayPosition,slot.yDisplayPosition);
+			}
+			
+			public boolean isItemValid(ItemStack stack){
+				if(stack!=null&&stack.getItem().equals(ModItems.goldCoin)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			
 		}
 		
 	}
