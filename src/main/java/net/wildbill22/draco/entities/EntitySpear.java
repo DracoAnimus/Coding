@@ -2,14 +2,21 @@ package net.wildbill22.draco.entities;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.wildbill22.draco.items.ItemSpear;
+import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
 public class EntitySpear extends EntityThrowable {
+    public Entity shootingEntity;
+    /** 1 if the player can pick up the arrow */
+    public int canBePickedUp;
 
 	public EntitySpear(World world, double p_i1778_2_, double p_i1778_4_, double p_i1778_6_) {
 		super(world, p_i1778_2_, p_i1778_4_, p_i1778_6_);
@@ -21,7 +28,37 @@ public class EntitySpear extends EntityThrowable {
 	
 	public EntitySpear(World par1World) {
 		super(par1World);
-	}	
+	}
+	
+	// Added for attack from EntityAISpearAttack
+    public EntitySpear(World world, EntityLivingBase attacker, EntityLivingBase target, float p_i1755_4_, float p_i1755_5_)
+    {
+        super(world);
+        this.renderDistanceWeight = 10.0D;
+        this.shootingEntity = attacker;
+
+        if (attacker instanceof EntityPlayer) {
+            this.canBePickedUp = 1;
+        }
+
+        this.posY = attacker.posY + (double)attacker.getEyeHeight() - 0.10000000149011612D;
+        double d0 = target.posX - attacker.posX;
+        double d1 = target.boundingBox.minY + (double)(target.height / 3.0F) - this.posY;
+        double d2 = target.posZ - attacker.posZ;
+        double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+
+        if (d3 >= 1.0E-7D)
+        {
+            float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+            float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
+            double d4 = d0 / d3;
+            double d5 = d2 / d3;
+            this.setLocationAndAngles(attacker.posX + d4, this.posY, attacker.posZ + d5, f2, f3);
+            this.yOffset = 0.0F;
+            float f4 = (float)d3 * 0.2F;
+            this.setThrowableHeading(d0, d1 + (double)f4, d2, p_i1755_4_, p_i1755_5_);
+        }
+    }
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
@@ -30,7 +67,7 @@ public class EntitySpear extends EntityThrowable {
 			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {
-				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), ItemSpear.spearDamage);
+				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) ItemSpear.spearDamage);
 			}
 			else {
 				// Do something for instance if it hits a tree
@@ -44,4 +81,25 @@ public class EntitySpear extends EntityThrowable {
 		if (!this.worldObj.isRemote)
 			this.setDead();
 	}
+	
+    /**
+     * Called by a player entity when they collide with an entity
+     */
+    public void onCollideWithPlayer(EntityPlayer player)
+    {
+//        if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0)
+    	if (!this.worldObj.isRemote && this.inGround) {
+            boolean flag = this.canBePickedUp == 1 || this.canBePickedUp == 2 && player.capabilities.isCreativeMode;
+
+            if (this.canBePickedUp == 1 && !player.inventory.addItemStackToInventory(new ItemStack(ModItems.spear, 1))) {
+                flag = false;
+            }
+
+            if (flag) {
+                this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                player.onItemPickup(this, 1);
+                this.setDead();
+            }
+        }
+    }
 }

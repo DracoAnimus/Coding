@@ -21,6 +21,6 @@ public class RenderGuard extends RenderBiped{
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return texture[((EntityGuard) entity).type.getType()];
+		return texture[((EntityGuard) entity).getGuardType()];
 	}
 }

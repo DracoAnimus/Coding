@@ -3,6 +3,7 @@ package net.wildbill22.draco.generation.villages;
 import java.util.List;
 import java.util.Random;
 
+import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -237,9 +238,10 @@ public class VillageTavern extends StructureVillagePieces.Village
     }
 
 	// TODO: make a bar wench
-//    protected int getVillagerType(int par1){
-//        return VillageHandlerBarWench.BAR_WENCH;
-//    }
+	@Override
+    protected int getVillagerType(int par1){
+        return BarWenchCreationHandler.BAR_WENCH;
+    }
 
 	public static void registerTavernChest(){
 		ChestGenHooks.getInfo(TAVERN_CHEST);
@@ -248,5 +250,13 @@ public class VillageTavern extends StructureVillagePieces.Village
 		}
 		ChestGenHooks.getInfo(TAVERN_CHEST).setMax(3);
 		ChestGenHooks.getInfo(TAVERN_CHEST).setMax(7);
+	}
+
+	// Call from mod's init
+	public static void init() {
+		VillageTavern.addVillagePiece(VillageTavern.class, "ViTav");
+ 		TavernCreationHandler tavernCreator = new TavernCreationHandler();
+		VillagerRegistry.instance().registerVillageCreationHandler(tavernCreator);
+		VillageTavern.registerTavernChest();
 	}
 }

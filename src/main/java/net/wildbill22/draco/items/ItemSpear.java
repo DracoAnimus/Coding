@@ -6,12 +6,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntitySpear;
+import net.wildbill22.draco.lib.BALANCE;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemSpear extends ModItems 
 {	
-	public static final int spearDamage = 4;
+	public static double spearDamage = BALANCE.MOBPROP.GUARD_SPEAR_DAMAGE;
 	public static final String name = "spear";
 	
 	public ItemSpear() {

@@ -173,7 +173,7 @@ public class Configs {
 	public static class VILLAGE {
 		@DefaultBoolean(value = true, name = "Enable More Villages", comment = "Should the custom generator be injected? (Enables/Disables the village mod)")
 		public static boolean village_gen_enabled;
-		@DefaultInt(value = 15, minValue = 1, maxValue = 64, name = "Density", 
+		@DefaultInt(value = 15, minValue = 6, maxValue = 64, name = "Density", 
 				comment = "Minecraft will try to generate 1 village per NxN chunk area. Vanilla: 32")
 		public static int village_density;
 		@DefaultInt(value = 4, minValue = 2, maxValue = 16, name = "minimumDistance", 

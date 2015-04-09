@@ -40,6 +40,9 @@ public final class BALANCE {
 		@DefaultDouble(value = 5.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Attack Damage", 
 				comment = "Attack damage")
 		public static double GUARD_ATTACK_DAMAGE;
+		@DefaultDouble(value = 3.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Spear Damage", 
+				comment = "Spear damage")
+		public static double GUARD_SPEAR_DAMAGE;
 		@DefaultDouble(value = 0.35F, minValue = 0.1D, maxValue = 1.0D, name = "Guard Movement Speed", 
 				comment = "Guard movement speed")
 		public static double GUARD_MOVEMENT_SPEED;

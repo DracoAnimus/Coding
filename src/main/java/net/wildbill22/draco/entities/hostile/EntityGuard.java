@@ -3,6 +3,8 @@ package net.wildbill22.draco.entities.hostile;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -23,14 +25,16 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.wildbill22.draco.biome.ModBiomes;
+import net.wildbill22.draco.entities.EntitySpear;
 import net.wildbill22.draco.entities.ai.EntityAIDefendVillage;
+import net.wildbill22.draco.entities.ai.EntityAISpearAttack;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
-public class EntityGuard extends EntityMob{
+public class EntityGuard extends EntityMob implements IRangedAttackMob {
 	public static final String name = "guard";
 	private boolean isLookingForHome;
 	private Village homeVillage = null;
@@ -52,8 +56,20 @@ public class EntityGuard extends EntityMob{
 			return type;
 		}
 	}
-	public GuardType type;
+	private GuardType type;
 
+	private void setType(GuardType type) {
+		this.type = type;
+	}
+
+	public int getGuardType() {
+		return type.getType();
+	}
+
+	// Stuff for Spear attack:
+    private EntityAISpearAttack aiSpearAttack = new EntityAISpearAttack(this, 1.0D, 20, 60, 15.0F);
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, true);
+    
 	// Does this need entityAIMoveTowardsTarget?
 	public EntityGuard(World world){
 		super(world);
@@ -63,13 +79,14 @@ public class EntityGuard extends EntityMob{
 		this.setSize(0.6F, 1.8F);
 //		this.clearAITasks();
 		this.tasks.addTask(0, new EntityAISwimming(this));
+		// Leave task 1 empty, this is set when finds home
 		this.tasks.addTask(2, new EntityAIWander(this, 1.0D));
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, true));
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityCreature.class, 0.9, false));
+		// Task 3 is set below, depends on if guard or knight
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 
         this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, true));
-		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityCreature.class, 0, true, false, new IEntitySelector() {
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityCreature.class, 0, true, false, new IEntitySelector() {
 			@Override
 			// TODO: Add all the creatures the guard should attack
 			public boolean isEntityApplicable(Entity entity) {
@@ -79,14 +96,14 @@ public class EntityGuard extends EntityMob{
 			}
 
 		}));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-        
+		        
 		// Default to not in a village, will be set to false in
 		// WorldGenDracoAnimus when generated on the surface in a village
 		isLookingForHome = true;
 		
 		// Default to Guard
-		type = EntityGuard.GuardType.GUARD;
+		// Also sets task 3 to one of  EntityAIAttackOnCollide or EntityAISpearAttack
+		setGuardType(GuardType.GUARD);		
 	}
 	
 	public void setGuardTypePerBiome(World world){
@@ -105,12 +122,13 @@ public class EntityGuard extends EntityMob{
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
 				this.setCurrentItemOrArmor(0, new ItemStack(ModItems.spear));
 			}
-			this.type = type;
+			this.setType(type);
 		}
 		else if (type == GuardType.KNIGHT){
 			// Hold a random weapon, either mace, longSword, or battleAxe
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
 				int chance = this.rand.nextInt(3);
+				this.setCurrentItemOrArmor(0, null);
 				switch (chance){
 				case 0:
 					this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.mace));
@@ -128,8 +146,9 @@ public class EntityGuard extends EntityMob{
 				this.setCurrentItemOrArmor(4, new ItemStack(Items.iron_boots));
 				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(BALANCE.MOBPROP.GUARD_MOVEMENT_SPEED);
 			}
-			this.type = type;			
+			this.setType(type);			
 		}
+        this.setCombatTask();
 	}
 	
 //	@Override
@@ -291,10 +310,10 @@ public class EntityGuard extends EntityMob{
 	 * 
 	 * @return village or null
 	 */
-    // TODO: This is called a lot, could be optimized somehow
 	public Village getHomeVillage() {
 		if (isLookingForHome)
 			return null;
+		// Added only setting once, as this is called a lot!
 		if (homeVillage != null)
 			return homeVillage;
 		else {
@@ -320,4 +339,33 @@ public class EntityGuard extends EntityMob{
 	public boolean isLookingForHome() {
 		return isLookingForHome;
 	}
+	
+    /**
+     * Attack the specified entity using a ranged attack.
+     */
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase entity, float attackDamage) {
+		EntitySpear entitySpear = new EntitySpear(this.worldObj, this, entity, 1.6F, (float)(14 - this.worldObj.difficultySetting.getDifficultyId() * 4));
+
+		// TODO: Could have enchantments
+		
+		this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.worldObj.spawnEntityInWorld(entitySpear);
+	}
+	
+    /**
+     * sets this entity's combat AI.
+     */
+    public void setCombatTask() {
+        this.tasks.removeTask(this.aiAttackOnCollide);
+        this.tasks.removeTask(this.aiSpearAttack);
+        ItemStack itemstack = this.getHeldItem();
+
+        if (itemstack != null && itemstack.getItem() == ModItems.spear) {
+            this.tasks.addTask(3, this.aiSpearAttack);
+        }
+        else {
+            this.tasks.addTask(3, this.aiAttackOnCollide);
+        }
+    }
 }

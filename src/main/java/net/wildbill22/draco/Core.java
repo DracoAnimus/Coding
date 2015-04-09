@@ -6,10 +6,10 @@ import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
+import net.wildbill22.draco.generation.villages.BarWenchCreationHandler;
 import net.wildbill22.draco.generation.villages.VillageBiomes;
 import net.wildbill22.draco.generation.villages.VillageGenReplacer;
 import net.wildbill22.draco.generation.villages.VillageTavern;
-import net.wildbill22.draco.handlers.TavernCreationHandler;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
@@ -28,7 +28,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
 	
 /** 
@@ -78,10 +77,10 @@ public class Core {
 		}
 		// Register new village building
 		if (Configs.VILLAGE.village_taverns_enabled) {
-			VillageTavern.addVillagePiece(VillageTavern.class, "ViTav");
-	 		TavernCreationHandler tavernCreator = new TavernCreationHandler();
-			VillagerRegistry.instance().registerVillageCreationHandler(tavernCreator);
-			VillageTavern.registerTavernChest();
+			// Tavern
+			VillageTavern.init();
+			// Bar Wench
+			BarWenchCreationHandler.init();
 		}
 	}
 
