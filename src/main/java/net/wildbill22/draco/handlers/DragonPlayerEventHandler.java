@@ -79,7 +79,8 @@ public class DragonPlayerEventHandler {
 	public void onPlacingBlock(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
 		if (!player.worldObj.isRemote && event.block instanceof TemporaryHoard) {
-	    	DragonPlayer.get(player).removeHoard(event.x, event.y, event.z);			
+	    	DragonPlayer.get(player).removeHoard(event.x, event.y, event.z);		
+	    	DragonPlayer.get(player).calculateHoardSize(event.world);
 			DragonPlayer.saveProxyData(event.getPlayer());
 		}
 	}
