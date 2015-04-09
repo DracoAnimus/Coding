@@ -3,6 +3,10 @@ package net.wildbill22.draco.tile_entity;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -20,8 +24,29 @@ import net.wildbill22.draco.lib.LogHelper;
  * 
  * @author WILLIAM
 */ 
-@SuppressWarnings("unused")
 public class TileEntityTemporaryHoard extends TileEntityChest {
+	
+	/**
+	 * Container (Used for inventory interactions on server and client) for this temporaryHoard
+	 * Calculates dragon level on close
+	 * @author Maxanier
+	 */
+	public static class HoardContainer extends ContainerChest{
+
+		public HoardContainer(IInventory player, IInventory chest) {
+			super(player, chest);
+		}
+		
+		@Override
+		public void onContainerClosed(EntityPlayer player){
+			if(!player.worldObj.isRemote){
+				DragonPlayer.get(player).calculateHoardSize(player.worldObj);
+			}
+
+			super.onContainerClosed(player);
+		}
+		
+	}
 
 	private String customName;
 	private ItemStack[] chestContents = new ItemStack[36];
@@ -42,7 +67,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
      */
 	@Override
     public void setInventorySlotContents(int par1, ItemStack itemstack){
-    	if (itemstack.getItem() == ModItems.goldCoin) {
+    	if (itemstack!=null&&itemstack.getItem() == ModItems.goldCoin) {
 	    	this.chestContents[par1] = itemstack;
 	    	if(itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()){
 	    		itemstack.stackSize = this.getInventoryStackLimit();
@@ -315,4 +340,20 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     public int getInventoryStackLimit() {
         return 64;
     }
+
+	/**
+	 * Creates a new Container for chest interaction
+	 * @param inventory
+	 * @return
+	 */
+	public Container getNewInventoryContainer(InventoryPlayer inventory) {
+		return new HoardContainer(inventory, getInventory());
+	}
+	
+	/**
+	 * @return The inventory to this block
+	 */
+	public IInventory getInventory(){
+		return ((TemporaryHoard)ModBlocks.temporaryHoard).func_149951_m(worldObj, this.xCoord,yCoord,zCoord);
+	}
 }

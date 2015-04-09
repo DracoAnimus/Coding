@@ -14,6 +14,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityOcelot;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.wildbill22.draco.Core;
+import net.wildbill22.draco.GuiHandler;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
@@ -293,4 +296,11 @@ public class TemporaryHoard extends BlockChest{
         this.blockIcon = p_149651_1_.registerIcon(REFERENCE.Texture_Path + TemporaryHoard.textureName);
         LogHelper.info("Set chest icon texture to temporaryHoard!");
     }    
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    {
+    	player.openGui(Core.instance, GuiHandler.ID_HOARD, world, x, y, z);
+    	return true;
+    }
 }
