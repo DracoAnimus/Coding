@@ -19,9 +19,9 @@ import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -91,6 +91,8 @@ public class Core {
 	
 	// For future use:
 	private void setupNetwork() {
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+		
 		modChannel = NetworkRegistry.INSTANCE.newSimpleChannel(REFERENCE.MODID);
 
 		int id = 0;

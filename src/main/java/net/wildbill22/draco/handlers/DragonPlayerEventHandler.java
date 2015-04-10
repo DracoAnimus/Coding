@@ -79,7 +79,8 @@ public class DragonPlayerEventHandler {
 	public void onPlacingBlock(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
 		if (!player.worldObj.isRemote && event.block instanceof TemporaryHoard) {
-	    	DragonPlayer.get(player).removeHoard(event.x, event.y, event.z);			
+	    	DragonPlayer.get(player).removeHoard(event.x, event.y, event.z);		
+	    	DragonPlayer.get(player).calculateHoardSize(event.world);
 			DragonPlayer.saveProxyData(event.getPlayer());
 		}
 	}
@@ -96,12 +97,13 @@ public class DragonPlayerEventHandler {
 	// Added to track how many gold coins the Player Dragon has (would be better if closing container)
 	@SubscribeEvent
     public void onPlayerInteractBlock(PlayerInteractEvent event) {
-		EntityPlayer player = event.entityPlayer;
-		Block block = event.world.getBlock(event.x, event.y, event.z);
-		if (!player.worldObj.isRemote && block instanceof TemporaryHoard) {
-			if (DragonPlayer.get(player).calculateHoardSize(event.world))
-				player.addChatMessage(new ChatComponentText("Put gold coins in the hoard."));
-		}
+//		Not required anymore
+//		EntityPlayer player = event.entityPlayer;
+//		Block block = event.world.getBlock(event.x, event.y, event.z);
+//		if (!player.worldObj.isRemote && block instanceof TemporaryHoard) {
+//			if (DragonPlayer.get(player).calculateHoardSize(event.world))
+//				player.addChatMessage(new ChatComponentText("Put gold coins in the hoard."));
+//		}
 	}
 	
 	// Gives fireballs or explosive fireball each time you kill something when a dragon
