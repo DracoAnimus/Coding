@@ -13,15 +13,13 @@ public class RenderGuard extends RenderBiped{
 	
 	public RenderGuard(ModelBiped par1ModelBiped, float shadowSize) {
 		super(par1ModelBiped, shadowSize);
-		texture = new ResourceLocation[5];
+		texture = new ResourceLocation[4];
 		texture[0] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
 		texture[1] = new ResourceLocation(REFERENCE.MODID + ":textures/models/knightTexture.png");
 		texture[2] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
 		texture[3] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
-		texture[4] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
 //		LogHelper.info("RenderGuard: Setting new texture");
 	}
-
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {

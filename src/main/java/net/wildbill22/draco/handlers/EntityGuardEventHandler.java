@@ -25,7 +25,6 @@ public class EntityGuardEventHandler {
 	    	// If spawned by WorldGen, it will not be looking for home
 	    	if (guard.isLookingForHome()) {
 	    		if (okToSpawnNearVillage(event, 50)) {
-//	    			guard.setGuardTypePerBiome(event.world);
 		    		LogHelper.info("EntityJoinWorldEvent: Do spawn " + guard.getGuardType() + " at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
 	    			// If I set to ALLOW, need to do all own checks here, so use DEFAULT
 		    		event.setResult(Result.DEFAULT);
@@ -35,9 +34,6 @@ public class EntityGuardEventHandler {
 //		    		LogHelper.info("onLivingCheckSpawnEvent: Don't spawn Guard at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
 		    		event.setResult(Result.DENY);	    		
 		    	}
-	    	}
-	    	else if (guard.isTypeSet()) {
-    			guard.setCombatTask();	    		
 	    	}
 		}
 	}

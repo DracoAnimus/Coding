@@ -39,6 +39,8 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 	private void addSurfaceEntities(World world, Random random, int x, int z) {
 
 		int surfaceY = world.getHeightValue(x, z);
+		if (world.villageCollectionObj == null)
+			return;
 		Village v = world.villageCollectionObj.findNearestVillage(x, surfaceY, z, 16);
 		if (v == null) {
 			return;

@@ -34,12 +34,10 @@ public class EntityAISpearAttack  extends EntityAIBase {
     		int attackWaitTime, float p_i1650_6_) {
         this.rangedAttackTime = -1;
 
-        if (!(entityAttacker instanceof EntityLivingBase))
-        {
+        if (!(entityAttacker instanceof EntityLivingBase)) {
             throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
         }
-        else
-        {
+        else {
             this.rangedAttackEntityHost = entityAttacker;
             this.entityHost = (EntityLiving)entityAttacker;
             this.entityMoveSpeed = targetSpeed;

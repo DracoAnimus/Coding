@@ -1,19 +1,16 @@
 package net.wildbill22.draco.entities.hostile;
 
-import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -32,22 +29,16 @@ import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
-public class EntityGuard extends EntityMob {
-	public static final String name = "guard";
-	private boolean isLookingForHome;
+public abstract class EntityGuard extends EntityMob {
+	protected boolean isLookingForHome;
 	private Village homeVillage = null;
-	private static final String GUARD_PROP = "draco_guard_type";
-
-	public static String getFullName() {
-		return REFERENCE.MODID + "." + name;
-	}
+//	private static final String GUARD_PROP = "draco_guard_type";
 
 	public static enum GuardType {
-	    GUARD(0),
-	    SPEAR(1),
-	    KNIGHT(2),
-	    LONGBOW(3),
-	    CROSSBOW(4);
+	    SPEAR(0),
+	    KNIGHT(1),
+	    LONGBOW(2),
+	    CROSSBOW(3);
 		private final int type;
 	    
 	    private GuardType(int id) {
@@ -61,57 +52,20 @@ public class EntityGuard extends EntityMob {
 		public String toString() {
 			switch (type) {
 			case 0:
-				return "Guard";
-			case 1:
 				return "Spear";
-			case 2:
+			case 1:
 				return "Knight";
-			case 3:
+			case 2:
 				return "Longbow";
-			case 4:
+			case 3:
 				return "Crossbow";
 			}
-			return "Guard";			
-		}
-	}
-	protected GuardType type;
-
-//	private void setType(GuardType type) {
-//		this.type = type;
-//	}
-
-	public void setGuardTypeId(int id) {
-		switch (id) {
-		case 0:
-			this.type = GuardType.GUARD;
-			break;
-		case 1:
-			this.type = GuardType.SPEAR;
-			break;
-		case 2:
-			this.type = GuardType.KNIGHT;
-			break;
-		case 3:
-			this.type = GuardType.LONGBOW;
-			break;
-		case 4:
-			this.type = GuardType.CROSSBOW;
-			break;
+			return "Spear";			
 		}
 	}
 	
-	public boolean isTypeSet() {
-		if (type == null)
-			return false;
-		return true;
-	}
-	public GuardType getGuardType() {
-		if (type == null)
-			type = GuardType.GUARD;
-		return type;
-	}
+	public abstract GuardType getGuardType();
    
-	// Does this need entityAIMoveTowardsTarget?
 	public EntityGuard(World world){
 		super(world);
 		this.getNavigator().setCanSwim(true);
@@ -119,46 +73,39 @@ public class EntityGuard extends EntityMob {
 		this.experienceValue = 10;
 		this.setSize(0.6F, 1.8F);
 		this.clearAITasks();
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		// Leave task 1 empty, this is set when finds home
-		this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
-		this.tasks.addTask(4, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, true));
-        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 
-//        this.targetTasks.addTask(0, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-//		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityCreature.class, 0, true, false, new IEntitySelector() {
-//			@Override
-//			// TODO: Add all the creatures the guard should attack
-//			public boolean isEntityApplicable(Entity entity) {
-//				if (!isLookingForHome && ((EntityCreature) entity).isWithinHomeDistanceCurrentPosition() && entity instanceof EntityZombie)
-//					return true;
-//				return false;
-//			}
-//		}));
-		        
-		// Default to not in a village, will be set to false in
+		// rangedAttackEntityHost, entityMoveSpeed, ???, maxRangedAttackTime, attackDamage 
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		// Task 1 set to the type of attack for each guard type
+		// Leave task 2 empty, this is set when finds home
+		this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(5, new EntityAILookIdle(this));
+
+        // taskOwner, targetClass, targetChance, shouldCheckSight
+		this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+
+        // Default to not in a village, will be set to false in
 		// WorldGenDracoAnimus when generated on the surface in a village
 		isLookingForHome = true;		
 	}
 	
 	public static EntityGuard createGuardTypePerBiome(World world, int x, int z) {
 		GuardType guardForBiome = getGuardTypePerBiome(world, x, z);
-		if (guardForBiome == GuardType.SPEAR) {
-			return (EntityGuard) EntityList.createEntityByName(EntitySpearGuard.getFullName(), world);
-		}
 		if (guardForBiome == GuardType.KNIGHT) {
 			return (EntityGuard) EntityList.createEntityByName(EntityKnightGuard.getFullName(), world);
 		}
-		if (guardForBiome == GuardType.LONGBOW) {
+		else if (guardForBiome == GuardType.LONGBOW) {
 			return (EntityGuard) EntityList.createEntityByName(EntityLongbowGuard.getFullName(), world);
 		}
-		if (guardForBiome == GuardType.CROSSBOW) {
+		else if (guardForBiome == GuardType.CROSSBOW) {
 			return (EntityGuard) EntityList.createEntityByName(EntityCrossbowGuard.getFullName(), world);
 		}
-		LogHelper.error("EnityGuard: createGuardTypePerBiome: Oops, should never have gotten here!");
-		return (EntityGuard) EntityList.createEntityByName(EntityGuard.getFullName(), world);
+		// should be set, but default here for simplicity
+		else {
+			return (EntityGuard) EntityList.createEntityByName(EntitySpearGuard.getFullName(), world);
+		}
 	}
 	
 	public static GuardType getGuardTypePerBiome(World world, int x, int z){
@@ -179,7 +126,7 @@ public class EntityGuard extends EntityMob {
 	}
 
 	// Counter part for getHeldItem from EntityLiving
-	public void setGuardWeaponType(){
+	public void setGuardWeaponType(GuardType type){
 		if (type == GuardType.SPEAR) {
 			// Hold a spear
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
@@ -190,7 +137,6 @@ public class EntityGuard extends EntityMob {
 			// Hold a random weapon, either mace, longSword, or battleAxe
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
 				int chance = this.rand.nextInt(3);
-//				this.setCurrentItemOrArmor(0, null);
 				switch (chance){
 				case 0:
 					this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.mace));
@@ -212,21 +158,17 @@ public class EntityGuard extends EntityMob {
 		else if (type == GuardType.LONGBOW) {
 			// Hold a longbow
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
-//				this.setCurrentItemOrArmor(0, null);
 				this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.longBow));
 			}			
 		}
 		else if (type == GuardType.CROSSBOW) {
 			// Hold a crossbow
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
-//				this.setCurrentItemOrArmor(0, null);
 				this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.crossbow));
 			}			
 		}
 		else
 			LogHelper.error("EntityGuard: setGuardWeaponType: Oops, should not have gotten here!");
-//		this.type = type;			
-//      this.setCombatTask();
 	}
 	
     /**
@@ -235,10 +177,10 @@ public class EntityGuard extends EntityMob {
 	@Override
     public void setCurrentItemOrArmor(int slot, ItemStack stack) {
         super.setCurrentItemOrArmor(slot, stack);
-
-        if (!this.worldObj.isRemote && slot == 0) {
-            this.setCombatTask();
-        }
+//
+//        if (!this.worldObj.isRemote && slot == 0) {
+//            this.setCombatTask();
+//        }
     }
 
 	public boolean okToSpawnNearVillage(int distanceToLook) {
@@ -317,9 +259,6 @@ public class EntityGuard extends EntityMob {
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
 	
-	public void setCombatTask() {	
-	}
-	
 	@Override
 	// par1 - whether attacked recently by player
 	// par2 - looting level used in attack
@@ -385,34 +324,36 @@ public class EntityGuard extends EntityMob {
 	public void setFoundHome() {
 		isLookingForHome = false;
 		// This moves the entity towards its home position
-		this.tasks.addTask(1, new EntityAIMoveTowardsRestriction(this, 1.0F));
+		this.tasks.addTask(2, new EntityAIMoveTowardsRestriction(this, 1.0F));
+
 		// sets entity, speed, and whether nocturnal or not, I think this AI used by zombie
 //		this.tasks.addTask(4, new EntityAIMoveThroughVillage(this, 0.9F, false));
-		this.targetTasks.addTask(1, new EntityAIDefendVillage(this));
+
+		this.targetTasks.addTask(2, new EntityAIDefendVillage(this));
 	}
 
 	public boolean isLookingForHome() {
 		return isLookingForHome;
 	}
 
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbt) {
-		super.writeEntityToNBT(nbt);
-		// Added Guard properties
-		nbt.setInteger(GUARD_PROP, this.getGuardType().getGuardId());
-		LogHelper.info("EnityGuard write: Guard is a " + this.type.toString() + ".");
-	}
+//	@Override
+//	public void writeEntityToNBT(NBTTagCompound nbt) {
+//		super.writeEntityToNBT(nbt);
+//		// Added Guard properties
+//		nbt.setInteger(GUARD_PROP, this.getGuardType().getGuardId());
+//		LogHelper.info("EnityGuard write: Guard is a " + this.type.toString() + ".");
+//	}
 	
-	@Override
-	public void readEntityFromNBT(NBTTagCompound nbt) {
-		super.readEntityFromNBT(nbt);
-		// Added Guard properties
-		if (nbt.hasKey(GUARD_PROP)) {
-			setGuardTypeId(nbt.getInteger(GUARD_PROP));
-			this.setCombatTask();
-			LogHelper.info("EnityGuard read: Guard is a " + this.type.toString() + ".");
-		}
-		else
-			LogHelper.error("EnityGuard read: No guard property!");
-	}	
+//	@Override
+//	public void readEntityFromNBT(NBTTagCompound nbt) {
+//		super.readEntityFromNBT(nbt);
+//		// Added Guard properties
+//		if (nbt.hasKey(GUARD_PROP)) {
+//			setGuardTypeId(nbt.getInteger(GUARD_PROP));
+//			this.setCombatTask();
+//			LogHelper.info("EnityGuard read: Guard is a " + this.type.toString() + ".");
+//		}
+//		else
+//			LogHelper.error("EnityGuard read: No guard property!");
+//	}	
 }
