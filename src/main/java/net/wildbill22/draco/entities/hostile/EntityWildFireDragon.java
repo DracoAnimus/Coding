@@ -22,7 +22,9 @@ import net.wildbill22.draco.lib.LogHelper;
  *
  */
 public class EntityWildFireDragon extends EntityMob {
-//	int lastCheckTime = 0;
+	public static final String name = "wildFireDragon";
+
+	//	int lastCheckTime = 0;
     /** Random offset used in floating behavior */
     private float heightOffset = 0.5F;
     /** ticks until heightOffset is randomized */

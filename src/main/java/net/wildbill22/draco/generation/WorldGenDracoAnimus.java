@@ -66,21 +66,21 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 			int y1 = world.getHeightValue(x1, z1);
 			if (v.isInRange(x1, y1, z1)) {
 //				LogHelper.info("WorldGen: going to spawn Guard!");
-				Entity e = EntityList.createEntityByName(EntityGuard.getFullName(), world);
-				if (e == null){
-					LogHelper.error("WorldGen: Could not createEntityByName: " + EntityGuard.getFullName());
+				EntityGuard guard = EntityGuard.createGuardTypePerBiome(world, x, z);
+//				Entity e = EntityList.createEntityByName(EntityGuard.getFullName(), world);
+				if (guard == null){
 					return;
 				}
-				e.setLocationAndAngles(x1, y1, z1, 0.0F, 0.0F);
-				((EntityGuard) e).setFoundHome();
-				if (((EntityGuard) e).getCanSpawnHere()) {
-					((EntityGuard) e).setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
-					((EntityGuard) e).setGuardTypePerBiome(world);
-					world.spawnEntityInWorld(e);
+				guard.setLocationAndAngles(x1, y1, z1, 0.0F, 0.0F);
+				guard.setFoundHome();
+				if (guard.getCanSpawnHere()) {
+					guard.setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
+//					guard.setGuardTypePerBiome(world);
+					world.spawnEntityInWorld(guard);
 //					LogHelper.info("WorldGen: Spawned guard at: " + x1 + " " + y1 + " " + z1);
 					spawnedGuards++;
 				} else {
-					e.setDead();
+					guard.setDead();
 				}
 			}
 		}

@@ -53,9 +53,9 @@ public class Core {
 		ModItems.preInit();
 		ModBlocks.preInit();
     	ModTileEntities.modRegistry();
+		ModBiomes.init(); // Must be before ModEntities
 		ModEntities.preInit();
 		ModWeapons.preInit();
-		ModBiomes.init();
 		dracoProxy.registerRenderer();
 		VillageBiomes.preInit(event);
 		setupNetwork();

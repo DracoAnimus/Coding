@@ -12,8 +12,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.wildbill22.draco.blocks.TemporaryHoard;
-import net.wildbill22.draco.common.entities.dragons.EntityMCDragon;
-import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
+import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -25,16 +24,16 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	public static final String EXT_PROP_NAME = "DragonPlayer";
 //	public static final int LEVEL_WATCHER = 20;
 	private final EntityPlayer player;
-	private EntityMCDragon dragon =  null;
+//	private EntityMCDragon dragon =  null;
 	private World world;
 
-	public EntityMCDragon getDragon() {
-		if (dragon == null) {			
-			dragon = EntityMCDragon.EntityMCDragonFactory(dragonName, world);
-			dragon.setPlayer(player);
-		}
-		return dragon;
-	}
+//	public EntityMCDragon getDragon() {
+//		if (dragon == null) {			
+//			dragon = EntityMCDragon.EntityMCDragonFactory(dragonName, world);
+//			dragon.setPlayer(player);
+//		}
+//		return dragon;
+//	}
 	
 	// The extended player properties:
 	private boolean isDragon;
@@ -61,7 +60,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		this.level = 1;
 		this.player.getDataWatcher().addObject(BALANCE.LEVEL_WATCHER, this.level);
 		this.isDragon = true;
-		this.dragonName = EntityMCSilverDragon.name;
+		this.dragonName = EntitySilverDragon.name;
 		this.world = world;
 		
 		// Configure some stuff that needs defaults (don't set anything that will be loaded)
@@ -134,12 +133,12 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		compound.setTag(EXT_PROP_NAME, properties);
 
 		// Log some settings
-        LogHelper.info("DragonPlayer save: Player is " + (isDragon ? "a" : "not a") + " dragon");
-        LogHelper.info("DragonPlayer save: Player is a " + dragonName + ".");
-        LogHelper.info("DragonPlayer save: Player was " + (this.getPlayer().capabilities.isFlying ? "" : "not ") + "flying");
-        LogHelper.info("DragonPlayer save: Player has " + getHoardSize() + " coins.");
-        LogHelper.info("DragonPlayer save: Player has " + writeIndex + " hoards.");
-        LogHelper.info("DragonPlayer save: Player is level " + level + ".");
+//        LogHelper.info("DragonPlayer save: Player is " + (isDragon ? "a" : "not a") + " dragon");
+//        LogHelper.info("DragonPlayer save: Player is a " + dragonName + ".");
+//        LogHelper.info("DragonPlayer save: Player was " + (this.getPlayer().capabilities.isFlying ? "" : "not ") + "flying");
+//        LogHelper.info("DragonPlayer save: Player has " + getHoardSize() + " coins.");
+//        LogHelper.info("DragonPlayer save: Player has " + writeIndex + " hoards.");
+//        LogHelper.info("DragonPlayer save: Player is level " + level + ".");
 	}
 
 	@Override
@@ -169,12 +168,12 @@ public class DragonPlayer implements IExtendedEntityProperties {
         }
 
         // Log some settings
-        LogHelper.info("DragonPlayer load: Player is " + (isDragon ? "a" : "not a") + " dragon");
-        LogHelper.info("DragonPlayer load: Player is a " + dragonName + ".");
-        LogHelper.info("DragonPlayer load: Player was " + (wasFlyingOnExit ? "" : "not ") + "flying");   
-        LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
-        LogHelper.info("DragonPlayer load: Player has " + hoardList.size() + " hoards.");
-        LogHelper.info("DragonPlayer load: Player is level " + level + ".");
+//        LogHelper.info("DragonPlayer load: Player is " + (isDragon ? "a" : "not a") + " dragon");
+//        LogHelper.info("DragonPlayer load: Player is a " + dragonName + ".");
+//        LogHelper.info("DragonPlayer load: Player was " + (wasFlyingOnExit ? "" : "not ") + "flying");   
+//        LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
+//        LogHelper.info("DragonPlayer load: Player has " + hoardList.size() + " hoards.");
+//        LogHelper.info("DragonPlayer load: Player is level " + level + ".");
 	}
 
 	@Override

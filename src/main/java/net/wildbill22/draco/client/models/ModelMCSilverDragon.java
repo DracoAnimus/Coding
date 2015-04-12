@@ -326,14 +326,17 @@ public void render(Entity par1Entity, float par2, float par3, float par4, float 
 	EntityMCSilverDragon entity;
     if (par1Entity instanceof EntityPlayer) {
         dragonPlayer = DragonPlayer.get((EntityPlayer)par1Entity);
-        entity = (EntityMCSilverDragon) dragonPlayer.getDragon();
-//        entity.setPlayerAnimationsToRun();
-        entity.setPlayerAnimationsToRun(par3);
+        // TODO: Uncomment these two lines if we ever use this dragon again!
+//        entity = (EntityMCSilverDragon) dragonPlayer.getDragon();
+//        entity.setPlayerAnimationsToRun(par3);
+        
+//      entity.setPlayerAnimationsToRun();
     }
     else {
         entity = (EntityMCSilverDragon) par1Entity;
-    }	
-	AnimationHandler.performAnimationInModel(parts, entity);
+    }
+    // This line too!
+//	AnimationHandler.performAnimationInModel(parts, entity);
 	
 	//Render every non-child part
 	leftLeg1.render(par7);

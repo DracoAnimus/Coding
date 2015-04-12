@@ -25,8 +25,8 @@ public class EntityGuardEventHandler {
 	    	// If spawned by WorldGen, it will not be looking for home
 	    	if (guard.isLookingForHome()) {
 	    		if (okToSpawnNearVillage(event, 50)) {
-	    			guard.setGuardTypePerBiome(event.world);
-//		    		LogHelper.info("onLivingCheckSpawnEvent: Do spawn Guard at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
+//	    			guard.setGuardTypePerBiome(event.world);
+		    		LogHelper.info("EntityJoinWorldEvent: Do spawn " + guard.getGuardType() + " at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
 	    			// If I set to ALLOW, need to do all own checks here, so use DEFAULT
 		    		event.setResult(Result.DEFAULT);
 		    	}
@@ -35,6 +35,9 @@ public class EntityGuardEventHandler {
 //		    		LogHelper.info("onLivingCheckSpawnEvent: Don't spawn Guard at: " + guard.posX + ", " + guard.posY + ", " + guard.posZ);
 		    		event.setResult(Result.DENY);	    		
 		    	}
+	    	}
+	    	else if (guard.isTypeSet()) {
+    			guard.setCombatTask();	    		
 	    	}
 		}
 	}
@@ -57,11 +60,12 @@ public class EntityGuardEventHandler {
 //				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
 		if (v.isInRange(x, surfaceY, z) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE) {
 			EntityGuard guard = (EntityGuard) event.entity;
-			guard.setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
-			guard.setFoundHome();
-			return true;
+			if (guard instanceof EntityGuard) {
+				guard.setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
+				guard.setFoundHome();
+				return true;
+			}
 		}
-		else
-			return false;
+		return false;
 	}
 }

@@ -30,18 +30,19 @@ public class ModBiomes {
         // Allow villages in this biome
 		BiomeManager.addVillageBiome(biomeTownForest, true);
 		BiomeDictionary.registerBiomeType(biomeTownForest, Type.MAGICAL);
-		int weight = 10;
-//		int weight = 50;  // Testing only, 100 is maximum weight
+//		int weight = 10;
+		int weight = 40;  // Testing only, 100 is maximum weight
 		LogHelper.info("ModBiomes: Town Forest created with weight: " + weight);
 		biomeEntryTownForest = new BiomeEntry(biomeTownForest, weight);
 		BiomeManager.addBiome(BiomeType.WARM, biomeEntryTownForest);
 		
 		// Create City Forest
+		biomeID++;
 		biomeCityPlains = new BiomeCityPlains(biomeID).setBiomeName(BiomeCityPlains.name);
         // Allow villages in this biome
 		BiomeManager.addVillageBiome(biomeCityPlains, true);
 		BiomeDictionary.registerBiomeType(biomeCityPlains, Type.MAGICAL);
-		weight = 10;
+		weight = 20;
 //		weight = 50;  // Testing only, 100 is maximum weight
 		LogHelper.info("ModBiomes: City Plains created with weight: " + weight);
 		biomeEntryCityPlains = new BiomeEntry(biomeCityPlains, weight);

@@ -2,15 +2,13 @@ package net.wildbill22.draco.handlers;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -18,12 +16,8 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.wildbill22.draco.blocks.TemporaryHoard;
-import net.wildbill22.draco.client.renders.RenderMCSilverDragon;
-import net.wildbill22.draco.common.entities.dragons.EntityMCDragon;
-import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
@@ -45,7 +39,7 @@ public class DragonPlayerEventHandler {
 	}
 	
 	// This is supposed to ensure that the player can fly, but still can lose ability if changing from creative
-	@SubscribeEvent
+	@SubscribeEvent (receiveCanceled=true)
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
 			DragonPlayer.loadProxyData((EntityPlayer) event.entity);
@@ -95,8 +89,8 @@ public class DragonPlayerEventHandler {
 	}
 
 	// Added to track how many gold coins the Player Dragon has (would be better if closing container)
-	@SubscribeEvent
-    public void onPlayerInteractBlock(PlayerInteractEvent event) {
+//	@SubscribeEvent
+//    public void onPlayerInteractBlock(PlayerInteractEvent event) {
 //		Not required anymore
 //		EntityPlayer player = event.entityPlayer;
 //		Block block = event.world.getBlock(event.x, event.y, event.z);
@@ -104,14 +98,15 @@ public class DragonPlayerEventHandler {
 //			if (DragonPlayer.get(player).calculateHoardSize(event.world))
 //				player.addChatMessage(new ChatComponentText("Put gold coins in the hoard."));
 //		}
-	}
+//	}
 	
 	// Gives fireballs or explosive fireball each time you kill something when a dragon
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
-		if (event.source.getEntity() instanceof EntityPlayer) {
+		Entity entity = event.source.getSourceOfDamage();
+		if (entity != null && !entity.worldObj.isRemote && entity instanceof EntityPlayer) {
 			LogHelper.info("DragonPlayerEventHandler: Player killed something!");
-			EntityPlayer player = (EntityPlayer) event.source.getEntity();
+			EntityPlayer player = (EntityPlayer) entity;
 			if (DragonPlayer.get(player).isDragon()) {
 				int chance  = Math.max((DragonPlayer.get(player).getLevel() / 2), 1);
 				int num = new Random().nextInt(chance) + 1;

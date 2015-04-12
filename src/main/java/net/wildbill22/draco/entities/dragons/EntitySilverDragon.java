@@ -12,6 +12,7 @@ import net.wildbill22.draco.items.ModItems;
  */
 public class EntitySilverDragon extends EntityLiving {
 	int lastCheckTime = 0;
+	public static final String name = "silverDragon";
 	
 	public EntitySilverDragon(World world) {
 		super(world);        

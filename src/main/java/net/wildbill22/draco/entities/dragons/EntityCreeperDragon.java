@@ -44,6 +44,7 @@ import net.wildbill22.draco.lib.LogHelper;
  */
 public class EntityCreeperDragon extends EntityTameable {
 	int lastCheckTime = 0;
+	public static final String name = "creeperDragon";
 	
 	public EntityCreeperDragon(World world) {
 		super(world);
