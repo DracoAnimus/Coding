@@ -1,4 +1,4 @@
-package net.wildbill22.draco.generation.villages;
+package net.wildbill22.draco.generation.villageHandlers;
 
 import java.util.Random;
 

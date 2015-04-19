@@ -10,7 +10,6 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntitySpear;
 import net.wildbill22.draco.entities.ai.EntityAISpearAttack;
-import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
 public class EntitySpearGuard extends EntityGuard implements IRangedAttackMob {

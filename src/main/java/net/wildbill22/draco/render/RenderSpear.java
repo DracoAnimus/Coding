@@ -16,7 +16,6 @@ import org.lwjgl.opengl.GL12;
  *
  */
 public class RenderSpear extends Render {
-
 	private static final ResourceLocation spearTextures = new ResourceLocation(REFERENCE.MODID + ":textures/entity/spear.png");
 
 	@Override
@@ -33,10 +32,10 @@ public class RenderSpear extends Render {
 		Tessellator tessellator = Tessellator.instance;
 
 		// U and V points in the texture
-		float bu1 = 4F / 32F;
-		float bv1 = 0;
-		float bu2 = 5F / 32F;
-		float bv2 = 2F / 32F;
+//		float bu1 = 4F / 32F;
+//		float bv1 = 0;
+//		float bu2 = 5F / 32F;
+//		float bv2 = 2F / 32F;
 
 		float su1 = 0;
 		float sv1 = 2F / 32F;

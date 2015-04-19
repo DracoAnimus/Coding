@@ -1,39 +1,32 @@
 package net.wildbill22.draco.tile_entity;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.ChatComponentText;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
-import net.wildbill22.draco.lib.LogHelper;
 
 /**
  * 
  * @author WILLIAM
 */ 
-public class TileEntityTemporaryHoard extends TileEntityChest {
-	
+public class TileEntityTemporaryHoard extends TileEntityChest {	
 	/**
 	 * Container (Used for inventory interactions on server and client) for this temporaryHoard
 	 * Calculates dragon level on close
 	 * @author Maxanier
 	 */
 	public static class HoardContainer extends ContainerChest{
-
 		public HoardContainer(IInventory player, IInventory chest) {
 			super(player, chest);
 		}
@@ -43,9 +36,9 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 			if(!player.worldObj.isRemote){
 				DragonPlayer.get(player).calculateHoardSize(player.worldObj);
 			}
-
 			super.onContainerClosed(player);
 		}
+		
 		/**
 		 * Replaces the chest inventory slots by filter slots
 		 */
@@ -55,14 +48,12 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 				return super.addSlotToContainer(new CoinSlot(slot));
 			}
 			return super.addSlotToContainer(slot);
-
 		}
 		
 		/**
 		 * Filter Slot which clones an existing slot, but only allows gold coins
 		 */
 		public static class CoinSlot extends Slot{
-
 			public CoinSlot(Slot slot) {
 				super(slot.inventory, slot.getSlotIndex(),slot.xDisplayPosition,slot.yDisplayPosition);
 			}
@@ -75,9 +66,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 					return false;
 				}
 			}
-			
 		}
-		
 	}
 
 	private String customName;
@@ -151,14 +140,8 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         return this.customName != null && this.customName.length() > 0;
     }
 
-//    @Override
-//    public int getSizeInventory() {
-//    	return 40;
-//    }
-
 	@Override
-    public void func_145976_a(String p_145976_1_)
-    {
+    public void func_145976_a(String p_145976_1_) {
         this.customName = p_145976_1_;
     }
 
@@ -203,42 +186,31 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         }
     }
 
-    private void func_145978_a(TileEntityTemporaryHoard entity, int side)
-    {
-        if (entity.isInvalid())
-        {
+    private void func_145978_a(TileEntityTemporaryHoard entity, int side) {
+        if (entity.isInvalid()) {
             this.adjacentChestChecked = false;
         }
-        else if (this.adjacentChestChecked)
-        {
-            switch (side)
-            {
-                case 0:
-                    if (this.adjacentChestZPos != entity)
-                    {
-                        this.adjacentChestChecked = false;
-                    }
-
-                    break;
-                case 1:
-                    if (this.adjacentChestXNeg != entity)
-                    {
-                        this.adjacentChestChecked = false;
-                    }
-
-                    break;
-                case 2:
-                    if (this.adjacentChestZNeg != entity)
-                    {
-                        this.adjacentChestChecked = false;
-                    }
-
-                    break;
-                case 3:
-                    if (this.adjacentChestXPos != entity)
-                    {
-                        this.adjacentChestChecked = false;
-                    }
+        else if (this.adjacentChestChecked) {
+            switch (side) {
+            case 0:
+                if (this.adjacentChestZPos != entity) {
+                    this.adjacentChestChecked = false;
+                }
+                break;
+            case 1:
+                if (this.adjacentChestXNeg != entity) {
+                    this.adjacentChestChecked = false;
+                }
+                break;
+            case 2:
+                if (this.adjacentChestZNeg != entity) {
+                    this.adjacentChestChecked = false;
+                }
+                break;
+            case 3:
+                if (this.adjacentChestXPos != entity) {
+                    this.adjacentChestChecked = false;
+                }
             }
         }
     }
@@ -247,49 +219,35 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
      * Performs the check for adjacent chests to determine if this chest is double or not.
      */
 	@Override
-    public void checkForAdjacentChests()
-    {
-        if (!this.adjacentChestChecked)
-        {
+    public void checkForAdjacentChests() {
+        if (!this.adjacentChestChecked) {
             this.adjacentChestChecked = true;
             this.adjacentChestZNeg = null;
             this.adjacentChestXPos = null;
             this.adjacentChestXNeg = null;
             this.adjacentChestZPos = null;
 
-            if (this.func_145977_a(this.xCoord - 1, this.yCoord, this.zCoord))
-            {
+            if (this.func_145977_a(this.xCoord - 1, this.yCoord, this.zCoord)) {
                 this.adjacentChestXNeg = (TileEntityTemporaryHoard)this.worldObj.getTileEntity(this.xCoord - 1, this.yCoord, this.zCoord);
             }
-
-            if (this.func_145977_a(this.xCoord + 1, this.yCoord, this.zCoord))
-            {
+            if (this.func_145977_a(this.xCoord + 1, this.yCoord, this.zCoord)) {
                 this.adjacentChestXPos = (TileEntityTemporaryHoard)this.worldObj.getTileEntity(this.xCoord + 1, this.yCoord, this.zCoord);
             }
-
-            if (this.func_145977_a(this.xCoord, this.yCoord, this.zCoord - 1))
-            {
+            if (this.func_145977_a(this.xCoord, this.yCoord, this.zCoord - 1)) {
                 this.adjacentChestZNeg = (TileEntityTemporaryHoard)this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord - 1);
             }
-
-            if (this.func_145977_a(this.xCoord, this.yCoord, this.zCoord + 1))
-            {
+            if (this.func_145977_a(this.xCoord, this.yCoord, this.zCoord + 1)) {
                 this.adjacentChestZPos = (TileEntityTemporaryHoard)this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord + 1);
             }
-
-            if (this.adjacentChestZNeg != null)
-            {
+            if (this.adjacentChestZNeg != null) {
                 this.adjacentChestZNeg.func_145978_a(this, 0);
             }
-
             if (this.adjacentChestZPos != null) {
                 this.adjacentChestZPos.func_145978_a(this, 2);
             }
-
             if (this.adjacentChestXPos != null) {
                 this.adjacentChestXPos.func_145978_a(this, 1);
             }
-
             if (this.adjacentChestXNeg != null) {
                 this.adjacentChestXNeg.func_145978_a(this, 3);
             }
@@ -297,31 +255,24 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     }
 
     // Get an instance of the chest at x, y, z
-    private boolean func_145977_a(int x, int y, int z)
-    {
-        if (this.worldObj == null)
-        {
+    private boolean func_145977_a(int x, int y, int z) {
+        if (this.worldObj == null) {
             return false;
         }
-        else
-        {
+        else {
             Block block = this.worldObj.getBlock(x, y, z);
             return block instanceof TemporaryHoard && ((TemporaryHoard)block).field_149956_a == this.func_145980_j();
         }
     }
     
 	@Override
-    public int func_145980_j()
-    {
-        if (this.cachedChestType == -1)
-        {
+    public int func_145980_j() {
+        if (this.cachedChestType == -1) {
             if (this.worldObj == null || !(this.getBlockType() instanceof TemporaryHoard)) {
                 return 0;
             }
-
             this.cachedChestType = ((TemporaryHoard)this.getBlockType()).field_149956_a;
         }
-
         return this.cachedChestType;
     }
     
@@ -343,11 +294,9 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
             }
             else {
                 itemstack = this.chestContents[slot].splitStack(maxItems);
-
                 if (this.chestContents[slot].stackSize == 0) {
                     this.chestContents[slot] = null;
                 }
-
                 this.markDirty();
                 return itemstack;
             }

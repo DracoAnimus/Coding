@@ -27,7 +27,6 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
-import net.wildbill22.draco.lib.REFERENCE;
 
 public abstract class EntityGuard extends EntityMob {
 	protected boolean isLookingForHome;
@@ -38,7 +37,8 @@ public abstract class EntityGuard extends EntityMob {
 	    SPEAR(0),
 	    KNIGHT(1),
 	    LONGBOW(2),
-	    CROSSBOW(3);
+	    CROSSBOW(3),
+	    BARON(4);
 		private final int type;
 	    
 	    private GuardType(int id) {
@@ -51,16 +51,18 @@ public abstract class EntityGuard extends EntityMob {
 		
 		public String toString() {
 			switch (type) {
-			case 0:
-				return "Spear";
 			case 1:
 				return "Knight";
 			case 2:
 				return "Longbow";
 			case 3:
 				return "Crossbow";
+			case 4:
+				return "Baron";
+			case 0:
+			default:
+				return "Spear";
 			}
-			return "Spear";			
 		}
 	}
 	
@@ -108,6 +110,14 @@ public abstract class EntityGuard extends EntityMob {
 		}
 	}
 	
+	public static boolean isBaronBiome(World world, int x, int z){
+		BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
+		if (biome == ModBiomes.biomeCityPlains) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static GuardType getGuardTypePerBiome(World world, int x, int z){
 		BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
 		if (biome == BiomeGenBase.desert || biome == BiomeGenBase.savanna
@@ -136,22 +146,29 @@ public abstract class EntityGuard extends EntityMob {
 		else if (type == GuardType.KNIGHT) {
 			// Hold a random weapon, either mace, longSword, or battleAxe
 			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
-				int chance = this.rand.nextInt(3);
+				int chance = this.rand.nextInt(2);
 				switch (chance){
 				case 0:
 					this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.mace));
 					break;
 				case 1:
-					this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.longSword));
-					break;
-				case 2:
 					this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.battleAxe));
 					break;
 				}
-				this.setCurrentItemOrArmor(1, new ItemStack(Items.iron_helmet));
-				this.setCurrentItemOrArmor(2, new ItemStack(Items.iron_chestplate));
-				this.setCurrentItemOrArmor(3, new ItemStack(Items.iron_leggings));
-				this.setCurrentItemOrArmor(4, new ItemStack(Items.iron_boots));
+				this.setCurrentItemOrArmor(1, new ItemStack(Items.leather_helmet));
+				this.setCurrentItemOrArmor(2, new ItemStack(Items.leather_chestplate));
+				this.setCurrentItemOrArmor(3, new ItemStack(Items.leather_leggings));
+				this.setCurrentItemOrArmor(4, new ItemStack(Items.leather_boots));
+				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(BALANCE.MOBPROP.GUARD_MOVEMENT_SPEED);
+			}
+		}
+		else if (type == GuardType.BARON) {
+			if (this.worldObj.difficultySetting != EnumDifficulty.EASY){
+				this.setCurrentItemOrArmor(0, new ItemStack(ModWeapons.longSword));
+				this.setCurrentItemOrArmor(1, new ItemStack(Items.golden_helmet));
+				this.setCurrentItemOrArmor(2, new ItemStack(Items.golden_chestplate));
+				this.setCurrentItemOrArmor(3, new ItemStack(Items.golden_leggings));
+				this.setCurrentItemOrArmor(4, new ItemStack(Items.golden_boots));
 				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(BALANCE.MOBPROP.GUARD_MOVEMENT_SPEED);
 			}
 		}

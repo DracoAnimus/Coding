@@ -1,4 +1,4 @@
-package net.wildbill22.draco.generation.villages;
+package net.wildbill22.draco.generation.villageComponents;
 
 import java.util.List;
 import java.util.Random;
@@ -13,7 +13,10 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
+import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.common.ChestGenHooks;
+import net.wildbill22.draco.generation.villageHandlers.BarWenchCreationHandler;
+import net.wildbill22.draco.generation.villageHandlers.TavernCreationHandler;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -48,7 +51,7 @@ public class VillageTavern extends StructureVillagePieces.Village
 
     public VillageTavern() {}
     
-	public VillageTavern(StructureVillagePieces.Start startPiece, int type, Random random, StructureBoundingBox _boundingBox, int direction){
+	public VillageTavern(Start startPiece, int type, Random random, StructureBoundingBox _boundingBox, int direction){
 		super(startPiece, type);
         coordBaseMode = direction;
     	boundingBox = _boundingBox;
@@ -61,7 +64,7 @@ public class VillageTavern extends StructureVillagePieces.Village
 		catch (Exception localException) {} 
 	} 
 
-	public static StructureVillagePieces.Village buildComponent(StructureVillagePieces.Start startPiece, @SuppressWarnings("rawtypes") List pieces, Random random, int x, int y, int z, int direction, int type) {
+	public static StructureVillagePieces.Village buildComponent(Start startPiece, @SuppressWarnings("rawtypes") List pieces, Random random, int x, int y, int z, int direction, int type) {
         StructureBoundingBox _boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 14, 10, 8, direction);
         if(canVillageGoDeeper(_boundingBox)){ 
         	if(StructureComponent.findIntersecting(pieces, _boundingBox) == null){
@@ -74,7 +77,7 @@ public class VillageTavern extends StructureVillagePieces.Village
 	@Override
 	public boolean addComponentParts(World world, Random random, StructureBoundingBox box) 
 	{
-		LogHelper.info("VillageTavern: Build tavern at: " + box.minX + ", " + box.minY + ", " + box.minZ);
+		LogHelper.info("VillageTavern: Build tavern at: " + box.minX + ", " + box.minZ);
         if (averageGroundLevel < 0){
             averageGroundLevel = getAverageGroundLevel(world, box);
             if (averageGroundLevel < 0){
@@ -83,13 +86,10 @@ public class VillageTavern extends StructureVillagePieces.Village
             boundingBox.offset(0, this.averageGroundLevel - boundingBox.maxY + HEIGHT - 2, 0);
         }
 
-		
-		fillWithBlocks(world, box, 0,0,0, 14,9,7, Blocks.air, Blocks.air, false);
-		
+        // Clear out for building and make foundation
         for (int xx = 0; xx < 14; xx++){
             for (int zz = 0; zz < 8; zz++){
                 clearCurrentPositionBlocksUpwards(world, xx,0,zz, box);
-//                fillCurrentPositionBlocksDownwards(world, Blocks.cobblestone, 0, xx, -1, zz, box);
                 this.func_151554_b(world, Blocks.cobblestone, 0, xx, -1, zz, box);
             }
         }

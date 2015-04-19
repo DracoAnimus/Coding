@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.wildbill22.draco.generation.structures.StructureCoordinates.Structures;
 import net.wildbill22.draco.lib.LogHelper;

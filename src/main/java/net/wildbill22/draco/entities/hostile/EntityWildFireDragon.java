@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.BALANCE.WILD_FIRE_DRAGON_PROP;
-import net.wildbill22.draco.lib.LogHelper;
 
 //import net.minecraft.entity.monster.EntityBlaze;
 
@@ -72,7 +71,6 @@ public class EntityWildFireDragon extends EntityMob {
 	@Override
     protected String getLivingSound() {
         return "mob.blaze.breathe";
-//       	return "mob.wolf.growl";        
     }
      
     @Override

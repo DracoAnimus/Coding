@@ -7,7 +7,6 @@ import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.wildbill22.draco.items.weapons.ItemDragonSlayerSword;;
 

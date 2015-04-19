@@ -176,13 +176,21 @@ public class Configs {
 		@DefaultInt(value = 15, minValue = 6, maxValue = 64, name = "Density", 
 				comment = "Minecraft will try to generate 1 village per NxN chunk area. Vanilla: 32")
 		public static int village_density;
-		@DefaultInt(value = 4, minValue = 2, maxValue = 16, name = "minimumDistance", 
+		@DefaultInt(value = 4, minValue = 2, maxValue = 16, name = "Minimum Distance", 
 				comment = "Village centers will be at least N chunks apart. Must be smaller than density. Vanilla: 8")
 		public static int village_minDist;
-		@DefaultInt(value = 0, minValue = 0, maxValue = 10, name = "size", 
+		@DefaultInt(value = 0, minValue = 0, maxValue = 10, name = "Size", 
 				comment = "NO CHANGE RECOMMENED: A higher size increases the overall spawn weight of buildings.")
 		public static int village_size;
 		@DefaultBoolean(value = true, name = "Enable Taverns", comment = "Should Taverns be added to villages?")
 		public static boolean village_taverns_enabled;		
+		@DefaultBoolean(value = true, name = "Enable Guard Towers", comment = "Should Guard Towers be added to villages?")
+		public static boolean village_guard_tower_enabled;		
+		@DefaultInt(value = 20, minValue = 0, maxValue = 100, name = "City Probability", 
+				comment = "Controls how often cities can appear, 10 would be an average value.")
+		public static int city_weight;
+		@DefaultInt(value = 30, minValue = 0, maxValue = 100, name = "Town Probability", 
+				comment = "Controls how often towns can appear, 10 would be an average value.")
+		public static int town_weight;
 	}
 }

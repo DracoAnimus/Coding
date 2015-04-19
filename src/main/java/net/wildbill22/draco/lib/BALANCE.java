@@ -1,7 +1,5 @@
 package net.wildbill22.draco.lib;
 
-import net.minecraft.entity.SharedMonsterAttributes;
-
 /**
  * All constants which could be used to balance the mod should be stored here
  *
@@ -37,6 +35,9 @@ public final class BALANCE {
 		@DefaultDouble(value = 30.0D, minValue = 5.0D, maxValue = 50.0D, name = "Guard Maximum Health", 
 				comment = "Maximum health")
 		public static double GUARD_MAX_HEALTH;
+		@DefaultDouble(value = 50.0D, minValue = 5.0D, maxValue = 75.0D, name = "Baron Maximum Health", 
+				comment = "Maximum health")
+		public static double BARON_MAX_HEALTH;
 		@DefaultDouble(value = 5.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Attack Damage", 
 				comment = "Attack damage")
 		public static double GUARD_ATTACK_DAMAGE;

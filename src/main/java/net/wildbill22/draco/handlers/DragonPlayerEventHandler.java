@@ -101,6 +101,7 @@ public class DragonPlayerEventHandler {
 //	}
 	
 	// Gives fireballs or explosive fireball each time you kill something when a dragon
+	// FIXME: Could this use addItemStackToInventory(itemstack)? 
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
 		Entity entity = event.source.getSourceOfDamage();

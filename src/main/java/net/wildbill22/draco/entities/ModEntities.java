@@ -8,6 +8,7 @@ import net.wildbill22.draco.Core;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
+import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityCrossbowGuard;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.entities.hostile.EntityKnightGuard;
@@ -48,6 +49,7 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityKnightGuard.class, EntityKnightGuard.name, ++modEntityID, Core.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityLongbowGuard.class, EntityLongbowGuard.name, ++modEntityID, Core.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityCrossbowGuard.class, EntityCrossbowGuard.name, ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityBaron.class, EntityBaron.name, ++modEntityID, Core.instance, 80, 1, true);
 		
 		addMobSpawns();
 	}

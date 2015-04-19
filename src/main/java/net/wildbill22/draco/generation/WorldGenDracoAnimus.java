@@ -1,17 +1,12 @@
 package net.wildbill22.draco.generation;
 
-import java.util.Iterator;
 import java.util.Random;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -71,6 +66,7 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 				EntityGuard guard = EntityGuard.createGuardTypePerBiome(world, x, z);
 //				Entity e = EntityList.createEntityByName(EntityGuard.getFullName(), world);
 				if (guard == null){
+					LogHelper.error("WorldGen: createGuardTypePerBiome returned null!");
 					return;
 				}
 				guard.setLocationAndAngles(x1, y1, z1, 0.0F, 0.0F);

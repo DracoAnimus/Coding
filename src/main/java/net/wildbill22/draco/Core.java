@@ -6,10 +6,13 @@ import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
-import net.wildbill22.draco.generation.villages.BarWenchCreationHandler;
+import net.wildbill22.draco.generation.villageComponents.ComponentBakery;
+import net.wildbill22.draco.generation.villageComponents.VillageGuardTower;
+import net.wildbill22.draco.generation.villageComponents.VillageTavern;
+import net.wildbill22.draco.generation.villageHandlers.BarWenchCreationHandler;
+import net.wildbill22.draco.generation.villageHandlers.VillagerBakeryTradeHandler;
 import net.wildbill22.draco.generation.villages.VillageBiomes;
 import net.wildbill22.draco.generation.villages.VillageGenReplacer;
-import net.wildbill22.draco.generation.villages.VillageTavern;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
@@ -77,10 +80,14 @@ public class Core {
 		}
 		// Register new village building
 		if (Configs.VILLAGE.village_taverns_enabled) {
-			// Tavern
-			VillageTavern.init();
-			// Bar Wench
-			BarWenchCreationHandler.init();
+			VillageTavern.init();              // Tavern
+			BarWenchCreationHandler.init();    // Bar Wench
+			VillagerBakeryTradeHandler.init(); // Baker
+			ComponentBakery.init();            // Bakery
+		}
+		// Register new village building
+		if (Configs.VILLAGE.village_guard_tower_enabled) {
+			VillageGuardTower.init();  // Guard Tower
 		}
 	}
 

@@ -25,7 +25,6 @@ public class DragonPlayer implements IExtendedEntityProperties {
 //	public static final int LEVEL_WATCHER = 20;
 	private final EntityPlayer player;
 //	private EntityMCDragon dragon =  null;
-	private World world;
 
 //	public EntityMCDragon getDragon() {
 //		if (dragon == null) {			
@@ -61,7 +60,6 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		this.player.getDataWatcher().addObject(BALANCE.LEVEL_WATCHER, this.level);
 		this.isDragon = true;
 		this.dragonName = EntitySilverDragon.name;
-		this.world = world;
 		
 		// Configure some stuff that needs defaults (don't set anything that will be loaded)
 		this.setDragon(true); // Will add a way to change this, but for now, always a dragon
