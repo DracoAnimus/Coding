@@ -16,15 +16,19 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.models.ModelSilverDragon;
+import net.wildbill22.draco.network.RequestDragonPlayerUpdatePacket;
 import net.wildbill22.draco.render.RenderSilverDragon;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
+// All events in this class are type MinecraftForge.EVENT_BUS
 public class DragonPlayerEventHandler {
 	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
 //	Render renderPlayerDragon = new RenderMCSilverDragon();
@@ -34,22 +38,31 @@ public class DragonPlayerEventHandler {
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && DragonPlayer.get((EntityPlayer) event.entity) == null) {
 			DragonPlayer.register((EntityPlayer) event.entity, event.entity.worldObj);
-			LogHelper.info("DragonPlayerEventHandler: Registered a new DragonPlayer");
+			if (event.entity.worldObj.isRemote) // On client
+				LogHelper.info("DragonPlayerEventHandler: Registered a new DragonPlayer on client.");
+			else
+				LogHelper.info("DragonPlayerEventHandler: Registered a new DragonPlayer on server.");
 		}
 	}
 	
 	// This is supposed to ensure that the player can fly, but still can lose ability if changing from creative
 	@SubscribeEvent (receiveCanceled=true)
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-			DragonPlayer.loadProxyData((EntityPlayer) event.entity);
-        	if (DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
-        		((EntityPlayer)event.entity).capabilities.allowFlying = true;
-        		if (DragonPlayer.get((EntityPlayer) event.entity).wasFlyingOnExit)
-        			((EntityPlayer)event.entity).capabilities.isFlying = true;
-        		// ((EntityPlayer)event.entity).sendPlayerAbilities();
-        	}
+		if (event.entity instanceof EntityPlayer) {
+			if (event.entity.worldObj.isRemote) { // On client
+//				Core.modChannel.sendToServer(new RequestDragonPlayerUpdatePacket(1));
+//				LogHelper.info("DragonPlayerEventHandler: Client requesting sync.");
+			} else { // On server
+				DragonPlayer.onPlayerJoinWorld((EntityPlayer) event.entity);
+				LogHelper.info("DragonPlayerEventHandler: Server syncing client.");
+			}
 		}
+	}
+
+	@SubscribeEvent
+	public void onClonePlayer(PlayerEvent.Clone event) {
+		LogHelper.info("DragonPlayerEventHandler: Cloning player extended properties");
+		DragonPlayer.get(event.entityPlayer).copy(DragonPlayer.get(event.original));
 	}
 
 	// Need to call this until I figure out how to detect switching from creative to survival mode (makes you not fly)
@@ -75,7 +88,7 @@ public class DragonPlayerEventHandler {
 		if (!player.worldObj.isRemote && event.block instanceof TemporaryHoard) {
 	    	DragonPlayer.get(player).removeHoard(event.x, event.y, event.z);		
 	    	DragonPlayer.get(player).calculateHoardSize(event.world);
-			DragonPlayer.saveProxyData(event.getPlayer());
+//			DragonPlayer.saveProxyData(event.getPlayer());
 		}
 	}
 
@@ -84,7 +97,7 @@ public class DragonPlayerEventHandler {
 	public void onHarvestBlock(BlockEvent.PlaceEvent event) {
 		if (!event.world.isRemote && event.block instanceof TemporaryHoard) {
 			DragonPlayer.get((EntityPlayer) event.player).addHoard(event.x, event.y, event.z);
-			DragonPlayer.saveProxyData(event.player);
+//			DragonPlayer.saveProxyData(event.player);
 		}
 	}
 
@@ -154,6 +167,7 @@ public class DragonPlayerEventHandler {
 
 	// Will need this when player dragon looses a level on death
 	// Also needed to save data, since it gets loaded again when player respawns
+	// With this, player retains hoard on death and level
 	@SubscribeEvent
 	public void onLivingDeathEvent(LivingDeathEvent event) {
 		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {

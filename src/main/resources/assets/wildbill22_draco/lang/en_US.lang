@@ -44,3 +44,9 @@ category.wildbill22_draco.balance=Balance settings
 category.wildbill22_draco.balance.tooltip=Level up balance settings
 category.wildbill22_draco.balance_level=Level up balance settings
 category.wildbill22_draco.balance_level.tooltip=Level up balance settings
+
+#Stats (Achievements)
+achievement.firstGoldCoin=First Gold Coin
+achievement.firstGoldCoin.desc=Shiny! You put your first gold coin in the hoard.
+achievement.levelTenDragon=Level Ten Dragon
+achievement.levelTenDragon.desc=You made it to level ten!

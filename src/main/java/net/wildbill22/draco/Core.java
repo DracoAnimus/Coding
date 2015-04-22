@@ -7,6 +7,7 @@ import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
 import net.wildbill22.draco.generation.villageComponents.ComponentBakery;
+import net.wildbill22.draco.generation.villageComponents.VillageBaronCastle;
 import net.wildbill22.draco.generation.villageComponents.VillageGuardTower;
 import net.wildbill22.draco.generation.villageComponents.VillageTavern;
 import net.wildbill22.draco.generation.villageHandlers.BarWenchCreationHandler;
@@ -17,8 +18,10 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
-import net.wildbill22.draco.network.UpdateDragonPlayerPacket;
+import net.wildbill22.draco.network.DragonPlayerUpdatePacket;
+import net.wildbill22.draco.network.RequestDragonPlayerUpdatePacket;
 import net.wildbill22.draco.proxies.CommonProxy;
+import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -70,6 +73,7 @@ public class Core {
 		ModWeapons.init();
 		ModItems.init();
 		ModBlocks.init();
+		ModStats.init();
 		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 1000);
 		dracoProxy.registerSounds();
 		dracoProxy.registerSubscriptions();
@@ -89,6 +93,7 @@ public class Core {
 		if (Configs.VILLAGE.village_guard_tower_enabled) {
 			VillageGuardTower.init();  // Guard Tower
 		}
+		VillageBaronCastle.init();
 	}
 
 	@EventHandler
@@ -103,6 +108,7 @@ public class Core {
 		modChannel = NetworkRegistry.INSTANCE.newSimpleChannel(REFERENCE.MODID);
 
 		int id = 0;
-		modChannel.registerMessage(UpdateDragonPlayerPacket.Handler.class, UpdateDragonPlayerPacket.class, id++, Side.SERVER);
+		modChannel.registerMessage(DragonPlayerUpdatePacket.Handler.class, DragonPlayerUpdatePacket.class, id++, Side.CLIENT);
+//		modChannel.registerMessage(RequestDragonPlayerUpdatePacket.Handler.class, RequestDragonPlayerUpdatePacket.class, id++, Side.SERVER);
 	}
 }

@@ -78,7 +78,7 @@ public class ComponentBakery extends StructureVillagePieces.Village{
         fillWithBlocks(world, sbb, 2,1,2, 9,3,2, walls, walls, false);
         placeBlockAtCurrentPosition(world, Blocks.air, 3, 1,2,0, sbb);
         placeBlockAtCurrentPosition(world, Blocks.air, 3, 2,2,0, sbb);
-        placeDoorAtCurrentPosition(world, boundingBox, random, 3, 1, 2, 0);        
+        placeDoorAtCurrentPosition(world, boundingBox, random, 3, 1,2,0);        
         this.placeBlockAtCurrentPosition(world, roof, northStair, 3,0,1, sbb);
         fillWithBlocks(world, sbb, 5, 2, 2, 7, 2, 2, Blocks.glass, Blocks.glass, false);
 

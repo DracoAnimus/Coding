@@ -14,6 +14,12 @@ public class NBTCoordinates extends ChunkCoordinates {
 	public NBTCoordinates(NBTCoordinates coords) {	
 		super(coords);
 	}
+	
+	public void copy(NBTCoordinates coords) {
+		posX = coords.posX;
+		posY = coords.posY;
+		posZ = coords.posZ;
+	}
 
 	public void readFromNBT(NBTTagCompound nbt, int i) {
 		NBTTagCompound nbtTag = nbt.getCompoundTag(getTag(i));

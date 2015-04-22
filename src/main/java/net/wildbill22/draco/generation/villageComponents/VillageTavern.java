@@ -83,7 +83,7 @@ public class VillageTavern extends StructureVillagePieces.Village
             if (averageGroundLevel < 0){
                 return true;
             }
-            boundingBox.offset(0, this.averageGroundLevel - boundingBox.maxY + HEIGHT - 2, 0);
+            boundingBox.offset(0, this.averageGroundLevel - boundingBox.maxY + HEIGHT - 1, 0);
         }
 
         // Clear out for building and make foundation

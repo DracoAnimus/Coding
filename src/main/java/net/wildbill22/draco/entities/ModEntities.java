@@ -35,21 +35,21 @@ public class ModEntities {
 		registerEntityEgg(EntityWildFireDragon.class, 0xd8bb9d, 0xa83c1a);
 		
 		// Overworld mod entities 
-		EntityRegistry.registerModEntity(EntityCreeperDragon.class, EntityCreeperDragon.name, ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntitySilverDragon.class, EntitySilverDragon.name, ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityCreeperDragon.class, EntityCreeperDragon.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySilverDragon.class, EntitySilverDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 //		EntityRegistry.registerModEntity(EntityGuard.class, EntityGuard.name, ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntitySpearGuard.class, EntitySpearGuard.name, ++modEntityID, Core.instance, 80, 1, true);
-//    	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityWildFireDragon.class, EntityWildFireDragon.name, ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntitySpearGuard.class, EntitySpearGuard.name, ++modEntityID, Core.instance, 80, 3, true);
+//    	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityWildFireDragon.class, EntityWildFireDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 
-		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 20, true);
 		EntityRegistry.registerModEntity(EntityMyFireball.class, ItemMyFireball.name, ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityMyExplosive.class, ItemMyExplosive.name, ++modEntityID, Core.instance, 64, 10, true);
 
-		EntityRegistry.registerModEntity(EntityKnightGuard.class, EntityKnightGuard.name, ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityLongbowGuard.class, EntityLongbowGuard.name, ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityCrossbowGuard.class, EntityCrossbowGuard.name, ++modEntityID, Core.instance, 80, 1, true);
-		EntityRegistry.registerModEntity(EntityBaron.class, EntityBaron.name, ++modEntityID, Core.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntityKnightGuard.class, EntityKnightGuard.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityLongbowGuard.class, EntityLongbowGuard.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityCrossbowGuard.class, EntityCrossbowGuard.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityBaron.class, EntityBaron.name, ++modEntityID, Core.instance, 80, 3, true);
 		
 		addMobSpawns();
 	}

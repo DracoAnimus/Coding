@@ -6,23 +6,27 @@ import java.util.Iterator;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
+import net.wildbill22.draco.network.DragonPlayerUpdatePacket;
 import net.wildbill22.draco.proxies.CommonProxy;
+import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 
 public class DragonPlayer implements IExtendedEntityProperties {
 	public static final String EXT_PROP_NAME = "DragonPlayer";
-//	public static final int LEVEL_WATCHER = 20;
 	private final EntityPlayer player;
 //	private EntityMCDragon dragon =  null;
 
@@ -39,6 +43,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	public boolean wasFlyingOnExit;
 	private int hoardSize;
 	private int level;        // current level, as determined by several factors
+	private ArrayList<NBTCoordinates> hoardList;
 
 	private String dragonName;
 	public String getDragonName() {
@@ -50,15 +55,13 @@ public class DragonPlayer implements IExtendedEntityProperties {
 			this.dragonName = dragonName;
 	}
 
-	private ArrayList<NBTCoordinates> hoardList;
-	
 	public DragonPlayer(EntityPlayer player, World world) {
 		// Initialize some stuff
 		this.player = player;
-		this.hoardList = new ArrayList<NBTCoordinates>();
-		this.level = 1;
-		this.player.getDataWatcher().addObject(BALANCE.LEVEL_WATCHER, this.level);
 		this.isDragon = true;
+		this.level = 1;
+//		this.player.getDataWatcher().addObject(BALANCE.LEVEL_WATCHER, this.level);
+		this.hoardList = new ArrayList<NBTCoordinates>();
 		this.dragonName = EntitySilverDragon.name;
 		
 		// Configure some stuff that needs defaults (don't set anything that will be loaded)
@@ -73,13 +76,13 @@ public class DragonPlayer implements IExtendedEntityProperties {
 
 	// Not sure if the next two methods are needed
 	// Are these supposed to be in CommonProxy?
-	public static final void loadProxyData(EntityPlayer player) {
-		DragonPlayer playerData = DragonPlayer.get(player);
-		NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player));
-		if (savedData != null) {
-			playerData.loadNBTData(savedData);
-		}
-	}
+//	public static final void loadProxyData(EntityPlayer player) {
+//		DragonPlayer playerData = DragonPlayer.get(player);
+//		NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player));
+//		if (savedData != null) {
+//			playerData.loadNBTData(savedData);
+//		}
+//	}
 	
 	public static void saveProxyData(EntityPlayer player) {
 		DragonPlayer playerData = DragonPlayer.get(player);
@@ -134,9 +137,9 @@ public class DragonPlayer implements IExtendedEntityProperties {
 //        LogHelper.info("DragonPlayer save: Player is " + (isDragon ? "a" : "not a") + " dragon");
 //        LogHelper.info("DragonPlayer save: Player is a " + dragonName + ".");
 //        LogHelper.info("DragonPlayer save: Player was " + (this.getPlayer().capabilities.isFlying ? "" : "not ") + "flying");
-//        LogHelper.info("DragonPlayer save: Player has " + getHoardSize() + " coins.");
+        LogHelper.info("DragonPlayer save: Player has " + getHoardSize() + " coins.");
 //        LogHelper.info("DragonPlayer save: Player has " + writeIndex + " hoards.");
-//        LogHelper.info("DragonPlayer save: Player is level " + level + ".");
+        LogHelper.info("DragonPlayer save: Player is level " + level + ".");
 	}
 
 	@Override
@@ -148,7 +151,9 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		setDragon(properties.getBoolean("isDragon"));
         this.wasFlyingOnExit = properties.getBoolean("wasFlyingOnExit");
         setHoardSize(properties.getInteger("hoardSize"));
+        LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
         setLevel(properties.getInteger("level"));
+        LogHelper.info("DragonPlayer load: Player is level " + level + ".");
         setDragonName(properties.getString("dragonName"));
 
         // Hoard Locations
@@ -169,9 +174,24 @@ public class DragonPlayer implements IExtendedEntityProperties {
 //        LogHelper.info("DragonPlayer load: Player is " + (isDragon ? "a" : "not a") + " dragon");
 //        LogHelper.info("DragonPlayer load: Player is a " + dragonName + ".");
 //        LogHelper.info("DragonPlayer load: Player was " + (wasFlyingOnExit ? "" : "not ") + "flying");   
-//        LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
 //        LogHelper.info("DragonPlayer load: Player has " + hoardList.size() + " hoards.");
-//        LogHelper.info("DragonPlayer load: Player is level " + level + ".");
+	}
+
+	/**
+	 * Copies additional player data from the given ExtendedPlayer instance
+	 * Avoids NBT disk I/O overhead when cloning a player after respawn
+	 */
+	public void copy(DragonPlayer props) {
+		this.isDragon = props.isDragon;
+		this.wasFlyingOnExit = props.wasFlyingOnExit;
+		setLevel(props.level);
+		int size = props.hoardList.size();
+        Iterator<NBTCoordinates> iterator = props.hoardList.iterator();
+		for (int i = 0; i < size; i++) {
+			NBTCoordinates coords = new NBTCoordinates();
+			coords.copy(iterator.next());
+			hoardList.add(coords);
+        }
 	}
 
 	@Override
@@ -218,6 +238,11 @@ public class DragonPlayer implements IExtendedEntityProperties {
 
 	// Returns true if anything in chest other than gold coins
 	public boolean calculateHoardSize(World world) {
+		// Only look for hoards in OverWorld!
+		if (world.provider.dimensionId != 0) {
+			this.player.addChatMessage(new ChatComponentText("Hoards only work in the OverWorld!"));
+			return false;
+		}
 		hoardSize = 0;
 		boolean notJustCoins = false;
 		int size = hoardList.size();
@@ -229,8 +254,12 @@ public class DragonPlayer implements IExtendedEntityProperties {
 					if (coins != null) {
 						if (coins.getItem() != ModItems.goldCoin)
 							notJustCoins = true;
-						else
+						else {
 							hoardSize += coins.stackSize;
+							if (hoardSize > 0) {
+								this.player.addStat(ModStats.firstGoldCoin, 1);
+							}
+						}
 					}
 				}
 			}
@@ -246,6 +275,9 @@ public class DragonPlayer implements IExtendedEntityProperties {
 				Math.pow(BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL, BALANCE.LEVELING.LEVEL_MOD_TYPE)) * BALANCE.LEVELING.MAXIMUM_LEVEL);
 		level = level == 0 ? 1 : level;
 		setLevel(level);
+		if (level >= 10) {
+			this.player.addStat(ModStats.levelTenDragon, 1);
+		}
         LogHelper.info("DragonPlayer calculateLevel: Player is level " + level + ".");
 	}
 
@@ -257,23 +289,39 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	}
 
 	public int getLevel() {
-		level = this.player.getDataWatcher().getWatchableObjectInt(BALANCE.LEVEL_WATCHER);
+//		level = this.player.getDataWatcher().getWatchableObjectInt(BALANCE.LEVEL_WATCHER);
 		return level;
 	}
 
 	public void setLevel(int level) {
-		this.player.getDataWatcher().updateObject(BALANCE.LEVEL_WATCHER, level);
+//		this.player.getDataWatcher().updateObject(BALANCE.LEVEL_WATCHER, level);
 		this.level = level;
+		syncClient(false);
 		PlayerModifiers.applyModifiers(level, player);
 	}
 	
-//	public void sync(){
-//		if(!player.worldObj.isRemote){
-//	        LogHelper.info("DragonPlayer sync: About to send player level of " + level + ".");
-//	        if (player != null) {
-//	        	Core.modChannel.sendTo(new UpdateDragonPlayerPacket(level), (EntityPlayerMP)player);
-//	        }
-//	        LogHelper.info("DragonPlayer sync: Sent player level of " + level + ".");
-//		}
-//	}
+	/**
+	 * Handles player loading and syncing on world join. Only called server side
+	 * @param player
+	 */
+	public static void onPlayerJoinWorld(EntityPlayer player) {
+		DragonPlayer p = DragonPlayer.get(player);
+    	if (p.isDragon()) {
+    		player.capabilities.allowFlying = true;
+    		if (p.wasFlyingOnExit)
+    			player.capabilities.isFlying = true;
+    	}
+		p.syncClient(false);
+	}
+
+	public void syncClient(boolean all) {
+		// Only send message on server to client
+		if(!player.worldObj.isRemote){
+	        LogHelper.info("DragonPlayer sync: About to send player level of " + level + " to client.");
+	        if (player != null) {
+        		Core.modChannel.sendTo(new DragonPlayerUpdatePacket(level), (EntityPlayerMP)player);
+		        LogHelper.info("DragonPlayer sync: Sent player level of " + level + " to client.");
+	        }
+		}
+	}
 }

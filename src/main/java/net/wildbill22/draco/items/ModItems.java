@@ -3,6 +3,7 @@ package net.wildbill22.draco.items;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
@@ -21,6 +22,7 @@ public class ModItems extends Item {
 	public static Item goldCoin;
 	public static Item fireball;
 	public static Item explosiveFireball;
+	public static Achievement levelTen;
 	
 	public static void preInit() {
 		dragonScales = new ItemDragonScales();
