@@ -248,7 +248,8 @@ public class VillageTavern extends StructureVillagePieces.Village
    		for(int i = 0; i < tavernChestContents.length; i++){
 			ChestGenHooks.addItem(TAVERN_CHEST, tavernChestContents[i]);
 		}
-		ChestGenHooks.getInfo(TAVERN_CHEST).setMax(3);
+//		ChestGenHooks.getInfo(TAVERN_CHEST).setMax(3); // Min?
+		ChestGenHooks.getInfo(TAVERN_CHEST).setMin(3);
 		ChestGenHooks.getInfo(TAVERN_CHEST).setMax(7);
 	}
 

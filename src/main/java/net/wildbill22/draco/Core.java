@@ -81,19 +81,23 @@ public class Core {
 		if (Configs.VILLAGE.village_gen_enabled) {
 			LogHelper.info("Registering replacer for village generation.");
 			MinecraftForge.TERRAIN_GEN_BUS.register(new VillageGenReplacer());
+			// Register new village building
+			if (Configs.VILLAGE.village_taverns_enabled) {
+				VillageTavern.init();              // Tavern
+				BarWenchCreationHandler.init();    // Bar Wench
+			}
+			if (Configs.VILLAGE.village_bakery_enabled) {
+				VillagerBakeryTradeHandler.init(); // Baker
+				ComponentBakery.init();            // Bakery			
+			}
+			// Register new village building
+			if (Configs.VILLAGE.village_guard_tower_enabled) {
+				VillageGuardTower.init();  // Guard Tower
+			}
+			if (Configs.VILLAGE.village_barons_castle_enabled) {
+				VillageBaronCastle.init();
+			}
 		}
-		// Register new village building
-		if (Configs.VILLAGE.village_taverns_enabled) {
-			VillageTavern.init();              // Tavern
-			BarWenchCreationHandler.init();    // Bar Wench
-			VillagerBakeryTradeHandler.init(); // Baker
-			ComponentBakery.init();            // Bakery
-		}
-		// Register new village building
-		if (Configs.VILLAGE.village_guard_tower_enabled) {
-			VillageGuardTower.init();  // Guard Tower
-		}
-		VillageBaronCastle.init();
 	}
 
 	@EventHandler

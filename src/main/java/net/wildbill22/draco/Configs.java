@@ -186,6 +186,10 @@ public class Configs {
 		public static boolean village_taverns_enabled;		
 		@DefaultBoolean(value = true, name = "Enable Guard Towers", comment = "Should Guard Towers be added to villages?")
 		public static boolean village_guard_tower_enabled;		
+		@DefaultBoolean(value = true, name = "Enable Bakery", comment = "Should Bakery be added to villages?")
+		public static boolean village_bakery_enabled;		
+		@DefaultBoolean(value = true, name = "Enable Baron Castle", comment = "Should Baron's Castle be added to villages?")
+		public static boolean village_barons_castle_enabled;		
 		@DefaultInt(value = 20, minValue = 0, maxValue = 100, name = "City Probability", 
 				comment = "Controls how often cities can appear, 10 would be an average value.")
 		public static int city_weight;

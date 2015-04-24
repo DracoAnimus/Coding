@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -13,7 +12,6 @@ import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.wildbill22.draco.biome.ModBiomes;
-import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.generation.villageHandlers.GuardTowerCreationHandler;
 import net.wildbill22.draco.lib.LogHelper;
@@ -121,8 +119,14 @@ public class VillageGuardTower extends StructureVillagePieces.Village
     }
 
     /**
-     * Spawns a number of guards in this component. Parameters: world, component bounding box, x offset, y
-     * offset, z offset, number of guards
+     * Spawns a number of guards in this component.
+     * 
+     * @param World
+     * @param StructureBoundingBox
+     * @param x
+     * @param y
+     * @param z
+     * @param numGuards
      */
     protected void spawnGuards(World world, StructureBoundingBox box, int x, int y, int z, int numGuards) {
     	if (numGuards == 0)
@@ -141,19 +145,7 @@ public class VillageGuardTower extends StructureVillagePieces.Village
 			guard.setLocationAndAngles((double)xx + 0.5D, (double)yy, (double)zz + 0.5D, 0.0F, 0.0F);
             world.spawnEntityInWorld(guard);
         }
-        xx = this.getXWithOffset(x + i1, z);
-        yy = this.getYWithOffset(y);
-        zz = this.getZWithOffset(x + i1, z);
-        if (!box.isVecInside(xx, yy, zz)) {
-            return;
-        }
-        if (EntityGuard.isBaronBiome(world, xx, zz)) {
-        	EntityBaron baron = (EntityBaron) EntityList.createEntityByName(EntityBaron.getFullName(), world);
-			baron.setLocationAndAngles((double)xx + 0.5D, (double)yy, (double)zz + 0.5D, 0.0F, 0.0F);
-            world.spawnEntityInWorld(baron);
-			LogHelper.info("VillageGuardTower: Spawned Baron at: " + xx + " " + yy + " " + zz);
-        }
-    }
+     }
 
 	// Call from mod's init
 	public static void init() {
