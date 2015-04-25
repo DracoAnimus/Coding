@@ -69,6 +69,10 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 	private final int WEST  = 0;
 	private final int NORTH = 2;
 	private final int EAST  = 1;
+	private final int bedHeadFacingSouth = 0;
+	private final int bedHeadFacingWest = 1;
+	private final int bedHeadFacingNorth = 2;
+	private final int bedHeadFacingEast = 3;
 
     public VillageBaronCastle() {}
     
@@ -116,10 +120,10 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         int westFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 1);
         int southFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 3);
         int northFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 2);
-        int eastFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 0+4);
-        int westFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 1+4);
-        int southFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 3+4);
-        int northFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 2+4);
+//        int eastFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 0+4);
+//        int westFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 1+4);
+//        int southFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 3+4);
+//        int northFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 2+4);
         int northFacingOakStair = this.getMetadataWithOffset(Blocks.oak_stairs, 2);
 
         // Clear out area of trees
@@ -185,9 +189,11 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         		ChestGenHooks.getCount(BARON_CASTLE_STUDY_CHEST, random));
         placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, 1,lvl,11, box);
         // FIXME: chair and table, one is stone, not oak. The table isn't always aligned right
-		placeBlockAtCurrentPosition(world, Blocks.oak_stairs, northFacingOakStair, 3,lvl,10, box);        
-		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingStairInv, 2,lvl,11, box);
-		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingStairInv, 3,lvl,11, box);
+		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingOakStair, 3,lvl,10, box);        
+		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, southFacingStair+4, 2,lvl,11, box);
+		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, southFacingStair+4, 3,lvl,11, box);
+//		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingStairInv, 2,lvl,11, box);
+//		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingStairInv, 3,lvl,11, box);
         placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, 4,lvl,11, box);
 
         // 6th floor
@@ -219,9 +225,9 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         placeBlockAtCurrentPosition(world, Blocks.stone_slab, stoneBrickSlabTop, 13,lvl,9, box);
 		for (int zz = 3; zz <= 9; zz++)
 	        placeBlockAtCurrentPosition(world, Blocks.stone_slab, stoneBrickSlabTop, 14,lvl,zz, box);			
-        placeBlockAtCurrentPosition(world, Blocks.stone_brick_stairs, westFacingStairInv, 13,lvl,4, box); // inverted stairs
-        placeBlockAtCurrentPosition(world, Blocks.stone_brick_stairs, westFacingStairInv, 13,lvl,6, box); // inverted stairs
-        placeBlockAtCurrentPosition(world, Blocks.stone_brick_stairs, westFacingStairInv, 13,lvl,8, box); // inverted stairs
+        placeBlockAtCurrentPosition(world, Blocks.stone_brick_stairs, westFacingStair+4, 13,lvl,4, box); // inverted stairs
+        placeBlockAtCurrentPosition(world, Blocks.stone_brick_stairs, westFacingStair+4, 13,lvl,6, box); // inverted stairs
+        placeBlockAtCurrentPosition(world, Blocks.stone_brick_stairs, westFacingStair+4, 13,lvl,8, box); // inverted stairs
 		
         // 9th floor
         lvl = 9;
@@ -240,11 +246,13 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         	placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, xx,lvl,3, box);
         for (int xx = 6; xx <= 9; xx++)
         	placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, xx,lvl,9, box);
-        // FIXME: place a bed, which sometimes comes loose
-        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 3 + 8), 9,lvl,6, box); // head
-        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 3), 8,lvl,6, box);     // foot
         generateStructureChestContents(world, box, random, 9,lvl,7, ChestGenHooks.getItems(BARON_CASTLE_CHEST, random), 
         		ChestGenHooks.getCount(BARON_CASTLE_CHEST, random));
+        // FIXME: place a bed, which sometimes comes loose
+        placeBedAtCurrentPosition(world, box, random, 9,lvl,6, bedHeadFacingEast, true); // head
+        placeBedAtCurrentPosition(world, box, random, 8,lvl,6, bedHeadFacingEast, false); // foot
+//        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 3 + 8), 9,lvl,6, box); // head
+//        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 3), 8,lvl,6, box);     // foot
         placeDoorAtCurrentPosition(world, box, random, 2,lvl,6, getMetadataWithOffset(Blocks.wooden_door, WEST)); // door
 
         // 10th floor
@@ -269,7 +277,7 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 
         // 12th floor
         lvl = 12;
-		fillWithBlocks(world, box, 3,lvl,3, 11,lvl,9, Blocks.stonebrick, Blocks.stonebrick, false);   // floor
+		fillWithBlocks(world, box, 3,lvl,3, 10,lvl,9, Blocks.stonebrick, Blocks.stonebrick, false);   // floor
 		fillWithAir(world, box, 3,lvl,7, 3,lvl,9); // stair well
 		fillWithAir(world, box, 4,lvl,9, 5,lvl,9); // stair well
 
@@ -415,6 +423,32 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         this.func_151554_b(world, Blocks.stonebrick, 0, x,y-1,z, box);	
     }
     
+    protected void placeBedAtCurrentPosition(World world, StructureBoundingBox sbb, Random random, int x, int y, int z, int dir, boolean head) {
+        int xPos = this.getXWithOffset(x, z);
+        int yPos = this.getYWithOffset(y);
+        int zPos = this.getZWithOffset(x, z);
+
+        int metadata = dir;
+        switch (this.coordBaseMode) {
+        case 3:
+        	metadata++;
+        case 2:
+        	metadata++;
+        case 1:
+        	metadata++;
+        	break;
+        default:
+        }
+        if (metadata > 3)
+        	metadata -= 4;
+        if (head)
+        	metadata += 8;
+
+        if (sbb.isVecInside(xPos, yPos, zPos)) {
+        	world.setBlock(xPos, yPos, zPos, Blocks.bed, metadata, 3);
+        }
+    }
+
 	public static void registerBaronCastleChest(){
 		Random random = new Random();
 		// Study chest
@@ -460,7 +494,7 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 		ChestGenHooks.getInfo(BARON_CASTLE_CHEST).setMin(3);
 		ChestGenHooks.getInfo(BARON_CASTLE_CHEST).setMax(7);
 	}
-//	BARON_CASTLE_MESS_HALL_CHEST
+	
 	// Call from mod's init
 	public static void init() {
 		VillageBaronCastle.addVillagePiece(VillageBaronCastle.class, "ViBrnCastle");

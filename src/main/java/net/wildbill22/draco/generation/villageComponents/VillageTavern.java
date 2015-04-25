@@ -48,6 +48,7 @@ public class VillageTavern extends StructureVillagePieces.Village
 	private final int WEST  = 0;
 	private final int NORTH = 2;
 	private final int EAST  = 1;
+	private final int bedHeadFacingNorth = 2;
 
     public VillageTavern() {}
     
@@ -193,9 +194,8 @@ public class VillageTavern extends StructureVillagePieces.Village
         placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, 11,5,2, box);
         placeBlockAtCurrentPosition(world, Blocks.torch, 0, 11,6,2, box);
         // place a bed
-        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 2), 10,5,2, box);
-        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 0), 10,5,3, box);
-        
+        placeBedAtCurrentPosition(world, box, random, 10,5,2, bedHeadFacingNorth, true); // head
+        placeBedAtCurrentPosition(world, box, random, 10,5,3, bedHeadFacingNorth, false); // foot       
 
         // Adds custom TAVERN_CHEST for loot drop
         generateStructureChestContents(world, box, random, 9,5,2, ChestGenHooks.getItems(TAVERN_CHEST, random), ChestGenHooks.getCount(TAVERN_CHEST, random));
@@ -235,6 +235,32 @@ public class VillageTavern extends StructureVillagePieces.Village
 		
         spawnVillagers(world, box, 2,1,2,1);
         return true;
+    }
+
+    protected void placeBedAtCurrentPosition(World world, StructureBoundingBox sbb, Random random, int x, int y, int z, int dir, boolean head) {
+        int xPos = this.getXWithOffset(x, z);
+        int yPos = this.getYWithOffset(y);
+        int zPos = this.getZWithOffset(x, z);
+
+        int metadata = dir;
+        switch (this.coordBaseMode) {
+        case 3:
+        	metadata++;
+        case 2:
+        	metadata++;
+        case 1:
+        	metadata++;
+        	break;
+        default:
+        }
+        if (metadata > 3)
+        	metadata -= 4;
+        if (head)
+        	metadata += 8;
+
+        if (sbb.isVecInside(xPos, yPos, zPos)) {
+        	world.setBlock(xPos, yPos, zPos, Blocks.bed, metadata, 3);
+        }
     }
 
 	// TODO: make a bar wench
