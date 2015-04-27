@@ -7,6 +7,7 @@ import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
 import net.wildbill22.draco.generation.villageComponents.ComponentBakery;
+import net.wildbill22.draco.generation.villageComponents.TestBallistaTower;
 import net.wildbill22.draco.generation.villageComponents.VillageBaronCastle;
 import net.wildbill22.draco.generation.villageComponents.VillageGuardTower;
 import net.wildbill22.draco.generation.villageComponents.VillageTavern;
@@ -18,6 +19,7 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
+import net.wildbill22.draco.network.BallistaUpdatePacket;
 import net.wildbill22.draco.network.DragonPlayerUpdatePacket;
 import net.wildbill22.draco.network.RequestDragonPlayerUpdatePacket;
 import net.wildbill22.draco.proxies.CommonProxy;
@@ -93,6 +95,7 @@ public class Core {
 			// Register new village building
 			if (Configs.VILLAGE.village_guard_tower_enabled) {
 				VillageGuardTower.init();  // Guard Tower
+				TestBallistaTower.init();
 			}
 			if (Configs.VILLAGE.village_barons_castle_enabled) {
 				VillageBaronCastle.init();
@@ -113,6 +116,7 @@ public class Core {
 
 		int id = 0;
 		modChannel.registerMessage(DragonPlayerUpdatePacket.Handler.class, DragonPlayerUpdatePacket.class, id++, Side.CLIENT);
+//		modChannel.registerMessage(BallistaUpdatePacket.Handler.class, BallistaUpdatePacket.class, id++, Side.CLIENT);
 //		modChannel.registerMessage(RequestDragonPlayerUpdatePacket.Handler.class, RequestDragonPlayerUpdatePacket.class, id++, Side.SERVER);
 	}
 }

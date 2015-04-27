@@ -27,6 +27,7 @@ entity.wildbill22_draco.longbowGuard.name=Guard
 entity.wildbill22_draco.hornedGoat.name=Horned Goat
 entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
 entity.wildbill22_draco.spear.name=Spear
+entity.wildbill22_draco.ballista.name=Ballista
 
 #General
 itemGroup.Draco_Animus=Draco Animus

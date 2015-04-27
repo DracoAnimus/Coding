@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import cpw.mods.fml.common.registry.VillagerRegistry;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -21,65 +20,15 @@ import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.generation.villageHandlers.BaronCastleCreationHandler;
-import net.wildbill22.draco.items.ModItems;
-import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 
-public class VillageBaronCastle extends StructureVillagePieces.Village
-{
-	public static final String BARON_CASTLE_CHEST = "villageBaronCastle";
-	public static final WeightedRandomChestContent[] commonChestContents = new WeightedRandomChestContent[]{
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_boots), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_chestplate), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_helmet), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_leggings), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR)
-    };
-	public static final String BARON_CASTLE_MESS_HALL_CHEST = "villageBaronCastleMessHall";
-	public static final WeightedRandomChestContent[] messHallChestContents = new WeightedRandomChestContent[]{
-		new WeightedRandomChestContent(new ItemStack(Items.apple), 1, 5, 20),
-		new WeightedRandomChestContent(new ItemStack(Items.cake), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.baked_potato), 1, 3, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.bread), 1, 5, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.cooked_chicken), 1, 5, 30)
-    };
-	public static final String BARON_CASTLE_STUDY_CHEST = "villageBaronCastleStudy";
-	public static final WeightedRandomChestContent[] studyChestContents = new WeightedRandomChestContent[]{
-		new WeightedRandomChestContent(new ItemStack(Items.book), 1, 5, 20),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30)
-    };
-	private int averageGroundLevel = -1;
+public class VillageBaronCastle extends MyVillageComponents {
     private static final int HEIGHT = 12;
-	private final int SOUTH = 3;
-	private final int WEST  = 0;
-	private final int NORTH = 2;
-	private final int EAST  = 1;
-	private final int bedHeadFacingSouth = 0;
-	private final int bedHeadFacingWest = 1;
-	private final int bedHeadFacingNorth = 2;
-	private final int bedHeadFacingEast = 3;
-
+   
     public VillageBaronCastle() {}
-    
+
 	public VillageBaronCastle(StructureVillagePieces.Start startPiece, int type, Random random, StructureBoundingBox _boundingBox, int direction){
-		super(startPiece, type);
-        coordBaseMode = direction;
-    	boundingBox = _boundingBox;
+		super(startPiece, type, _boundingBox, direction);
 	}
 	
 	public static void addVillagePiece(@SuppressWarnings("rawtypes") Class c, String s) { 
@@ -115,17 +64,9 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
             }
             boundingBox.offset(0, this.averageGroundLevel - boundingBox.maxY + HEIGHT - 1, 0);
         }
+        
+        setMetaData();
 		
-        int eastFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 0);
-        int westFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 1);
-        int southFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 3);
-        int northFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 2);
-//        int eastFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 0+4);
-//        int westFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 1+4);
-//        int southFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 3+4);
-//        int northFacingStairInv = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 2+4);
-        int northFacingOakStair = this.getMetadataWithOffset(Blocks.oak_stairs, 2);
-
         // Clear out area of trees
 		fillWithAir(world, box, 0,0,0, 12,14,12);
 
@@ -164,11 +105,6 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 
         // 3rd floor
         lvl = 3;
-        int eastFacingTorch = this.getMetadataWithOffset(Blocks.torch, 1);
-        int westFacingTorch = this.getMetadataWithOffset(Blocks.torch, 2);
-        int southFacingTorch = this.getMetadataWithOffset(Blocks.torch, 3);
-        int northFacingTorch = this.getMetadataWithOffset(Blocks.torch, 4);
-        int facingUpTorch = 5;
         placeBlockAtCurrentPosition(world, Blocks.torch, southFacingTorch, 2,lvl,3, box);
         placeBlockAtCurrentPosition(world, Blocks.torch, northFacingTorch, 2,lvl,11, box);
         placeBlockAtCurrentPosition(world, Blocks.torch, northFacingTorch, 6,lvl,11, box);
@@ -188,12 +124,10 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         generateStructureChestContents(world, box, random, 1,lvl,10, ChestGenHooks.getItems(BARON_CASTLE_STUDY_CHEST, random), 
         		ChestGenHooks.getCount(BARON_CASTLE_STUDY_CHEST, random));
         placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, 1,lvl,11, box);
-        // FIXME: chair and table, one is stone, not oak. The table isn't always aligned right
+        // chair and table, the table isn't always aligned right
 		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingOakStair, 3,lvl,10, box);        
 		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, southFacingStair+4, 2,lvl,11, box);
 		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, southFacingStair+4, 3,lvl,11, box);
-//		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingStairInv, 2,lvl,11, box);
-//		placeBlockAtCurrentPosition(world, Blocks.dark_oak_stairs, northFacingStairInv, 3,lvl,11, box);
         placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, 4,lvl,11, box);
 
         // 6th floor
@@ -248,11 +182,9 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
         	placeBlockAtCurrentPosition(world, Blocks.bookshelf, 0, xx,lvl,9, box);
         generateStructureChestContents(world, box, random, 9,lvl,7, ChestGenHooks.getItems(BARON_CASTLE_CHEST, random), 
         		ChestGenHooks.getCount(BARON_CASTLE_CHEST, random));
-        // FIXME: place a bed, which sometimes comes loose
+        // place a bed
         placeBedAtCurrentPosition(world, box, random, 9,lvl,6, bedHeadFacingEast, true); // head
         placeBedAtCurrentPosition(world, box, random, 8,lvl,6, bedHeadFacingEast, false); // foot
-//        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 3 + 8), 9,lvl,6, box); // head
-//        placeBlockAtCurrentPosition(world, Blocks.bed, getMetadataWithOffset(Blocks.bed, 3), 8,lvl,6, box);     // foot
         placeDoorAtCurrentPosition(world, box, random, 2,lvl,6, getMetadataWithOffset(Blocks.wooden_door, WEST)); // door
 
         // 10th floor
@@ -346,40 +278,28 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 		placeBlockAtCurrentPosition(world, Blocks.glass_pane, grayStaindGlass, 10,11,6, box);
 		placeBlockAtCurrentPosition(world, Blocks.glass_pane, grayStaindGlass, 10,11,7, box);
 	        
-        // Spawn guards and baron on top:
-        // world, box, x, y, z, number of villages
-        spawnGuards(world, box, 3,12,3, 2);
+        // Spawn guards on top:
+        spawnGuards(world, box, 3,13,3, 2);
+
+        // Spawn guards in Mess Hall:
+        spawnGuards(world, box, 4,2,6, 1);
+        spawnGuards(world, box, 4,2,7, 1);
+
+        // Spawn baron in study:
+        spawnBaron(world, box, 3,6,9);
         
         return true;
     }
 
-    /**
+	/**
      * Spawns a number of guards in this component. Parameters: world, component bounding box, x offset, y
      * offset, z offset, number of guards
      */
-    protected void spawnGuards(World world, StructureBoundingBox box, int x, int y, int z, int numGuards) {
-    	// Spawn guards
-    	if (numGuards == 0)
-    		return;
-        int i1, xx, yy, zz;
-		for (i1 = 0; i1 < numGuards; ++i1) {
-            xx = this.getXWithOffset(x + i1, z);
-            yy = this.getYWithOffset(y);
-            zz = this.getZWithOffset(x + i1, z);
-
-            if (!box.isVecInside(xx, yy, zz)) {
-                return;
-            }
-
-			EntityGuard guard = EntityGuard.createGuardTypePerBiome(world, xx, zz);
-			guard.setLocationAndAngles((double)xx + 0.5D, (double)yy, (double)zz + 0.5D, 0.0F, 0.0F);
-            world.spawnEntityInWorld(guard);
-        }
-		
-		// Spawn Baron
-        xx = this.getXWithOffset(x + i1, z);
+    protected void spawnBaron(World world, StructureBoundingBox box, int x, int y, int z) {
+        int xx, yy, zz;
+        xx = this.getXWithOffset(x, z);
         yy = this.getYWithOffset(y);
-        zz = this.getZWithOffset(x + i1, z);
+        zz = this.getZWithOffset(x, z);
         if (!box.isVecInside(xx, yy, zz)) {
             return;
         }
@@ -388,64 +308,6 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 			baron.setLocationAndAngles((double)xx + 0.5D, (double)yy, (double)zz + 0.5D, 0.0F, 0.0F);
             world.spawnEntityInWorld(baron);
 			LogHelper.info("VillageBaronCastle: Spawned Baron at: " + xx + " " + yy + " " + zz);
-        }
-    }
-
-    // Helper functions
-    
-    /**
-     * Clears out an area for building
-     * @param World
-     * @param xMin
-     * @param zMin
-     * @param xMax
-     * @param zMax
-     * @param StructureBoundingBox
-     */
-    private void clearBlocks(World world, int xMin, int zMin, int xMax, int zMax, StructureBoundingBox box) {
-        for (int xx = xMin; xx <= xMax ; xx++){
-            for (int zz = zMin; zz <= zMax; zz++){
-            	clearBlock(world, xx,0,zz, box);
-            }
-        }
-    }
-    
-    /**
-     * Clears out an block at x,y,z for building
-     * @param World
-     * @param x
-     * @param y Clears from y up, puts down base from y-1 down
-     * @param z
-     * @param StructureBoundingBox
-     */
-    private void clearBlock(World world, int x, int y, int z, StructureBoundingBox box) {
-        clearCurrentPositionBlocksUpwards(world, x,y,z, box);
-        this.func_151554_b(world, Blocks.stonebrick, 0, x,y-1,z, box);	
-    }
-    
-    protected void placeBedAtCurrentPosition(World world, StructureBoundingBox sbb, Random random, int x, int y, int z, int dir, boolean head) {
-        int xPos = this.getXWithOffset(x, z);
-        int yPos = this.getYWithOffset(y);
-        int zPos = this.getZWithOffset(x, z);
-
-        int metadata = dir;
-        switch (this.coordBaseMode) {
-        case 3:
-        	metadata++;
-        case 2:
-        	metadata++;
-        case 1:
-        	metadata++;
-        	break;
-        default:
-        }
-        if (metadata > 3)
-        	metadata -= 4;
-        if (head)
-        	metadata += 8;
-
-        if (sbb.isVecInside(xPos, yPos, zPos)) {
-        	world.setBlock(xPos, yPos, zPos, Blocks.bed, metadata, 3);
         }
     }
 
@@ -464,13 +326,13 @@ public class VillageBaronCastle extends StructureVillagePieces.Village
 //   		magicBook.addEnchantment(Enchantment.infinity, random.nextInt(3)+1);
 		ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, new WeightedRandomChestContent(magicBook, 1, 5, 20));
    		magicBook = new ItemStack(Items.enchanted_book);
-   		magicBook.addEnchantment(Enchantment.power, random.nextInt(3));
+//   		magicBook.addEnchantment(Enchantment.power, random.nextInt(3));
 		ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, new WeightedRandomChestContent(magicBook, 1, 5, 20));
    		magicBook = new ItemStack(Items.enchanted_book);
-   		magicBook.addEnchantment(Enchantment.punch, random.nextInt(3));
+//   		magicBook.addEnchantment(Enchantment.punch, random.nextInt(3));
 		ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, new WeightedRandomChestContent(magicBook, 1, 5, 20));
    		magicBook = new ItemStack(Items.enchanted_book);
-   		magicBook.addEnchantment(Enchantment.unbreaking, random.nextInt(3)+1);
+//   		magicBook.addEnchantment(Enchantment.unbreaking, random.nextInt(3)+1);
 		ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, new WeightedRandomChestContent(magicBook, 1, 5, 20));
 		ChestGenHooks.getInfo(BARON_CASTLE_STUDY_CHEST).setMin(3);
 		ChestGenHooks.getInfo(BARON_CASTLE_STUDY_CHEST).setMax(7);

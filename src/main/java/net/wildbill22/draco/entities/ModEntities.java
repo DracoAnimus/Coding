@@ -8,6 +8,7 @@ import net.wildbill22.draco.Core;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
+import net.wildbill22.draco.entities.hostile.EntityBallista;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityCrossbowGuard;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
@@ -33,6 +34,7 @@ public class ModEntities {
 		registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
 		registerEntityEgg(EntitySilverDragon.class, 0xd8bb9d, 0xa73c1a);
 		registerEntityEgg(EntityWildFireDragon.class, 0xd8bb9d, 0xa83c1a);
+		registerEntityEgg(EntityBallista.class, 0xd8bb9d, 0xa93c1a);
 		
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, EntityCreeperDragon.name, ++modEntityID, Core.instance, 80, 3, true);
@@ -50,6 +52,7 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityLongbowGuard.class, EntityLongbowGuard.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntityCrossbowGuard.class, EntityCrossbowGuard.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntityBaron.class, EntityBaron.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityBallista.class, EntityBallista.name, ++modEntityID, Core.instance, 80, 3, true);
 		
 		addMobSpawns();
 	}

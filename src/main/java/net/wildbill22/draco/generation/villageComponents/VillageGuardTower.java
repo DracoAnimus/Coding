@@ -5,69 +5,31 @@ import java.util.Random;
 
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.common.ChestGenHooks;
 import net.wildbill22.draco.biome.ModBiomes;
-import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.generation.villageHandlers.GuardTowerCreationHandler;
-import net.wildbill22.draco.items.ModItems;
-import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 
-public class VillageGuardTower extends StructureVillagePieces.Village
-{
-	public static final String TOWER_CHEST = "villagegGuardTower";
-	public static final WeightedRandomChestContent[] towerChestContents = new WeightedRandomChestContent[]{
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_boots), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_chestplate), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_helmet), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR),
-		new WeightedRandomChestContent(
-				new ItemStack(Items.diamond_leggings), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR)
-    };
-	private int averageGroundLevel = -1;
+public class VillageGuardTower extends MyVillageComponents {
     private static final int HEIGHT = 13;
-	private final int EAST  = 1;
 
     public VillageGuardTower() {}
     
-	public VillageGuardTower(StructureVillagePieces.Start startPiece, int type, Random random, StructureBoundingBox _boundingBox, int direction){
-		super(startPiece, type);
-        coordBaseMode = direction;
-    	boundingBox = _boundingBox;
+	public VillageGuardTower(StructureVillagePieces.Start startPiece, int type, StructureBoundingBox boundingBox, int direction){
+		super(startPiece, type, boundingBox, direction);
 	}
 	
-	public static void addVillagePiece(@SuppressWarnings("rawtypes") Class c, String s) { 
-		try { 
-			MapGenStructureIO.func_143031_a(c, s); 
-		} 
-		catch (Exception localException) {} 
-	} 
-
 	public static StructureVillagePieces.Village buildComponent(StructureVillagePieces.Start startPiece, 
 			@SuppressWarnings("rawtypes") List pieces, Random random, int x, int y, int z, int direction, int type) {
         StructureBoundingBox _boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 7, 14, 6, direction);
         if (canVillageGoDeeper(_boundingBox)) { 
         	if (StructureComponent.findIntersecting(pieces, _boundingBox) == null) {
-        		return new VillageGuardTower(startPiece, type, random, _boundingBox, direction);
+        		return new VillageGuardTower(startPiece, type, _boundingBox, direction);
         	}
         }
 		return null;
@@ -89,19 +51,13 @@ public class VillageGuardTower extends StructureVillagePieces.Village
             boundingBox.offset(0, this.averageGroundLevel - boundingBox.maxY + HEIGHT - 0, 0);
         }
 
-        int westFacingStair = this.getMetadataWithOffset(Blocks.stone_brick_stairs, 1);
+        setMetaData();
 
         // Clear out area of trees
 		fillWithAir(world, box, 0,0,0, 6,14,6);
 
         // Clear out the area for the building and make a base
-//    	clearBlocks(world, 0,0, 6,6, box);
-        for (int xx = 0; xx <= 6 ; xx++){
-            for (int zz = 0; zz <= 6; zz++){
-                clearCurrentPositionBlocksUpwards(world, xx,0,zz, box);
-                this.func_151554_b(world, Blocks.cobblestone, 0, xx, -1, zz, box);
-            }
-        }
+    	clearBlocks(world, 0,0, 6,6, box);
 		
     	// bottom floor
         int lvl = 0; // Level under construction
@@ -121,8 +77,6 @@ public class VillageGuardTower extends StructureVillagePieces.Village
 
         // 2nd floor
         lvl = 2;
-        int eastFacingTorch = this.getMetadataWithOffset(Blocks.torch, 1);
-        int northFacingTorch = this.getMetadataWithOffset(Blocks.torch, 4);
         placeBlockAtCurrentPosition(world, Blocks.torch, northFacingTorch, 1,lvl,5, box);
 
         // 4th floor
@@ -225,35 +179,6 @@ public class VillageGuardTower extends StructureVillagePieces.Village
         spawnGuards(world, box, 5,12,5,1);
         
         return true;
-    }
-
-    /**
-     * Spawns a number of guards in this component.
-     * 
-     * @param World
-     * @param StructureBoundingBox
-     * @param x
-     * @param y
-     * @param z
-     * @param numGuards
-     */
-    protected void spawnGuards(World world, StructureBoundingBox box, int x, int y, int z, int numGuards) {
-    	if (numGuards == 0)
-    		return;
-        int i1, xx, yy, zz;
-		for (i1 = 0; i1 < numGuards; ++i1) {
-            xx = this.getXWithOffset(x + i1, z);
-            yy = this.getYWithOffset(y);
-            zz = this.getZWithOffset(x + i1, z);
-
-            if (!box.isVecInside(xx, yy, zz)) {
-                return;
-            }
-
-			EntityGuard guard = EntityGuard.createGuardTypePerBiome(world, xx, zz);
-			guard.setLocationAndAngles((double)xx + 0.5D, (double)yy, (double)zz + 0.5D, 0.0F, 0.0F);
-            world.spawnEntityInWorld(guard);
-        }
     }
 
     public static void registerGuardTowerChest(){
