@@ -4,6 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntitySpear;
@@ -15,11 +16,11 @@ import net.wildbill22.draco.lib.BALANCE.WILD_FIRE_DRAGON_PROP;
  * @author WILLIAM
  *
  */
-public class EntityBallista extends EntityMob {
-	public static final String name = "ballista";
+public class EntityCatapult extends EntityMob {
+	public static final String name = "catapult";
     private int field_70846_g;  // Something to do with when and how attacks occur
 
-	public EntityBallista(World world) {
+	public EntityCatapult(World world) {
 		super(world);
 		this.getDataWatcher().addObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte)0));
 		this.setSize(2.0F, 1.0F);
@@ -108,8 +109,8 @@ public class EntityBallista extends EntityMob {
 //            double targetY = target.boundingBox.minY + (double)(target.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
             double targetZ = target.posZ - this.posZ;
             // Pull the bow
-            if (this.attackTime < 4) {
-            	setBowPosition(this.attackTime);
+            if (this.attackTime < 6) {
+            	setArmPosition(this.attackTime);
             }
             if (this.attackTime == 0) {
                 ++this.field_70846_g;
@@ -117,7 +118,7 @@ public class EntityBallista extends EntityMob {
                     this.attackTime = 60;
                 }
                 else if (this.field_70846_g <= 4) {
-                    this.attackTime = 6;
+                    this.attackTime = 30;
                 }
                 else {
                     this.attackTime = 100;
@@ -125,13 +126,15 @@ public class EntityBallista extends EntityMob {
                 }
                 if (this.field_70846_g > 1) {
                     for (int i = 0; i < 1; ++i) {
-                		EntitySpear entitySpear = new EntitySpear(this.worldObj, (EntityLivingBase)this, (EntityLivingBase)target, 1.6F, (float)(14 - this.worldObj.difficultySetting.getDifficultyId() * 4));
+                		EntitySnowball entitySnowball = new EntitySnowball(this.worldObj, this);
                 		// TODO: Could have enchantments
-                		entitySpear.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
-                		entitySpear.posX += target.posX > 0 ? 1 : -1;
-                		entitySpear.posZ += target.posZ > 0 ? 1 : -1;
+                		entitySnowball.posY = this.posY + (double)(this.height / 2.0F) + 1.5D;
+                		entitySnowball.posX = this.posX;
+                		entitySnowball.posZ = this.posZ;
+//                		entitySnowball.posX += target.posX > 0 ? 1 : -1;
+//                		entitySnowball.posY += target.posY > 0 ? 1 : -1;
                 		this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-                        this.worldObj.spawnEntityInWorld(entitySpear);
+                        this.worldObj.spawnEntityInWorld(entitySnowball);
                     }
                 }
             }
@@ -140,16 +143,41 @@ public class EntityBallista extends EntityMob {
         }
     }
 
-	public int getBowPosition() {
-        return this.dataWatcher.getWatchableObjectByte(BALANCE.BOW_POSITION_WATCHER);
+	public float getArmPosition() {
+		int pos = this.dataWatcher.getWatchableObjectByte(BALANCE.BOW_POSITION_WATCHER);
+		float angle = 30;
+		switch (pos) {
+		case 0:
+			angle = 30;
+			break;
+		case 1:
+			angle = 45;
+			break;
+		case 2:
+			angle = 60;
+			break;
+		case 3:
+			angle = 45;
+			break;
+		case 4:
+			angle = 30;
+			break;
+		case 5:
+			angle = 15;
+			break;
+		default:
+			angle = 30;
+		}
+		float radians = (float) (Math.PI / 180.0F * angle);
+        return radians;
 	}
 
-	public void setBowPosition(int newBowPosition) {
-		 int bowPosition = newBowPosition;
-		 if (bowPosition > 3)
+	public void setArmPosition(int newArmPosition) {
+		 int armPosition = newArmPosition;
+		 if (armPosition > 5)
 			 return;
 		
-        this.dataWatcher.updateObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte) bowPosition));
-        LogHelper.info("EntityBallista sync: Set bow position of " + bowPosition + ".");
+        this.dataWatcher.updateObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte) armPosition));
+        LogHelper.info("EntityBallista sync: Set bow position of " + armPosition + ".");
 	}    
 }

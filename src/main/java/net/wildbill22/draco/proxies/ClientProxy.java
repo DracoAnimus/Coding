@@ -45,6 +45,8 @@ public class ClientProxy extends CommonProxy
 //		RenderingRegistry.registerEntityRenderingHandler(EntityMCSilverDragon.class, new RenderMCSilverDragon());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBallista.class, 
 				new RenderBallista(new ModelBallista(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCatapult.class, 
+				new RenderCatapult(new ModelCatapult(), 0.5F));
 		
 		// Throwable entities
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, new RenderSpear());
