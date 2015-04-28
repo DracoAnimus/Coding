@@ -1,13 +1,11 @@
 package net.wildbill22.draco.entities.hostile;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.wildbill22.draco.entities.EntitySpear;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.BALANCE.WILD_FIRE_DRAGON_PROP;
@@ -24,6 +22,7 @@ public class EntityCatapult extends EntityMob {
 		super(world);
 		this.getDataWatcher().addObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte)0));
 		this.setSize(2.0F, 1.0F);
+		jumpMovementFactor = 0.0F;
 	}
 
     protected void applyEntityAttributes() {

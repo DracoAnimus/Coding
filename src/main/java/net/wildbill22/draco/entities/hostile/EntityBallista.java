@@ -23,6 +23,7 @@ public class EntityBallista extends EntityMob {
 		super(world);
 		this.getDataWatcher().addObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte)0));
 		this.setSize(2.0F, 1.0F);
+		jumpMovementFactor = 0.0F;
 	}
 
     protected void applyEntityAttributes() {
@@ -104,9 +105,12 @@ public class EntityBallista extends EntityMob {
         }
         // TODO: Set to the follow range? Maybe new attack distance setting in config?
         else if (distance < 30.0F) {
-            double targetX = target.posX - this.posX;
+        	// Adding offset so it doesn't shoot itself
+        	double posOffsetX = this.posX > 0 ? 1.6 : -1.6;
+        	double posOffsetZ = this.posZ > 0 ? 1.6 : -1.6;
+            double targetX = target.posX - this.posX + posOffsetX;
 //            double targetY = target.boundingBox.minY + (double)(target.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
-            double targetZ = target.posZ - this.posZ;
+            double targetZ = target.posZ - this.posZ + posOffsetZ;
             // Pull the bow
             if (this.attackTime < 4) {
             	setBowPosition(this.attackTime);
@@ -128,8 +132,8 @@ public class EntityBallista extends EntityMob {
                 		EntitySpear entitySpear = new EntitySpear(this.worldObj, (EntityLivingBase)this, (EntityLivingBase)target, 1.6F, (float)(14 - this.worldObj.difficultySetting.getDifficultyId() * 4));
                 		// TODO: Could have enchantments
                 		entitySpear.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
-                		entitySpear.posX += target.posX > 0 ? 1 : -1;
-                		entitySpear.posZ += target.posZ > 0 ? 1 : -1;
+                		entitySpear.posX = this.posX + posOffsetX;
+                		entitySpear.posZ = this.posZ + posOffsetZ;
                 		this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
                         this.worldObj.spawnEntityInWorld(entitySpear);
                     }
