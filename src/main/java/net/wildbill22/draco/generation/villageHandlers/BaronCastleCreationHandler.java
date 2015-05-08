@@ -18,7 +18,7 @@ public class BaronCastleCreationHandler implements VillagerRegistry.IVillageCrea
 	@Override
 	public PieceWeight getVillagePieceWeight(Random random, int i) {
 		// First number is likelihood of spawning, second is maximum to spawn
-        return new PieceWeight(VillageBaronCastle.class, 25, 1);
+        return new PieceWeight(VillageBaronCastle.class, 30, 1);
 	}
 
 	@SuppressWarnings("rawtypes")

@@ -19,6 +19,7 @@ import net.wildbill22.draco.entities.hostile.EntitySpearGuard;
 import net.wildbill22.draco.entities.hostile.EntityWildFireDragon;
 import net.wildbill22.draco.items.ItemMyExplosive;
 import net.wildbill22.draco.items.ItemMyFireball;
+import net.wildbill22.draco.items.ItemMyRock;
 import net.wildbill22.draco.items.ItemSpear;
 import net.wildbill22.draco.lib.BALANCE;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -56,6 +57,7 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityBaron.class, EntityBaron.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntityBallista.class, EntityBallista.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntityCatapult.class, EntityCatapult.name, ++modEntityID, Core.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityMyRock.class, ItemMyRock.name, ++modEntityID, Core.instance, 64, 20, true);
 		
 		addMobSpawns();
 	}

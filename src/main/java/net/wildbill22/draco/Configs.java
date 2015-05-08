@@ -184,6 +184,9 @@ public class Configs {
 		public static int village_size;
 		@DefaultBoolean(value = true, name = "Enable Taverns", comment = "Should Taverns be added to villages?")
 		public static boolean village_taverns_enabled;		
+		@DefaultInt(value = 15, minValue = 1, maxValue = 50, name = "Tavern Probability", 
+				comment = "Weighting for whether a tavern will occur in a village. Average: 15")
+		public static int tavern_weight;
 		@DefaultBoolean(value = true, name = "Enable Guard Towers", comment = "Should Guard Towers be added to villages?")
 		public static boolean village_guard_tower_enabled;		
 		@DefaultBoolean(value = true, name = "Enable Bakery", comment = "Should Bakery be added to villages?")

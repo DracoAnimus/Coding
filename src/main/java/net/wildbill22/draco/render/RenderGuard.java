@@ -14,10 +14,10 @@ public class RenderGuard extends RenderBiped{
 		super(par1ModelBiped, shadowSize);
 		texture = new ResourceLocation[5];
 		texture[0] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
-		texture[1] = new ResourceLocation(REFERENCE.MODID + ":textures/models/knightTexture.png");
+		texture[1] = new ResourceLocation(REFERENCE.MODID + ":textures/models/knight.png");
 		texture[2] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
 		texture[3] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
-		texture[4] = new ResourceLocation(REFERENCE.MODID + ":textures/models/guardTexture.png");
+		texture[4] = new ResourceLocation(REFERENCE.MODID + ":textures/models/baron.png");
 	}
 
 	@Override

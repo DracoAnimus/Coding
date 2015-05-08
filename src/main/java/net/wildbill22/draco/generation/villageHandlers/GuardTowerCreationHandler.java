@@ -20,7 +20,7 @@ public class GuardTowerCreationHandler implements VillagerRegistry.IVillageCreat
 	public PieceWeight getVillagePieceWeight(Random random, int i) {
 //        return new PieceWeight(VillageTavern.class, 4, MathHelper.getRandomIntegerInRange(random, 0, 1));
 		// First number is likelihood of spawning, second is maximum to spawn
-        return new PieceWeight(VillageGuardTower.class, 15, MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i));
+        return new PieceWeight(VillageGuardTower.class, 15, MathHelper.getRandomIntegerInRange(random, 1 + i, 1 + i));
 	}
 
 	@SuppressWarnings("rawtypes")

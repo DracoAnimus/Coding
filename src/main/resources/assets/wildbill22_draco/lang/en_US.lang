@@ -10,6 +10,7 @@ item.wildbill22_draco_mace.name=Mace
 item.wildbill22_draco_goldCoin.name=Gold Coin
 item.wildbill22_draco_longBow.name=Long Bow
 item.wildbill22_draco_crossbow.name=Crossbow
+item.wildbill22_draco_rock.name=Rock
 
 #Blocks (tiles)
 tile.charredGround.name=Charred Ground
@@ -28,6 +29,8 @@ entity.wildbill22_draco.hornedGoat.name=Horned Goat
 entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
 entity.wildbill22_draco.spear.name=Spear
 entity.wildbill22_draco.ballista.name=Ballista
+entity.wildbill22_draco.catapult.name=Catapult
+entity.wildbill22_draco.rock.name=Rock
 
 #General
 itemGroup.Draco_Animus=Draco Animus

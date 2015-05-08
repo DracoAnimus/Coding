@@ -6,9 +6,10 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.projectile.EntitySnowball;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.wildbill22.draco.entities.EntityMyRock;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
-import net.wildbill22.draco.lib.BALANCE.WILD_FIRE_DRAGON_PROP;
+import net.wildbill22.draco.lib.REFERENCE;
 
 /**
  * @author WILLIAM
@@ -21,15 +22,13 @@ public class EntityCatapult extends EntityMob {
 	public EntityCatapult(World world) {
 		super(world);
 		this.getDataWatcher().addObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte)0));
-		this.setSize(2.0F, 1.0F);
+		this.setSize(1.9F, 1.0F);
 		jumpMovementFactor = 0.0F;
 	}
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(WILD_FIRE_DRAGON_PROP.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(WILD_FIRE_DRAGON_PROP.FOLLOW_RANGE);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(WILD_FIRE_DRAGON_PROP.MAX_HEALTH);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(BALANCE.MOBPROP.TOWER_MAX_HEALTH);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0);
     }
 
@@ -54,7 +53,8 @@ public class EntityCatapult extends EntityMob {
      */
 	@Override
     protected String getLivingSound() {
-        return "mob.blaze.breathe";
+		return REFERENCE.MODID + ":" + "crank-01";
+//        return "mob.blaze.breathe";
     }
      
     @Override
@@ -117,7 +117,7 @@ public class EntityCatapult extends EntityMob {
                     this.attackTime = 60;
                 }
                 else if (this.field_70846_g <= 4) {
-                    this.attackTime = 30;
+                    this.attackTime = 10;
                 }
                 else {
                     this.attackTime = 100;
@@ -125,15 +125,15 @@ public class EntityCatapult extends EntityMob {
                 }
                 if (this.field_70846_g > 1) {
                     for (int i = 0; i < 1; ++i) {
-                		EntitySnowball entitySnowball = new EntitySnowball(this.worldObj, this);
+                		EntityMyRock entityMyRock = new EntityMyRock(this.worldObj, this);
                 		// TODO: Could have enchantments
-                		entitySnowball.posY = this.posY + (double)(this.height / 2.0F) + 1.5D;
-                		entitySnowball.posX = this.posX;
-                		entitySnowball.posZ = this.posZ;
+                		entityMyRock.posY = this.posY + (double)(this.height / 2.0F) + 1.5D;
+                		entityMyRock.posX = this.posX;
+                		entityMyRock.posZ = this.posZ;
 //                		entitySnowball.posX += target.posX > 0 ? 1 : -1;
 //                		entitySnowball.posY += target.posY > 0 ? 1 : -1;
                 		this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-                        this.worldObj.spawnEntityInWorld(entitySnowball);
+                        this.worldObj.spawnEntityInWorld(entityMyRock);
                     }
                 }
             }

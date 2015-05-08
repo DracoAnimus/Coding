@@ -19,7 +19,7 @@ public class TestCatapultTowerCreationHandler implements VillagerRegistry.IVilla
 	@Override
 	public PieceWeight getVillagePieceWeight(Random random, int i) {
 		// First number is likelihood of spawning, second is maximum to spawn
-        return new PieceWeight(TestCatapultTower.class, 25, MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i));
+        return new PieceWeight(TestCatapultTower.class, 25, MathHelper.getRandomIntegerInRange(random, 1 + i, 1 + i));
 	}
 
 	@SuppressWarnings("rawtypes")

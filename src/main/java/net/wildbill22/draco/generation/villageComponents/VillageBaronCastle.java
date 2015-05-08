@@ -51,13 +51,15 @@ public class VillageBaronCastle extends MyVillageComponents {
 	
 	// Only create the Baron Castle in city biomes
 	@Override
-	public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
-		BiomeGenBase biome = world.getBiomeGenForCoords(box.minX, box.minZ);
-		if (biome != ModBiomes.biomeCityPlains)
-			return true;
-
-		LogHelper.info("VillageBaronCastle: Build Baron's Castle at: " + box.minX + ", " + box.minZ);
+	public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {		
+//		LogHelper.info("VillageBaronCastle: Was going to build Baron's Castle at: " + box.minX + ", " + box.minZ);
+		// First part built, this is always < 0
         if (averageGroundLevel < 0){
+    		BiomeGenBase biome = world.getBiomeGenForCoords(box.minX, box.minZ);
+    		if (biome != ModBiomes.biomeCityPlains)
+    			return false;
+
+    		LogHelper.info("VillageBaronCastle: Build Baron's Castle at: " + box.minX + ", " + box.minZ);
             averageGroundLevel = getAverageGroundLevel(world, box);
             if (averageGroundLevel < 0){
                 return true;

@@ -22,6 +22,7 @@ public class ModItems extends Item {
 	public static Item goldCoin;
 	public static Item fireball;
 	public static Item explosiveFireball;
+	public static Item rock;
 	public static Achievement levelTen;
 	
 	public static void preInit() {
@@ -30,12 +31,14 @@ public class ModItems extends Item {
 		goldCoin = new ItemGoldCoin();
 		fireball = new ItemMyFireball();
 		explosiveFireball = new ItemMyExplosive();
+		rock = new ItemMyRock();
 		
 		GameRegistry.registerItem(dragonScales, ItemDragonScales.name);
 		GameRegistry.registerItem(goldCoin, ItemGoldCoin.name);
 		GameRegistry.registerItem(spear, ItemSpear.name);
 		GameRegistry.registerItem(fireball, ItemMyFireball.name);
 		GameRegistry.registerItem(explosiveFireball, ItemMyExplosive.name);
+		GameRegistry.registerItem(rock, ItemMyRock.name);
 	}
 
 	public static void init() {

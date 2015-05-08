@@ -39,15 +39,18 @@ public final class BALANCE {
 				comment = "Maximum health")
 		public static double BARON_MAX_HEALTH;
 		@DefaultDouble(value = 5.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Attack Damage", 
-				comment = "Attack damage")
+				comment = "Guard attack damage")
 		public static double GUARD_ATTACK_DAMAGE;
 		@DefaultDouble(value = 3.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Spear Damage", 
-				comment = "Spear damage")
+				comment = "Guard's spear damage")
 		public static double GUARD_SPEAR_DAMAGE;
+		@DefaultDouble(value = 8.0D, minValue = 1.0D, maxValue = 20.0D, name = "Catapult Rock Damage", 
+		comment = "Rock damage from catapult")
+		public static double ROCK_DAMAGE;
 		@DefaultDouble(value = 0.35F, minValue = 0.1D, maxValue = 1.0D, name = "Guard Movement Speed", 
 				comment = "Guard movement speed")
 		public static double GUARD_MOVEMENT_SPEED;
-		@DefaultInt(value = 75, minValue = 0, maxValue = 100, name = "Guard Spawn Probability", 
+		@DefaultInt(value = 10, minValue = 0, maxValue = 100, name = "Guard Spawn Probability", 
 				comment = "Probability of spawning guards")
 		public static int GUARD_SPAWN_PROB;
 		@DefaultInt(value = 6, minValue = 0, maxValue = 20, name = "Maximum Guards per Village", 
@@ -79,6 +82,11 @@ public final class BALANCE {
 		@DefaultInt(value = 10, minValue = 0, maxValue = 80, name = "Creeper Avoidance Distance", 
 				comment = "How far away creepers will stay from dragon")
 		public static int CREEPER_AVOID_LEVEL;
+		
+		// Properties for tower weapons
+		@DefaultDouble(value = 50.0D, minValue = 10.0D, maxValue = 100.0D, name = "Tower Weapon Maximum Health", 
+				comment = "Maximum health for tower weapon")
+		public static double TOWER_MAX_HEALTH;
 	}
 	
 	public static class WILD_FIRE_DRAGON_PROP {
@@ -138,7 +146,7 @@ public final class BALANCE {
 	@DefaultBoolean(value = true, name = "Player as silver dragon initially?", 
 			comment = "Whether player should spawn initially as a silver dragon")
 	public static boolean PLAYER_AS_SILVER_DRAGON_INITIALLY;
-	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher for Ballista", 
+	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher for Ballista and Catapult", 
 			comment = "If there is a conflict with another mod, this can be changed.")
 	public static int BOW_POSITION_WATCHER;	
 	@DefaultInt(value = 21, minValue = 20, maxValue = 31, name = "Fire Dragon Data Watcher", 

@@ -1,5 +1,7 @@
 package net.wildbill22.draco.models;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -13,7 +15,7 @@ import net.wildbill22.draco.entities.player.DragonPlayer;
  */
 public class ModelSilverDragon extends ModelBase{
     ModelRenderer neck;
-//    ModelRenderer neckSpikes;
+    ModelRenderer neckSpikes;
     ModelRenderer head, mouth;
 //    ModelRenderer topMouth, bottomMouth;
     ModelRenderer rWing1, rWing2, rWing3, rWing4;
@@ -26,7 +28,7 @@ public class ModelSilverDragon extends ModelBase{
     ModelRenderer backRightLeg1, backRightLeg2, backRightFoot;
     
     final float WING_SPEED = 0.6662f;
-    final float MAXIMUM_WING_ROTATION = 1.5f;
+    final float MAXIMUM_WING_ROTATION = 1.4f; // 4-29-15: was 1.5
     DragonPlayer dragonPlayer;
     
     // f = time, f1 = how far to move legs
@@ -78,15 +80,18 @@ public class ModelSilverDragon extends ModelBase{
         else
         	dragonPlayer = null;
 
-        // Neck
-        neck.render(f5);
-
-        // Head
-        head.render(f5);
-//      neckSpikes.render(f5);
-//      topMouth.render(f5);
-//      bottomMouth.render(f5);
+        // For when shown in inventory
+//        if (entity.)
+//        	GL11.glPushMatrix();
+//          GL11.glScalef(0.5, 0.5, 0.5);
+        // or this
+//        float scaleFactor = 2.5F;
+//        GL11.glPushMatrix();
+//        GL11.glTranslatef(0F, 1.5F-1.5F*scaleFactor, 0F); 
+//        GL11.glScalef(scaleFactor, scaleFactor, scaleFactor);
         
+        neck.render(f5);
+        head.render(f5);        
         if (dragonPlayer == null) {
 	        rWing1.render(f5);
 	        lWing1.render(f5);
@@ -95,27 +100,17 @@ public class ModelSilverDragon extends ModelBase{
 	        rWing1.render(f5);
 	        lWing1.render(f5);
         } 
-//        else {
-//            rWing1.render(0);
-//            lWing1.render(0);
-//        }
-        
-        // Front Left Leg
-        leftLeg1.render(f5);
-
-        // Back Left Leg
-        backLeftLeg1.render(f5);
-        
-        // Front Right Leg
-        rightLeg1.render(f5);
-
-        // Back right leg
-        backRightLeg1.render(f5);
-
-        // Tail
+        else {
+            leftLeg1.render(f5);  // Front Left Leg
+            backLeftLeg1.render(f5); // Back Left Leg
+            rightLeg1.render(f5); // Front Right Leg
+            backRightLeg1.render(f5); // Back right leg
+        }       
         tail1.render(f5);
-        
         body.render(f5);
+        // For when shown in inventory
+//      if (entity.)
+//      	GL11.glPopMatrix();
       }
       
     private void setRotation(ModelRenderer model, float x, float y, float z)
@@ -144,13 +139,19 @@ public class ModelSilverDragon extends ModelBase{
 		// Head & neck spikes have same rotation point
 		head = new ModelRenderer(this, 125, 45);
 		head.addBox(-5F, -5F, -10F, 10, 10, 10);
-		head.addBox(-15F, -15F, -2F, 30, 30, 0); // Neck spikes
 		head.setRotationPoint(0F, -13F, -30F);
 		head.setTextureSize(512, 256);
 		head.mirror = true;
 		setRotation(head, 0F, 0F, 0F);
 //		convertToChild(neck, head);
-		
+
+		// Spikes (good)
+        neckSpikes = new ModelRenderer(this, 0, 120);
+		neckSpikes.addBox(-15F, -15F, -2F, 30, 30, 0);
+        neckSpikes.setRotationPoint(0F, -13F, -30F);
+        setRotation(neckSpikes, -0.4363323F, 0F, 0F);
+		convertToChild(head, neckSpikes);
+
 		// Mouth
 		// Mouth won't open for the first phase
 		mouth = new ModelRenderer(this, 0, 60);

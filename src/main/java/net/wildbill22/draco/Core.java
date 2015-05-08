@@ -13,16 +13,16 @@ import net.wildbill22.draco.generation.villageComponents.VillageBaronCastle;
 import net.wildbill22.draco.generation.villageComponents.VillageGuardTower;
 import net.wildbill22.draco.generation.villageComponents.VillageTavern;
 import net.wildbill22.draco.generation.villageHandlers.BarWenchCreationHandler;
+import net.wildbill22.draco.generation.villageHandlers.House3CreationHandler;
 import net.wildbill22.draco.generation.villageHandlers.VillagerBakeryTradeHandler;
+import net.wildbill22.draco.generation.villageHandlers.WoodHutCreationHandler;
 import net.wildbill22.draco.generation.villages.VillageBiomes;
 import net.wildbill22.draco.generation.villages.VillageGenReplacer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
-import net.wildbill22.draco.network.BallistaUpdatePacket;
 import net.wildbill22.draco.network.DragonPlayerUpdatePacket;
-import net.wildbill22.draco.network.RequestDragonPlayerUpdatePacket;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
@@ -101,6 +101,9 @@ public class Core {
 			}
 			if (Configs.VILLAGE.village_barons_castle_enabled) {
 				VillageBaronCastle.init();
+				// Extra houses to make the city a bit bigger
+//				House3CreationHandler.init();
+//				WoodHutCreationHandler.init();
 			}
 		}
 	}

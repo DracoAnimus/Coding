@@ -9,29 +9,29 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.wildbill22.draco.items.ItemSpear;
+import net.wildbill22.draco.items.ItemMyRock;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
-public class EntitySpear extends EntityThrowable {
+public class EntityMyRock extends EntityThrowable {
     public Entity shootingEntity;
-    /** 1 if the player can pick up the arrow */
+    /** 1 if the player can pick up the rock */
     public int canBePickedUp;
 
-	public EntitySpear(World world, double p_i1778_2_, double p_i1778_4_, double p_i1778_6_) {
+	public EntityMyRock(World world, double p_i1778_2_, double p_i1778_4_, double p_i1778_6_) {
 		super(world, p_i1778_2_, p_i1778_4_, p_i1778_6_);
 	}
 	
-	public EntitySpear(World par1World, EntityLivingBase par2EntityLivingBase) {
+	public EntityMyRock(World par1World, EntityLivingBase par2EntityLivingBase) {
 		super(par1World, par2EntityLivingBase);
 	}
 	
-	public EntitySpear(World par1World) {
+	public EntityMyRock(World par1World) {
 		super(par1World);
 	}
 	
 	// Added for attack from EntityAISpearAttack
-    public EntitySpear(World world, EntityLivingBase attacker, EntityLivingBase target, float p_i1755_4_, float p_i1755_5_)
+    public EntityMyRock(World world, EntityLivingBase attacker, EntityLivingBase target, float p_i1755_4_, float p_i1755_5_)
     {
         super(world);
         this.renderDistanceWeight = 10.0D;
@@ -63,22 +63,21 @@ public class EntitySpear extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
 		if (!this.worldObj.isRemote)
-			LogHelper.info("EntitySpear landed!");
+			LogHelper.info("EntityRock landed!");
 			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {
-				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) ItemSpear.spearDamage);
+				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) ItemMyRock.rockDamage);
 			}
 			else {
 				// Do something for instance if it hits a tree
-				return;  // no crit and not dead
 			}
 		}
 		
 		for (int i = 0; i < 4; ++i)	{
 			this.worldObj.spawnParticle("crit", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 		}
-		// Get rid of the used spear
+		// Get rid of the used rock
 		if (!this.worldObj.isRemote)
 			this.setDead();
 	}

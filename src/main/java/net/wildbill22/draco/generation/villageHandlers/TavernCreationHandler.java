@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.structure.StructureVillagePieces.PieceWeight;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
+import net.wildbill22.draco.Configs.VILLAGE;
 import net.wildbill22.draco.generation.villageComponents.VillageTavern;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
@@ -19,7 +20,7 @@ public class TavernCreationHandler implements VillagerRegistry.IVillageCreationH
 	@Override
 	public PieceWeight getVillagePieceWeight(Random random, int i) {
 		// First number is likelihood of spawning, second is maximum to spawn
-        return new PieceWeight(VillageTavern.class, 15, MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i));
+        return new PieceWeight(VillageTavern.class, VILLAGE.tavern_weight, MathHelper.getRandomIntegerInRange(random, 0 + i, 1 + i));
 	}
 
 	@SuppressWarnings("rawtypes")

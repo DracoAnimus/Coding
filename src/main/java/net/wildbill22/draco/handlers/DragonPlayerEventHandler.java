@@ -191,6 +191,28 @@ public class DragonPlayerEventHandler {
 	public void OnPlayerRender(RenderPlayerEvent.Pre event) {
     	if (DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
 			event.setCanceled(true);
+//	        this.setSize(0.6F, 1.62F); // normal player size
+			
+			// shorter dragon hit box (not tested)
+//			event.entityPlayer.height = 1.62F;      // normally 1.62F
+//			event.entityPlayer.boundingBox.maxY = event.entityPlayer.boundingBox.minY + event.entityPlayer.height;
+			
+			// Longer dragon hit box (works as long as it is square)
+//			event.entityPlayer.width = 1.5F;
+//			event.entityPlayer.boundingBox.maxZ = event.entityPlayer.boundingBox.minZ + event.entityPlayer.width;
+//			event.entityPlayer.boundingBox.maxX = event.entityPlayer.boundingBox.minX + event.entityPlayer.width;
+
+			// Hit box more centered
+//			event.entityPlayer.yOffset =  0.92F;    // normally 1.62F
+//			event.entityPlayer.eyeHeight = event.entityPlayer.yOffset - 1.5F;  // normally 0.12F
+//			renderPlayerDragon.doRender(event.entityPlayer, 0D, -0.4D, 0D, 0F, 0F);
+			
+			// Below sort of works, gets stuck once in awhile
+//			event.entityPlayer.eyeHeight = 1.12F;  // normally 0.12F
+//			event.entityPlayer.yOffset =  0.62F;    // normally 1.62F
+//			renderPlayerDragon.doRender(event.entityPlayer, 0D, -0.4D, 0D, 0F, 0F);
+			
+			// Old single setting:
 			renderPlayerDragon.doRender(event.entityPlayer, 0D, -1.4D, 0D, 0F, 0F);
     	}
 	}

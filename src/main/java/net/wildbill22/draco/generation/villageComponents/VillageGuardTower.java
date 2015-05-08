@@ -38,12 +38,12 @@ public class VillageGuardTower extends MyVillageComponents {
 	// Only create the Guard Tower in biomes with Longbow or Crossbow guards
 	@Override
 	public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
-		BiomeGenBase biome = world.getBiomeGenForCoords(box.minX, box.minZ);
-		if (biome != ModBiomes.biomeCityPlains && biome != ModBiomes.biomeTownForest)
-			return true;
-
-		LogHelper.info("VillageGuardTower: Build guard tower at: " + box.minX + ", " + box.minZ);
         if (averageGroundLevel < 0){
+    		BiomeGenBase biome = world.getBiomeGenForCoords(box.minX, box.minZ);
+    		if (biome != ModBiomes.biomeCityPlains && biome != ModBiomes.biomeTownForest)
+    			return false;
+
+    		LogHelper.info("VillageGuardTower: Build guard tower at: " + box.minX + ", " + box.minZ);
             averageGroundLevel = getAverageGroundLevel(world, box);
             if (averageGroundLevel < 0){
                 return true;

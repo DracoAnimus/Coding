@@ -12,6 +12,7 @@ import net.wildbill22.draco.client.renders.RenderMCSilverDragon;
 import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.EntityMyExplosive;
 import net.wildbill22.draco.entities.EntityMyFireball;
+import net.wildbill22.draco.entities.EntityMyRock;
 import net.wildbill22.draco.entities.EntitySpear;
 import net.wildbill22.draco.entities.dragons.*;
 import net.wildbill22.draco.entities.hostile.*;
@@ -52,6 +53,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntitySpear.class, new RenderSpear());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMyFireball.class, new RenderSnowball(ModItems.fireball));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMyExplosive.class, new RenderSnowball(ModItems.explosiveFireball));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMyRock.class, new RenderSnowball(ModItems.rock));
 
 		// Special one for hoard
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTemporaryHoard.class, new TemporaryHoardRenderer());

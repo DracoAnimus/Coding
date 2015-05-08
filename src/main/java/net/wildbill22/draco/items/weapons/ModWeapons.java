@@ -14,7 +14,7 @@ public class ModWeapons {
 
 	// Tool Materials, has name, harvest level, maxUses, efficiency, damage (added), enchantability
 	static ToolMaterial dragonsBreath = EnumHelper.addToolMaterial("DragonsBreath", 3, 1000, 9.5F, 3.5F, 10);
-	static ToolMaterial LONGSWORD = EnumHelper.addToolMaterial("LONGSWORD", 3, 1000, 9.5F, 3.5F, 10);
+	static ToolMaterial LONGSWORD = EnumHelper.addToolMaterial("LONGSWORD", 3, 1000, 9.5F, 5.5F, 10);
 	static ToolMaterial BATTLEAXE = EnumHelper.addToolMaterial("BATTLEAXE", 3, 1000, 9.5F, 3.5F, 10);
 	static ToolMaterial MACE = EnumHelper.addToolMaterial("MACE", 3, 1000, 9.5F, 3.5F, 10);
 	
