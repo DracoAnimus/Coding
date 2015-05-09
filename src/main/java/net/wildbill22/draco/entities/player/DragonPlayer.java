@@ -182,16 +182,18 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	 * Avoids NBT disk I/O overhead when cloning a player after respawn
 	 */
 	public void copy(DragonPlayer props) {
+		// coords.copy is occasionally causing a ConcurrentModificationException
+		// Apparently, the NBT is already being loaded automatically, this was redundant
+//		int size = props.hoardList.size();
+//        Iterator<NBTCoordinates> iterator = props.hoardList.iterator();
+//		for (int i = 0; i < size; i++) {
+//			NBTCoordinates coords = new NBTCoordinates();
+//			coords.copy(iterator.next());
+//			hoardList.add(coords);
+//        }
 		this.isDragon = props.isDragon;
 		this.wasFlyingOnExit = props.wasFlyingOnExit;
 		setLevel(props.level);
-		int size = props.hoardList.size();
-        Iterator<NBTCoordinates> iterator = props.hoardList.iterator();
-		for (int i = 0; i < size; i++) {
-			NBTCoordinates coords = new NBTCoordinates();
-			coords.copy(iterator.next());
-			hoardList.add(coords);
-        }
 	}
 
 	@Override
@@ -282,6 +284,9 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	}
 
 	private boolean hoardExists(NBTCoordinates coords) {
+		// Don't check for block when not in Over-world
+		if (player.worldObj.provider.dimensionId != 0)
+			return true;
 		Block block = player.worldObj.getBlock(coords.posX, coords.posY, coords.posZ);
 		if (block != null && block instanceof TemporaryHoard)
 			return true;
