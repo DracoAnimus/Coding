@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -24,7 +25,6 @@ import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.models.ModelSilverDragon;
-import net.wildbill22.draco.network.RequestDragonPlayerUpdatePacket;
 import net.wildbill22.draco.render.RenderSilverDragon;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
@@ -83,7 +83,7 @@ public class DragonPlayerEventHandler {
 
     // Added to remove chest location
 	@SubscribeEvent
-	public void onPlacingBlock(BlockEvent.BreakEvent event) {
+	public void onBreakingBlock(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
 		if (!player.worldObj.isRemote && event.block instanceof TemporaryHoard) {
 	    	DragonPlayer.get(player).removeHoard(event.x, event.y, event.z);		
@@ -94,9 +94,11 @@ public class DragonPlayerEventHandler {
 
 	// Added to save chest location when a chest is placed
 	@SubscribeEvent
-	public void onHarvestBlock(BlockEvent.PlaceEvent event) {
+	public void onPlacingBlock(BlockEvent.PlaceEvent event) {
 		if (!event.world.isRemote && event.block instanceof TemporaryHoard) {
 			DragonPlayer.get((EntityPlayer) event.player).addHoard(event.x, event.y, event.z);
+			event.player.addChatMessage(new ChatComponentText("You have placed a hoard, you can now add gold coins!"));
+			event.player.addChatMessage(new ChatComponentText("The more gold coins you add, the higher your dragon level."));
 //			DragonPlayer.saveProxyData(event.player);
 		}
 	}

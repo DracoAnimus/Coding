@@ -1,5 +1,6 @@
 package net.wildbill22.draco;
 
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.blocks.ModBlocks;
@@ -51,18 +52,23 @@ public class Core {
 	public static CommonProxy dracoProxy;
 
 	public static SimpleNetworkWrapper modChannel;
+	public boolean devEnvironment = false;
 
 	@Instance(REFERENCE.MODID)
 	public static Core instance;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
+		if (Launch.blackboard.get("fml.deobfuscatedEnvironment") != null)
+			devEnvironment = true;
 		Configs.init(event.getSuggestedConfigurationFile());// Keep first
 		Creative_Tab.OtherInfo();
 		ModItems.preInit();
 		ModBlocks.preInit();
     	ModTileEntities.modRegistry();
 		ModBiomes.init(); // Must be before ModEntities
+		if (devEnvironment)
+			ModEntities.registerEggs();
 		ModEntities.preInit();
 		ModWeapons.preInit();
 		dracoProxy.registerRenderer();

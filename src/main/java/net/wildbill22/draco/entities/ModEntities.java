@@ -31,14 +31,17 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 public class ModEntities {
 	private static int modEntityID = 0;
 	
-	public static void preInit() {
+	// Only in dev environment
+	public static void registerEggs() {		
 		// Overworld eggs
 		registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
 		registerEntityEgg(EntitySilverDragon.class, 0xd8bb9d, 0xa73c1a);
 		registerEntityEgg(EntityWildFireDragon.class, 0xd8bb9d, 0xa83c1a);
 		registerEntityEgg(EntityBallista.class, 0xd8bb9d, 0xa93c1a);
 		registerEntityEgg(EntityCatapult.class, 0xd8bb9d, 0xaa3c1a);
-		
+	}
+	
+	public static void preInit() {		
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, EntityCreeperDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, EntitySilverDragon.name, ++modEntityID, Core.instance, 80, 3, true);
