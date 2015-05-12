@@ -22,6 +22,7 @@ import net.wildbill22.draco.items.ItemMyFireball;
 import net.wildbill22.draco.items.ItemMyRock;
 import net.wildbill22.draco.items.ItemSpear;
 import net.wildbill22.draco.lib.BALANCE;
+import net.wildbill22.draco.lib.LogHelper;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 /**
@@ -31,17 +32,10 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 public class ModEntities {
 	private static int modEntityID = 0;
 	
-	// Only in dev environment
-	public static void registerEggs() {		
-		// Overworld eggs
-		registerEntityEgg(EntityCreeperDragon.class, 0xd8bb9d, 0xa63c1a);
-		registerEntityEgg(EntitySilverDragon.class, 0xd8bb9d, 0xa73c1a);
-		registerEntityEgg(EntityWildFireDragon.class, 0xd8bb9d, 0xa83c1a);
-		registerEntityEgg(EntityBallista.class, 0xd8bb9d, 0xa93c1a);
-		registerEntityEgg(EntityCatapult.class, 0xd8bb9d, 0xaa3c1a);
-	}
-	
-	public static void preInit() {		
+	public static void preInit() {
+		// Eggs for some of the entities below for creative mode
+		registerEggs();
+		
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, EntityCreeperDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, EntitySilverDragon.name, ++modEntityID, Core.instance, 80, 3, true);
@@ -103,6 +97,34 @@ public class ModEntities {
 	
     static int startEntityId = 300;
     
+	// Only in dev environment:
+	public static void registerEggsForDev() {		
+		// Overworld eggs
+		LogHelper.info("ModEntities: Registering the dev eggs!");
+		registerEntityEgg(EntitySilverDragon.class, 0xdabb9d, 0xa53c1a);
+	}
+	
+	// For creative mode:
+	public static void registerEggs() {		
+		// Overworld eggs
+		LogHelper.info("ModEntities: Registering the creative eggs!");
+		
+		// Dragons
+		registerEntityEgg(EntityCreeperDragon.class, 0xdabb9d, 0xa73c1a);
+		registerEntityEgg(EntityWildFireDragon.class, 0xdabb9d, 0xa93c1a);
+		
+		// Fixed weapons
+		registerEntityEgg(EntityBallista.class, 0xd6bb9d, 0xa93c1a);
+		registerEntityEgg(EntityCatapult.class, 0xd6bb9d, 0xaa3c1a);
+
+		// Guards
+		registerEntityEgg(EntitySpearGuard.class, 0xd8bb9d, 0xa23c1a);
+		registerEntityEgg(EntityKnightGuard.class, 0xd8bb9d, 0xa43c1a);
+		registerEntityEgg(EntityLongbowGuard.class, 0xd8bb9d, 0xa63c1a);
+		registerEntityEgg(EntityCrossbowGuard.class, 0xd8bb9d, 0xa63c1a);
+		registerEntityEgg(EntityBaron.class, 0xd8bb9d, 0xa83c1a);
+	}
+	
     @SuppressWarnings("unchecked")
     public static void registerEntityEgg(Class<? extends Entity> entity, int primaryColor, int secondaryColor) {
     	int id = getUniqueEntityId();

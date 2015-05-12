@@ -14,9 +14,7 @@ import net.wildbill22.draco.generation.villageComponents.VillageBaronCastle;
 import net.wildbill22.draco.generation.villageComponents.VillageGuardTower;
 import net.wildbill22.draco.generation.villageComponents.VillageTavern;
 import net.wildbill22.draco.generation.villageHandlers.BarWenchCreationHandler;
-import net.wildbill22.draco.generation.villageHandlers.House3CreationHandler;
 import net.wildbill22.draco.generation.villageHandlers.VillagerBakeryTradeHandler;
-import net.wildbill22.draco.generation.villageHandlers.WoodHutCreationHandler;
 import net.wildbill22.draco.generation.villages.VillageBiomes;
 import net.wildbill22.draco.generation.villages.VillageGenReplacer;
 import net.wildbill22.draco.items.ModItems;
@@ -52,23 +50,22 @@ public class Core {
 	public static CommonProxy dracoProxy;
 
 	public static SimpleNetworkWrapper modChannel;
-	public boolean devEnvironment = false;
+	public boolean devEnv = false;
 
 	@Instance(REFERENCE.MODID)
 	public static Core instance;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
-		if (Launch.blackboard.get("fml.deobfuscatedEnvironment") != null)
-			devEnvironment = true;
+		devEnv = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 		Configs.init(event.getSuggestedConfigurationFile());// Keep first
 		Creative_Tab.OtherInfo();
 		ModItems.preInit();
 		ModBlocks.preInit();
     	ModTileEntities.modRegistry();
 		ModBiomes.init(); // Must be before ModEntities
-		if (devEnvironment)
-			ModEntities.registerEggs();
+		if (devEnv)
+			ModEntities.registerEggsForDev();
 		ModEntities.preInit();
 		ModWeapons.preInit();
 		dracoProxy.registerRenderer();
