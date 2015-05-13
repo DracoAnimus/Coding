@@ -8,7 +8,7 @@
   "url": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2331466-w-i-p-draco-animus-minecraft-through-a-dragons",
   "updateUrl": "http://minecraft.curseforge.com/mc-mods/229166-draco-animus-dragon-soul",
   "authorList": ["LRA10, wildbill22"],
-  "credits": "maxanier, baddaspig",
+  "credits": "maxanier for pull requests, baddaspig because the mod would not be possible without him, VergilDarkSlayer for testing and writing issues, also thanks to all others that contributed.",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

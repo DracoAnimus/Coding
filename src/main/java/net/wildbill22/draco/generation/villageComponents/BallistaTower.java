@@ -13,17 +13,17 @@ import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.hostile.EntityBallista;
-import net.wildbill22.draco.generation.villageHandlers.TestBallistaTowerCreationHandler;
+import net.wildbill22.draco.generation.villageHandlers.BallistaTowerCreationHandler;
 import net.wildbill22.draco.lib.LogHelper;
 
-public class TestBallistaTower extends StructureVillagePieces.Village
+public class BallistaTower extends StructureVillagePieces.Village
 {
 	private int averageGroundLevel = -1;
-    private static final int HEIGHT = 10;
+    private static final int HEIGHT = 9;
 
-    public TestBallistaTower() {}
+    public BallistaTower() {}
     
-	public TestBallistaTower(StructureVillagePieces.Start startPiece, int type, Random random, StructureBoundingBox _boundingBox, int direction){
+	public BallistaTower(StructureVillagePieces.Start startPiece, int type, Random random, StructureBoundingBox _boundingBox, int direction){
 		super(startPiece, type);
         coordBaseMode = direction;
     	boundingBox = _boundingBox;
@@ -38,10 +38,10 @@ public class TestBallistaTower extends StructureVillagePieces.Village
 
 	public static StructureVillagePieces.Village buildComponent(StructureVillagePieces.Start startPiece, 
 			@SuppressWarnings("rawtypes") List pieces, Random random, int x, int y, int z, int direction, int type) {
-        StructureBoundingBox _boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 5, 10, 5, direction);
+        StructureBoundingBox _boundingBox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, 0, 5, 8, 5, direction);
         if (canVillageGoDeeper(_boundingBox)) { 
         	if (StructureComponent.findIntersecting(pieces, _boundingBox) == null) {
-        		return new TestBallistaTower(startPiece, type, random, _boundingBox, direction);
+        		return new BallistaTower(startPiece, type, random, _boundingBox, direction);
         	}
         }
 		return null;
@@ -55,7 +55,7 @@ public class TestBallistaTower extends StructureVillagePieces.Village
     		if (biome != ModBiomes.biomeCityPlains && biome != ModBiomes.biomeTownForest)
     			return false;
 
-    		LogHelper.info("TestBallistaTower: Build ballista tower at: " + box.minX + ", " + box.minZ);
+    		LogHelper.info("BallistaTower: Build ballista tower at: " + box.minX + ", " + box.minZ);
             averageGroundLevel = getAverageGroundLevel(world, box);
             if (averageGroundLevel < 0){
                 return true;
@@ -64,47 +64,51 @@ public class TestBallistaTower extends StructureVillagePieces.Village
         }
 		
         // Clear out the area for the building and make a base
-        for (int xx = 0; xx <=5 ; xx++){
+        for (int xx = 0; xx <= 5 ; xx++){
             for (int zz = 0; zz <= 5; zz++){
                 clearCurrentPositionBlocksUpwards(world, xx,0,zz, box);
                 this.func_151554_b(world, Blocks.stonebrick, 0, xx, -1, zz, box);
             }
         }
 		
-        // Top floor
-		fillWithBlocks(world, box, 0,9,0, 5,9,5, Blocks.stonebrick, Blocks.stonebrick, false);
-        
-		// walls
-		fillWithBlocks(world, box, 0,1,0, 5,8,0, Blocks.stonebrick, Blocks.stonebrick, false);
-		fillWithBlocks(world, box, 5,1,0, 5,8,5, Blocks.stonebrick, Blocks.stonebrick, false);
-		fillWithBlocks(world, box, 0,1,5, 5,8,5, Blocks.stonebrick, Blocks.stonebrick, false);
-		fillWithBlocks(world, box, 0,1,0, 0,8,5, Blocks.stonebrick, Blocks.stonebrick, false);
-		
-		// Interior
-		fillWithBlocks(world, box, 1,7,1, 4,7,4, Blocks.stonebrick, Blocks.stonebrick, false);
+        // Level 0 - 2
+        int lvl = 0;
+		fillWithBlocks(world, box, 0,lvl,0, 1,2,0, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 4,lvl,0, 5,2,0, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,1, 0,2,1, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 5,lvl,1, 5,2,1, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,4, 0,2,4, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 5,lvl,4, 5,2,4, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,5, 1,2,5, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 4,lvl,5, 5,2,5, Blocks.fence, Blocks.fence, false);
 
-		// Corner blocks
-		fillWithBlocks(world, box, 0,10,0, 5,10,0, Blocks.stonebrick, Blocks.stonebrick, false);
-		fillWithBlocks(world, box, 5,10,1, 5,10,5, Blocks.stonebrick, Blocks.stonebrick, false);
-		fillWithBlocks(world, box, 0,10,5, 4,10,5, Blocks.stonebrick, Blocks.stonebrick, false);
-		fillWithBlocks(world, box, 0,10,1, 0,10,4, Blocks.stonebrick, Blocks.stonebrick, false);
-		
-		// torch on each corner, on top of a block
-		// world, block, metadata, x, y, z, bounding box
-        placeBlockAtCurrentPosition(world, Blocks.torch, 0, 0,11,0, box);
-        placeBlockAtCurrentPosition(world, Blocks.torch, 0, 0,11,5, box);
-        placeBlockAtCurrentPosition(world, Blocks.torch, 0, 5,11,5, box);
-        placeBlockAtCurrentPosition(world, Blocks.torch, 0, 5,11,0, box);
-        
-        // Spawn guards on top:
-        // world, box, x, y, z, number of villages
-        spawnBallista(world, box, 2,11,3);
+        // Level 3 - 6
+        lvl = 3;
+		fillWithBlocks(world, box, 0,lvl,0, 5,6,0, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,1, 0,6,4, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 5,lvl,1, 5,6,4, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,5, 5,6,5, Blocks.fence, Blocks.fence, false);
+
+        // Top floor
+        lvl = 7;
+		fillWithBlocks(world, box, 0,lvl,0, 5,lvl,5, Blocks.planks, Blocks.planks, false);
+
+        // Fence
+        lvl = 8;
+		fillWithBlocks(world, box, 0,lvl,0, 5,lvl,0, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,1, 0,lvl,4, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 5,lvl,1, 5,lvl,4, Blocks.fence, Blocks.fence, false);
+		fillWithBlocks(world, box, 0,lvl,5, 5,lvl,5, Blocks.fence, Blocks.fence, false);
+	       
+        // Spawn ballista on top:
+        // world, box, x, y, z
+        spawnBallista(world, box, 2,8,3);
         
         return true;
     }
 
     /**
-     * Spawns a number of guards in this component.
+     * Spawns a ballista in this component.
      * 
      * @param World
      * @param StructureBoundingBox
@@ -129,8 +133,8 @@ public class TestBallistaTower extends StructureVillagePieces.Village
 
 	// Call from mod's init
 	public static void init() {
-		TestBallistaTower.addVillagePiece(TestBallistaTower.class, "ViBallTwr");
-		TestBallistaTowerCreationHandler ballistaTower = new TestBallistaTowerCreationHandler();
+		BallistaTower.addVillagePiece(BallistaTower.class, "ViBallTwr");
+		BallistaTowerCreationHandler ballistaTower = new BallistaTowerCreationHandler();
 		VillagerRegistry.instance().registerVillageCreationHandler(ballistaTower);
 	}
 }

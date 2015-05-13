@@ -6,6 +6,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.wildbill22.draco.entities.EntityBallistaSpear;
 import net.wildbill22.draco.entities.EntitySpear;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -128,13 +129,13 @@ public class EntityBallista extends EntityMob {
                 }
                 if (this.field_70846_g > 1) {
                     for (int i = 0; i < 1; ++i) {
-                		EntitySpear entitySpear = new EntitySpear(this.worldObj, (EntityLivingBase)this, (EntityLivingBase)target, 1.6F, (float)(14 - this.worldObj.difficultySetting.getDifficultyId() * 4));
+                		EntitySpear entityBallistaSpear = new EntityBallistaSpear(this.worldObj, (EntityLivingBase)this, (EntityLivingBase)target, 1.6F, (float)(14 - this.worldObj.difficultySetting.getDifficultyId() * 4));
                 		// TODO: Could have enchantments
-                		entitySpear.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
-                		entitySpear.posX = this.posX + posOffsetX;
-                		entitySpear.posZ = this.posZ + posOffsetZ;
+                		entityBallistaSpear.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
+                		entityBallistaSpear.posX = this.posX + posOffsetX;
+                		entityBallistaSpear.posZ = this.posZ + posOffsetZ;
                 		this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-                        this.worldObj.spawnEntityInWorld(entitySpear);
+                        this.worldObj.spawnEntityInWorld(entityBallistaSpear);
                     }
                 }
             }

@@ -7,9 +7,9 @@ import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
+import net.wildbill22.draco.generation.villageComponents.BallistaTower;
+import net.wildbill22.draco.generation.villageComponents.CatapultTower;
 import net.wildbill22.draco.generation.villageComponents.ComponentBakery;
-import net.wildbill22.draco.generation.villageComponents.TestBallistaTower;
-import net.wildbill22.draco.generation.villageComponents.TestCatapultTower;
 import net.wildbill22.draco.generation.villageComponents.VillageBaronCastle;
 import net.wildbill22.draco.generation.villageComponents.VillageGuardTower;
 import net.wildbill22.draco.generation.villageComponents.VillageTavern;
@@ -99,8 +99,10 @@ public class Core {
 			// Register new village building
 			if (Configs.VILLAGE.village_guard_tower_enabled) {
 				VillageGuardTower.init();  // Guard Tower
-				TestBallistaTower.init();
-				TestCatapultTower.init();
+				// TestBallistaTower.init();
+//				TestCatapultTower.init();
+				BallistaTower.init();
+				CatapultTower.init();
 			}
 			if (Configs.VILLAGE.village_barons_castle_enabled) {
 				VillageBaronCastle.init();

@@ -258,15 +258,15 @@ public class DragonPlayer implements IExtendedEntityProperties {
 							notJustCoins = true;
 						else {
 							hoardSize += coins.stackSize;
-							if (hoardSize > 0) {
-								this.player.addStat(ModStats.firstGoldCoin, 1);
-							}
 						}
 					}
 				}
 			}
 		}
         LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
+		if (hoardSize > 0) {
+			this.player.addStat(ModStats.firstGoldCoin, 1);
+		}
 		calculateLevel();
 		return notJustCoins;
 	}
@@ -283,7 +283,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
         LogHelper.info("DragonPlayer calculateLevel: Player is level " + level + ".");
 	}
 
-	private boolean hoardExists(NBTCoordinates coords) {
+	public boolean hoardExists(NBTCoordinates coords) {
 		// Don't check for block when not in Over-world
 		if (player.worldObj.provider.dimensionId != 0)
 			return true;

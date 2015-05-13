@@ -67,7 +67,8 @@ public class EntitySpear extends EntityThrowable {
 			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {
-				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) ItemSpear.spearDamage);
+				movObjPos.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 
+						(float) ItemSpear.spearDamage);
 			}
 			else {
 				// Do something for instance if it hits a tree

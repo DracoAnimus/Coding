@@ -41,12 +41,15 @@ public final class BALANCE {
 		@DefaultDouble(value = 5.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Attack Damage", 
 				comment = "Guard attack damage")
 		public static double GUARD_ATTACK_DAMAGE;
-		@DefaultDouble(value = 3.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Spear Damage", 
+		@DefaultDouble(value = 3.5D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Spear Damage", 
 				comment = "Guard's spear damage")
 		public static double GUARD_SPEAR_DAMAGE;
-		@DefaultDouble(value = 8.0D, minValue = 1.0D, maxValue = 20.0D, name = "Catapult Rock Damage", 
+		@DefaultDouble(value = 10.0D, minValue = 1.0D, maxValue = 20.0D, name = "Catapult Rock Damage", 
 		comment = "Rock damage from catapult")
 		public static double ROCK_DAMAGE;
+		@DefaultDouble(value = 7.0D, minValue = 1.0D, maxValue = 20.0D, name = "Ballista Spear Damage", 
+				comment = "Ballista's spear damage")
+		public static double BALLISTA_SPEAR_DAMAGE;
 		@DefaultDouble(value = 0.35F, minValue = 0.1D, maxValue = 1.0D, name = "Guard Movement Speed", 
 				comment = "Guard movement speed")
 		public static double GUARD_MOVEMENT_SPEED;
