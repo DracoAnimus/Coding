@@ -8,8 +8,6 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.client.gui.DragonHudOverlay;
-import net.wildbill22.draco.client.renders.RenderMCSilverDragon;
-import net.wildbill22.draco.common.entities.dragons.EntityMCSilverDragon;
 import net.wildbill22.draco.entities.EntityMyExplosive;
 import net.wildbill22.draco.entities.EntityMyFireball;
 import net.wildbill22.draco.entities.EntityMyRock;

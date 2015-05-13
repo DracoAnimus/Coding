@@ -2,14 +2,17 @@ package net.wildbill22.draco.handlers;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -18,6 +21,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
@@ -26,6 +30,7 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.models.ModelSilverDragon;
 import net.wildbill22.draco.render.RenderSilverDragon;
+import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 // All events in this class are type MinecraftForge.EVENT_BUS
@@ -97,23 +102,39 @@ public class DragonPlayerEventHandler {
 	public void onPlacingBlock(BlockEvent.PlaceEvent event) {
 		if (!event.world.isRemote && event.block instanceof TemporaryHoard) {
 			DragonPlayer.get((EntityPlayer) event.player).addHoard(event.x, event.y, event.z);
+			setOwner(event.world, event.player, event.x, event.y, event.z);
 			event.player.addChatMessage(new ChatComponentText("You have placed a hoard, you can now add gold coins!"));
 			event.player.addChatMessage(new ChatComponentText("The more gold coins you add, the higher your dragon level."));
 //			DragonPlayer.saveProxyData(event.player);
 		}
 	}
+	
+	private void setOwner(World world, EntityPlayer player, int x, int y, int z) {
+		TileEntityChest chestEntity = (TileEntityChest) world.getTileEntity(x, y, z);
+		if (chestEntity instanceof TileEntityTemporaryHoard)
+			((TileEntityTemporaryHoard)chestEntity).setOwner(player.getDisplayName());
+	}
 
-	// Added to track how many gold coins the Player Dragon has (would be better if closing container)
-//	@SubscribeEvent
-//    public void onPlayerInteractBlock(PlayerInteractEvent event) {
-//		Not required anymore
-//		EntityPlayer player = event.entityPlayer;
-//		Block block = event.world.getBlock(event.x, event.y, event.z);
-//		if (!player.worldObj.isRemote && block instanceof TemporaryHoard) {
-//			if (DragonPlayer.get(player).calculateHoardSize(event.world))
-//				player.addChatMessage(new ChatComponentText("Put gold coins in the hoard."));
-//		}
-//	}
+	private String getOwner(World world, EntityPlayer player, int x, int y, int z) {
+		TileEntityChest chestEntity = (TileEntityChest) world.getTileEntity(x, y, z);
+		if (chestEntity instanceof TileEntityTemporaryHoard)
+			return ((TileEntityTemporaryHoard)chestEntity).getOwner();
+		else 
+			return null;
+	}
+	
+	// Added to tell player if hoard is not theirs
+	@SubscribeEvent
+    public void onPlayerInteractBlock(PlayerInteractEvent event) {
+		EntityPlayer player = event.entityPlayer;
+		Block block = event.world.getBlock(event.x, event.y, event.z);
+		if (!player.worldObj.isRemote && block instanceof TemporaryHoard) {
+			if (player.getDisplayName().compareTo(getOwner(event.world, player, event.x, event.y, event.z)) != 0) {
+				player.addChatMessage(new ChatComponentText("You are not the owner of this hoard!"));
+				player.addChatMessage(new ChatComponentText("You can break it and place it again to become the owner."));
+			}
+		}
+	}
 	
 	// Gives fireballs or explosive fireball each time you kill something when a dragon
 	// FIXME: Could this use addItemStackToInventory(itemstack)? 

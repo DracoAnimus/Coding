@@ -93,8 +93,8 @@ public class Core {
 				BarWenchCreationHandler.init();    // Bar Wench
 			}
 			if (Configs.VILLAGE.village_bakery_enabled) {
-				VillagerBakeryTradeHandler.init(); // Baker
 				ComponentBakery.init();            // Bakery			
+				VillagerBakeryTradeHandler.init(); // Baker
 			}
 			// Register new village building
 			if (Configs.VILLAGE.village_guard_tower_enabled) {

@@ -314,7 +314,6 @@ public class VillageBaronCastle extends MyVillageComponents {
     }
 
 	public static void registerBaronCastleChest(){
-		Random random = new Random();
 		// Study chest
 		ChestGenHooks.getInfo(BARON_CASTLE_STUDY_CHEST);
    		for(int i = 0; i < commonChestContents.length; i++){

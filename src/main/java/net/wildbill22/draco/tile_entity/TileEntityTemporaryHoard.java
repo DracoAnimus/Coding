@@ -81,6 +81,9 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     /** Contains the chest tile located adjacent to this one (if any) */
     public TileEntityTemporaryHoard adjacentChestZPos;
 
+    // owner of chest (player displayname)
+    private String owner;
+    
     // Stuff Changed to allow only gold coins:
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
@@ -164,6 +167,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
                 this.chestContents[j] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }        
+        this.owner = p_145839_1_.getString("owner");
     }
 
 	@Override
@@ -184,6 +188,8 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
         if (this.hasCustomInventoryName()) {
             p_145841_1_.setString(TemporaryHoard.textureName, this.customName);
         }
+        
+        p_145841_1_.setString("owner", owner);
     }
 
     private void func_145978_a(TileEntityTemporaryHoard entity, int side) {
@@ -336,5 +342,13 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	 */
 	public IInventory getInventory(){
 		return ((TemporaryHoard)ModBlocks.temporaryHoard).func_149951_m(worldObj, this.xCoord,yCoord,zCoord);
+	}
+
+	public void setOwner(String displayName) {
+		owner = displayName;
+	}
+
+	public String getOwner() {
+		return owner;
 	}
 }

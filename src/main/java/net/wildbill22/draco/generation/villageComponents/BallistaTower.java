@@ -67,7 +67,9 @@ public class BallistaTower extends StructureVillagePieces.Village
         for (int xx = 0; xx <= 5 ; xx++){
             for (int zz = 0; zz <= 5; zz++){
                 clearCurrentPositionBlocksUpwards(world, xx,0,zz, box);
-                this.func_151554_b(world, Blocks.stonebrick, 0, xx, -1, zz, box);
+                if (((xx <= 1 || xx >= 4) && zz == 0) || ((xx <= 0 || xx >= 5) && zz == 1) ||
+                    	((xx <= 1 || xx >= 4) && zz == 5) || ((xx <= 0 || xx >= 5) && zz == 4))
+                    	this.func_151554_b(world, Blocks.fence, 0, xx, -1, zz, box);
             }
         }
 		
