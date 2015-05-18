@@ -1,13 +1,19 @@
 package net.wildbill22.draco.entities.hostile;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntityBallistaSpear;
 import net.wildbill22.draco.entities.EntitySpear;
+import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
@@ -26,6 +32,35 @@ public class EntityBallista extends EntityMob {
 		this.setSize(1.9F, 1.0F);
 		jumpMovementFactor = 0.0F;
 	}
+	
+	// **** Stuff to not attack human ****
+	
+    /**
+     * Finds the closest player within 16 blocks to attack, or null if this Entity isn't interested in attacking
+     * (Animals, Spiders at day, peaceful PigZombies).
+     */
+	@SuppressWarnings("unchecked")
+	@Override
+    protected Entity findPlayerToAttack()
+    {
+//        EntityPlayer entityplayer = this.worldObj.getClosestVulnerablePlayerToEntity(this, 16.0D);
+		double d0 = 20.0D;
+        List<?> list = this.worldObj.selectEntitiesWithinAABB(EntityPlayer.class, this.boundingBox.expand(d0, 4.0D, d0), null);
+        Collections.sort(list, new EntityAINearestAttackableTarget.Sorter(this));
+        // Don't attack humans players
+        EntityPlayer entityplayer = null;
+        for (int i = 0; i < list.size(); i++) {
+            if ((EntityPlayer)list.get(i) instanceof EntityPlayer) {
+            	if (DragonPlayer.get((EntityPlayer)list.get(i)).isDragon() && !((EntityPlayer)list.get(i)).isInvisible()) {
+                	entityplayer = (EntityPlayer)list.get(i);
+            		break;
+            	}
+            }
+        }
+        return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
+    }
+
+	// **** End of stuff to not attack human ****
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();

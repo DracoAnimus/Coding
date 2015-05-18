@@ -7,6 +7,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.wildbill22.draco.Core;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
+import net.wildbill22.draco.entities.dragons.EntityDracoMortem;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.hostile.EntityBallista;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
@@ -56,6 +57,9 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityCatapult.class, EntityCatapult.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntityMyRock.class, ItemMyRock.name, ++modEntityID, Core.instance, 64, 20, true);
 		
+		// New in 0.3.0
+		EntityRegistry.registerModEntity(EntityDracoMortem.class, EntityDracoMortem.name, ++modEntityID, Core.instance, 80, 3, true);
+
 		addMobSpawns();
 	}
 

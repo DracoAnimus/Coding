@@ -24,6 +24,9 @@ public class DragonHudOverlay extends Gui {
 		if (event.type != ElementType.EXPERIENCE) {
 			return;
 		}
+		if (!DragonPlayer.get(mc.thePlayer).isDragon())
+			return;
+					
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glDisable(GL11.GL_LIGHTING);
 

@@ -6,7 +6,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -22,6 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.ai.EntityAIDefendVillage;
+import net.wildbill22.draco.entities.ai.EntityAINearestAttackableDragon;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.BALANCE;
@@ -84,7 +84,7 @@ public abstract class EntityGuard extends EntityMob {
 		this.tasks.addTask(5, new EntityAILookIdle(this));
 
         // taskOwner, targetClass, targetChance, shouldCheckSight
-		this.targetTasks.addTask(0, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
+		this.targetTasks.addTask(0, new EntityAINearestAttackableDragon(this, 0, true));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 
         // Default to not in a village, will be set to false in

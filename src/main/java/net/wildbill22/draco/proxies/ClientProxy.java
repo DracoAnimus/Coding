@@ -34,12 +34,18 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void registerRenderer(){
 		//Entities, the 0.5F is the shadow size
+		
+		// Dragons
 		RenderingRegistry.registerEntityRenderingHandler(EntityCreeperDragon.class, 
 				new RenderCreeperDragon(new ModelCreeperDragon(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityWildFireDragon.class, 
 				new RenderWildFireDragon(new ModelWildFireDragon(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySilverDragon.class, 
 				new RenderSilverDragon(new ModelSilverDragon(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDracoMortem.class, 
+				new RenderDracoMortem(new ModelDracoMortem(), 0.5F));
+		
+		// Other entities
 		RenderingRegistry.registerEntityRenderingHandler(EntityGuard.class,	new RenderGuard(new ModelBiped(), 0.5F));
 //		RenderingRegistry.registerEntityRenderingHandler(EntityMCSilverDragon.class, new RenderMCSilverDragon());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBallista.class, 

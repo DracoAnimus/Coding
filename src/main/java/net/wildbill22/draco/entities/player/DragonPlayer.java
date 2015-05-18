@@ -20,7 +20,10 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
-import net.wildbill22.draco.network.DragonPlayerUpdatePacket;
+import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
+import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
+import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
+import net.wildbill22.draco.network.DragonPlayerUpdatePacket2;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
@@ -28,15 +31,6 @@ import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 public class DragonPlayer implements IExtendedEntityProperties {
 	public static final String EXT_PROP_NAME = "DragonPlayer";
 	private final EntityPlayer player;
-//	private EntityMCDragon dragon =  null;
-
-//	public EntityMCDragon getDragon() {
-//		if (dragon == null) {			
-//			dragon = EntityMCDragon.EntityMCDragonFactory(dragonName, world);
-//			dragon.setPlayer(player);
-//		}
-//		return dragon;
-//	}
 	
 	// The extended player properties:
 	private boolean isDragon;
@@ -44,29 +38,26 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	private int hoardSize;
 	private int level;        // current level, as determined by several factors
 	private ArrayList<NBTCoordinates> hoardList;
-
 	private String dragonName;
+
 	public String getDragonName() {
 		return dragonName;
 	}
 
 	public void setDragonName(String dragonName) {
-		if (dragonName != null && !dragonName.isEmpty())
+		if (dragonName != null && !dragonName.isEmpty()) {
 			this.dragonName = dragonName;
+	        LogHelper.info("DragonPlayer setDragonName: Player is a " + dragonName + ".");
+		}
 	}
 
 	public DragonPlayer(EntityPlayer player, World world) {
 		// Initialize some stuff
 		this.player = player;
-		this.isDragon = true;
 		this.level = 1;
-//		this.player.getDataWatcher().addObject(BALANCE.LEVEL_WATCHER, this.level);
+		this.isDragon = BALANCE.PLAYER_AS_SILVER_DRAGON_INITIALLY;
+		this.dragonName = EntitySilverDragon.name;		
 		this.hoardList = new ArrayList<NBTCoordinates>();
-		this.dragonName = EntitySilverDragon.name;
-		
-		// Configure some stuff that needs defaults (don't set anything that will be loaded)
-		this.setDragon(true); // Will add a way to change this, but for now, always a dragon
-		player.fireResistance = 1200;  // Not immune, but can stand in fire 1 minute
 	}
 
 	private static final String getSaveKey(EntityPlayer player) {
@@ -74,16 +65,6 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		return player.getCommandSenderName() + ":" + EXT_PROP_NAME;
 	}
 
-	// Not sure if the next two methods are needed
-	// Are these supposed to be in CommonProxy?
-//	public static final void loadProxyData(EntityPlayer player) {
-//		DragonPlayer playerData = DragonPlayer.get(player);
-//		NBTTagCompound savedData = CommonProxy.getEntityData(getSaveKey(player));
-//		if (savedData != null) {
-//			playerData.loadNBTData(savedData);
-//		}
-//	}
-	
 	public static void saveProxyData(EntityPlayer player) {
 		DragonPlayer playerData = DragonPlayer.get(player);
 		NBTTagCompound savedData = new NBTTagCompound();
@@ -182,15 +163,6 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	 * Avoids NBT disk I/O overhead when cloning a player after respawn
 	 */
 	public void copy(DragonPlayer props) {
-		// coords.copy is occasionally causing a ConcurrentModificationException
-		// Apparently, the NBT is already being loaded automatically, this was redundant
-//		int size = props.hoardList.size();
-//        Iterator<NBTCoordinates> iterator = props.hoardList.iterator();
-//		for (int i = 0; i < size; i++) {
-//			NBTCoordinates coords = new NBTCoordinates();
-//			coords.copy(iterator.next());
-//			hoardList.add(coords);
-//        }
 		this.isDragon = props.isDragon;
 		this.wasFlyingOnExit = props.wasFlyingOnExit;
 		setLevel(props.level);
@@ -206,6 +178,20 @@ public class DragonPlayer implements IExtendedEntityProperties {
 
 	public void setDragon(boolean isDragon) {
 		this.isDragon = isDragon;
+		if (isDragon()) {
+    		// TODO: Add a clear abilities per dragon type
+			player.fireResistance = 1200;  // Not immune, but can stand in fire 1 minute
+    		player.capabilities.allowFlying = true;
+		}
+    	else {
+    		// TODO: Add a set abilities per dragon type
+			player.fireResistance = 0;
+			if (!player.capabilities.isCreativeMode)
+				player.capabilities.allowFlying = false;    		
+    	}
+		syncClient(false);
+		// TODO: Need to also add unique modifiers for each dragon type
+		PlayerModifiers.applyModifiers(level, player, isDragon);
 	}
 
 	private EntityPlayer getPlayer() {
@@ -294,15 +280,13 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	}
 
 	public int getLevel() {
-//		level = this.player.getDataWatcher().getWatchableObjectInt(BALANCE.LEVEL_WATCHER);
 		return level;
 	}
 
 	public void setLevel(int level) {
-//		this.player.getDataWatcher().updateObject(BALANCE.LEVEL_WATCHER, level);
 		this.level = level;
 		syncClient(false);
-		PlayerModifiers.applyModifiers(level, player);
+		PlayerModifiers.applyModifiers(level, player, isDragon);
 	}
 	
 	/**
@@ -316,15 +300,31 @@ public class DragonPlayer implements IExtendedEntityProperties {
     		if (p.wasFlyingOnExit)
     			player.capabilities.isFlying = true;
     	}
+    	else {
+    		player.capabilities.allowFlying = false;    		
+    	}
 		p.syncClient(false);
+	}
+	
+	public void syncServer() {		
+		// Only send message on client to server
+		if(player.worldObj.isRemote){
+	        LogHelper.info("DragonPlayer syncServer: About to send player isDragon " + isDragon() + " to server.");
+	        if (player != null) {
+        		Core.modChannel.sendToServer(new DragonPlayerUpdatePacket2(isDragon()));
+    	        LogHelper.info("DragonPlayer syncServer: Sent player isDragon " + isDragon() + " to server.");
+	        }
+		}
 	}
 
 	public void syncClient(boolean all) {
 		// Only send message on server to client
 		if(!player.worldObj.isRemote){
-	        LogHelper.info("DragonPlayer sync: About to send player level of " + level + " to client.");
+	        LogHelper.info("DragonPlayer syncClient: About to send player level of " + level + " to client.");
 	        if (player != null) {
-        		Core.modChannel.sendTo(new DragonPlayerUpdatePacket(level), (EntityPlayerMP)player);
+        		Core.modChannel.sendTo(new DragonPlayerUpdateLevel(level), (EntityPlayerMP)player);
+        		Core.modChannel.sendTo(new DragonPlayerUpdateIsDragon(isDragon), (EntityPlayerMP)player);
+        		Core.modChannel.sendTo(new DragonPlayerUpdateDragonName(dragonName), (EntityPlayerMP)player);
 		        LogHelper.info("DragonPlayer sync: Sent player level of " + level + " to client.");
 	        }
 		}

@@ -93,16 +93,20 @@ public abstract class MyVillageComponents extends StructureVillagePieces.Village
 		new WeightedRandomChestContent(new ItemStack(Items.cake), 1, 1, 30),
 		new WeightedRandomChestContent(new ItemStack(Items.baked_potato), 1, 3, 30),
 		new WeightedRandomChestContent(new ItemStack(Items.bread), 1, 5, 30),
+		new WeightedRandomChestContent(new ItemStack(ModItems.villagerHeart), 1, 3, 50),
 		new WeightedRandomChestContent(new ItemStack(Items.cooked_chicken), 1, 5, 30)
     };
+	// Stuff in this chest didn't work right, had to do the enchanted books differently!
 	public static final String BARON_CASTLE_STUDY_CHEST = "villageBaronCastleStudy";
 	public static final WeightedRandomChestContent[] studyChestContents = new WeightedRandomChestContent[]{
 		new WeightedRandomChestContent(new ItemStack(Items.book), 1, 5, 20),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30)
+//		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
+//		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
+//		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
+//		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
+//		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
+		new WeightedRandomChestContent(new ItemStack(ModItems.dragonEggSkeleton), 1, 1, 60),
+		new WeightedRandomChestContent(new ItemStack(ModItems.dragonEggGold), 1, 1, 30)
     };
 
     public MyVillageComponents() {}

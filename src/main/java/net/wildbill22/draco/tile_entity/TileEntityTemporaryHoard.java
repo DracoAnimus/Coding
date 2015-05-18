@@ -346,6 +346,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 
 	public void setOwner(String displayName) {
 		owner = displayName;
+    	this.markDirty();
 	}
 
 	public String getOwner() {

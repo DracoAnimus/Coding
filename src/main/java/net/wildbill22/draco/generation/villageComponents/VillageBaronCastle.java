@@ -20,6 +20,7 @@ import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.generation.villageHandlers.BaronCastleCreationHandler;
+import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
 public class VillageBaronCastle extends MyVillageComponents {
@@ -319,7 +320,10 @@ public class VillageBaronCastle extends MyVillageComponents {
    		for(int i = 0; i < commonChestContents.length; i++){
 			ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, commonChestContents[i]);
 		}
-   		ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, new WeightedRandomChestContent(new ItemStack(Items.book), 1, 5, 20));
+   		for(int i = 0; i < studyChestContents.length; i++){
+			ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, studyChestContents[i]);
+		}
+   		// Add these magic books in addition to the stuff above to the study chest
    		ItemStack magicBook = new ItemStack(Items.enchanted_book);
 //   		magicBook.addEnchantment(Enchantment.protection, random.nextInt(3)+1);
 		ChestGenHooks.addItem(BARON_CASTLE_STUDY_CHEST, new WeightedRandomChestContent(magicBook, 1, 5, 20));

@@ -6,9 +6,12 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.wildbill22.draco.lib.REFERENCE;
 
@@ -24,7 +27,10 @@ public class EntityLongbowGuard extends EntityGuard implements IRangedAttackMob 
 
 	public EntityLongbowGuard(World world){
 		super(world);
-		this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.0D, 20, 60, 15.0F));
+		if (this.worldObj.difficultySetting == EnumDifficulty.EASY)
+			this.tasks.addTask(1, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, true));
+		else
+			this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.0D, 20, 60, 15.0F));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityCreature.class, 0, true, false, 
 				new IEntitySelector() {
 					public boolean isEntityApplicable(Entity entity) {

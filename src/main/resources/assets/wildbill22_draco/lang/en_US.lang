@@ -11,23 +11,33 @@ item.wildbill22_draco_goldCoin.name=Gold Coin
 item.wildbill22_draco_longBow.name=Long Bow
 item.wildbill22_draco_crossbow.name=Crossbow
 item.wildbill22_draco_rock.name=Rock
+item.wildbill22_draco_silverDragonStaff.name=Silver Dragon Staff
+item.wildbill22_draco_skeletonDragonStaff.name=Skeleton Dragon Staff
+item.wildbill22_draco_dragonEggSkeleton.name=Skeleton Dragon Egg
+item.wildbill22_draco_dragonEggGold.name=Gold Dragon Egg
+item.wildbill22_draco_goldDragonStaff.name=Gold Dragon Staff
+
+#Food Items
+item.wildbill22_draco_villagerHeart.name=Villager Heart
 
 #Blocks (tiles)
 tile.charredGround.name=Charred Ground
 tile.scorchedCobblestone.name=Scorched Cobblestone
 tile.temporaryHoard.name=Temporary Hoard
 
-#Entities
+#Dragons
+entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
 entity.wildbill22_draco.creeperDragon.name=Crepitus Draco
 entity.wildbill22_draco.wildFireDragon.name=Wild Fire Dragon
 entity.wildbill22_draco.silverDragon.name=Argentum Draco
+entity.wildbill22_draco.dracoMortem.name=Draco Mortem
+
+#Entities
 entity.wildbill22_draco.spearGuard.name=Spear Guard
 entity.wildbill22_draco.knightGuard.name=Knight Guard
 entity.wildbill22_draco.crossbowGuard.name=Crossbow Guard
 entity.wildbill22_draco.longbowGuard.name=Longbow Guard
 entity.wildbill22_draco.baron.name=Baron
-entity.wildbill22_draco.hornedGoat.name=Horned Goat
-entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
 entity.wildbill22_draco.spear.name=Spear
 entity.wildbill22_draco.ballista.name=Ballista
 entity.wildbill22_draco.catapult.name=Catapult

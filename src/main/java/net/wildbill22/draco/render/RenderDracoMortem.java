@@ -5,32 +5,33 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.wildbill22.draco.entities.dragons.EntityDracoMortem;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
-import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.lib.REFERENCE;
+import net.wildbill22.draco.models.ModelDracoMortem;
 
-// Must extend RendererLivingEntity, not RenderLiving, so player can change to dragon!
-public class RenderSilverDragon extends RendererLivingEntity implements IDragonRendererCreationHandler {
+public class RenderDracoMortem extends RendererLivingEntity  implements IDragonRendererCreationHandler {
+	protected ModelDracoMortem model;
 	protected ResourceLocation dragonTexture;
-	
-	public RenderSilverDragon(ModelBase par1ModelBase, float parShadowSize) {
-		super(par1ModelBase, parShadowSize);
+
+	public RenderDracoMortem(ModelBase par1ModelBase, float par2) {
+		super(par1ModelBase, par2);
 		this.renderManager = RenderManager.instance;
 		setEntityTexture();
 	}
-
+	
 	// Add logic here for different dragons
 	private void setEntityTexture() {
-		dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/silverDragon.png");
+		dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/dracoMortem.png");
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+	protected ResourceLocation getEntityTexture(Entity par1Entity) {
 		return dragonTexture;
 	}
 
 	@Override
 	public String getKey() {
-		return EntitySilverDragon.name;
+		return EntityDracoMortem.name;
 	}
 }

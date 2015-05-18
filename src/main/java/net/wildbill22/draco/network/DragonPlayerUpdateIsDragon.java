@@ -13,38 +13,38 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
  * @author William
  *
  */
-public class DragonPlayerUpdatePacket implements IMessage {
-	private int value;
+public class DragonPlayerUpdateIsDragon implements IMessage {
+	private boolean value;
 
 	/**
 	 * Don't use
 	 */
-	public DragonPlayerUpdatePacket() {	}
+	public DragonPlayerUpdateIsDragon() {	}
 
 	/**
 	 * 
 	 * @param value new value
 	 */
-	public DragonPlayerUpdatePacket(int value) {
+	public DragonPlayerUpdateIsDragon(boolean value) {
 		this.value = value;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		this.value = buf.readInt();
+		this.value = buf.readBoolean();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeInt(this.value);
+		buf.writeBoolean(this.value);
 	}
 	
-	public static class Handler implements IMessageHandler<DragonPlayerUpdatePacket, IMessage> {
+	public static class Handler implements IMessageHandler<DragonPlayerUpdateIsDragon, IMessage> {
 		@Override
-		public IMessage onMessage(DragonPlayerUpdatePacket message, MessageContext ctx) {
+		public IMessage onMessage(DragonPlayerUpdateIsDragon message, MessageContext ctx) {
 			EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
 			if (player != null)
-				DragonPlayer.get(player).setLevel(message.value);
+				DragonPlayer.get(player).setDragon(message.value);
 			return null;
 		}
 	}

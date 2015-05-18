@@ -15,26 +15,35 @@ import net.wildbill22.draco.lib.BALANCE;
  *
  */
 public abstract class PlayerModifiers {
-	public static void applyModifiers(int level, EntityPlayer p) {
+	public static void applyModifiers(int level, EntityPlayer p, boolean isDragon) {
 		double m = 0;
-		// Speed modifier
-		IAttributeInstance movement = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
-		rmMod(movement, speedModifierUUID);
-		m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.SPEED_LCAP, BALANCE.DP_MODIFIERS.SPEED_MAX_MOD, BALANCE.DP_MODIFIERS.SPEED_TYPE);
-		movement.applyModifier(new AttributeModifier(speedModifierUUID, "Dragon Speed Bonus", m, 2).setSaved(false));
-
-		// Health modifier
-		IAttributeInstance health = p.getEntityAttribute(SharedMonsterAttributes.maxHealth);
-		rmMod(health, healthModifierUUID);
-		m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.HEALTH_LCAP, BALANCE.DP_MODIFIERS.HEALTH_MAX_MOD, BALANCE.DP_MODIFIERS.HEALTH_TYPE);
-		health.applyModifier(new AttributeModifier(healthModifierUUID, "Dragon Health Bonus", m, 2).setSaved(false));
-
-		// Strength modifier
-		IAttributeInstance damage = p.getEntityAttribute(SharedMonsterAttributes.attackDamage);
-		rmMod(damage, damageModifierUUID);
-		m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.STRENGTH_LCAP, BALANCE.DP_MODIFIERS.STRENGTH_MAX_MOD,
-				BALANCE.DP_MODIFIERS.STRENGTH_TYPE);
-		damage.applyModifier(new AttributeModifier(damageModifierUUID, "Dragon Strength Bonus", m, 2).setSaved(false));
+		
+			// Speed modifier
+			IAttributeInstance movement = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed);
+			rmMod(movement, speedModifierUUID);
+			m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.SPEED_LCAP, BALANCE.DP_MODIFIERS.SPEED_MAX_MOD, 
+					BALANCE.DP_MODIFIERS.SPEED_TYPE);
+			if (!isDragon) 
+				m = 0.0;
+			movement.applyModifier(new AttributeModifier(speedModifierUUID, "Dragon Speed Bonus", m, 2).setSaved(false));
+	
+			// Health modifier
+			IAttributeInstance health = p.getEntityAttribute(SharedMonsterAttributes.maxHealth);
+			rmMod(health, healthModifierUUID);
+			m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.HEALTH_LCAP, BALANCE.DP_MODIFIERS.HEALTH_MAX_MOD, 
+					BALANCE.DP_MODIFIERS.HEALTH_TYPE);
+			if (!isDragon) 
+				m = 0.0;
+			health.applyModifier(new AttributeModifier(healthModifierUUID, "Dragon Health Bonus", m, 2).setSaved(false));
+	
+			// Strength modifier
+			IAttributeInstance damage = p.getEntityAttribute(SharedMonsterAttributes.attackDamage);
+			rmMod(damage, damageModifierUUID);
+			m = calculateModifierValue(level, BALANCE.DP_MODIFIERS.STRENGTH_LCAP, BALANCE.DP_MODIFIERS.STRENGTH_MAX_MOD,
+					BALANCE.DP_MODIFIERS.STRENGTH_TYPE);
+			if (!isDragon) 
+				m = 0.0;
+			damage.applyModifier(new AttributeModifier(damageModifierUUID, "Dragon Strength Bonus", m, 2).setSaved(false));
 	}
 	
 	/**

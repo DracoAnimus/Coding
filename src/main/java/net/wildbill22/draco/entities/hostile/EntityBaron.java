@@ -44,6 +44,7 @@ public class EntityBaron extends EntityGuard {
 	@Override
 	protected void applyEntityAttributes(){
 		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(BALANCE.MOBPROP.BARON_ATTACK_DAMAGE);
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(BALANCE.MOBPROP.BARON_MAX_HEALTH);
 	}
 	

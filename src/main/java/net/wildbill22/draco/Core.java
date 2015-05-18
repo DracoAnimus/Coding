@@ -6,6 +6,7 @@ import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
 import net.wildbill22.draco.entities.ModEntities;
+import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.generation.WorldGenDracoAnimus;
 import net.wildbill22.draco.generation.villageComponents.BallistaTower;
 import net.wildbill22.draco.generation.villageComponents.CatapultTower;
@@ -21,8 +22,14 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
-import net.wildbill22.draco.network.DragonPlayerUpdatePacket;
+import net.wildbill22.draco.models.ModelDracoMortem;
+import net.wildbill22.draco.models.ModelSilverDragon;
+import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
+import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
+import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
 import net.wildbill22.draco.proxies.CommonProxy;
+import net.wildbill22.draco.render.RenderDracoMortem;
+import net.wildbill22.draco.render.RenderSilverDragon;
 import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -111,6 +118,11 @@ public class Core {
 //				WoodHutCreationHandler.init();
 			}
 		}
+		// Dragons
+		RenderSilverDragon sdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+		DragonRegistry.instance().registerDragonRendererCreationHandler(sdHandler);
+		RenderDracoMortem dmHandler = new RenderDracoMortem(new ModelDracoMortem(), 0.5F);
+		DragonRegistry.instance().registerDragonRendererCreationHandler(dmHandler);
 	}
 
 	@EventHandler
@@ -125,8 +137,10 @@ public class Core {
 		modChannel = NetworkRegistry.INSTANCE.newSimpleChannel(REFERENCE.MODID);
 
 		int id = 0;
-		modChannel.registerMessage(DragonPlayerUpdatePacket.Handler.class, DragonPlayerUpdatePacket.class, id++, Side.CLIENT);
-//		modChannel.registerMessage(BallistaUpdatePacket.Handler.class, BallistaUpdatePacket.class, id++, Side.CLIENT);
+		modChannel.registerMessage(DragonPlayerUpdateLevel.Handler.class, DragonPlayerUpdateLevel.class, id++, Side.CLIENT);
+		modChannel.registerMessage(DragonPlayerUpdateIsDragon.Handler.class, DragonPlayerUpdateIsDragon.class, id++, Side.CLIENT);
+		modChannel.registerMessage(DragonPlayerUpdateDragonName.Handler.class, DragonPlayerUpdateDragonName.class, id++, Side.CLIENT);
+//		modChannel.registerMessage(DragonPlayerUpdatePacket2.Handler.class, DragonPlayerUpdatePacket2.class, id++, Side.SERVER);
 //		modChannel.registerMessage(RequestDragonPlayerUpdatePacket.Handler.class, RequestDragonPlayerUpdatePacket.class, id++, Side.SERVER);
 	}
 }

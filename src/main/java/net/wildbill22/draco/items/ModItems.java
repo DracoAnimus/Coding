@@ -3,7 +3,8 @@ package net.wildbill22.draco.items;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Achievement;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
@@ -23,8 +24,15 @@ public class ModItems extends Item {
 	public static Item fireball;
 	public static Item explosiveFireball;
 	public static Item rock;
-	public static Achievement levelTen;
-	
+	public static Item silverDragonStaff;
+	public static Item skeletonDragonStaff;
+	public static Item dragonEggGold;
+	public static Item dragonEggSkeleton;
+	public static Item goldDragonStaff;
+
+	// Food
+	public static ItemModFood villagerHeart; 
+
 	public static void preInit() {
 		dragonScales = new ItemDragonScales();
 		spear = new ItemSpear();
@@ -32,6 +40,11 @@ public class ModItems extends Item {
 		fireball = new ItemMyFireball();
 		explosiveFireball = new ItemMyExplosive();
 		rock = new ItemMyRock();
+		silverDragonStaff = new ItemSilverDragonStaff();
+		skeletonDragonStaff = new ItemSkeletonDragonStaff();
+		dragonEggGold = new ItemDragonEggGold();
+		dragonEggSkeleton = new ItemDragonEggSkeleton();
+		goldDragonStaff = new ItemGoldDragonStaff();
 		
 		GameRegistry.registerItem(dragonScales, ItemDragonScales.name);
 		GameRegistry.registerItem(goldCoin, ItemGoldCoin.name);
@@ -39,6 +52,19 @@ public class ModItems extends Item {
 		GameRegistry.registerItem(fireball, ItemMyFireball.name);
 		GameRegistry.registerItem(explosiveFireball, ItemMyExplosive.name);
 		GameRegistry.registerItem(rock, ItemMyRock.name);
+		GameRegistry.registerItem(silverDragonStaff, ItemSilverDragonStaff.name);
+		GameRegistry.registerItem(skeletonDragonStaff, ItemSkeletonDragonStaff.name);
+		GameRegistry.registerItem(dragonEggGold, ItemDragonEggGold.name);
+		GameRegistry.registerItem(dragonEggSkeleton, ItemDragonEggSkeleton.name);
+		GameRegistry.registerItem(goldDragonStaff, ItemGoldDragonStaff.name);
+
+		// Food
+		// In wiki: Food points, Saturation ration
+//		GameRegistry.registerItem(villagerHeart = new ItemModFood("villagerHeart", 4, 0.6f, false), "villagerHeart");
+		// Poison, like potatoes
+		GameRegistry.registerItem(villagerHeart = new ItemModFood("villagerHeart", 6, 1.2f, false, 
+				new PotionEffect(Potion.poison.id, 5, 0)), "villagerHeart");
+		villagerHeart.setAlwaysEdible();
 	}
 
 	public static void init() {

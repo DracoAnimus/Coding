@@ -35,9 +35,12 @@ public final class BALANCE {
 		@DefaultDouble(value = 30.0D, minValue = 5.0D, maxValue = 50.0D, name = "Guard Maximum Health", 
 				comment = "Maximum health")
 		public static double GUARD_MAX_HEALTH;
-		@DefaultDouble(value = 50.0D, minValue = 5.0D, maxValue = 75.0D, name = "Baron Maximum Health", 
+		@DefaultDouble(value = 60.0D, minValue = 5.0D, maxValue = 75.0D, name = "Baron Maximum Health", 
 				comment = "Maximum health")
 		public static double BARON_MAX_HEALTH;
+		@DefaultDouble(value = 8.0D, minValue = 1.0D, maxValue = 10.0D, name = "Baron Attack Damage", 
+				comment = "Baron attack damage")
+		public static double BARON_ATTACK_DAMAGE;
 		@DefaultDouble(value = 5.0D, minValue = 1.0D, maxValue = 10.0D, name = "Guard Attack Damage", 
 				comment = "Guard attack damage")
 		public static double GUARD_ATTACK_DAMAGE;
@@ -146,7 +149,7 @@ public final class BALANCE {
 	}
 	
 	// Dragon player (add more as needed)
-	@DefaultBoolean(value = true, name = "Player as silver dragon initially?", 
+	@DefaultBoolean(value = false, name = "Player as silver dragon initially?", 
 			comment = "Whether player should spawn initially as a silver dragon")
 	public static boolean PLAYER_AS_SILVER_DRAGON_INITIALLY;
 	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher for Ballista and Catapult", 

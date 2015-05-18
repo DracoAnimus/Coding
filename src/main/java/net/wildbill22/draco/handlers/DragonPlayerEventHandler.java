@@ -5,6 +5,8 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
@@ -14,6 +16,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -23,19 +26,18 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
+import net.wildbill22.draco.entities.dragons.DragonRegistry;
+import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
-import net.wildbill22.draco.models.ModelSilverDragon;
-import net.wildbill22.draco.render.RenderSilverDragon;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 // All events in this class are type MinecraftForge.EVENT_BUS
 public class DragonPlayerEventHandler {
-	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+//	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
 //	Render renderPlayerDragon = new RenderMCSilverDragon();
 
 	// Add DragonPlayer properties to player
@@ -103,6 +105,7 @@ public class DragonPlayerEventHandler {
 		if (!event.world.isRemote && event.block instanceof TemporaryHoard) {
 			DragonPlayer.get((EntityPlayer) event.player).addHoard(event.x, event.y, event.z);
 			setOwner(event.world, event.player, event.x, event.y, event.z);
+			LogHelper.info("DragonPlayerEventHandler: Set owner to " + event.player.getDisplayName() + "!");
 			event.player.addChatMessage(new ChatComponentText("You have placed a hoard, you can now add gold coins!"));
 			event.player.addChatMessage(new ChatComponentText("The more gold coins you add, the higher your dragon level."));
 //			DragonPlayer.saveProxyData(event.player);
@@ -129,7 +132,10 @@ public class DragonPlayerEventHandler {
 		EntityPlayer player = event.entityPlayer;
 		Block block = event.world.getBlock(event.x, event.y, event.z);
 		if (!player.worldObj.isRemote && block instanceof TemporaryHoard) {
-			if (player.getDisplayName().compareTo(getOwner(event.world, player, event.x, event.y, event.z)) != 0) {
+			String owner = getOwner(event.world, player, event.x, event.y, event.z);
+			if (player.getDisplayName().compareTo(owner) != 0) {
+				LogHelper.info("DragonPlayerEventHandler: You are " + player.getDisplayName() + "!");
+				LogHelper.info("DragonPlayerEventHandler: Owner is " + owner + "!");
 				player.addChatMessage(new ChatComponentText("You are not the owner of this hoard!"));
 				player.addChatMessage(new ChatComponentText("You can break it and place it again to become the owner."));
 			}
@@ -152,6 +158,15 @@ public class DragonPlayerEventHandler {
 					if (!addItemToHotbar(player.inventory, ModItems.fireball))
 						addItemToHotbar(player.inventory, ModItems.explosiveFireball);
 				}
+			}
+		}
+		if (event.entityLiving instanceof EntityVillager) {
+			// 50% chance to drop the heart
+			LogHelper.info("DragonPlayerEventHandler: Villager died!");
+			if (entity.worldObj.rand.nextInt(2) == 0) {
+				LogHelper.info("DragonPlayerEventHandler: Villager dropped a heart!");
+				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
+						new ItemStack(ModItems.villagerHeart)));
 			}
 		}
 	}
@@ -209,6 +224,16 @@ public class DragonPlayerEventHandler {
 		}
 	}
 	
+	//	Used to add the invisiblity dragon ability to the dragon's armor 
+	@SubscribeEvent
+	public void onArmorEvent(SetArmorModel event) {
+		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer && DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
+			EntityPlayer player = (EntityPlayer) event.entity;
+			if (player.isInvisible())
+				event.result = -1;
+		}
+	}
+	
 	// Render player as dragon if a dragon
 	@SubscribeEvent
 	public void OnPlayerRender(RenderPlayerEvent.Pre event) {
@@ -235,8 +260,11 @@ public class DragonPlayerEventHandler {
 //			event.entityPlayer.yOffset =  0.62F;    // normally 1.62F
 //			renderPlayerDragon.doRender(event.entityPlayer, 0D, -0.4D, 0D, 0F, 0F);
 			
+			String dragon = DragonPlayer.get((EntityPlayer) event.entity).getDragonName();
+			IDragonRendererCreationHandler renderPlayerDragon = DragonRegistry.instance().getDragonRenderer(dragon);
+			((Render) renderPlayerDragon).doRender(event.entityPlayer, 0D, -1.4D, 0D, 0F, 0F);
 			// Old single setting:
-			renderPlayerDragon.doRender(event.entityPlayer, 0D, -1.4D, 0D, 0F, 0F);
+//			renderPlayerDragon.doRender(event.entityPlayer, 0D, -1.4D, 0D, 0F, 0F);
     	}
 	}
 }
