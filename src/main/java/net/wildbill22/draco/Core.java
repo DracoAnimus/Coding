@@ -22,12 +22,14 @@ import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
+import net.wildbill22.draco.models.ModelAquaDraco;
 import net.wildbill22.draco.models.ModelDracoMortem;
 import net.wildbill22.draco.models.ModelSilverDragon;
 import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
 import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
 import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
 import net.wildbill22.draco.proxies.CommonProxy;
+import net.wildbill22.draco.render.RenderAquaDraco;
 import net.wildbill22.draco.render.RenderDracoMortem;
 import net.wildbill22.draco.render.RenderSilverDragon;
 import net.wildbill22.draco.stats.ModStats;
@@ -70,7 +72,7 @@ public class Core {
 		ModItems.preInit();
 		ModBlocks.preInit();
     	ModTileEntities.modRegistry();
-		ModBiomes.init(); // Must be before ModEntities
+		ModBiomes.preInit(); // Must be before ModEntities
 		if (devEnv)
 			ModEntities.registerEggsForDev();
 		ModEntities.preInit();
@@ -119,10 +121,14 @@ public class Core {
 			}
 		}
 		// Dragons
-		RenderSilverDragon sdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
+		RenderSilverDragon sdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 0); // Silver
 		DragonRegistry.instance().registerDragonRendererCreationHandler(sdHandler);
 		RenderDracoMortem dmHandler = new RenderDracoMortem(new ModelDracoMortem(), 0.5F);
 		DragonRegistry.instance().registerDragonRendererCreationHandler(dmHandler);
+		RenderAquaDraco adHandler = new RenderAquaDraco(new ModelAquaDraco(), 0.5F);
+		DragonRegistry.instance().registerDragonRendererCreationHandler(adHandler);
+		RenderSilverDragon gdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 1);  // Gold
+		DragonRegistry.instance().registerDragonRendererCreationHandler(gdHandler);
 	}
 
 	@EventHandler

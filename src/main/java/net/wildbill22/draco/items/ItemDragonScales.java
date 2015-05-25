@@ -18,7 +18,7 @@ public class ItemDragonScales extends ModItems {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Dragon Scales");
-		list.add("Ability: Dropped when a dragon is killed.");
+		list.add("Dragon Scales");
+		list.add("Dropped when a dragon is killed.");
 	}
 }

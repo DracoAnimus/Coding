@@ -45,7 +45,7 @@ public class ItemMyRock extends ModItems
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Rock");
-		list.add("Ability: Causes " + rockDamage + " throw damage.");
+		list.add("Rock.");
+		list.add("Causes " + rockDamage + " throw damage.");
 	}
 }

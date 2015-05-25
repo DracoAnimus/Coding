@@ -38,9 +38,9 @@ public class ItemLongBow extends ItemBow {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
-		list.add("Description: Long Bow.");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: Can kill village enemies.");
+		list.add("Long Bow.");
+		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining.");
+		list.add("Can kill village enemies.");
 	}
         
     /**

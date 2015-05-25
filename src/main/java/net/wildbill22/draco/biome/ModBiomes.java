@@ -20,7 +20,7 @@ public class ModBiomes {
 	public static BiomeGenBase biomeCityPlains;
 	public static BiomeEntry biomeEntryCityPlains;
 	
-	public static void init() {
+	public static void preInit() {
 		int biomeID = 10;
 		while (BiomeDictionary.isBiomeRegistered(biomeID))
 			biomeID++;

@@ -24,8 +24,7 @@ public class ItemGoldCoin extends ModItems {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Store these in the dragon");
-		list.add("   hoard to increase your powers!");
-		list.add("Ability: Provides dragon powers.");
+		list.add("Store these in the dragon");
+		list.add("hoard to increase your powers!");
 	}
 }

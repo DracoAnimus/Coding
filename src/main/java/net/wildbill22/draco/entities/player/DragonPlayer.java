@@ -1,7 +1,9 @@
 package net.wildbill22.draco.entities.player;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -15,7 +17,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
+import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
+import net.wildbill22.draco.items.ItemDragonEgg;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -23,7 +27,6 @@ import net.wildbill22.draco.lib.NBTCoordinates;
 import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
 import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
 import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
-import net.wildbill22.draco.network.DragonPlayerUpdatePacket2;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
@@ -39,6 +42,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	private int level;        // current level, as determined by several factors
 	private ArrayList<NBTCoordinates> hoardList;
 	private String dragonName;
+	private Set<String> eggsInHoard; // All the dragon egg types in the hoard
 
 	public String getDragonName() {
 		return dragonName;
@@ -58,6 +62,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		this.isDragon = BALANCE.PLAYER_AS_SILVER_DRAGON_INITIALLY;
 		this.dragonName = EntitySilverDragon.name;		
 		this.hoardList = new ArrayList<NBTCoordinates>();
+		this.eggsInHoard = new HashSet<String>();
 	}
 
 	private static final String getSaveKey(EntityPlayer player) {
@@ -111,7 +116,17 @@ public class DragonPlayer implements IExtendedEntityProperties {
 				writeIndex++;
 			}
         }
-		properties.setInteger("numHoards", writeIndex);		
+		properties.setInteger("numHoards", writeIndex);
+		
+		// Eggs in hoard
+		size = eggsInHoard.size();
+		writeIndex = 0;
+        Iterator<String> it = eggsInHoard.iterator();
+		for (int i = 0; i < size; i++) {
+			properties.setString("egg" + i, it.next());			
+			writeIndex++;
+		}
+		properties.setInteger("numEggs", writeIndex);
 		compound.setTag(EXT_PROP_NAME, properties);
 
 		// Log some settings
@@ -148,6 +163,15 @@ public class DragonPlayer implements IExtendedEntityProperties {
 				if (hoardExists(coords)) {
 					hoardList.add(coords);
 				}
+			}
+        }
+		// Eggs in hoard
+        eggsInHoard.clear();
+        if (properties.hasKey("numEggs")) {
+			size = properties.getInteger("numEggs");
+			for (int i = 0; i < size; i++) {
+				String egg = properties.getString("egg" + i);
+				addEgg(egg);
 			}
         }
 
@@ -233,23 +257,29 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		}
 		hoardSize = 0;
 		boolean notJustCoins = false;
+		this.eggsInHoard.clear();
 		int size = hoardList.size();
 		for (int i = 0; i < size; i++) {
 			TileEntityChest chestEntity = (TileEntityChest) world.getTileEntity(hoardList.get(i).posX, hoardList.get(i).posY, hoardList.get(i).posZ);
 			if (chestEntity instanceof TileEntityTemporaryHoard) {
 				for (int j = 0; j < chestEntity.getSizeInventory(); j++) {
-					ItemStack coins = chestEntity.getStackInSlot(j);
-					if (coins != null) {
-						if (coins.getItem() != ModItems.goldCoin)
+					ItemStack itemStack = chestEntity.getStackInSlot(j);
+					if (itemStack != null) {
+						if (itemStack.getItem() != ModItems.goldCoin) {
 							notJustCoins = true;
+							if (itemStack.getItem() instanceof ItemDragonEgg) {
+								this.addEgg(((IDragonEggHandler)itemStack.getItem()).getEggName());
+							}
+						}
 						else {
-							hoardSize += coins.stackSize;
+							hoardSize += itemStack.stackSize;
 						}
 					}
 				}
 			}
 		}
         LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
+        LogHelper.info("DragonPlayer load: Player has " + this.eggsInHoard.size() + " different eggs.");
 		if (hoardSize > 0) {
 			this.player.addStat(ModStats.firstGoldCoin, 1);
 		}
@@ -258,14 +288,17 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	}
 
 	private void calculateLevel() {
-		int coinEffect = hoardSize > BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL ? BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL : hoardSize; 
+		int coinsToMaxLevel = BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL; 
+		coinsToMaxLevel += coinsToMaxLevel / 2 * Math.max(0, (this.eggsInHoard.size() - 1));
+		int coinEffect = hoardSize > coinsToMaxLevel ? coinsToMaxLevel : hoardSize; 
 		level = (int) Math.floor((Math.pow(coinEffect, BALANCE.LEVELING.LEVEL_MOD_TYPE) / 
-				Math.pow(BALANCE.LEVELING.HOARD_COINS_TO_MAX_LEVEL, BALANCE.LEVELING.LEVEL_MOD_TYPE)) * BALANCE.LEVELING.MAXIMUM_LEVEL);
+				Math.pow(coinsToMaxLevel, BALANCE.LEVELING.LEVEL_MOD_TYPE)) * BALANCE.LEVELING.MAXIMUM_LEVEL);
 		level = level == 0 ? 1 : level;
-		setLevel(level);
 		if (level >= 10) {
 			this.player.addStat(ModStats.levelTenDragon, 1);
+			level = 10;
 		}
+		setLevel(level);
         LogHelper.info("DragonPlayer calculateLevel: Player is level " + level + ".");
 	}
 
@@ -306,17 +339,17 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		p.syncClient(false);
 	}
 	
-	public void syncServer() {		
-		// Only send message on client to server
-		if(player.worldObj.isRemote){
-	        LogHelper.info("DragonPlayer syncServer: About to send player isDragon " + isDragon() + " to server.");
-	        if (player != null) {
-        		Core.modChannel.sendToServer(new DragonPlayerUpdatePacket2(isDragon()));
-    	        LogHelper.info("DragonPlayer syncServer: Sent player isDragon " + isDragon() + " to server.");
-	        }
-		}
-	}
-
+//	public void syncServer() {		
+//		// Only send message on client to server
+//		if(player.worldObj.isRemote){
+//	        LogHelper.info("DragonPlayer syncServer: About to send player isDragon " + isDragon() + " to server.");
+//	        if (player != null) {
+//        		Core.modChannel.sendToServer(new DragonPlayerUpdatePacket2(isDragon()));
+//    	        LogHelper.info("DragonPlayer syncServer: Sent player isDragon " + isDragon() + " to server.");
+//	        }
+//		}
+//	}
+//
 	public void syncClient(boolean all) {
 		// Only send message on server to client
 		if(!player.worldObj.isRemote){
@@ -328,5 +361,13 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		        LogHelper.info("DragonPlayer sync: Sent player level of " + level + " to client.");
 	        }
 		}
+	}
+
+	public boolean isEggInHoard(String name) {
+		return this.eggsInHoard.contains(name);
+	}
+	
+	public void addEgg(String name) {
+		this.eggsInHoard.add(name);
 	}
 }

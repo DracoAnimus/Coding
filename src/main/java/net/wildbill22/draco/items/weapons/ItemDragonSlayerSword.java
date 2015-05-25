@@ -46,8 +46,8 @@ public class ItemDragonSlayerSword extends ItemSword {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		list.add("Description, Dragon Slayer Sword");
+		list.add("Dragon Slayer Sword.");
 		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: More damage to dragons.");
+		list.add("More damage to dragons.");
 	}
 }

@@ -23,9 +23,9 @@ public final class BALANCE {
 		@DefaultInt(value = 80, minValue = 0, maxValue = 100, name = "Gold Coins", 
 				comment = "Chance of finding gold coins in village chests.")
 		public static int VILLAGE_BLACKSMITH_GOLD_COINS;
-		@DefaultInt(value = 50, minValue = 0, maxValue = 100, name = "Fireballs", 
-				comment = "Chance of finding fireballs in village chests.")
-		public static int VILLAGE_BLACKSMITH_FIREBALLS;
+//		@DefaultInt(value = 50, minValue = 0, maxValue = 100, name = "Fireballs", 
+//				comment = "Chance of finding fireballs in village chests.")
+//		public static int VILLAGE_BLACKSMITH_FIREBALLS;
 		@DefaultInt(value = 10, minValue = 0, maxValue = 100, name = "Dragon Slayer Sword", 
 				comment = "Chance of finding Dragon Slayer Sword in village chests.")
 		public static int VILLAGE_BLACKSMITH_DRAGON_SLAYER;

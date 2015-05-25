@@ -26,8 +26,8 @@ public class ItemLongSword extends ItemSword {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		list.add("Description, Long Sword");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: Hit damage.");
+		list.add("Long Sword.");
+		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining.");
+		list.add("Causes hit damage.");
 	}
 }

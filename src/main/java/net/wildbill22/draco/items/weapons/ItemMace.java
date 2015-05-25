@@ -24,8 +24,8 @@ public class ItemMace extends ItemAxe {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
-		list.add("Description, Mace");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: Hit damage.");
+		list.add("Mace.");
+		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining.");
+		list.add("Causes hit damage.");
 	}
 }

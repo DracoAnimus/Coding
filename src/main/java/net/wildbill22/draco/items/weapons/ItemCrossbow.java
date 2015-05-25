@@ -38,9 +38,9 @@ public class ItemCrossbow extends ItemBow {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
-		list.add("Description: Crossbow.");
+		list.add("Crossbow.");
 		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: Can kill village enemies.");
+		list.add("Can kill village enemies.");
 	}
 
     /**

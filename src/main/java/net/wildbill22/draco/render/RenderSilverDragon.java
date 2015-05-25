@@ -6,22 +6,28 @@ import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
+import net.wildbill22.draco.entities.dragons.EntityGoldDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.lib.REFERENCE;
 
 // Must extend RendererLivingEntity, not RenderLiving, so player can change to dragon!
 public class RenderSilverDragon extends RendererLivingEntity implements IDragonRendererCreationHandler {
 	protected ResourceLocation dragonTexture;
+	private int type;
 	
-	public RenderSilverDragon(ModelBase par1ModelBase, float parShadowSize) {
+	public RenderSilverDragon(ModelBase par1ModelBase, float parShadowSize, int type) {
 		super(par1ModelBase, parShadowSize);
 		this.renderManager = RenderManager.instance;
-		setEntityTexture();
+		setEntityTexture(type);
+		this.type = type;
 	}
 
 	// Add logic here for different dragons
-	private void setEntityTexture() {
-		dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/silverDragon.png");
+	private void setEntityTexture(int type) {
+		if (type == 0)
+			dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/silverDragon.png");
+		else
+			dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/goldDragon.png");
 	}
 
 	@Override
@@ -31,6 +37,9 @@ public class RenderSilverDragon extends RendererLivingEntity implements IDragonR
 
 	@Override
 	public String getKey() {
-		return EntitySilverDragon.name;
+		if (type == 0)
+			return EntitySilverDragon.name;
+		else
+			return EntityGoldDragon.name;
 	}
 }

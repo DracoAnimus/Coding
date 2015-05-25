@@ -5,7 +5,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
-import net.wildbill22.draco.entities.dragons.EntityDracoMortem;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 
 public class ModelDracoMortem extends ModelBase
@@ -41,23 +40,6 @@ public class ModelDracoMortem extends ModelBase
     ModelRenderer tail2;
   
     DragonPlayer dragonPlayer;
-
-//  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-//  super.render(entity, f, f1, f2, f3, f4, f5);
-//  setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    
-//  body.render(f5);
-//  upperBody.render(f5);
-//  rightUpperLeg.render(f5);
-//  leftUpperLeg.render(f5);
-//  leftUpperArm.render(f5);
-//  rightUpperArm.render(f5);
-//  leftWing1.render(f5);
-//  rightWing1.render(f5);
-//  neck.render(f5);
-//  tail1.render(f5);
-//  tail2.render(f5);
-//}
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         super.render(entity, f, f1, f2, f3, f4, f5);

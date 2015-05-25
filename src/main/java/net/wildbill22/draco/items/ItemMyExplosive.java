@@ -51,7 +51,7 @@ public class ItemMyExplosive extends ModItems
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Explosive Fireball");
-		list.add("Ability: Explodes on impact!");
+		list.add("Explosive Fireball.");
+		list.add("Explodes on impact!");
 	}
 }

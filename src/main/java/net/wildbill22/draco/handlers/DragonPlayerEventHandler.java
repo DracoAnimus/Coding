@@ -1,16 +1,14 @@
 package net.wildbill22.draco.handlers;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
@@ -25,11 +23,13 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
+import net.wildbill22.draco.items.ItemDragonEgg;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
@@ -37,8 +37,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 // All events in this class are type MinecraftForge.EVENT_BUS
 public class DragonPlayerEventHandler {
-//	Render renderPlayerDragon = new RenderSilverDragon(new ModelSilverDragon(), 0.5F);
-//	Render renderPlayerDragon = new RenderMCSilverDragon();
 
 	// Add DragonPlayer properties to player
 	@SubscribeEvent
@@ -72,17 +70,30 @@ public class DragonPlayerEventHandler {
 		DragonPlayer.get(event.entityPlayer).copy(DragonPlayer.get(event.original));
 	}
 
+	// This doesn't work for some stuff. Player drops from flying when game started with this.
+//	@SubscribeEvent
+//	public void onPlayerTickEvent(PlayerTickEvent event) {
+//    	if (DragonPlayer.get(event.player).isDragon()) {
+//    		event.player.capabilities.allowFlying = true;
+//    		ItemDragonEgg.applyAbilities(event.player);
+//    		event.player.sendPlayerAbilities();
+//        }
+//    }
+
 	// Need to call this until I figure out how to detect switching from creative to survival mode (makes you not fly)
 	@SubscribeEvent
-    public void onLivingUpdateEvent(LivingUpdateEvent event) {
-        if (event.entityLiving != null) {
-            if(event.entityLiving instanceof EntityPlayer) {
-            	if (DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
-            		((EntityPlayer)event.entity).capabilities.allowFlying = true;
-            		((EntityPlayer)event.entity).sendPlayerAbilities();
-            	}
-            }
-        }
+	// Previously had event.entityLiving (uses EntityLivingBase) instead of Entity
+	public void onLivingUpdateEvent(LivingUpdateEvent event) {
+//		if (event.entity != null && event.entity instanceof EntityPlayer) {
+//			EntityPlayer player = (EntityPlayer) event.entity;
+		if (event.entityLiving != null && event.entityLiving instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.entityLiving;
+			if (DragonPlayer.get(player).isDragon()) {
+	    		player.capabilities.allowFlying = true;
+	    		ItemDragonEgg.applyAbilities(player);
+	    		player.sendPlayerAbilities();
+	        }
+		}
     }
 	
 	// Some other events to maybe use, that are on FMLCommonHandler.bus(), so need a separate handler
@@ -143,57 +154,66 @@ public class DragonPlayerEventHandler {
 	}
 	
 	// Gives fireballs or explosive fireball each time you kill something when a dragon
-	// FIXME: Could this use addItemStackToInventory(itemstack)? 
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
-		Entity entity = event.source.getSourceOfDamage();
-		if (entity != null && !entity.worldObj.isRemote && entity instanceof EntityPlayer) {
-			LogHelper.info("DragonPlayerEventHandler: Player killed something!");
-			EntityPlayer player = (EntityPlayer) entity;
-			if (DragonPlayer.get(player).isDragon()) {
-				int chance  = Math.max((DragonPlayer.get(player).getLevel() / 2), 1);
-				int num = new Random().nextInt(chance) + 1;
-				LogHelper.info("DragonPlayerEventHandler: Player killed something! Adding " + num + " Fireballs!");
-				for (int i = 0; i < num; i++) {
-					if (!addItemToHotbar(player.inventory, ModItems.fireball))
-						addItemToHotbar(player.inventory, ModItems.explosiveFireball);
-				}
-			}
-		}
+//		Entity entity = event.source.getSourceOfDamage();
+//		if (entity != null && !entity.worldObj.isRemote && entity instanceof EntityPlayer) {
+//			LogHelper.info("DragonPlayerEventHandler: Player killed something!");
+//			EntityPlayer player = (EntityPlayer) entity;
+//			if (DragonPlayer.get(player).isDragon()) {
+//				int chance  = Math.max((DragonPlayer.get(player).getLevel() / 2), 1);
+//				int num = new Random().nextInt(chance) + 1;
+//				LogHelper.info("DragonPlayerEventHandler: Player killed something! Adding " + num + " Fireballs!");
+//				for (int i = 0; i < num; i++) {
+//					if (!addItemToHotbar(player.inventory, ModItems.fireball))
+//						addItemToHotbar(player.inventory, ModItems.explosiveFireball);
+//				}
+//			}
+//		}
 		if (event.entityLiving instanceof EntityVillager) {
 			// 50% chance to drop the heart
 			LogHelper.info("DragonPlayerEventHandler: Villager died!");
-			if (entity.worldObj.rand.nextInt(2) == 0) {
+			if (event.entity.worldObj.rand.nextInt(2) == 0) {
 				LogHelper.info("DragonPlayerEventHandler: Villager dropped a heart!");
 				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
 						new ItemStack(ModItems.villagerHeart)));
 			}
 		}
+		else if (event.entityLiving instanceof EntitySquid) {
+			// 50% chance to drop the meat
+			LogHelper.info("DragonPlayerEventHandler: Squid died!");
+			if (event.entity.worldObj.rand.nextInt(2) == 0) {
+				LogHelper.info("DragonPlayerEventHandler: Squid dropped food!");
+				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
+						new ItemStack(ModItems.squid, event.entity.worldObj.rand.nextInt(2) + 1)));
+			}
+		}
 	}
 	
-	private static boolean addItemToHotbar(InventoryPlayer hotbar, Item item) {
-		int hotbarSize = InventoryPlayer.getHotbarSize();
-		if (hotbar.hasItem(item)) {
-			for (int i = 0; i < hotbarSize; i++) {
-				ItemStack itemStack = hotbar.getStackInSlot(i);
-				if (itemStack != null && itemStack.getItem().equals(item)) {
-					if (itemStack.stackSize < itemStack.getMaxStackSize()) {
-						itemStack.stackSize++;
-						return true;
-					}
-				}					
-			}
-		}
-		else {
-			int slot = hotbar.getFirstEmptyStack();
-			if (slot >= 0) {
-				ItemStack items = new ItemStack(item);
-				hotbar.setInventorySlotContents(slot, items);
-				return true;
-			}
-		}
-		return false;
-	}
+	// FIXME: Could this use addItemStackToInventory(itemstack)? 
+//	private static boolean addItemToHotbar(InventoryPlayer hotbar, Item item) {
+//		int hotbarSize = InventoryPlayer.getHotbarSize();
+//		if (hotbar.hasItem(item)) {
+//			for (int i = 0; i < hotbarSize; i++) {
+//				ItemStack itemStack = hotbar.getStackInSlot(i);
+//				if (itemStack != null && itemStack.getItem().equals(item)) {
+//					if (itemStack.stackSize < itemStack.getMaxStackSize()) {
+//						itemStack.stackSize++;
+//						return true;
+//					}
+//				}					
+//			}
+//		}
+//		else {
+//			int slot = hotbar.getFirstEmptyStack();
+//			if (slot >= 0) {
+//				ItemStack items = new ItemStack(item);
+//				hotbar.setInventorySlotContents(slot, items);
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 	
 	// On MinecraftForge.EVENT_BUS
 //	@SubscribeEvent
@@ -212,6 +232,15 @@ public class DragonPlayerEventHandler {
 			DragonPlayer.saveProxyData((EntityPlayer) event.entity);
 		}
 	}
+
+//	@SubscribeEvent
+//	public void onLivingAttackEvent(LivingAttackEvent event) {
+//		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
+//			if (((EntityPlayer)event.entity).getItemInUse().getItem() instanceof ItemDragonStaff) {
+//				event.source.
+//			}
+//		}		
+//	}
 	
 	// To prevent death by lava for a dragon
 	@SubscribeEvent
@@ -231,6 +260,25 @@ public class DragonPlayerEventHandler {
 			EntityPlayer player = (EntityPlayer) event.entity;
 			if (player.isInvisible())
 				event.result = -1;
+		}
+	}
+	
+	//	Used to limit what food a dragon can eat 
+	@SubscribeEvent
+	public void onItemUseFinish(PlayerUseItemEvent.Finish event) {
+		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer && DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
+			EntityPlayer player = (EntityPlayer) event.entity;
+			if (event.item != null) {
+				if (!ItemDragonEgg.isDragonFood(DragonPlayer.get(player).getDragonName(), event.item.getItem())) {
+					LogHelper.info("onItemUseFinish: You just ate a non-dragon food!");
+					player.addPotionEffect(new PotionEffect(Potion.poison.id, 5*20, 1));				
+				}
+				else {					
+					LogHelper.info("onItemUseFinish: You just ate a dragon food!");
+					// Remove potions from stuff dragons can eat like rotten flesh
+					player.clearActivePotions();
+				}
+			}
 		}
 	}
 	

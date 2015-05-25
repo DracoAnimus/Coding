@@ -50,10 +50,10 @@ public abstract class MyVillageComponents extends StructureVillagePieces.Village
 
 	public static final String TOWER_CHEST = "villagegGuardTower";
 	public static final WeightedRandomChestContent[] towerChestContents = new WeightedRandomChestContent[]{
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
+//    	new WeightedRandomChestContent(
+//    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
+//    	new WeightedRandomChestContent(
+//    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
     	new WeightedRandomChestContent(
     			new ItemStack(ModItems.goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS),
 		new WeightedRandomChestContent(
@@ -69,10 +69,10 @@ public abstract class MyVillageComponents extends StructureVillagePieces.Village
     };
 	public static final String BARON_CASTLE_CHEST = "villageBaronCastle";
 	public static final WeightedRandomChestContent[] commonChestContents = new WeightedRandomChestContent[]{
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
+//    	new WeightedRandomChestContent(
+//    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
+//    	new WeightedRandomChestContent(
+//    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
     	new WeightedRandomChestContent(
     			new ItemStack(ModItems.goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS),
 		new WeightedRandomChestContent(
@@ -105,8 +105,8 @@ public abstract class MyVillageComponents extends StructureVillagePieces.Village
 //		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
 //		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
 //		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
-		new WeightedRandomChestContent(new ItemStack(ModItems.dragonEggSkeleton), 1, 1, 60),
-		new WeightedRandomChestContent(new ItemStack(ModItems.dragonEggGold), 1, 1, 30)
+		new WeightedRandomChestContent(new ItemStack(ModItems.skeletonDragonEgg), 1, 1, 60),
+		new WeightedRandomChestContent(new ItemStack(ModItems.goldDragonEgg), 1, 1, 30)
     };
 
     public MyVillageComponents() {}

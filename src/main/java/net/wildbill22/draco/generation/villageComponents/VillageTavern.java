@@ -25,10 +25,10 @@ public class VillageTavern extends StructureVillagePieces.Village
 {
 	public static final String TAVERN_CHEST = "villageTavern";
 	public static final WeightedRandomChestContent[] tavernChestContents = new WeightedRandomChestContent[]{
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
-    	new WeightedRandomChestContent(
-    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
+//    	new WeightedRandomChestContent(
+//    			new ItemStack(ModItems.fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
+//    	new WeightedRandomChestContent(
+//    			new ItemStack(ModItems.explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS), 
     	new WeightedRandomChestContent(
     			new ItemStack(ModItems.goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS),
 		new WeightedRandomChestContent(

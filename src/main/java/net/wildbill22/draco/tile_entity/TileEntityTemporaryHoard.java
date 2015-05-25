@@ -13,20 +13,25 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.blocks.TemporaryHoard;
+import net.wildbill22.draco.entities.dragons.DragonRegistry;
+import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
+import net.wildbill22.draco.items.ItemDragonEgg;
 import net.wildbill22.draco.items.ModItems;
 
 /**
  * 
  * @author WILLIAM
 */ 
-public class TileEntityTemporaryHoard extends TileEntityChest {	
+public class TileEntityTemporaryHoard extends TileEntityChest {
 	/**
 	 * Container (Used for inventory interactions on server and client) for this temporaryHoard
 	 * Calculates dragon level on close
 	 * @author Maxanier
 	 */
 	public static class HoardContainer extends ContainerChest{
+		private static ItemStack justAdded = null;
+		
 		public HoardContainer(IInventory player, IInventory chest) {
 			super(player, chest);
 		}
@@ -35,10 +40,22 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 		public void onContainerClosed(EntityPlayer player){
 			if(!player.worldObj.isRemote){
 				DragonPlayer.get(player).calculateHoardSize(player.worldObj);
+				
+				// Added to create staffs when an egg is put into inventory
+				if (justAdded != null) {
+					for (int i = 0; i < DragonRegistry.instance().getNumEggs(); i++) {
+						IDragonEggHandler handler = DragonRegistry.instance().getDragonEggHandler(i);
+						if (justAdded.getItem() == handler.getEggItem()) {
+							player.dropPlayerItemWithRandomChoice(handler.getStaffItemStack(), false);
+							DragonPlayer.get(player).addEgg(handler.getEggName());
+						}
+					}
+				}
+				justAdded = null;
 			}
 			super.onContainerClosed(player);
 		}
-		
+				
 		/**
 		 * Replaces the chest inventory slots by filter slots
 		 */
@@ -51,20 +68,23 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 		}
 		
 		/**
-		 * Filter Slot which clones an existing slot, but only allows gold coins
+		 * Filter Slot which clones an existing slot, but only allows gold coins and dragon eggs
 		 */
 		public static class CoinSlot extends Slot{
 			public CoinSlot(Slot slot) {
 				super(slot.inventory, slot.getSlotIndex(),slot.xDisplayPosition,slot.yDisplayPosition);
 			}
 			
-			public boolean isItemValid(ItemStack stack){
-				if(stack!=null&&stack.getItem().equals(ModItems.goldCoin)){
-					return true;
+			public boolean isItemValid(ItemStack stack) {
+				if (stack != null) {
+					if (stack.getItem().equals(ModItems.goldCoin))
+						return true;
+					else if (stack.getItem() instanceof ItemDragonEgg) {
+						justAdded = stack;
+						return true;
+					}
 				}
-				else{
-					return false;
-				}
+				return false;
 			}
 		}
 	}

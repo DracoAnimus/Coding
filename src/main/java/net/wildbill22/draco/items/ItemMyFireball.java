@@ -53,7 +53,7 @@ public class ItemMyFireball extends ModItems
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Fireball");
-		list.add("Ability: On impact it catches entities on fire.");
+		list.add("Fireball.");
+		list.add("On impact it catches entities on fire.");
 	}
 }

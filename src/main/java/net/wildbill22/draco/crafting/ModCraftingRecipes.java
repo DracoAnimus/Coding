@@ -16,23 +16,9 @@ public class ModCraftingRecipes {
 //				" S ",
 //				'S', Items.stick, 'E', ModItems.Egg);
 		
-		GameRegistry.addShapedRecipe(new ItemStack(ModItems.silverDragonStaff, 1), 
-		" H ",
-		" S ",
-		" S ",
-		'S', Items.stick, 'H', ModItems.villagerHeart);
-
-		GameRegistry.addShapedRecipe(new ItemStack(ModItems.skeletonDragonStaff, 1), 
-		" E ",
-		" S ",
-		" S ",
-		'S', Items.stick, 'E', ModItems.dragonEggSkeleton);
-
-		GameRegistry.addShapedRecipe(new ItemStack(ModItems.goldDragonStaff, 1), 
-		" E ",
-		" S ",
-		" S ",
-		'S', Items.stick, 'E', ModItems.dragonEggGold);
+		// Need to change to crafting an silver dragon egg
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.silverDragonEgg, 1), 
+				Items.egg, ModItems.villagerHeart);
 
 		// Blocks
 		GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.scorchedCobblestone, 1), 

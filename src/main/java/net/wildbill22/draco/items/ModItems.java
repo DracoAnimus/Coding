@@ -9,6 +9,8 @@ import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.Creative_Tab;
+import net.wildbill22.draco.entities.dragons.DragonRegistry;
+import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -24,57 +26,69 @@ public class ModItems extends Item {
 	public static Item fireball;
 	public static Item explosiveFireball;
 	public static Item rock;
-	public static Item silverDragonStaff;
-	public static Item skeletonDragonStaff;
-	public static Item dragonEggGold;
-	public static Item dragonEggSkeleton;
-	public static Item goldDragonStaff;
+	public static Item goldDragonEgg;
+	public static Item skeletonDragonEgg;
+	public static Item silverDragonEgg;
+	public static Item waterDragonEgg;
 
 	// Food
-	public static ItemModFood villagerHeart; 
+	public static ItemDragonFood villagerHeart; 
+	public static ItemDragonFood squid; 
 
 	public static void preInit() {
 		dragonScales = new ItemDragonScales();
-		spear = new ItemSpear();
-		goldCoin = new ItemGoldCoin();
-		fireball = new ItemMyFireball();
-		explosiveFireball = new ItemMyExplosive();
-		rock = new ItemMyRock();
-		silverDragonStaff = new ItemSilverDragonStaff();
-		skeletonDragonStaff = new ItemSkeletonDragonStaff();
-		dragonEggGold = new ItemDragonEggGold();
-		dragonEggSkeleton = new ItemDragonEggSkeleton();
-		goldDragonStaff = new ItemGoldDragonStaff();
-		
 		GameRegistry.registerItem(dragonScales, ItemDragonScales.name);
-		GameRegistry.registerItem(goldCoin, ItemGoldCoin.name);
-		GameRegistry.registerItem(spear, ItemSpear.name);
-		GameRegistry.registerItem(fireball, ItemMyFireball.name);
-		GameRegistry.registerItem(explosiveFireball, ItemMyExplosive.name);
-		GameRegistry.registerItem(rock, ItemMyRock.name);
-		GameRegistry.registerItem(silverDragonStaff, ItemSilverDragonStaff.name);
-		GameRegistry.registerItem(skeletonDragonStaff, ItemSkeletonDragonStaff.name);
-		GameRegistry.registerItem(dragonEggGold, ItemDragonEggGold.name);
-		GameRegistry.registerItem(dragonEggSkeleton, ItemDragonEggSkeleton.name);
-		GameRegistry.registerItem(goldDragonStaff, ItemGoldDragonStaff.name);
 
-		// Food
+		goldCoin = new ItemGoldCoin();
+		GameRegistry.registerItem(goldCoin, ItemGoldCoin.name);
+
+		spear = new ItemSpear();
+		GameRegistry.registerItem(spear, ItemSpear.name);
+
+		fireball = new ItemMyFireball();
+		GameRegistry.registerItem(fireball, ItemMyFireball.name);
+
+		explosiveFireball = new ItemMyExplosive();
+		GameRegistry.registerItem(explosiveFireball, ItemMyExplosive.name);
+
+		rock = new ItemMyRock();
+		GameRegistry.registerItem(rock, ItemMyRock.name);
+		
+		// Dragon Food - only dragons can eat this food! Register foods before eggs!
 		// In wiki: Food points, Saturation ration
 //		GameRegistry.registerItem(villagerHeart = new ItemModFood("villagerHeart", 4, 0.6f, false), "villagerHeart");
 		// Poison, like potatoes
-		GameRegistry.registerItem(villagerHeart = new ItemModFood("villagerHeart", 6, 1.2f, false, 
+		GameRegistry.registerItem(villagerHeart = new ItemDragonFood("villagerHeart", 6, 1.2f, false, 
 				new PotionEffect(Potion.poison.id, 5, 0)), "villagerHeart");
 		villagerHeart.setAlwaysEdible();
+		GameRegistry.registerItem(squid = new ItemDragonFood("squid", 6, 1.2f, false, 
+				new PotionEffect(Potion.poison.id, 5, 0)), "squid");
+
+		// Eggs created after food has been registered (else null pointer exception)
+		silverDragonEgg = new ItemSilverDragonEgg();
+		skeletonDragonEgg = new ItemSkeletonDragonEgg();
+		goldDragonEgg = new ItemGoldDragonEgg();
+		waterDragonEgg = new ItemWaterDragonEgg();
+		GameRegistry.registerItem(goldDragonEgg, ItemGoldDragonEgg.name);
+		GameRegistry.registerItem(skeletonDragonEgg, ItemSkeletonDragonEgg.name);
+		GameRegistry.registerItem(silverDragonEgg, ItemSilverDragonEgg.name);
+		GameRegistry.registerItem(waterDragonEgg, ItemWaterDragonEgg.name);
+
+		// Dragon Egg Registry
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) silverDragonEgg);
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) skeletonDragonEgg);
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) goldDragonEgg);		
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) waterDragonEgg);		
 	}
 
 	public static void init() {
 		// Mod items
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
 				new ItemStack(goldCoin), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_GOLD_COINS));
-		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
-		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
-				new ItemStack(explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
+//		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+//				new ItemStack(fireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
+//		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
+//				new ItemStack(explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
 		
 		// Other useful stuff
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(

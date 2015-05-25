@@ -24,8 +24,8 @@ public class ItemBattleAxe extends ItemAxe {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
-		list.add("Description: Battle Axe.");
+		list.add("Battle Axe.");
 		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Ability: Can kill village enemies.");
+		list.add("Can kill village enemies.");
 	}
 }

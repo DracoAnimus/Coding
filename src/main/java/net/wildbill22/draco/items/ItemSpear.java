@@ -45,7 +45,7 @@ public class ItemSpear extends ModItems
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Description: Spear held by village guards.");
-		list.add("Ability: Causes thrown damage.");
+		list.add("Spear held by village guards.");
+		list.add("Causes thrown damage.");
 	}
 }
