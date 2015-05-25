@@ -2,11 +2,15 @@ package net.wildbill22.draco.generation;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.village.Village;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -84,7 +88,24 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 		}
 	}
 
-	private void addSurfaceStructures(World world, Random random, int x, int z) {		
+	private void addSurfaceStructures(World world, Random random, int x, int z) {
+		int chance = random.nextInt(1000);
+		boolean generatedStructure = false; // needed when a 2nd structure is
+											// added
+		int spawnChance = 0;
+		BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
+
+		spawnChance += BALANCE.DRAGON_EGG_SPAWN_CHANCE;
+		if (generatedStructure == false && chance < spawnChance) {
+			if (biome == BiomeGenBase.swampland) {
+				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.skeletonDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Skeleton Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
+			else if (biome == BiomeGenBase.river || biome == BiomeGenBase.ocean) {
+				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.waterDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Water Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
+		}
 	}
 
 	@Override
@@ -109,5 +130,22 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 	private void generateSurface(World world, Random random, int x, int z) {
 		addSurfaceStructures(world, random, x, z);
 		addSurfaceEntities(world, random, x + 8, z + 8);
-	}	
+	}
+	
+	// Place just one egg
+    public boolean generateDragonEgg(World world, Random random, int x, int y, int z, Block eggBlock) {
+        for (int l = 0; l < 32; ++l) {
+            int chunkX = x + random.nextInt(8) - random.nextInt(8);
+            int chunkY = y + random.nextInt(4) - random.nextInt(4);
+            int chunkZ = z + random.nextInt(8) - random.nextInt(8);
+
+            if (world.isAirBlock(chunkX, chunkY, chunkZ) && world.getBlock(chunkX, chunkY - 1, chunkZ) == Blocks.grass 
+            		&& eggBlock.canPlaceBlockAt(world, chunkX, chunkY, chunkZ)) {
+//                world.setBlock(chunkX, chunkY, chunkZ, egg, random.nextInt(4), 2);
+                world.setBlock(chunkX, chunkY, chunkZ, eggBlock);
+                return true;
+            }
+        }
+        return false;
+    }
 }

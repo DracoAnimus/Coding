@@ -10,16 +10,31 @@ public class ModBlocks extends Block {
 	public static Block charredGround;
  	public static Block scorchedCobblestone;
  	public static Block temporaryHoard;
+ 	
+ 	// Eggs
+ 	public static Block goldDragonEgg;
+ 	public static Block silverDragonEgg;
+ 	public static Block skeletonDragonEgg;
+ 	public static Block waterDragonEgg;
 	
-	public static void preInit() {
-			
+	public static void preInit() {			
+		// Misc 
 		charredGround = new BlockCharredGround().setLightLevel(0.5F);
 		scorchedCobblestone = new BlockScorchedCobblestone();
 		temporaryHoard = new TemporaryHoard().setBlockName(TemporaryHoard.textureName).setCreativeTab(Creative_Tab.TabDraco_Animus);
-				
 		GameRegistry.registerBlock(charredGround, BlockCharredGround.name);
 		GameRegistry.registerBlock(scorchedCobblestone, BlockScorchedCobblestone.name);
 		GameRegistry.registerBlock(temporaryHoard, TemporaryHoard.textureName);
+		
+		// Eggs
+		goldDragonEgg = new BlockGoldDragonEgg();
+		silverDragonEgg = new BlockSilverDragonEgg();
+		skeletonDragonEgg = new BlockSkeletonDragonEgg();
+		waterDragonEgg = new BlockWaterDragonEgg();
+		GameRegistry.registerBlock(goldDragonEgg, BlockGoldDragonEgg.name);
+		GameRegistry.registerBlock(silverDragonEgg, BlockSilverDragonEgg.name);
+		GameRegistry.registerBlock(skeletonDragonEgg, BlockSkeletonDragonEgg.name);
+		GameRegistry.registerBlock(waterDragonEgg, BlockWaterDragonEgg.name);		
 	}
 
 	public static void init() {

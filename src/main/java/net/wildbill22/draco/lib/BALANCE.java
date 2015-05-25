@@ -152,10 +152,13 @@ public final class BALANCE {
 	@DefaultBoolean(value = false, name = "Player as silver dragon initially?", 
 			comment = "Whether player should spawn initially as a silver dragon")
 	public static boolean PLAYER_AS_SILVER_DRAGON_INITIALLY;
+	@DefaultInt(value = 100, minValue = 0, maxValue = 1000, name = "Chance of spawning dragon eggs", 
+			comment = "n in 1000 chance of spawning dragon eggs")
+	public static int DRAGON_EGG_SPAWN_CHANCE;
 	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher for Ballista and Catapult", 
 			comment = "If there is a conflict with another mod, this can be changed.")
 	public static int BOW_POSITION_WATCHER;	
 	@DefaultInt(value = 21, minValue = 20, maxValue = 31, name = "Fire Dragon Data Watcher", 
 			comment = "If there is a conflict with another mod, this can be changed.")
-	public static int FIRE_DRAGON_WATCHER;	
+	public static int FIRE_DRAGON_WATCHER;
 }
