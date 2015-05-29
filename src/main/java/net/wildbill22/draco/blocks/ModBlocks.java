@@ -16,6 +16,7 @@ public class ModBlocks extends Block {
  	public static Block silverDragonEgg;
  	public static Block skeletonDragonEgg;
  	public static Block waterDragonEgg;
+ 	public static Block earthDragonEgg;
 	
 	public static void preInit() {			
 		// Misc 
@@ -31,10 +32,12 @@ public class ModBlocks extends Block {
 		silverDragonEgg = new BlockSilverDragonEgg();
 		skeletonDragonEgg = new BlockSkeletonDragonEgg();
 		waterDragonEgg = new BlockWaterDragonEgg();
+		earthDragonEgg = new BlockEarthDragonEgg();
 		GameRegistry.registerBlock(goldDragonEgg, BlockGoldDragonEgg.name);
 		GameRegistry.registerBlock(silverDragonEgg, BlockSilverDragonEgg.name);
 		GameRegistry.registerBlock(skeletonDragonEgg, BlockSkeletonDragonEgg.name);
 		GameRegistry.registerBlock(waterDragonEgg, BlockWaterDragonEgg.name);		
+		GameRegistry.registerBlock(earthDragonEgg, BlockEarthDragonEgg.name);		
 	}
 
 	public static void init() {

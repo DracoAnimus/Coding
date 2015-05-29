@@ -20,6 +20,8 @@ item.wildbill22_draco_goldDragonEgg.name=Gold Dragon Egg
 item.wildbill22_draco_goldDragonStaff.name=Gold Dragon Staff
 item.wildbill22_draco_waterDragonEgg.name=Water Dragon Egg
 item.wildbill22_draco_waterDragonStaff.name=Water Dragon Staff
+item.wildbill22_draco_earthDragonStaff.name=Earth Dragon Staff
+item.wildbill22_draco_earthDragonEgg.name=Earth Dragon Egg
 
 #Food Items
 item.wildbill22_draco_villagerHeart.name=Villager Heart
@@ -28,6 +30,11 @@ item.wildbill22_draco_villagerHeart.name=Villager Heart
 tile.charredGround.name=Charred Ground
 tile.scorchedCobblestone.name=Scorched Cobblestone
 tile.temporaryHoard.name=Temporary Hoard
+tile.goldDragonEggBlock.name=Gold Dragon Egg
+tile.skeletonDragonEggBlock.name=Skeleton Dragon Egg
+tile.silverDragonEggBlock.name=Silver Dragon Egg
+tile.waterDragonEggBlock.name=Water Dragon Egg
+tile.earthDragonEggBlock.name=Earth Dragon Egg
 
 #Dragons
 entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
@@ -36,6 +43,7 @@ entity.wildbill22_draco.wildFireDragon.name=Wild Fire Dragon
 entity.wildbill22_draco.silverDragon.name=Argentum Draco
 entity.wildbill22_draco.dracoMortem.name=Draco Mortem
 entity.wildbill22_draco.aquaDragon.name=Aqua Draco
+entity.wildbill22_draco.terraDraco.name=Terra Draco
 
 #Entities
 entity.wildbill22_draco.spearGuard.name=Spear Guard

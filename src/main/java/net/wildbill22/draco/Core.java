@@ -25,13 +25,17 @@ import net.wildbill22.draco.lib.REFERENCE;
 import net.wildbill22.draco.models.ModelAquaDraco;
 import net.wildbill22.draco.models.ModelDracoMortem;
 import net.wildbill22.draco.models.ModelSilverDragon;
+import net.wildbill22.draco.models.ModelTerraDraco;
 import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
 import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
 import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
+import net.wildbill22.draco.network.StaffUpdateDamageTarget;
+import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.render.RenderAquaDraco;
 import net.wildbill22.draco.render.RenderDracoMortem;
 import net.wildbill22.draco.render.RenderSilverDragon;
+import net.wildbill22.draco.render.RenderTerraDraco;
 import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -129,6 +133,8 @@ public class Core {
 		DragonRegistry.instance().registerDragonRendererCreationHandler(adHandler);
 		RenderSilverDragon gdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 1);  // Gold
 		DragonRegistry.instance().registerDragonRendererCreationHandler(gdHandler);
+		RenderTerraDraco tdHandler = new RenderTerraDraco(new ModelTerraDraco(), 0.5F);
+		DragonRegistry.instance().registerDragonRendererCreationHandler(tdHandler);
 	}
 
 	@EventHandler
@@ -146,6 +152,8 @@ public class Core {
 		modChannel.registerMessage(DragonPlayerUpdateLevel.Handler.class, DragonPlayerUpdateLevel.class, id++, Side.CLIENT);
 		modChannel.registerMessage(DragonPlayerUpdateIsDragon.Handler.class, DragonPlayerUpdateIsDragon.class, id++, Side.CLIENT);
 		modChannel.registerMessage(DragonPlayerUpdateDragonName.Handler.class, DragonPlayerUpdateDragonName.class, id++, Side.CLIENT);
+		modChannel.registerMessage(StaffUpdateSetTargetOnFire.Handler.class, StaffUpdateSetTargetOnFire.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdateDamageTarget.Handler.class, StaffUpdateDamageTarget.class, id++, Side.SERVER);
 //		modChannel.registerMessage(DragonPlayerUpdatePacket2.Handler.class, DragonPlayerUpdatePacket2.class, id++, Side.SERVER);
 //		modChannel.registerMessage(RequestDragonPlayerUpdatePacket.Handler.class, RequestDragonPlayerUpdatePacket.class, id++, Side.SERVER);
 	}

@@ -30,6 +30,7 @@ public class ModItems extends Item {
 	public static Item skeletonDragonEgg;
 	public static Item silverDragonEgg;
 	public static Item waterDragonEgg;
+	public static Item earthDragonEgg;
 
 	// Food
 	public static ItemDragonFood villagerHeart; 
@@ -69,16 +70,19 @@ public class ModItems extends Item {
 		skeletonDragonEgg = new ItemSkeletonDragonEgg();
 		goldDragonEgg = new ItemGoldDragonEgg();
 		waterDragonEgg = new ItemWaterDragonEgg();
+		earthDragonEgg = new ItemEarthDragonEgg();
 		GameRegistry.registerItem(goldDragonEgg, ItemGoldDragonEgg.name);
 		GameRegistry.registerItem(skeletonDragonEgg, ItemSkeletonDragonEgg.name);
 		GameRegistry.registerItem(silverDragonEgg, ItemSilverDragonEgg.name);
 		GameRegistry.registerItem(waterDragonEgg, ItemWaterDragonEgg.name);
+		GameRegistry.registerItem(earthDragonEgg, ItemEarthDragonEgg.name);
 
 		// Dragon Egg Registry
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) silverDragonEgg);
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) skeletonDragonEgg);
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) goldDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) waterDragonEgg);		
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) earthDragonEgg);		
 	}
 
 	public static void init() {

@@ -63,12 +63,14 @@ public class ModelAquaDraco extends ModelBase {
       tailFin.setTextureSize(512, 256);
       tailFin.mirror = true;
       setRotation(tailFin, 0F, 0F, 0F);
+      
       body = new ModelRenderer(this, 62, 0);
       body.addBox(-5.5F, -5.5F, -20F, 11, 11, 20);
       body.setRotationPoint(0F, 11F, -10F);
       body.setTextureSize(512, 256);
       body.mirror = true;
       setRotation(body, 0F, 0F, 0F);
+      
       head = new ModelRenderer(this, 44, 38);
       head.addBox(-5F, -5F, -15F, 10, 10, 15);
       head.setRotationPoint(0F, 11F, -30F);
@@ -87,6 +89,7 @@ public class ModelAquaDraco extends ModelBase {
       leftHorn.setTextureSize(512, 256);
       leftHorn.mirror = true;
       setRotation(leftHorn, 0F, 0F, 0F);
+      
       frontRightLeg = new ModelRenderer(this, 100, 40);
       frontRightLeg.addBox(-2F, 0F, -2F, 4, 8, 5);
       frontRightLeg.setRotationPoint(-4F, 16F, -20F);
@@ -111,6 +114,7 @@ public class ModelAquaDraco extends ModelBase {
       backLeftLeg.setTextureSize(512, 256);
       backLeftLeg.mirror = true;
       setRotation(backLeftLeg, 0F, 0F, 0F);
+      
       rightTopWing = new ModelRenderer(this, 120, 40);
       rightTopWing.addBox(-30F, 0F, -15F, 30, 0, 30);
       rightTopWing.setRotationPoint(-5F, 9F, -16F);

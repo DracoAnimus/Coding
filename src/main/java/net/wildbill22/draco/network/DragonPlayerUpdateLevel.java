@@ -43,8 +43,11 @@ public class DragonPlayerUpdateLevel implements IMessage {
 		@Override
 		public IMessage onMessage(DragonPlayerUpdateLevel message, MessageContext ctx) {
 			EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-			if (player != null)
-				DragonPlayer.get(player).setLevel(message.value);
+			if (player != null) {
+				DragonPlayer dragonPlayer = DragonPlayer.get(player);
+				if (dragonPlayer != null)
+					dragonPlayer.setLevel(message.value, false);
+			}
 			return null;
 		}
 	}

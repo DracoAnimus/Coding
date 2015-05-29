@@ -11,6 +11,7 @@ import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntityDracoMortem;
 import net.wildbill22.draco.entities.dragons.EntityGoldDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
+import net.wildbill22.draco.entities.dragons.EntityTerraDraco;
 import net.wildbill22.draco.entities.hostile.EntityBallista;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityCatapult;
@@ -62,6 +63,7 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityDracoMortem.class, EntityDracoMortem.name, ++modEntityID, Core.instance, 80, 3, true); // Skeleton dragon
 		EntityRegistry.registerModEntity(EntityAquaDraco.class, EntityAquaDraco.name, ++modEntityID, Core.instance, 80, 3, true); // Water dragon
 		EntityRegistry.registerModEntity(EntityGoldDragon.class, EntityGoldDragon.name, ++modEntityID, Core.instance, 80, 3, true); // Gold dragon
+		EntityRegistry.registerModEntity(EntityTerraDraco.class, EntityTerraDraco.name, ++modEntityID, Core.instance, 80, 3, true); // Earth dragon
 
 		addMobSpawns();
 	}

@@ -8,8 +8,6 @@ import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.lib.BALANCE;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.wildbill22.draco.entities.dragons.DragonRegistry;
-import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonStaffHandler;
 import net.wildbill22.draco.items.weapons.ItemDragonSlayerSword;
 
 public class ModWeapons {
@@ -32,6 +30,7 @@ public class ModWeapons {
 	public static Item skeletonDragonStaff = new ItemSkeletonDragonStaff(STAFF);
 	public static Item goldDragonStaff = new ItemGoldDragonStaff(STAFF);
 	public static Item waterDragonStaff = new ItemWaterDragonStaff(STAFF);
+	public static Item earthDragonStaff = new ItemEarthDragonStaff(STAFF);
 	
 	public static void preInit() {
 		GameRegistry.registerItem(dragonSlayerSword, ItemDragonSlayerSword.name);
@@ -44,6 +43,7 @@ public class ModWeapons {
 		GameRegistry.registerItem(skeletonDragonStaff, ItemSkeletonDragonStaff.name);
 		GameRegistry.registerItem(goldDragonStaff, ItemGoldDragonStaff.name);
 		GameRegistry.registerItem(waterDragonStaff, ItemWaterDragonStaff.name);
+		GameRegistry.registerItem(earthDragonStaff, ItemEarthDragonStaff.name);
 		
 		// Dragon Staff Registry
 //		DragonRegistry.instance().registerDragonStaff((IDragonStaffHandler) goldDragonStaff);

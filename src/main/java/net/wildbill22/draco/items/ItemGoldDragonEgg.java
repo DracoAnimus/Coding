@@ -16,9 +16,10 @@ public class ItemGoldDragonEgg extends ItemDragonEgg {
 
 	public ItemGoldDragonEgg() {
 		super(name);
-		this.addDragonFood(EntityGoldDragon.name, ModItems.villagerHeart);
-		this.addDragonFood(EntityGoldDragon.name, Items.rotten_flesh);
-		this.addDamageBoost(EntityGoldDragon.name);
+		String dragonName = EntityGoldDragon.name;
+		this.addDragonFood(dragonName, ModItems.villagerHeart);
+		this.addDragonFood(dragonName, Items.rotten_flesh);
+		this.addDamageBoost(dragonName);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

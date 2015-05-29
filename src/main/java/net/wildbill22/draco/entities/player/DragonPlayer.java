@@ -144,11 +144,11 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		if (properties == null)
 			return;
 		// Dragon player properties 
-		setDragon(properties.getBoolean("isDragon"));
+		setDragon(properties.getBoolean("isDragon"), false);
         this.wasFlyingOnExit = properties.getBoolean("wasFlyingOnExit");
         setHoardSize(properties.getInteger("hoardSize"));
         LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
-        setLevel(properties.getInteger("level"));
+        setLevel(properties.getInteger("level"), false);
         LogHelper.info("DragonPlayer load: Player is level " + level + ".");
         setDragonName(properties.getString("dragonName"));
 
@@ -189,7 +189,27 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	public void copy(DragonPlayer props) {
 		this.isDragon = props.isDragon;
 		this.wasFlyingOnExit = props.wasFlyingOnExit;
-		setLevel(props.level);
+		setLevel(props.level, true);
+		
+        // Hoard Locations
+        hoardList.clear();
+		int size = props.hoardList.size();
+        Iterator<NBTCoordinates> iterator = props.hoardList.iterator();
+		for (int i = 0; i < size; i++) {
+			NBTCoordinates coords = iterator.next();
+			if (hoardExists(coords)) {
+				hoardList.add(coords);
+			}
+        }
+		       
+		// Eggs in hoard
+        eggsInHoard.clear();
+		size = props.eggsInHoard.size();
+        Iterator<String> it = props.eggsInHoard.iterator();
+		for (int i = 0; i < size; i++) {
+			String egg = it.next();
+			eggsInHoard.add(egg);
+		}
 	}
 
 	@Override
@@ -200,7 +220,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		return isDragon;
 	}
 
-	public void setDragon(boolean isDragon) {
+	public void setDragon(boolean isDragon, boolean syncClient) {
 		this.isDragon = isDragon;
 		if (isDragon()) {
     		// TODO: Add a clear abilities per dragon type
@@ -213,7 +233,8 @@ public class DragonPlayer implements IExtendedEntityProperties {
 			if (!player.capabilities.isCreativeMode)
 				player.capabilities.allowFlying = false;    		
     	}
-		syncClient(false);
+		if (syncClient)
+			syncClient(false);
 		// TODO: Need to also add unique modifiers for each dragon type
 		PlayerModifiers.applyModifiers(level, player, isDragon);
 	}
@@ -298,7 +319,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 			this.player.addStat(ModStats.levelTenDragon, 1);
 			level = 10;
 		}
-		setLevel(level);
+		setLevel(level, true);
         LogHelper.info("DragonPlayer calculateLevel: Player is level " + level + ".");
 	}
 
@@ -316,9 +337,10 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(int level, boolean syncClient) {
 		this.level = level;
-		syncClient(false);
+		if (syncClient)
+			syncClient(false);
 		PlayerModifiers.applyModifiers(level, player, isDragon);
 	}
 	

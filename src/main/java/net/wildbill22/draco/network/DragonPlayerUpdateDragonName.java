@@ -44,8 +44,11 @@ public class DragonPlayerUpdateDragonName implements IMessage {
 		@Override
 		public IMessage onMessage(DragonPlayerUpdateDragonName message, MessageContext ctx) {
 			EntityClientPlayerMP player = Minecraft.getMinecraft().thePlayer;
-			if (player != null)
-				DragonPlayer.get(player).setDragonName(message.text);
+			if (player != null) {
+				DragonPlayer dragonPlayer = DragonPlayer.get(player);
+				if (dragonPlayer != null)
+					dragonPlayer.setDragonName(message.text);
+			}
 			return null;
 		}
 	}

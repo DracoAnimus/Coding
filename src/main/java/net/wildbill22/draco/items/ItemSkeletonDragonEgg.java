@@ -16,8 +16,9 @@ public class ItemSkeletonDragonEgg extends ItemDragonEgg {
 
 	public ItemSkeletonDragonEgg() {
 		super(name);
-		this.addDragonFood(EntityDracoMortem.name, ModItems.villagerHeart);
-		this.addDragonFood(EntityDracoMortem.name, Items.rotten_flesh);
+		String dragonName = EntityDracoMortem.name;
+		this.addDragonFood(dragonName, ModItems.villagerHeart);
+		this.addDragonFood(dragonName, Items.rotten_flesh);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

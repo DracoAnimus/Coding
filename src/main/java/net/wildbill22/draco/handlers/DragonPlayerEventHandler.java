@@ -171,12 +171,14 @@ public class DragonPlayerEventHandler {
 //			}
 //		}
 		if (event.entityLiving instanceof EntityVillager) {
-			// 50% chance to drop the heart
-			LogHelper.info("DragonPlayerEventHandler: Villager died!");
-			if (event.entity.worldObj.rand.nextInt(2) == 0) {
-				LogHelper.info("DragonPlayerEventHandler: Villager dropped a heart!");
-				event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
-						new ItemStack(ModItems.villagerHeart)));
+			if (!((EntityVillager)event.entityLiving).isChild()) {				
+				// 50% chance to drop the heart
+				LogHelper.info("DragonPlayerEventHandler: Villager died!");
+				if (event.entity.worldObj.rand.nextInt(2) == 0) {
+					LogHelper.info("DragonPlayerEventHandler: Villager dropped a heart!");
+					event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
+							new ItemStack(ModItems.villagerHeart)));
+				}
 			}
 		}
 		else if (event.entityLiving instanceof EntitySquid) {
