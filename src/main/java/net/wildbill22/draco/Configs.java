@@ -23,6 +23,7 @@ public class Configs {
 	public static final String CATEGORY_CHEST_ITEMS = "chest_items";
 	public static final String CATEGORY_BALANCE_DP_MODIFIERS = "balance_dragon_player_properties";
 	public static final String CATEGORY_VILLAGE = "village_settings";
+	public static final String CATEGORY_BALANCE_DRAGON_PLAYER_ABILITIES = "balance_player_dragon_properties";
 
 	public static void init(File configFile) {
 		if (config == null) {
@@ -46,6 +47,7 @@ public class Configs {
 		balanceWildDragonPropConfiguration();
 		balanceChestItemsConfiguration();
 		balanceDPModifiersConfiguration();
+		balanceDragonPlayerAbilitiesConfiguration();
 		
 		// Balance Leveling
 		balanceLevelingConfiguration();
@@ -115,6 +117,12 @@ public class Configs {
 		ConfigCategory cat_balance_dp_modifiers = config.getCategory(CATEGORY_BALANCE_DP_MODIFIERS);
 		cat_balance_dp_modifiers.setComment("You can adjust the dragon player modifiers");
 		loadFields(cat_balance_dp_modifiers, BALANCE.DP_MODIFIERS.class);		
+	}
+
+	public static void balanceDragonPlayerAbilitiesConfiguration() {
+		ConfigCategory cat_balance_dragon_player_abilities = config.getCategory(CATEGORY_BALANCE_DRAGON_PLAYER_ABILITIES);
+		cat_balance_dragon_player_abilities.setComment("You can adjust the dragon player's abilities");
+		loadFields(cat_balance_dragon_player_abilities, BALANCE.DRAGON_PLAYER_ABILITIES.class);		
 	}
 
 	/**

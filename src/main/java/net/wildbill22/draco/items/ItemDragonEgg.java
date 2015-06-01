@@ -6,16 +6,27 @@ import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.wildbill22.draco.Core;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
+import net.wildbill22.draco.lib.LogHelper;
+import net.wildbill22.draco.network.DragonAbilityLavaToObsidian;
+import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
+import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
 
 public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandler {
     private static Multimap<String, String> dragonFoods = ArrayListMultimap.create();
@@ -41,6 +52,14 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 
 	// Stuff below for dragon abilities
 	
+	public static boolean hasAbility(EntityPlayer player, int ability) {
+		String dragonName = DragonPlayer.get(player).getDragonName();
+		if (Abilities.dragonAbilities.containsEntry(dragonName, ability))
+			return true;
+		else
+			return false;	
+	}
+	
 	/**
      * Sets dragon to be able to swim underwater, adds:
      * Slowness walking only. Nightvision and waterbreathing in water only
@@ -48,7 +67,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
      * @param dragonName unlocalizedName or any unique string 
      */
 	protected void addSwimmingUnderWater(String dragonName) {
-		Abilities.addAbility(dragonName, Abilities.SLOWNESS);
+		Abilities.addAbility(dragonName, Abilities.SLOWNESSONLAND);
 		Abilities.addAbility(dragonName, Abilities.SWIMMING);
 	}
 	
@@ -99,6 +118,15 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 	}
 	
 	/**
+     * Sets dragon to be slow when not flying or in water
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addSlownessOnLand(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.SLOWNESSONLAND);
+	}
+	
+	/**
      * Sets dragon for extra attack damage
      * 
      * @param dragonName unlocalizedName or any unique string 
@@ -107,8 +135,14 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		Abilities.addAbility(dragonName, Abilities.DAMAGEBOOST);
 	}
 	
-	protected void addNoClip(String dragonName) {
-		Abilities.addAbility(dragonName, Abilities.NOCLIP);
+	/**
+     * Sets dragon for night vision, noClip, always flying, & no block damage (when inside one)
+     * Normally used together with the "Teleport through walls" staff ability
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addNoBlockDamage(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.NOBLOCKDAMAGE);
 	}
 
 	/**
@@ -120,6 +154,42 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		Abilities.addAbility(dragonName, Abilities.COLLIDEWITHENTITIES);
 	}
 
+	/**
+     * Sets dragon to have night vision and be slow in light
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addNightDragonAbilities(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.NIGHTDRAGON);
+	}
+
+	/**
+     * Removes any poison or hunger effect from dragaon
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addImmuneToPoison(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.IMMUNETOPOISON);
+	}
+
+	/**
+     * Sets dragon made of water ability (turns lava to obsidian)
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addIsMadeOfWaterAbilities(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.ISMADEOFWATER);
+	}
+	
+	/**
+     * Sets dragon to be invisible in the dark (becomes visible from torches)
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addInvisibleInTheDark(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.INVISIBLEINDARK);
+	}
+	
 	public static void applyAbilities(EntityPlayer player) {
 		if (player.capabilities.isCreativeMode)
 			return;
@@ -146,22 +216,75 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWNESS) && !player.capabilities.isFlying) {
             player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));			
 		}
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWNESSONLAND) 
+				&& !player.capabilities.isFlying && !player.isInWater()) {
+            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));			
+		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.DAMAGEBOOST)) {
 			amplifier = amplifier / 3;
             player.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 10, amplifier));
 		}
-		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.NOCLIP)) {
-//            player.noClip = true;
-//            player.capabilities.isFlying = true;
-            // player.canBeCollidedWith(); // Dragon returns false
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.NOBLOCKDAMAGE)) {
+            player.noClip = true;
+            player.capabilities.isFlying = true;
+            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5, amplifier));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.COLLIDEWITHENTITIES)) {
 			amplifier = amplifier / 2;
 			collideWithEntities(player.worldObj, player, amplifier);
 		}
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWINLIGHT) && player.getBrightness(0) > 5) {
+            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));			
+		}
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.NIGHTDRAGON)) {
+			int lightLevel = Math.max(7, Math.min(2, amplifier / 2));
+			if (player.getBrightness(0) > lightLevel) {
+	            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));
+			}
+			amplifier = amplifier / 2;
+            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 10, amplifier));
+		}		
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.IMMUNETOPOISON)) {
+			// Removes these potions from dragon
+			if (player.isPotionActive(Potion.poison.id)) {
+				player.removePotionEffect(Potion.poison.id);						
+			}
+			if (player.isPotionActive(Potion.hunger.id)) {
+				player.removePotionEffect(Potion.hunger.getId());
+			}			
+		}
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.ISMADEOFWATER)) {
+			setAdjacentBlockUnderEntityToObsidian(player);
+		}
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.INVISIBLEINDARK) && player.getBrightness(0) < 6) {
+			amplifier = amplifier / 2;
+            player.addPotionEffect(new PotionEffect(Potion.invisibility.getId(), 10, amplifier));
+		}
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.STEALTH)) {
+			amplifier = amplifier / 2;
+            player.setInvisible(true);
+		}
 	}
 	
-    /**
+	// FIXME: Note: Caution this code depends on the yOffset of the dragon, which isn't set right!
+	public static void setAdjacentBlockUnderEntityToObsidian(EntityPlayer player) {
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dz = -1; dz <= 1; dz++) {
+			    int blockX = MathHelper.floor_double(player.posX) + dx;
+			    int blockY = MathHelper.floor_double(player.boundingBox.minY+0.5)-1;  // Adjust for offset in doRender
+			    int blockZ = MathHelper.floor_double(player.posZ) + dz;
+			    Block adjacent =  player.worldObj.getBlock(blockX, blockY, blockZ);
+			    if (adjacent == Blocks.lava) {
+			    	player.worldObj.setBlock(blockX, blockY, blockZ, Blocks.obsidian, 0, 3);
+			    	// Steam animation (splash) and sound
+		            player.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1004, blockX, blockY + 1, blockZ, 0);
+	        		Core.modChannel.sendTo(new DragonAbilityLavaToObsidian(blockX, blockY, blockZ), (EntityPlayerMP)player);
+			    }
+			}
+		}
+	}
+
+	/**
      * Pushes all entities inside the list away from the player
      */
     @SuppressWarnings("rawtypes")
@@ -191,8 +314,8 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 	
 	public static void setHumanAbilities(EntityPlayer player) {
 		player.clearActivePotions();
-//        player.noClip = false;
-//        player.capabilities.isFlying = false;		
+        player.noClip = false;
+        player.capabilities.isFlying = false;		
 	}
 	
     public static class Abilities {
@@ -203,8 +326,15 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		private static final int SWIMMING = 3;
 		public static final int SLOWNESS = 4;
 		public static final int DAMAGEBOOST = 5;
-		public static final int NOCLIP = 6;
+		public static final int NOBLOCKDAMAGE = 6;
 		public static final int COLLIDEWITHENTITIES = 7;
+		public static final int NIGHTDRAGON = 8;
+		public static final int SLOWINLIGHT = 9;
+		public static final int IMMUNETOPOISON = 10;
+		public static final int SLOWNESSONLAND = 11;
+		public static final int ISMADEOFWATER = 12;
+		private static final int INVISIBLEINDARK = 13;
+		private static final int STEALTH = 14;
 
 		protected static void addAbility(String dragonName, Integer ability) {
 			dragonAbilities.put(dragonName, ability);

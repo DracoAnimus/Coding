@@ -34,7 +34,8 @@ public class ModItems extends Item {
 
 	// Food
 	public static ItemDragonFood villagerHeart; 
-	public static ItemDragonFood squid; 
+	public static ItemDragonFood squid;
+	public static ItemDragonFood villagerSkull;
 
 	public static void preInit() {
 		dragonScales = new ItemDragonScales();
@@ -64,6 +65,8 @@ public class ModItems extends Item {
 		villagerHeart.setAlwaysEdible();
 		GameRegistry.registerItem(squid = new ItemDragonFood("squid", 6, 1.2f, false, 
 				new PotionEffect(Potion.poison.id, 5, 0)), "squid");
+		GameRegistry.registerItem(villagerSkull = new ItemDragonFood("villagerSkull", 6, 1.2f, false, 
+				new PotionEffect(Potion.poison.id, 5, 0)), "villagerSkull");
 
 		// Eggs created after food has been registered (else null pointer exception)
 		silverDragonEgg = new ItemSilverDragonEgg();

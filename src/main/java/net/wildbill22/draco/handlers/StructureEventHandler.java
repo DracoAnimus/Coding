@@ -9,6 +9,7 @@ import net.wildbill22.draco.generation.structures.StructureList;
  * @author WILLIAM
  *
  */
+//All events in this class are type MinecraftForge.EVENT_BUS
 
 public class StructureEventHandler {
 	@SubscribeEvent

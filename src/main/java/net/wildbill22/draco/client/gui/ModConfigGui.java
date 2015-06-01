@@ -15,6 +15,29 @@ import cpw.mods.fml.client.config.IConfigElement;
 
 public class ModConfigGui extends GuiConfig {
 
+	// Creates the Entry to the DRAGON_PLAYER_ABILITIES Settings
+	public static class DragonPlayerAbilitiesEntry extends CategoryEntry {
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		private static List<IConfigElement> getConfigElements() {
+			List<IConfigElement> list = new ArrayList<IConfigElement>();
+			// Add all the settings from BALANCE.DRAGON_PLAYER_ABILITIES class
+			list.addAll(new ConfigElement(Configs.config.getCategory(Configs.CATEGORY_BALANCE_DRAGON_PLAYER_ABILITIES)).getChildElements());
+			return list;
+		}
+
+		@SuppressWarnings("rawtypes")
+		public DragonPlayerAbilitiesEntry(GuiConfig owningScreen, GuiConfigEntries owningEntryList, IConfigElement prop) {
+			super(owningScreen, owningEntryList, prop);
+		}
+
+		// Build the list of settings from BALANCE.DRAGON_PLAYER_ABILITIES class
+		@Override
+		protected GuiScreen buildChildScreen() {
+			return new GuiConfig(this.owningScreen, getConfigElements(), this.owningScreen.modID, Configs.CATEGORY_BALANCE_DRAGON_PLAYER_ABILITIES, 
+					false, false, REFERENCE.NAME + "Dragon Player's Abilities");
+		}
+	}
+
 	// Creates the Entry to the WILD_DRAGON_PROP Settings
 	public static class WildDragonPropertiesEntry extends CategoryEntry {
 		@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -188,6 +211,7 @@ public class ModConfigGui extends GuiConfig {
 		list.add(new DummyConfigElement.DummyCategoryElement("chest_items", "category.wildbill22_draco.chest_items", ChestItemsEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("village", "category.wildbill22_draco.village", VillageEntry.class));
 		list.add(new DummyConfigElement.DummyCategoryElement("balance", "category.wildbill22_draco.balance", BalanceEntry.class));
+		list.add(new DummyConfigElement.DummyCategoryElement("dragon_player_abilities", "category.wildbill22_draco.dragon_player_abilities", DragonPlayerAbilitiesEntry.class));
 		return list;
 	}
 

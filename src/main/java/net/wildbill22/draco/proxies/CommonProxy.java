@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.handlers.DragonPlayerEventHandler;
 import net.wildbill22.draco.handlers.EntityGuardEventHandler;
+import net.wildbill22.draco.handlers.FMLCommonEventHandler;
 import net.wildbill22.draco.handlers.StructureEventHandler;
 import net.wildbill22.draco.lib.LogHelper;
 
@@ -48,6 +49,7 @@ public class CommonProxy {
 		LogHelper.info("CommonProxy: Registering subscriptions");
 		MinecraftForge.EVENT_BUS.register(new DragonPlayerEventHandler());    // For player
     	MinecraftForge.EVENT_BUS.register(new EntityGuardEventHandler());     // For Guards 
-    	MinecraftForge.EVENT_BUS.register(new StructureEventHandler());     // For Structures (WorldGen) 
+    	MinecraftForge.EVENT_BUS.register(new StructureEventHandler());     // For Structures (WorldGen)
+//    	MinecraftForge.EVENT_BUS.register(new FMLCommonEventHandler());     // These types of events
 	}
 }

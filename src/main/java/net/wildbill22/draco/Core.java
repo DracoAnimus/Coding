@@ -26,11 +26,15 @@ import net.wildbill22.draco.models.ModelAquaDraco;
 import net.wildbill22.draco.models.ModelDracoMortem;
 import net.wildbill22.draco.models.ModelSilverDragon;
 import net.wildbill22.draco.models.ModelTerraDraco;
+import net.wildbill22.draco.network.DragonAbilityLavaToObsidian;
 import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
 import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
 import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
 import net.wildbill22.draco.network.StaffUpdateDamageTarget;
+import net.wildbill22.draco.network.StaffUpdatePoisonTarget;
 import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
+import net.wildbill22.draco.network.StaffUpdateTeleportThroughWall;
+import net.wildbill22.draco.network.StaffUpdateWitherTarget;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.render.RenderAquaDraco;
 import net.wildbill22.draco.render.RenderDracoMortem;
@@ -154,7 +158,9 @@ public class Core {
 		modChannel.registerMessage(DragonPlayerUpdateDragonName.Handler.class, DragonPlayerUpdateDragonName.class, id++, Side.CLIENT);
 		modChannel.registerMessage(StaffUpdateSetTargetOnFire.Handler.class, StaffUpdateSetTargetOnFire.class, id++, Side.SERVER);
 		modChannel.registerMessage(StaffUpdateDamageTarget.Handler.class, StaffUpdateDamageTarget.class, id++, Side.SERVER);
-//		modChannel.registerMessage(DragonPlayerUpdatePacket2.Handler.class, DragonPlayerUpdatePacket2.class, id++, Side.SERVER);
-//		modChannel.registerMessage(RequestDragonPlayerUpdatePacket.Handler.class, RequestDragonPlayerUpdatePacket.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdateWitherTarget.Handler.class, StaffUpdateWitherTarget.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdatePoisonTarget.Handler.class, StaffUpdatePoisonTarget.class, id++, Side.SERVER);
+		modChannel.registerMessage(DragonAbilityLavaToObsidian.Handler.class, DragonAbilityLavaToObsidian.class, id++, Side.CLIENT);
+		modChannel.registerMessage(StaffUpdateTeleportThroughWall.Handler.class, StaffUpdateTeleportThroughWall.class, id++, Side.SERVER);
 	}
 }

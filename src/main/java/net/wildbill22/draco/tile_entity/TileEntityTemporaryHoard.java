@@ -29,7 +29,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	 * Calculates dragon level on close
 	 * @author Maxanier
 	 */
-	public static class HoardContainer extends ContainerChest{
+	public static class HoardContainer extends ContainerChest {
 		private static ItemStack justAdded = null;
 		
 		public HoardContainer(IInventory player, IInventory chest) {
@@ -87,6 +87,36 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 				return false;
 			}
 		}
+		
+	    /**
+	     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
+	     * Override to use our slot, which won't accept moving stuff not allowed!
+	     */
+		@Override
+	    public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
+			int numRows = this.inventorySlots.size() / 9;
+	        ItemStack itemstack = null;
+	        Slot slot = (Slot)this.inventorySlots.get(slotNum);
+	        if (slot != null && slot.getHasStack()) {
+	            ItemStack itemstack1 = slot.getStack();
+	            itemstack = itemstack1.copy();
+	            if (slotNum < numRows * 9) {
+	                if (!this.mergeItemStack(itemstack1, numRows * 9, this.inventorySlots.size(), true)) {
+	                    return null;
+	                }
+	            }
+	            else if (!this.mergeItemStack(itemstack1, 0, numRows * 9, false)) {
+	                return null;
+	            }
+	            if (itemstack1.stackSize == 0) {
+	                slot.putStack((ItemStack)null);
+	            }
+	            else {
+	                slot.onSlotChanged();
+	            }
+	        }
+	        return itemstack;
+	    }
 	}
 
 	private String customName;
@@ -105,6 +135,7 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
     private String owner;
     
     // Stuff Changed to allow only gold coins:
+
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      * Allows other items, need to figure out how to make only gold coins accepted but not lose other items

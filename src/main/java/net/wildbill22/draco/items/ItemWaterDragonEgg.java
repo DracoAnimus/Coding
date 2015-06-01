@@ -22,6 +22,7 @@ public class ItemWaterDragonEgg extends ItemDragonEgg {
 		this.addDragonFood(dragonName, Items.fish);
 		this.addSwimmingUnderWater(dragonName);
 		this.addCollideWithEntities(dragonName);
+		this.addIsMadeOfWaterAbilities(dragonName);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

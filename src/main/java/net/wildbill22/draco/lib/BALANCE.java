@@ -5,17 +5,19 @@ package net.wildbill22.draco.lib;
  *
  */
 public final class BALANCE {
+	
 	public static class LEVELING {
 		@DefaultInt(value = 200, minValue = 0, maxValue = 1000, name = "Maximum Coins for Hoard", 
 				comment = "Number of coins to reach the highest player dragon level")
 		public static int HOARD_COINS_TO_MAX_LEVEL;
-		@DefaultInt(value = 10, minValue = 0, maxValue = 100, name = "Maximum Dragon Player Level", 
+		@DefaultInt(value = 10, minValue = 0, maxValue = 12, name = "Maximum Dragon Player Level", 
 				comment = "Amount of coins needed for for each player dragon level")
 		public static int MAXIMUM_LEVEL;
 		@DefaultDouble(value = 0.5D, minValue = 0.3D, maxValue = 1.0D, name = "Level Modifier Type", 
 				comment = "0.5 for square root, 1 for linear")
 		public static double LEVEL_MOD_TYPE;
 	}
+	
 	public static class CHEST_ITEMS {
 		@DefaultInt(value = 20, minValue = 0, maxValue = 100, name = "Diamond Armor", 
 				comment = "Chance of finding diamond armor items in village chests.")
@@ -30,8 +32,9 @@ public final class BALANCE {
 				comment = "Chance of finding Dragon Slayer Sword in village chests.")
 		public static int VILLAGE_BLACKSMITH_DRAGON_SLAYER;
 	}
+
+	// Properties for guards
 	public static class MOBPROP {
-		// Properties for guards
 		@DefaultDouble(value = 30.0D, minValue = 5.0D, maxValue = 50.0D, name = "Guard Maximum Health", 
 				comment = "Maximum health")
 		public static double GUARD_MAX_HEALTH;
@@ -113,6 +116,16 @@ public final class BALANCE {
 		public static int SPAWN_PROB;		
 	}
 
+	// Setting values for the special abilities for different dragons and their staffs
+	public static class DRAGON_PLAYER_ABILITIES {
+		@DefaultDouble(value = 1.0F, minValue = 0.5D, maxValue = 4.0D, name = "Exploding Fireball Damage", 
+				comment = "1.0 is normal, this is multiplied by base value")
+		public static double EXPLODING_FIREBALL_MULTIPLIER;
+		@DefaultBoolean(value = false, name = "Receive damage from explosions?", 
+				comment = "Whether the player is damaged by explosions")
+		public static boolean RECEIVE_EXPLODING_FIREBALL_DAMAGE;
+	}
+
 	/**
 	 * Class to store all constants related to the player modifiers See {@link:
 	 * entity.player.PlayerModifiers#applyModifiers(int, EntityPlayer)} for impact
@@ -152,10 +165,10 @@ public final class BALANCE {
 	@DefaultBoolean(value = false, name = "Player as silver dragon initially?", 
 			comment = "Whether player should spawn initially as a silver dragon")
 	public static boolean PLAYER_AS_SILVER_DRAGON_INITIALLY;
-	@DefaultInt(value = 100, minValue = 0, maxValue = 1000, name = "Chance of spawning dragon eggs", 
+	@DefaultInt(value = 100, minValue = 0, maxValue = 1000, name = "Dragon egg spawn chance", 
 			comment = "n in 1000 chance of spawning dragon eggs")
 	public static int DRAGON_EGG_SPAWN_CHANCE;
-	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher for Ballista and Catapult", 
+	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher", 
 			comment = "If there is a conflict with another mod, this can be changed.")
 	public static int BOW_POSITION_WATCHER;	
 	@DefaultInt(value = 21, minValue = 20, maxValue = 31, name = "Fire Dragon Data Watcher", 

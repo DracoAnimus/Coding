@@ -30,7 +30,9 @@ import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ItemDragonEgg;
+import net.wildbill22.draco.items.ItemDragonEgg.Abilities;
 import net.wildbill22.draco.items.ModItems;
+import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -86,7 +88,7 @@ public class DragonPlayerEventHandler {
 	public void onLivingUpdateEvent(LivingUpdateEvent event) {
 //		if (event.entity != null && event.entity instanceof EntityPlayer) {
 //			EntityPlayer player = (EntityPlayer) event.entity;
-		if (event.entityLiving != null && event.entityLiving instanceof EntityPlayer) {
+		if (!event.entityLiving.worldObj.isRemote && event.entityLiving != null && event.entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
 			if (DragonPlayer.get(player).isDragon()) {
 	    		player.capabilities.allowFlying = true;
@@ -179,6 +181,11 @@ public class DragonPlayerEventHandler {
 					event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
 							new ItemStack(ModItems.villagerHeart)));
 				}
+				if (event.entity.worldObj.rand.nextInt(2) == 0) {
+					LogHelper.info("DragonPlayerEventHandler: Villager dropped a skull!");
+					event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
+							new ItemStack(ModItems.villagerSkull)));
+				}
 			}
 		}
 		else if (event.entityLiving instanceof EntitySquid) {
@@ -249,8 +256,18 @@ public class DragonPlayerEventHandler {
 	public void onLivingHurtEvent(LivingHurtEvent event) {
 		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer && DragonPlayer.get((EntityPlayer) event.entity).isDragon()) {
 			if (event.source.equals(DamageSource.lava) || event.source.equals(DamageSource.onFire) || event.source.equals(DamageSource.inFire)) {
-				event.ammount = 0;
-				LogHelper.info("DragonPlayerEventHandler: onLivingHurtEvent, no damage from lava!");
+				event.setCanceled(true);
+//				LogHelper.info("DragonPlayerEventHandler: onLivingHurtEvent, no damage from lava!");
+			}
+			// Damage yourself (probably an explosion)
+			else if (BALANCE.DRAGON_PLAYER_ABILITIES.RECEIVE_EXPLODING_FIREBALL_DAMAGE == false && event.source.isExplosion()) {
+				event.setCanceled(true);
+			}
+			else if (ItemDragonEgg.hasAbility((EntityPlayer) event.entity, Abilities.NOBLOCKDAMAGE) && event.source.equals(DamageSource.inWall)) {
+				event.setCanceled(true);
+	        }
+			else if (event.source.equals(DamageSource.fall)) {
+				event.setCanceled(true);
 			}
 		}
 	}
@@ -278,7 +295,12 @@ public class DragonPlayerEventHandler {
 				else {					
 					LogHelper.info("onItemUseFinish: You just ate a dragon food!");
 					// Remove potions from stuff dragons can eat like rotten flesh
-					player.clearActivePotions();
+					if (player.isPotionActive(Potion.poison.id)) {
+						player.removePotionEffect(Potion.poison.id);						
+					}
+					if (player.isPotionActive(Potion.hunger.id)) {
+						player.removePotionEffect(Potion.hunger.getId());
+					}
 				}
 			}
 		}

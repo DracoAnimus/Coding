@@ -11,7 +11,6 @@ item.wildbill22_draco_goldCoin.name=Gold Coin
 item.wildbill22_draco_longBow.name=Long Bow
 item.wildbill22_draco_crossbow.name=Crossbow
 item.wildbill22_draco_rock.name=Rock
-item.wildbill22_draco_squid.name=Squid meat
 item.wildbill22_draco_silverDragonEgg.name=Silver Dragon Egg
 item.wildbill22_draco_silverDragonStaff.name=Silver Dragon Staff
 item.wildbill22_draco_skeletonDragonEgg.name=Skeleton Dragon Egg
@@ -25,6 +24,8 @@ item.wildbill22_draco_earthDragonEgg.name=Earth Dragon Egg
 
 #Food Items
 item.wildbill22_draco_villagerHeart.name=Villager Heart
+item.wildbill22_draco_squid.name=Squid meat
+item.wildbill22_draco_villagerSkull.name=Villager Skull
 
 #Blocks (tiles)
 tile.charredGround.name=Charred Ground
@@ -72,6 +73,8 @@ category.wildbill22_draco.balance=Balance settings
 category.wildbill22_draco.balance.tooltip=Level up balance settings
 category.wildbill22_draco.balance_level=Level up balance settings
 category.wildbill22_draco.balance_level.tooltip=Level up balance settings
+category.wildbill22_draco.dragon_player_abilities=Player Dragon Abilities
+category.wildbill22_draco.dragon_player_abilities.tooltip=Player Dragon Abilities
 
 #Stats (Achievements)
 achievement.firstGoldCoin=First Gold Coin

@@ -11,6 +11,7 @@ public class ItemWaterDragonStaff extends ItemDragonStaff {
 		abilities.addChangeForm(EntityAquaDraco.name, "Water dragon");
 //		abilities.invisible();
 		abilities.addTeleporting();
+		abilities.addSpitBoilingWater();
 	}
 	
 	// Used to find if egg is in hoard

@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ItemMyExplosive;
 import net.wildbill22.draco.items.ItemMyFireball;
+import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityMyExplosive extends EntityThrowable {
@@ -77,9 +78,11 @@ public class EntityMyExplosive extends EntityThrowable {
 		// is if it should set neighboring blocks on fire
 		float explosionSize;
 		if (player != null)
-			explosionSize = ItemMyExplosive.explosionSize * ( 1 + DragonPlayer.get(player).getLevel() / 5);
+			explosionSize = (float) (ItemMyExplosive.explosionSize * ( 1 + DragonPlayer.get(player).getLevel() / 5) 
+				* BALANCE.DRAGON_PLAYER_ABILITIES.EXPLODING_FIREBALL_MULTIPLIER);
 		else
 			explosionSize = ItemMyExplosive.explosionSize;
+		LogHelper.info("Explosion of size: " + explosionSize + " at: " + movObjPos.blockX + "," + movObjPos.blockY + "," + movObjPos.blockZ);
 		Explosion explosion = this.worldObj.newExplosion(this, movObjPos.blockX, movObjPos.blockY, movObjPos.blockZ, explosionSize, true, true);
 		if (movObjPos.entityHit != null) {
 			movObjPos.entityHit.attackEntityFrom(DamageSource.setExplosionSource(explosion), explosionSize);
