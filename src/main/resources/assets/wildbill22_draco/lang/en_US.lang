@@ -21,6 +21,8 @@ item.wildbill22_draco_waterDragonEgg.name=Water Dragon Egg
 item.wildbill22_draco_waterDragonStaff.name=Water Dragon Staff
 item.wildbill22_draco_earthDragonStaff.name=Earth Dragon Staff
 item.wildbill22_draco_earthDragonEgg.name=Earth Dragon Egg
+item.wildbill22_draco_nightDragonStaff.name=Night Dragon Staff
+item.wildbill22_draco_nightDragonEgg.name=Night Dragon Egg
 
 #Food Items
 item.wildbill22_draco_villagerHeart.name=Villager Heart
@@ -36,6 +38,7 @@ tile.skeletonDragonEggBlock.name=Skeleton Dragon Egg
 tile.silverDragonEggBlock.name=Silver Dragon Egg
 tile.waterDragonEggBlock.name=Water Dragon Egg
 tile.earthDragonEggBlock.name=Earth Dragon Egg
+tile.nightDragonEggBlock.name=Night Dragon Egg
 
 #Dragons
 entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
@@ -45,6 +48,7 @@ entity.wildbill22_draco.silverDragon.name=Argentum Draco
 entity.wildbill22_draco.dracoMortem.name=Draco Mortem
 entity.wildbill22_draco.aquaDragon.name=Aqua Draco
 entity.wildbill22_draco.terraDraco.name=Terra Draco
+entity.wildbill22_draco.tenebrosusDraco.name=Tenebrosus Draco
 
 #Entities
 entity.wildbill22_draco.spearGuard.name=Spear Guard
@@ -81,3 +85,8 @@ achievement.firstGoldCoin=First Gold Coin
 achievement.firstGoldCoin.desc=Shiny! You put your first gold coin in the hoard.
 achievement.levelTenDragon=Level Ten Dragon
 achievement.levelTenDragon.desc=You made it to level ten!
+achievement.foundAllDragonEggs=You have all the Dragon Eggs
+achievement.foundAllDragonEggs.desc=You found all the dragon eggs!
+
+#Key Bindings
+key.staffChange=Change Staff Function

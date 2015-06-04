@@ -19,6 +19,7 @@ public class ItemSilverDragonEgg extends ItemDragonEgg {
 		String dragonName = EntitySilverDragon.name;
 		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, Items.rotten_flesh);
+		this.addNoBlockDamage(dragonName);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

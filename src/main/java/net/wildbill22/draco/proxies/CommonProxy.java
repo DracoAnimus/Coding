@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.wildbill22.draco.handlers.DragonPlayerEventHandler;
 import net.wildbill22.draco.handlers.EntityGuardEventHandler;
-import net.wildbill22.draco.handlers.FMLCommonEventHandler;
 import net.wildbill22.draco.handlers.StructureEventHandler;
 import net.wildbill22.draco.lib.LogHelper;
+import net.wildbill22.draco.stats.ModStats;
 
 /**
  * 
@@ -44,6 +44,10 @@ public class CommonProxy {
 	public void registerTileEntitySpecialRenderer(){}
 	
 	public void registerSounds() {}
+	
+	public void registerStats() {
+		ModStats.init();
+	}
 	
 	public void registerSubscriptions() {
 		LogHelper.info("CommonProxy: Registering subscriptions");

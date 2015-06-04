@@ -319,6 +319,9 @@ public class DragonPlayer implements IExtendedEntityProperties {
 			this.player.addStat(ModStats.levelTenDragon, 1);
 			level = 10;
 		}
+		if (this.eggsInHoard.size() > 5) {
+			this.player.addStat(ModStats.foundAllDragonEggs, 1);			
+		}
 		setLevel(level, true);
         LogHelper.info("DragonPlayer calculateLevel: Player is level " + level + ".");
 	}

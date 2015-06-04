@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.PieceWeight;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
-import net.wildbill22.draco.biome.ModBiomes;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
 public class WoodHutCreationHandler implements VillagerRegistry.IVillageCreationHandler {

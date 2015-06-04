@@ -36,11 +36,16 @@ import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonStaffHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ItemDragonEgg;
 import net.wildbill22.draco.items.ModItems;
+import net.wildbill22.draco.lib.KeyBindings;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
 import net.wildbill22.draco.lib.REFERENCE;
 import net.wildbill22.draco.network.StaffUpdateDamageTarget;
+import net.wildbill22.draco.network.StaffUpdatePoisonTarget;
 import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
+import net.wildbill22.draco.network.StaffUpdateTeleportThroughWall;
+import net.wildbill22.draco.network.StaffUpdateTeleportThroughWallInDark;
+import net.wildbill22.draco.network.StaffUpdateWitherTarget;
 
 public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffHandler {
     protected float damageAmplifier = 0;  	// FIXME: This is not multi-player safe! (short window to collide)
@@ -72,13 +77,20 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			if (!DragonPlayer.get(player).isEggInHoard(this.getEggName())) {
 				setNoEggInHoard(itemStack);
 				player.addChatMessage(new ChatComponentText("No egg in hoard for this staff!"));
-				setActive(itemStack, false);
+//				setActive(itemStack, false);
 				return itemStack;
 			}
 			// egg was put back in, so activate the staff
 			else {
 				setEggInHoard(itemStack);
-				setActive(itemStack, true);
+//				setActive(itemStack, true);
+			}
+			
+			// Change mode if Alt key is pressed
+			if (KeyBindings.staffChange.getIsKeyPressed()) {
+				abilities.nextMode(itemStack);
+				player.addChatMessage(new ChatComponentText("Staff in mode: " + abilities.getModeName(itemStack) + "!"));
+				return itemStack;				
 			}
 			
 			// Change mode if shift key pressed
@@ -107,12 +119,12 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			// No powers for humans!
 			else if (!DragonPlayer.get(player).isDragon()) {
 				player.addChatMessage(new ChatComponentText("Silly human, only dragons have powers!"));
-				setActive(itemStack, false);
+//				setActive(itemStack, false);
 				return itemStack;
 			}
 			else if (DragonPlayer.get(player).getDragonName().compareTo(abilities.dragonTextureName) != 0) {
 				player.addChatMessage(new ChatComponentText("This staff is only for " + abilities.dragonDisplayName + "!"));
-				setActive(itemStack, false);
+//				setActive(itemStack, false);
 				return itemStack;				
 			}
 		}
@@ -176,10 +188,25 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			else if (abilities.getModeNumber(itemStack) == abilities.GOLDENEYE) {
 				int amplifier = Math.max(1, DragonPlayer.get(player).getLevel() / 3);
 				LogHelper.info("ItemDragonStaff: Amplifier = " + amplifier);
-				goldenEye(player);
+				goldenEye(player, amplifier);
 			}
-		// On client
-		} else if (isActive(itemStack)) { 
+			else if (abilities.getModeNumber(itemStack) == abilities.LOCATESTRONGHOLDS) {
+				int amplifier = Math.max(1, DragonPlayer.get(player).getLevel() / 3);
+				LogHelper.info("ItemDragonStaff: Amplifier = " + amplifier);
+				locateStrongholds(player, amplifier);
+			}
+			
+		// **** On client *****
+		// Only allow the following powers if a dragon
+		}	
+		else if (DragonPlayer.get(player).isDragon() 
+				&& DragonPlayer.get(player).getDragonName().compareTo(abilities.dragonTextureName) == 0) {
+
+			if (KeyBindings.staffChange.getIsKeyPressed()) {
+				abilities.nextMode(itemStack);
+				return itemStack;				
+			}
+			
 			// Fire Breathing
 			if (abilities.getModeNumber(itemStack) == abilities.FIREBREATHING) {
 				int amplifier = DragonPlayer.get(player).getLevel();
@@ -190,6 +217,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		        	Core.modChannel.sendToServer(new StaffUpdateSetTargetOnFire(entity.posX, entity.posY, entity.posZ));
 		    	}
 			}
+			// Sound Wave
 			else if (abilities.getModeNumber(itemStack) == abilities.SOUNDWAVE) {
 				int amplifier = DragonPlayer.get(player).getLevel();
 		    	spawnSoundWave(world, player, 2.0F, amplifier);
@@ -200,13 +228,85 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		        	Core.modChannel.sendToServer(new StaffUpdateDamageTarget(entity.posX, entity.posY, entity.posZ));
 		    	}				
 			}
+			// Wither Effect
+			else if (abilities.getModeNumber(itemStack) == abilities.WITHEREFFECT) {
+				int amplifier = DragonPlayer.get(player).getLevel();
+		    	spawnWitherEffect(world, player, 2.0F, amplifier);
+		    	Entity entity = getMouseOver(world, amplifier * 2.0F + 4.5F);  // normal reach is 4.5F in survival
+				if (entity instanceof EntityLivingBase) {
+					LogHelper.info("Hit entity at: " + entity.posX + "," + entity.posY + "," + entity.posZ);
+		        	Core.modChannel.sendToServer(new StaffUpdateWitherTarget(entity.posX, entity.posY, entity.posZ));
+		    	}				
+			}
+			// Poison entities
+			else if (abilities.getModeNumber(itemStack) == abilities.POISON) {
+				int amplifier = DragonPlayer.get(player).getLevel();
+		    	spawnWitherEffect(world, player, 2.0F, amplifier);
+		    	Entity entity = getMouseOver(world, amplifier * 2.0F + 4.5F);  // normal reach is 4.5F in survival
+				if (entity instanceof EntityLivingBase) {
+					LogHelper.info("Hit entity at: " + entity.posX + "," + entity.posY + "," + entity.posZ);
+		        	Core.modChannel.sendToServer(new StaffUpdatePoisonTarget(entity.posX, entity.posY, entity.posZ));
+		    	}				
+			}
+			// Spit Boiling Water
+			else if (abilities.getModeNumber(itemStack) == abilities.SPITBOILINGWATER) {
+				if (!player.isInWater()) {
+					player.addChatMessage(new ChatComponentText("You can only spit boiling water in the water."));
+					return itemStack;
+				}
+				int amplifier = DragonPlayer.get(player).getLevel();
+				spawnSpitWater(world, player, 2.0F, amplifier);
+		    	Entity entity = getMouseOver(world, amplifier * 2.0F + 4.5F);  // normal reach is 4.5F in survival
+		    	// Steam sound
+	            player.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1004, (int)player.posX, (int)player.posY, (int)player.posZ, 0);
+				if (entity instanceof EntityLivingBase) {
+					LogHelper.info("Hit entity at: " + entity.posX + "," + entity.posY + "," + entity.posZ);
+		        	Core.modChannel.sendToServer(new StaffUpdateDamageTarget(entity.posX, entity.posY, entity.posZ));
+		    	}				
+			}
+			// Teleport through walls
+			else if (abilities.getModeNumber(itemStack) == abilities.TELEPORTTHROUGHWALL) {
+				teleportThroughWalls(world, player, false);
+		    }				
+			// Teleport through walls only at night
+			else if (abilities.getModeNumber(itemStack) == abilities.TELEPORTTHROUGHWALLATNIGHT) {
+				teleportThroughWalls(world, player, true);
+		    }
 		}
 		return itemStack;
 	}
 	
+	// Teleport through walls, teleport to the first location where the player does not collide with a block
+	private void teleportThroughWalls(World world, EntityPlayer player, boolean onlyAtNight) {
+		float amplifier = (float) Math.max(2, DragonPlayer.get(player).getLevel() / 2);
+		double maxD = 6.0D * amplifier;
+	    Vec3 lookVec = player.getLookVec();
+	    if (onlyAtNight) {
+			Core.modChannel.sendToServer(new StaffUpdateTeleportThroughWallInDark(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord, maxD));
+	    }
+	    else {
+	    	Core.modChannel.sendToServer(new StaffUpdateTeleportThroughWall(lookVec.xCoord, lookVec.yCoord, lookVec.zCoord, maxD));
+	    }
+	}
+
     // spawn particle name, position x,y,z velocity x,y,z
+	private void spawnSpitWater(World world, EntityPlayer player, float minD, int amplifier) {
+		Vec3 look = player.getLookVec();
+    	for (int i = 0; i < 4; i++) {
+    		float dx = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dy = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dz = (world.rand.nextFloat() - 0.5F) / 3;
+            double dxMin = (double)((float)player.posX + dx + look.xCoord * minD);
+            double dyMin = (double)((float)player.posY + dy + look.yCoord * minD);
+            double dzMin = (double)((float)player.posZ + dz + look.zCoord * minD);
+            float v = 0.09F * amplifier; // Velocity
+            world.spawnParticle("depthsuspend", dxMin, dyMin, dzMin, look.xCoord * v, look.yCoord * v, look.zCoord * v);
+    	}
+    }
+
+	// spawn particle name, position x,y,z velocity x,y,z
 	private void spawnFlames(World world, EntityPlayer player, float minD, int amplifier) {
-		Vec3 look = player.getLook(1.0F);
+		Vec3 look = player.getLookVec();
         double dxMin = (double)((float)player.posX + look.xCoord * minD);
         double dyMin = (double)((float)player.posY + player.eyeHeight + look.yCoord * minD);
         double dzMin = (double)((float)player.posZ + look.zCoord * minD);
@@ -218,17 +318,37 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	
     // spawn particle name, position x,y,z velocity x,y,z
 	private void spawnSoundWave(World world, EntityPlayer player, float minD, int amplifier) {
-		Vec3 look = player.getLook(1.0F);
+		Vec3 look = player.getLookVec();
     	for (int i = 0; i < 4; i++) {
-    		float d0 = world.rand.nextFloat() - 0.2F;
-            double dxMin = (double)((float)player.posX + d0 + look.xCoord * minD);
-//            double dyMin = (double)((float)player.posY + d0 + player.eyeHeight + look.yCoord * minD);
-            double dyMin = (double)((float)player.posY + d0 + look.yCoord * minD);
-            double dzMin = (double)((float)player.posZ + d0 + look.zCoord * minD);
+    		float dx = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dy = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dz = (world.rand.nextFloat() - 0.5F) / 3;
+            double dxMin = (double)((float)player.posX + dx + look.xCoord * minD);
+            double dyMin = (double)((float)player.posY + dy + look.yCoord * minD);
+            double dzMin = (double)((float)player.posZ + dz + look.zCoord * minD);
             world.spawnParticle("crit", dxMin, dyMin, dzMin, look.xCoord * 0.05 * amplifier, look.yCoord * 0.05 * amplifier, 
             		look.zCoord * 0.05 * amplifier);
     	}
 //        world.spawnParticle("crit", entity.posX + d0, entity.posY + d0, entity.posZ + d0, 0, 0, 0);		    		
+    }
+	
+    // spawn particle name, position x,y,z velocity x,y,z
+	private void spawnWitherEffect(World world, EntityPlayer player, float minD, int amplifier) {
+		Vec3 look = player.getLookVec();
+    	for (int i = 0; i < 6; i++) {
+    		float dx = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dy = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dz = (world.rand.nextFloat() - 0.5F) / 3;
+            double dxMin = (double)((float)player.posX + dx + look.xCoord * minD);
+            double dyMin = (double)((float)player.posY + dy + look.yCoord * minD);
+            double dzMin = (double)((float)player.posZ + dz + look.zCoord * minD);
+            if (i % 2 == 0)
+            	world.spawnParticle("mobSpell", dxMin, dyMin, dzMin, look.xCoord * 0.05 * amplifier, look.yCoord * 0.05 * amplifier, 
+            		look.zCoord * 0.05 * amplifier);
+            else
+            	world.spawnParticle("smoke", dxMin, dyMin, dzMin, look.xCoord * 0.05 * amplifier, look.yCoord * 0.05 * amplifier, 
+            		look.zCoord * 0.05 * amplifier);
+    	}
     }
 	
     /**
@@ -301,11 +421,64 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
         return mc.pointedEntity;
     }
 
-    private void goldenEye(EntityPlayer player) {
+    private void locateStrongholds(EntityPlayer player, int amplifier) {
 		final NBTCoordinates playerLocation;
 		TileEntityChest closestChest = null;
 		float distance;
-		float closestDistance = 1000000.0F; // Show direction to chests closer than this distance (up to 1000 blocks away)
+//		float closestDistance = 1000000.0F; // Show direction to chests closer than this distance (up to 1000 blocks away)
+		// Show direction to chests closer than this distance (up to 1000 blocks away with level 10 dragon)
+		float closestDistance = 10000.0F * amplifier * amplifier; 
+		boolean foundVillagerSkull = false;
+		
+		if (player != null){
+			playerLocation = new NBTCoordinates((int)player.posX, (int)player.posY, (int)player.posZ);	
+			
+//			for (Object tileEntity : Minecraft.getMinecraft().theWorld.loadedTileEntityList){
+			for (Object tileEntity : player.worldObj.loadedTileEntityList){
+				foundVillagerSkull = false;
+				if (tileEntity instanceof TileEntityChest){
+					TileEntityChest chestEntity = (TileEntityChest) tileEntity;
+					Object chestBlock = player.worldObj.getBlock(chestEntity.xCoord, chestEntity.yCoord, chestEntity.zCoord);
+					if (chestBlock instanceof BlockChest){
+						for (int j = 0; j < chestEntity.getSizeInventory(); j++) {
+							ItemStack itemStack = chestEntity.getStackInSlot(j);
+							if (itemStack != null) {
+								if (itemStack.getItem() == ModItems.villagerSkull) {
+									foundVillagerSkull = true;
+									break;
+								}
+							}
+						}
+						if (foundVillagerSkull) {
+							NBTCoordinates chestLocation = new NBTCoordinates(chestEntity.xCoord, chestEntity.yCoord, chestEntity.zCoord);
+							distance = chestLocation.getDistanceSquaredToChunkCoordinates(playerLocation);
+							if (distance < closestDistance){
+								closestDistance = distance;
+								closestChest = chestEntity; 
+							}
+						}
+					}
+				}
+			}
+			if (closestChest != null){
+				// TODO: Animate with a beeping sound (or flashing) when pointing to chest!
+				LogHelper.info("Nearest chest at: " + closestChest.xCoord + "," + closestChest.yCoord + "," + closestChest.zCoord + "!");
+				player.addChatMessage(new ChatComponentText("Found stronghold chest with a villager skull at: " + closestChest.xCoord + "," + closestChest.yCoord + "," + closestChest.zCoord + "!"));				
+			}
+			else { 
+				LogHelper.info("No stronghold chests nearby");
+				player.addChatMessage(new ChatComponentText("No stronghold chests nearby"));
+			}
+		}		
+    }
+
+    private void goldenEye(EntityPlayer player, int amplifier) {
+		final NBTCoordinates playerLocation;
+		TileEntityChest closestChest = null;
+		float distance;
+//		float closestDistance = 1000000.0F; // Show direction to chests closer than this distance (up to 1000 blocks away)
+		// Show direction to chests closer than this distance (up to 1000 blocks away with level 10 dragon)
+		float closestDistance = 10000.0F * amplifier * amplifier; 
 		boolean foundCoins = false;
 		
 		if (player != null){
@@ -401,16 +574,26 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
     	tagCompound.setInteger("cooldown", cooldown);
     }
 
-    private void setActive(ItemStack itemStack, boolean active) {
-    	NBTTagCompound tagCompound = itemStack.getTagCompound();
-		tagCompound.setBoolean("active", active);    	
-    }
+//    private void setActive(ItemStack itemStack, boolean active) {
+//    	NBTTagCompound tagCompound = itemStack.getTagCompound();
+//		tagCompound.setBoolean("active", active);    	
+//    }
+//
+//    private boolean isActive(ItemStack itemStack) {    	
+//    	NBTTagCompound tagCompound = getTagCompound(itemStack);
+//		return tagCompound.getBoolean("active");
+//    }
+//        
+//    private int getUses(ItemStack itemStack) {
+//    	NBTTagCompound tagCompound = getTagCompound(itemStack);
+//    	return tagCompound.getInteger("uses");
+//    }
+//
+//    private void setUses(ItemStack itemStack, int uses) {
+//    	NBTTagCompound tagCompound = getTagCompound(itemStack);
+//    	tagCompound.setInteger("uses", uses);
+//    }
 
-    private boolean isActive(ItemStack itemStack) {    	
-    	NBTTagCompound tagCompound = getTagCompound(itemStack);
-		return tagCompound.getBoolean("active");
-    }
-        
     /**
      * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
      * update it's contents.
@@ -437,6 +620,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			tagCompound.setBoolean("effect", true);
 			tagCompound.setInteger("cooldown", 0);
 			tagCompound.setBoolean("active", true);
+			tagCompound.setInteger("uses", 10);
 			itemStack.setTagCompound(tagCompound);
 		}
 		return itemStack.getTagCompound();
@@ -485,7 +669,13 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		private int FIREBREATHING = 10;
 		private int SOUNDWAVE = 11;
 		private int GOLDENEYE = 12;
-		private int NUM_MODES = 13;
+		private int WITHEREFFECT = 13;
+		private int POISON = 14;
+		private int SPITBOILINGWATER = 15;
+		private int TELEPORTTHROUGHWALL = 16;
+		private int LOCATESTRONGHOLDS = 17;
+		private int TELEPORTTHROUGHWALLATNIGHT = 18;
+		private int NUM_MODES = 19;
 
 		/**
 	     * Adds ability to staff to change between dragon and human.
@@ -541,7 +731,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			addMode(REGENERATION, "Regeneration - heal yourself");
 		}
 		/**
-	     * Adds ability to breath fire.
+	     * Adds ability to breath fire (and set entities on fire).
 	     */
 		public void addFireBreathing() {
 			addMode(this.FIREBREATHING, "Fire breathing");
@@ -557,6 +747,44 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	     */
 		public void addGoldenEye() {
 			addMode(this.GOLDENEYE, "Golden Eye");
+		}
+		/**
+	     * Adds ability to inflict the wither effect.
+	     */
+		public void addWitherEffect() {
+			addMode(this.WITHEREFFECT, "Wither Effect");
+		}
+		/**
+	     * Adds ability to poison entities.
+	     */
+		public void addPoison() {
+			addMode(this.POISON, "Poison");
+		}
+		/**
+	     * Adds ability to Spit Boiling Water.
+	     */
+		public void addSpitBoilingWater() {
+			addMode(this.SPITBOILINGWATER, "Spit Boiling Water");
+		}
+		/**
+	     * Adds ability to teleport through walls.
+	     * Always use this together with the dragon NoBlockDamage ability
+	     */
+		public void addTeleportThroughWalls() {
+			addMode(this.TELEPORTTHROUGHWALL, "Teleport through walls");
+		}
+		/**
+	     * Adds ability to locate a stronghold.
+	     */
+		public void addLocateStrongholds() {
+			addMode(this.LOCATESTRONGHOLDS, "Locate strongholds");
+		}
+		/**
+	     * Adds ability to teleport through walls.
+	     * Always use this together with the dragon NoBlockDamage ability
+	     */
+		public void addTeleportThroughWallsAtNight() {
+			addMode(this.TELEPORTTHROUGHWALLATNIGHT, "Teleport through walls in the dark");
 		}
 
 		private void addMode(int mode, String text) {

@@ -1,7 +1,6 @@
 package net.wildbill22.draco.entities.dragons;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +31,6 @@ public class DracoMortem extends EntityFlyingMob implements IMob
     public int attackCounter;
     /** The explosion radius of spawned fireballs. */
     private int explosionStrength = 1;
-    private static final String __OBFID = "CL_00001689";
 
     public DracoMortem(World p_i1735_1_)
     {

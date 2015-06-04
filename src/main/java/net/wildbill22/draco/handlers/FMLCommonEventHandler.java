@@ -1,10 +1,5 @@
 package net.wildbill22.draco.handlers;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.wildbill22.draco.entities.player.DragonPlayer;
-import net.wildbill22.draco.items.ItemDragonEgg;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 /**
  * 

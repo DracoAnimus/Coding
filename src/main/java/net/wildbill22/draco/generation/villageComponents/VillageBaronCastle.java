@@ -20,7 +20,6 @@ import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.generation.villageHandlers.BaronCastleCreationHandler;
-import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.LogHelper;
 
 public class VillageBaronCastle extends MyVillageComponents {

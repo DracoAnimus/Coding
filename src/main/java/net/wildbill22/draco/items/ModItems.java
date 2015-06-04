@@ -31,6 +31,7 @@ public class ModItems extends Item {
 	public static Item silverDragonEgg;
 	public static Item waterDragonEgg;
 	public static Item earthDragonEgg;
+	public static Item nightDragonEgg;
 
 	// Food
 	public static ItemDragonFood villagerHeart; 
@@ -74,11 +75,13 @@ public class ModItems extends Item {
 		goldDragonEgg = new ItemGoldDragonEgg();
 		waterDragonEgg = new ItemWaterDragonEgg();
 		earthDragonEgg = new ItemEarthDragonEgg();
+		nightDragonEgg = new ItemNightDragonEgg();
 		GameRegistry.registerItem(goldDragonEgg, ItemGoldDragonEgg.name);
 		GameRegistry.registerItem(skeletonDragonEgg, ItemSkeletonDragonEgg.name);
 		GameRegistry.registerItem(silverDragonEgg, ItemSilverDragonEgg.name);
 		GameRegistry.registerItem(waterDragonEgg, ItemWaterDragonEgg.name);
 		GameRegistry.registerItem(earthDragonEgg, ItemEarthDragonEgg.name);
+		GameRegistry.registerItem(nightDragonEgg, ItemNightDragonEgg.name);
 
 		// Dragon Egg Registry
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) silverDragonEgg);
@@ -86,6 +89,7 @@ public class ModItems extends Item {
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) goldDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) waterDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) earthDragonEgg);		
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) nightDragonEgg);		
 	}
 
 	public static void init() {
@@ -97,7 +101,7 @@ public class ModItems extends Item {
 //		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
 //				new ItemStack(explosiveFireball), 1, 10, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_FIREBALLS));
 		
-		// Other useful stuff
+		// Other useful stuff in the village blacksmith chest
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
 				new ItemStack(Items.diamond_sword), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
@@ -108,6 +112,14 @@ public class ModItems extends Item {
 				new ItemStack(Items.diamond_helmet), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
 		ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH, new WeightedRandomChestContent(
 				new ItemStack(Items.diamond_leggings), 1, 1, BALANCE.CHEST_ITEMS.VILLAGE_BLACKSMITH_DIAMOND_ARMOR));
+		
+		// Stuff in the stronghold chests
+		ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CORRIDOR, new WeightedRandomChestContent(
+				new ItemStack(villagerSkull), 1, 5, BALANCE.CHEST_ITEMS.STRONGHOLD_VILLAGER_SKULL));
+		ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING, new WeightedRandomChestContent(
+				new ItemStack(villagerSkull), 1, 5, BALANCE.CHEST_ITEMS.STRONGHOLD_VILLAGER_SKULL));
+		ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_LIBRARY, new WeightedRandomChestContent(
+				new ItemStack(villagerSkull), 1, 5, BALANCE.CHEST_ITEMS.STRONGHOLD_VILLAGER_SKULL));
 	}
 	
 	/**

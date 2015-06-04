@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 
 public abstract class EntityFlyingMob extends EntityLiving
 {
-    private static final String __OBFID = "CL_00001545";
 
     public EntityFlyingMob(World p_i1587_1_)
     {

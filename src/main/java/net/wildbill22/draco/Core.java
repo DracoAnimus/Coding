@@ -20,10 +20,12 @@ import net.wildbill22.draco.generation.villages.VillageBiomes;
 import net.wildbill22.draco.generation.villages.VillageGenReplacer;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
+import net.wildbill22.draco.lib.KeyBindings;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 import net.wildbill22.draco.models.ModelAquaDraco;
 import net.wildbill22.draco.models.ModelDracoMortem;
+import net.wildbill22.draco.models.ModelDracoTenebrosus;
 import net.wildbill22.draco.models.ModelSilverDragon;
 import net.wildbill22.draco.models.ModelTerraDraco;
 import net.wildbill22.draco.network.DragonAbilityLavaToObsidian;
@@ -34,10 +36,12 @@ import net.wildbill22.draco.network.StaffUpdateDamageTarget;
 import net.wildbill22.draco.network.StaffUpdatePoisonTarget;
 import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
 import net.wildbill22.draco.network.StaffUpdateTeleportThroughWall;
+import net.wildbill22.draco.network.StaffUpdateTeleportThroughWallInDark;
 import net.wildbill22.draco.network.StaffUpdateWitherTarget;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.render.RenderAquaDraco;
 import net.wildbill22.draco.render.RenderDracoMortem;
+import net.wildbill22.draco.render.RenderDracoTenebrosus;
 import net.wildbill22.draco.render.RenderSilverDragon;
 import net.wildbill22.draco.render.RenderTerraDraco;
 import net.wildbill22.draco.stats.ModStats;
@@ -81,13 +85,14 @@ public class Core {
 		ModBlocks.preInit();
     	ModTileEntities.modRegistry();
 		ModBiomes.preInit(); // Must be before ModEntities
+		ModEntities.preInit();
 		if (devEnv)
 			ModEntities.registerEggsForDev();
-		ModEntities.preInit();
 		ModWeapons.preInit();
 		dracoProxy.registerRenderer();
 		VillageBiomes.preInit(event);
 		setupNetwork();
+		KeyBindings.preInit();
 	}
 
 	@EventHandler
@@ -96,10 +101,11 @@ public class Core {
 		ModWeapons.init();
 		ModItems.init();
 		ModBlocks.init();
-		ModStats.init();
+//		ModStats.init();
 		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 1000);
 		dracoProxy.registerSounds();
 		dracoProxy.registerSubscriptions();
+		dracoProxy.registerStats();
 		FMLCommonHandler.instance().bus().register(new Configs());
 		if (Configs.VILLAGE.village_gen_enabled) {
 			LogHelper.info("Registering replacer for village generation.");
@@ -139,6 +145,8 @@ public class Core {
 		DragonRegistry.instance().registerDragonRendererCreationHandler(gdHandler);
 		RenderTerraDraco tdHandler = new RenderTerraDraco(new ModelTerraDraco(), 0.5F);
 		DragonRegistry.instance().registerDragonRendererCreationHandler(tdHandler);
+		RenderDracoTenebrosus dtHandler = new RenderDracoTenebrosus(new ModelDracoTenebrosus(), 0.5F); // Night Dragon
+		DragonRegistry.instance().registerDragonRendererCreationHandler(dtHandler);
 	}
 
 	@EventHandler
@@ -162,5 +170,6 @@ public class Core {
 		modChannel.registerMessage(StaffUpdatePoisonTarget.Handler.class, StaffUpdatePoisonTarget.class, id++, Side.SERVER);
 		modChannel.registerMessage(DragonAbilityLavaToObsidian.Handler.class, DragonAbilityLavaToObsidian.class, id++, Side.CLIENT);
 		modChannel.registerMessage(StaffUpdateTeleportThroughWall.Handler.class, StaffUpdateTeleportThroughWall.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdateTeleportThroughWallInDark.Handler.class, StaffUpdateTeleportThroughWallInDark.class, id++, Side.SERVER);
 	}
 }

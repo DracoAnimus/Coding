@@ -4,19 +4,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MovingObjectPosition;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.common.network.ByteBufUtils;
 
 /**
  * Used to tell the client about changes
@@ -64,8 +60,8 @@ public class StaffUpdateSetTargetOnFire implements IMessage {
 			            message.y+1.5D,
 			            message.z+0.5D
 			            );
-		    	List entities = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, targetBox);
-		        Iterator iterator = entities.iterator();
+				List<?> entities = player.worldObj.getEntitiesWithinAABBExcludingEntity(player, targetBox);
+				Iterator<?> iterator = entities.iterator();
 		        while (iterator.hasNext()) {
 		            Entity entity = (Entity)iterator.next();
 		            if (entity instanceof EntityLivingBase) {

@@ -31,6 +31,7 @@ public class ModWeapons {
 	public static Item goldDragonStaff = new ItemGoldDragonStaff(STAFF);
 	public static Item waterDragonStaff = new ItemWaterDragonStaff(STAFF);
 	public static Item earthDragonStaff = new ItemEarthDragonStaff(STAFF);
+	public static Item nightDragonStaff = new ItemNightDragonStaff(STAFF);
 	
 	public static void preInit() {
 		GameRegistry.registerItem(dragonSlayerSword, ItemDragonSlayerSword.name);
@@ -44,6 +45,7 @@ public class ModWeapons {
 		GameRegistry.registerItem(goldDragonStaff, ItemGoldDragonStaff.name);
 		GameRegistry.registerItem(waterDragonStaff, ItemWaterDragonStaff.name);
 		GameRegistry.registerItem(earthDragonStaff, ItemEarthDragonStaff.name);
+		GameRegistry.registerItem(nightDragonStaff, ItemNightDragonStaff.name);
 		
 		// Dragon Staff Registry
 //		DragonRegistry.instance().registerDragonStaff((IDragonStaffHandler) goldDragonStaff);

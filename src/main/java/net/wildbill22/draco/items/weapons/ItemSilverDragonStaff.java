@@ -11,8 +11,9 @@ public class ItemSilverDragonStaff extends ItemDragonStaff {
 		abilities.addChangeForm(EntitySilverDragon.name, "Silver dragon");
 //		abilities.explosiveFireballs();
 		abilities.addTeleporting();
-		abilities.addHaste();
+//		abilities.addHaste();
 		abilities.addFireBreathing();
+//		abilities.addTeleportThroughWalls();
 	}
 	
 	// Used to find if egg is in hoard

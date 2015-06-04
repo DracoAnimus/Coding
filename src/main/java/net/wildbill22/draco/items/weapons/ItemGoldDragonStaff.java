@@ -11,6 +11,7 @@ public class ItemGoldDragonStaff extends ItemDragonStaff {
 		abilities.addChangeForm(EntityGoldDragon.name, "Gold dragon");
 		abilities.addExplosiveFireballs();
 		abilities.addGoldenEye();
+		abilities.addPoison();
 	}
 	
 	// Used to find if egg is in hoard

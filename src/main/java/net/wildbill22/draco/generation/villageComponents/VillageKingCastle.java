@@ -54,6 +54,7 @@ public class VillageKingCastle extends StructureVillagePieces.Village
 	}
 	
 	// Only create the Baron Castle in city biomes
+	@SuppressWarnings("unused")
 	@Override
 	public boolean addComponentParts(World world, Random random, StructureBoundingBox box) {
 		BiomeGenBase biome = world.getBiomeGenForCoords(box.minX, box.minZ);

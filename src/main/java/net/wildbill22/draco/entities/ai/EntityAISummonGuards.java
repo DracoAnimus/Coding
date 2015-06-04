@@ -4,20 +4,21 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 
 public class EntityAISummonGuards extends EntityAITarget {
-    private final Class targetClass;
+    @SuppressWarnings("rawtypes")
+	private final Class targetClass;
     /** Instance of EntityAISummonGuards.Sorter */
     private final EntityAISummonGuards.Sorter theNearestAttackableTargetSorter;
-    private List targetList;
-    private List guardList;
+    @SuppressWarnings("rawtypes")
+	private List targetList;
+    @SuppressWarnings("rawtypes")
+	private List guardList;
     private int numGuardsToSpawn;
     
 	@SuppressWarnings("rawtypes")
@@ -79,6 +80,7 @@ public class EntityAISummonGuards extends EntityAITarget {
     	}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static class Sorter implements Comparator {
     	private final Entity theEntity;
 

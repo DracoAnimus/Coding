@@ -11,7 +11,7 @@ public class ItemSkeletonDragonStaff extends ItemDragonStaff {
 		abilities.addChangeForm(EntityDracoMortem.name, "Skeleton dragon");
 		abilities.addInvisible();
 		abilities.addRegeneration();
-		abilities.addSoundWave();
+		abilities.addLocateStrongholds();
 	}
 	
 	// Used to find if egg is in hoard

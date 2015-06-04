@@ -8,7 +8,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.wildbill22.draco.entities.hostile.EntityGuard;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.LogHelper;
 
 /**
  * 

@@ -109,6 +109,10 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.earthDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Earth Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
+			else if (biome == BiomeGenBase.roofedForest) {
+				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.nightDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Night Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
 		}
 	}
 

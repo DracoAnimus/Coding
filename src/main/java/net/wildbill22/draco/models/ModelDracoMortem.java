@@ -123,6 +123,7 @@ public class ModelDracoMortem extends ModelBase
       upperBody.setTextureSize(512, 256);
       upperBody.mirror = true;
       setRotation(upperBody, -0.3490659F, 0F, 0F);
+      
       rightUpperLeg = new ModelRenderer(this, 0, 55);
       rightUpperLeg.addBox(-2.5F, 0F, -8F, 5, 16, 16);
       rightUpperLeg.setRotationPoint(-11F, -16F, 16F);
@@ -150,6 +151,7 @@ public class ModelDracoMortem extends ModelBase
       convertToChild(rightLowerLeg, rightFoot);
       convertToChild(rightMiddleLeg, rightLowerLeg);
       convertToChild(rightUpperLeg, rightMiddleLeg);
+      
       leftUpperLeg = new ModelRenderer(this, 0, 55);
       leftUpperLeg.addBox(-2.5F, 0F, -8F, 5, 16, 16);
       leftUpperLeg.setRotationPoint(11F, -16F, 16F);
@@ -177,6 +179,7 @@ public class ModelDracoMortem extends ModelBase
       convertToChild(leftLowerLeg, leftFoot);
       convertToChild(leftMiddleLeg, leftLowerLeg);
       convertToChild(leftUpperLeg, leftMiddleLeg);
+      
       leftUpperArm = new ModelRenderer(this, 0, 55);
       leftUpperArm.addBox(-0.5F, 0F, -8F, 5, 16, 16);
       leftUpperArm.setRotationPoint(16F, -27F, -19F);
@@ -190,6 +193,7 @@ public class ModelDracoMortem extends ModelBase
       leftLowerArm.mirror = true;
       setRotation(leftLowerArm, 0F, 0F, 0F);
       convertToChild(leftUpperArm, leftLowerArm);
+      
       rightUpperArm = new ModelRenderer(this, 0, 55);
       rightUpperArm.addBox(-4.5F, 0F, -8F, 5, 16, 16);
       rightUpperArm.setRotationPoint(-16F, -27F, -19F);
@@ -203,6 +207,7 @@ public class ModelDracoMortem extends ModelBase
       rightLowerArm.mirror = true;
       setRotation(rightLowerArm, 0F, 0F, 0F);
       convertToChild(rightUpperArm, rightLowerArm);
+      
       leftWing1 = new ModelRenderer(this, 100, 0);
       leftWing1.addBox(-1.5F, -2.5F, -2.5F, 41, 5, 5);
       leftWing1.setRotationPoint(16F, -31F, -19F);
@@ -223,6 +228,7 @@ public class ModelDracoMortem extends ModelBase
       setRotation(leftWing3, 0F, 0F, 0F);
       convertToChild(leftWing1, leftWing3);
       convertToChild(leftWing1, leftWing2);
+
       rightWing1 = new ModelRenderer(this, 100, 0);
       rightWing1.addBox(-40F, -2.5F, -2.5F, 41, 5, 5);
       rightWing1.setRotationPoint(-16F, -31F, -19F);
@@ -243,6 +249,7 @@ public class ModelDracoMortem extends ModelBase
       setRotation(rightWing3, 0F, 0F, 0F);
       convertToChild(rightWing1, rightWing3);
       convertToChild(rightWing1, rightWing2);
+      
       neck = new ModelRenderer(this, 200, 0);
       neck.addBox(-7.5F, -7.5F, -30F, 15, 15, 30);
       neck.setRotationPoint(0F, -32F, -26F);
@@ -284,6 +291,7 @@ public class ModelDracoMortem extends ModelBase
       convertToChild(neck, rightHorn);
       convertToChild(neck, leftHorn);
       convertToChild(neck, head);
+      
       tail1 = new ModelRenderer(this, 0, 170);
       tail1.addBox(-6F, -6F, 1F, 12, 12, 32);
       tail1.setRotationPoint(0F, -16F, 25F);

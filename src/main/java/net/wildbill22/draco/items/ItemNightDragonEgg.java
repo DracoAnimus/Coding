@@ -8,19 +8,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.wildbill22.draco.entities.dragons.EntityGoldDragon;
+import net.wildbill22.draco.entities.dragons.EntityDracoTenebrosus;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 
-public class ItemGoldDragonEgg extends ItemDragonEgg {
-	public static final String name = "goldDragonEgg";
+public class ItemNightDragonEgg extends ItemDragonEgg {
+	public static final String name = "nightDragonEgg";
 
-	public ItemGoldDragonEgg() {
+	public ItemNightDragonEgg() {
 		super(name);
-		String dragonName = EntityGoldDragon.name;
+		String dragonName = EntityDracoTenebrosus.name;
 		this.addDragonFood(dragonName, ModItems.villagerHeart);
-		this.addDragonFood(dragonName, Items.rotten_flesh);
-		this.addDamageBoost(dragonName);
-		this.addImmuneToPoison(dragonName);
+		this.addDragonFood(dragonName, Items.beef);
+		this.addDragonFood(dragonName, Items.cooked_beef);
+		this.addNightDragonAbilities(dragonName);
+		this.addInvisibleInTheDark(dragonName);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -29,7 +30,7 @@ public class ItemGoldDragonEgg extends ItemDragonEgg {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
 		list.add("Put this egg in the hoard");
 		list.add("You will get a staff that turns"); 
-		list.add("you into a Golden Dragon!");
+		list.add("you into an Night Dragon!");
 	}
 	
 	@Override
@@ -39,11 +40,11 @@ public class ItemGoldDragonEgg extends ItemDragonEgg {
 
 	@Override
 	public Item getEggItem() {
-		return ModItems.goldDragonEgg;
+		return ModItems.nightDragonEgg;
 	}
 
 	@Override
 	public ItemStack getStaffItemStack() {
-		return new ItemStack(ModWeapons.goldDragonStaff);
+		return new ItemStack(ModWeapons.nightDragonStaff);
 	}
 }

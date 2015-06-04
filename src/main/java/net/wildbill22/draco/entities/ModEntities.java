@@ -11,6 +11,7 @@ import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntityDracoMortem;
 import net.wildbill22.draco.entities.dragons.EntityGoldDragon;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
+import net.wildbill22.draco.entities.dragons.EntityDracoTenebrosus;
 import net.wildbill22.draco.entities.dragons.EntityTerraDraco;
 import net.wildbill22.draco.entities.hostile.EntityBallista;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
@@ -36,9 +37,6 @@ public class ModEntities {
 	private static int modEntityID = 0;
 	
 	public static void preInit() {
-		// Eggs for some of the entities below for creative mode
-		registerEggs();
-		
 		// Overworld mod entities 
 		EntityRegistry.registerModEntity(EntityCreeperDragon.class, EntityCreeperDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntitySilverDragon.class, EntitySilverDragon.name, ++modEntityID, Core.instance, 80, 3, true);
@@ -64,8 +62,12 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityAquaDraco.class, EntityAquaDraco.name, ++modEntityID, Core.instance, 80, 3, true); // Water dragon
 		EntityRegistry.registerModEntity(EntityGoldDragon.class, EntityGoldDragon.name, ++modEntityID, Core.instance, 80, 3, true); // Gold dragon
 		EntityRegistry.registerModEntity(EntityTerraDraco.class, EntityTerraDraco.name, ++modEntityID, Core.instance, 80, 3, true); // Earth dragon
+		EntityRegistry.registerModEntity(EntityDracoTenebrosus.class, EntityDracoTenebrosus.name, ++modEntityID, Core.instance, 80, 3, true); // Night dragon
 
 		addMobSpawns();
+
+		// Eggs for some of the entities below for creative mode (this must be after the entities are created)
+		registerEggs();
 	}
 
 	private static void addMobSpawns() {

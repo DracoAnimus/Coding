@@ -18,16 +18,16 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
  * @author William
  *
  */
-public class StaffUpdateTeleportThroughWall implements IMessage {
+public class StaffUpdateTeleportThroughWallInDark implements IMessage {
 	double x, y, z;
 	double maxD;
 
 	/**
 	 * Don't use
 	 */
-	public StaffUpdateTeleportThroughWall() {	}
+	public StaffUpdateTeleportThroughWallInDark() {	}
 
-	public StaffUpdateTeleportThroughWall(double x, double y, double z, double maxD) {
+	public StaffUpdateTeleportThroughWallInDark(double x, double y, double z, double maxD) {
 		this.x = x; this.y = y; this.z = z;
 		this.maxD = maxD;
 	}
@@ -49,14 +49,17 @@ public class StaffUpdateTeleportThroughWall implements IMessage {
 	}
 	
 	// Runs on server, teleports player
-	public static class Handler implements IMessageHandler<StaffUpdateTeleportThroughWall, IMessage> {
+	public static class Handler implements IMessageHandler<StaffUpdateTeleportThroughWallInDark, IMessage> {
 		@Override
-		public IMessage onMessage(StaffUpdateTeleportThroughWall message, MessageContext ctx) {
+		public IMessage onMessage(StaffUpdateTeleportThroughWallInDark message, MessageContext ctx) {
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
 			if (player != null) {
+				if (player.worldObj.getBlockLightValue((int)Math.floor(player.posX), (int)Math.floor(player.posY), (int)Math.floor(player.posZ)) > 7) {	
+					player.addChatMessage(new ChatComponentText("You can only teleport in the dark."));
+					return null;
+				}
 				double minD = 3.0D;
 			    Vec3 currentPos = player.getPosition(0);
-//			    currentPos.yCoord += player.eyeHeight;
 			    Vec3 lookVec = Vec3.createVectorHelper(message.x, message.y, message.z);
 				for (double d0 = message.maxD; d0 >= minD; d0--) {
 				    Vec3 lookPos = currentPos.addVector(lookVec.xCoord * d0, lookVec.yCoord * d0, lookVec.zCoord * d0);
@@ -64,17 +67,12 @@ public class StaffUpdateTeleportThroughWall implements IMessage {
 				    	if (!isVecInsideOpaqueBlock(player, lookPos)) {
 				    		player.capabilities.isFlying = true;
 				    		player.setPositionAndUpdate(lookPos.xCoord, lookPos.yCoord - 0.0, lookPos.zCoord);
-				    		if (player.getBrightness(0) < 8) {
-				    			int amplifier = Math.max(1, DragonPlayer.get(player).getLevel() / 2);
-				    			LogHelper.info("ItemDragonStaff: Amplifier = " + amplifier);
-				    			player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), (60 * 20 * amplifier), amplifier));
-				    		}
 				    		LogHelper.info("Teleported to: " + lookPos.xCoord + "," + lookPos.yCoord + "," + lookPos.zCoord);
 				    		return null;
 					    }
 				    }
 				}
-				player.addChatMessage(new ChatComponentText("Only solid blocks in that direction for the next " + message.maxD + " meters!"));
+				player.addChatMessage(new ChatComponentText("Only solid blocks or daylight in that direction for the next " + message.maxD + " meters!"));
 			}
 			return null;
 		}
@@ -108,6 +106,10 @@ public class StaffUpdateTeleportThroughWall implements IMessage {
 	    int y = MathHelper.floor_double(newLocation.yCoord + (double)yOffset);
 	    int z = MathHelper.floor_double(newLocation.zCoord + (double)zOffset);
 		LogHelper.info("Checking location: " + x + "," + y + "," + z);
+		if (player.worldObj.getBlockLightValue(x, y, z) > 7) {	
+			LogHelper.info("Too light to teleport.");
+			return true;			
+		}
 	    return player.worldObj.getBlock(x, y, z).isNormalCube();
     }
 }

@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class EntityTerraDraco extends EntityFlyingMob implements IMob
+public class EntityDracoTenebrosus extends EntityFlyingMob implements IMob
 {
     public int courseChangeCooldown;
     public double waypointX;
@@ -31,9 +31,9 @@ public class EntityTerraDraco extends EntityFlyingMob implements IMob
     public int attackCounter;
     /** The explosion radius of spawned fireballs. */
     private int explosionStrength = 1;
-	public static final String name = "earthDragon";
+	public static final String name = "nightDragon";
 
-    public EntityTerraDraco(World p_i1735_1_)
+    public EntityDracoTenebrosus(World p_i1735_1_)
     {
         super(p_i1735_1_);
         this.setSize(4.0F, 4.0F);
