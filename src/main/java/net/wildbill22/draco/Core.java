@@ -23,11 +23,6 @@ import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.KeyBindings;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
-import net.wildbill22.draco.models.ModelAquaDraco;
-import net.wildbill22.draco.models.ModelDracoMortem;
-import net.wildbill22.draco.models.ModelDracoTenebrosus;
-import net.wildbill22.draco.models.ModelSilverDragon;
-import net.wildbill22.draco.models.ModelTerraDraco;
 import net.wildbill22.draco.network.DragonAbilityLavaToObsidian;
 import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
 import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
@@ -39,12 +34,6 @@ import net.wildbill22.draco.network.StaffUpdateTeleportThroughWall;
 import net.wildbill22.draco.network.StaffUpdateTeleportThroughWallInDark;
 import net.wildbill22.draco.network.StaffUpdateWitherTarget;
 import net.wildbill22.draco.proxies.CommonProxy;
-import net.wildbill22.draco.render.RenderAquaDraco;
-import net.wildbill22.draco.render.RenderDracoMortem;
-import net.wildbill22.draco.render.RenderDracoTenebrosus;
-import net.wildbill22.draco.render.RenderSilverDragon;
-import net.wildbill22.draco.render.RenderTerraDraco;
-import net.wildbill22.draco.stats.ModStats;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -101,7 +90,6 @@ public class Core {
 		ModWeapons.init();
 		ModItems.init();
 		ModBlocks.init();
-//		ModStats.init();
 		GameRegistry.registerWorldGenerator(new WorldGenDracoAnimus(), 1000);
 		dracoProxy.registerSounds();
 		dracoProxy.registerSubscriptions();
@@ -122,8 +110,6 @@ public class Core {
 			// Register new village building
 			if (Configs.VILLAGE.village_guard_tower_enabled) {
 				VillageGuardTower.init();  // Guard Tower
-				// TestBallistaTower.init();
-//				TestCatapultTower.init();
 				BallistaTower.init();
 				CatapultTower.init();
 			}
@@ -135,18 +121,7 @@ public class Core {
 			}
 		}
 		// Dragons
-		RenderSilverDragon sdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 0); // Silver
-		DragonRegistry.instance().registerDragonRendererCreationHandler(sdHandler);
-		RenderDracoMortem dmHandler = new RenderDracoMortem(new ModelDracoMortem(), 0.5F);
-		DragonRegistry.instance().registerDragonRendererCreationHandler(dmHandler);
-		RenderAquaDraco adHandler = new RenderAquaDraco(new ModelAquaDraco(), 0.5F);
-		DragonRegistry.instance().registerDragonRendererCreationHandler(adHandler);
-		RenderSilverDragon gdHandler = new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 1);  // Gold
-		DragonRegistry.instance().registerDragonRendererCreationHandler(gdHandler);
-		RenderTerraDraco tdHandler = new RenderTerraDraco(new ModelTerraDraco(), 0.5F);
-		DragonRegistry.instance().registerDragonRendererCreationHandler(tdHandler);
-		RenderDracoTenebrosus dtHandler = new RenderDracoTenebrosus(new ModelDracoTenebrosus(), 0.5F); // Night Dragon
-		DragonRegistry.instance().registerDragonRendererCreationHandler(dtHandler);
+		DragonRegistry.init();
 	}
 
 	@EventHandler

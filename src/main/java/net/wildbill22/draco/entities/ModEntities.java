@@ -6,13 +6,14 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.wildbill22.draco.Core;
 import net.wildbill22.draco.biome.ModBiomes;
-import net.wildbill22.draco.entities.dragons.EntityAquaDraco;
+import net.wildbill22.draco.entities.dragons.EntityDracoAqua;
 import net.wildbill22.draco.entities.dragons.EntityCreeperDragon;
 import net.wildbill22.draco.entities.dragons.EntityDracoMortem;
 import net.wildbill22.draco.entities.dragons.EntityGoldDragon;
+import net.wildbill22.draco.entities.dragons.EntityDracoIgnis;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
 import net.wildbill22.draco.entities.dragons.EntityDracoTenebrosus;
-import net.wildbill22.draco.entities.dragons.EntityTerraDraco;
+import net.wildbill22.draco.entities.dragons.EntityDracoTerra;
 import net.wildbill22.draco.entities.hostile.EntityBallista;
 import net.wildbill22.draco.entities.hostile.EntityBaron;
 import net.wildbill22.draco.entities.hostile.EntityCatapult;
@@ -59,10 +60,11 @@ public class ModEntities {
 		
 		// New in 0.3.0
 		EntityRegistry.registerModEntity(EntityDracoMortem.class, EntityDracoMortem.name, ++modEntityID, Core.instance, 80, 3, true); // Skeleton dragon
-		EntityRegistry.registerModEntity(EntityAquaDraco.class, EntityAquaDraco.name, ++modEntityID, Core.instance, 80, 3, true); // Water dragon
+		EntityRegistry.registerModEntity(EntityDracoAqua.class, EntityDracoAqua.name, ++modEntityID, Core.instance, 80, 3, true); // Water dragon
 		EntityRegistry.registerModEntity(EntityGoldDragon.class, EntityGoldDragon.name, ++modEntityID, Core.instance, 80, 3, true); // Gold dragon
-		EntityRegistry.registerModEntity(EntityTerraDraco.class, EntityTerraDraco.name, ++modEntityID, Core.instance, 80, 3, true); // Earth dragon
+		EntityRegistry.registerModEntity(EntityDracoTerra.class, EntityDracoTerra.name, ++modEntityID, Core.instance, 80, 3, true); // Earth dragon
 		EntityRegistry.registerModEntity(EntityDracoTenebrosus.class, EntityDracoTenebrosus.name, ++modEntityID, Core.instance, 80, 3, true); // Night dragon
+		EntityRegistry.registerModEntity(EntityDracoIgnis.class, EntityDracoIgnis.name, ++modEntityID, Core.instance, 80, 3, true); // Fire dragon
 
 		addMobSpawns();
 

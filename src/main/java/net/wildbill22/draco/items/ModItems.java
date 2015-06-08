@@ -11,6 +11,13 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.Creative_Tab;
 import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
+import net.wildbill22.draco.items.dragoneggs.ItemEarthDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemFireDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemGoldDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemNightDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemSilverDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemSkeletonDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemWaterDragonEgg;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -32,6 +39,7 @@ public class ModItems extends Item {
 	public static Item waterDragonEgg;
 	public static Item earthDragonEgg;
 	public static Item nightDragonEgg;
+	public static Item fireDragonEgg;
 
 	// Food
 	public static ItemDragonFood villagerHeart; 
@@ -58,7 +66,7 @@ public class ModItems extends Item {
 		GameRegistry.registerItem(rock, ItemMyRock.name);
 		
 		// Dragon Food - only dragons can eat this food! Register foods before eggs!
-		// In wiki: Food points, Saturation ration
+		// In wiki: Food points, Saturation ration. Potion has: id, seconds effect lasts, level (0 - X, depends on potion)
 //		GameRegistry.registerItem(villagerHeart = new ItemModFood("villagerHeart", 4, 0.6f, false), "villagerHeart");
 		// Poison, like potatoes
 		GameRegistry.registerItem(villagerHeart = new ItemDragonFood("villagerHeart", 6, 1.2f, false, 
@@ -76,12 +84,14 @@ public class ModItems extends Item {
 		waterDragonEgg = new ItemWaterDragonEgg();
 		earthDragonEgg = new ItemEarthDragonEgg();
 		nightDragonEgg = new ItemNightDragonEgg();
+		fireDragonEgg = new ItemFireDragonEgg();
 		GameRegistry.registerItem(goldDragonEgg, ItemGoldDragonEgg.name);
 		GameRegistry.registerItem(skeletonDragonEgg, ItemSkeletonDragonEgg.name);
 		GameRegistry.registerItem(silverDragonEgg, ItemSilverDragonEgg.name);
 		GameRegistry.registerItem(waterDragonEgg, ItemWaterDragonEgg.name);
 		GameRegistry.registerItem(earthDragonEgg, ItemEarthDragonEgg.name);
 		GameRegistry.registerItem(nightDragonEgg, ItemNightDragonEgg.name);
+		GameRegistry.registerItem(fireDragonEgg, ItemFireDragonEgg.name);
 
 		// Dragon Egg Registry
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) silverDragonEgg);
@@ -90,6 +100,7 @@ public class ModItems extends Item {
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) waterDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) earthDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) nightDragonEgg);		
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) fireDragonEgg);		
 	}
 
 	public static void init() {

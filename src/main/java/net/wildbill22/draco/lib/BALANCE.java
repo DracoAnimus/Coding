@@ -127,6 +127,9 @@ public final class BALANCE {
 		@DefaultBoolean(value = false, name = "Receive damage from explosions?", 
 				comment = "Whether the player is damaged by explosions")
 		public static boolean RECEIVE_EXPLODING_FIREBALL_DAMAGE;
+		@DefaultDouble(value = 10.0D, minValue = 4.5D, maxValue = 20.0D, name = "Extended reach for level 1 dragon", 
+				comment = "A level 10 dragon get this value + 20")
+		public static double MIN_EXTENDED_REACH;
 	}
 
 	/**
@@ -135,12 +138,21 @@ public final class BALANCE {
 	 *
 	 */
 	public static class DP_MODIFIERS {
+		@DefaultDouble(value = 1.0D, minValue = 0.1D, maxValue = 2.0D, name = "Jump multiplier", 
+				comment = "(Math.pow(level, type) / Math.pow(level cap, type)) * multiplier")
+		public static double JUMP_MAX_BOOST;
+		@DefaultInt(value = 10, minValue = 3, maxValue = 100, name = "Jump Level Cap", 
+				comment = "Dragon level where this modifier does not get stronger")
+		public static int JUMP_LCAP;
+		@DefaultDouble(value = 0.5D, minValue = 0.1D, maxValue = 1.0D, name = "Jump Modifier Type", 
+				comment = "0.5 for square root, 1 for linear")
+		public static double JUMP_TYPE;
 		@DefaultDouble(value = 1.0D, minValue = 0.3D, maxValue = 2.0D, name = "Health multiplier", 
 				comment = "(Math.pow(level, type) / Math.pow(level cap, type)) * multiplier")
 		public static double HEALTH_MAX_MOD;
 		@DefaultInt(value = 20, minValue = 0, maxValue = 40, name = "Health Level Cap", 
 				comment = "Dragon level where this modifier does not get stronger")
-		public static int HEALTH_LCAP = 20;
+		public static int HEALTH_LCAP;
 		@DefaultDouble(value = 0.5D, minValue = 0.3D, maxValue = 1.0D, name = "Health Modifier Type", 
 				comment = "0.5 for square root, 1 for linear")
 		public static double HEALTH_TYPE;
@@ -156,7 +168,7 @@ public final class BALANCE {
 		@DefaultDouble(value = 0.3D, minValue = 0.2D, maxValue = 1.0D, name = "Speed multiplier", 
 				comment = "(Math.pow(level, type) / Math.pow(level cap, type)) * multiplier")
 		public static double SPEED_MAX_MOD;
-		@DefaultInt(value = 15, minValue = 0, maxValue = 30, name = "Speed Level Cap", 
+		@DefaultInt(value = 6, minValue = 0, maxValue = 30, name = "Speed Level Cap", 
 				comment = "Dragon level where this modifier does not get stronger")
 		public static int SPEED_LCAP;
 		@DefaultDouble(value = 0.5D, minValue = 0.3D, maxValue = 1.0D, name = "Speed Modifier Type", 

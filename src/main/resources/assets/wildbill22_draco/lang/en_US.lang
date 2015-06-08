@@ -23,6 +23,8 @@ item.wildbill22_draco_earthDragonStaff.name=Earth Dragon Staff
 item.wildbill22_draco_earthDragonEgg.name=Earth Dragon Egg
 item.wildbill22_draco_nightDragonStaff.name=Night Dragon Staff
 item.wildbill22_draco_nightDragonEgg.name=Night Dragon Egg
+item.wildbill22_draco_fireDragonStaff.name=Fire Dragon Staff
+item.wildbill22_draco_fireDragonEgg.name=Fire Dragon Egg
 
 #Food Items
 item.wildbill22_draco_villagerHeart.name=Villager Heart
@@ -39,6 +41,7 @@ tile.silverDragonEggBlock.name=Silver Dragon Egg
 tile.waterDragonEggBlock.name=Water Dragon Egg
 tile.earthDragonEggBlock.name=Earth Dragon Egg
 tile.nightDragonEggBlock.name=Night Dragon Egg
+tile.fireDragonEggBlock.name=Fire Dragon Egg
 
 #Dragons
 entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon

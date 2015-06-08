@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -67,6 +68,7 @@ public class StaffUpdateSetTargetOnFire implements IMessage {
 		            if (entity instanceof EntityLivingBase) {
 						// Set fire				
 		            	entity.setFire(1 + amplifier);
+		            	entity.attackEntityFrom(DamageSource.onFire, amplifier * 0.25F);
 		            	LogHelper.info("Set fire to an entity!");
 		            }
 		        }

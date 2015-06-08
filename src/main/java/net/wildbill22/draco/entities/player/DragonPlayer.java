@@ -19,8 +19,8 @@ import net.wildbill22.draco.Core;
 import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
 import net.wildbill22.draco.entities.dragons.EntitySilverDragon;
-import net.wildbill22.draco.items.ItemDragonEgg;
 import net.wildbill22.draco.items.ModItems;
+import net.wildbill22.draco.items.dragoneggs.ItemDragonEgg;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
@@ -99,11 +99,11 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	public void saveNBTData(NBTTagCompound compound) {
 		NBTTagCompound properties = new NBTTagCompound();
 		// Dragon player properties
+		properties.setString("dragonName", getDragonName());
 		properties.setBoolean("isDragon", isDragon());
 		properties.setBoolean("wasFlyingOnExit", this.getPlayer().capabilities.isFlying);
 		properties.setInteger("hoardSize", getHoardSize());
 		properties.setInteger("level", getLevel());
-		properties.setString("dragonName", getDragonName());
 
         // Hoard Locations
 		int size = hoardList.size();
@@ -144,13 +144,13 @@ public class DragonPlayer implements IExtendedEntityProperties {
 		if (properties == null)
 			return;
 		// Dragon player properties 
+        setDragonName(properties.getString("dragonName"));
 		setDragon(properties.getBoolean("isDragon"), false);
         this.wasFlyingOnExit = properties.getBoolean("wasFlyingOnExit");
         setHoardSize(properties.getInteger("hoardSize"));
         LogHelper.info("DragonPlayer load: Player has " + getHoardSize() + " coins.");
         setLevel(properties.getInteger("level"), false);
         LogHelper.info("DragonPlayer load: Player is level " + level + ".");
-        setDragonName(properties.getString("dragonName"));
 
         // Hoard Locations
         hoardList.clear();
@@ -233,9 +233,11 @@ public class DragonPlayer implements IExtendedEntityProperties {
 			if (!player.capabilities.isCreativeMode)
 				player.capabilities.allowFlying = false;    		
     	}
-		if (syncClient)
+		if (syncClient) {
 			syncClient(false);
-		// TODO: Need to also add unique modifiers for each dragon type
+		}
+		
+		// Also adds unique modifiers for each dragon type
 		PlayerModifiers.applyModifiers(level, player, isDragon);
 	}
 

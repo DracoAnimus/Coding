@@ -16,9 +16,9 @@ public class ModCraftingRecipes {
 //				" S ",
 //				'S', Items.stick, 'E', ModItems.Egg);
 		
-		// Need to change to crafting an silver dragon egg
+		// Silver dragon egg to put in hoard
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.silverDragonEgg, 1), 
-				Items.egg, ModItems.villagerHeart);
+				ModItems.villagerSkull, ModItems.villagerHeart);
 
 		// Blocks
 		GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.scorchedCobblestone, 1), 

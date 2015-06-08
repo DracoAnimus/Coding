@@ -19,6 +19,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -29,8 +30,9 @@ import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
-import net.wildbill22.draco.items.ItemDragonEgg;
-import net.wildbill22.draco.items.ItemDragonEgg.Abilities;
+import net.wildbill22.draco.entities.player.PlayerModifiers;
+import net.wildbill22.draco.items.dragoneggs.ItemDragonEgg;
+import net.wildbill22.draco.items.dragoneggs.ItemDragonEgg.Abilities;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
@@ -88,16 +90,31 @@ public class DragonPlayerEventHandler {
 	public void onLivingUpdateEvent(LivingUpdateEvent event) {
 //		if (event.entity != null && event.entity instanceof EntityPlayer) {
 //			EntityPlayer player = (EntityPlayer) event.entity;
-		if (!event.entityLiving.worldObj.isRemote && event.entityLiving != null && event.entityLiving instanceof EntityPlayer) {
+		if (event.entityLiving != null && event.entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
 			if (DragonPlayer.get(player).isDragon()) {
-	    		player.capabilities.allowFlying = true;
-	    		ItemDragonEgg.applyAbilities(player);
-	    		player.sendPlayerAbilities();
-	        }
+				if (!event.entityLiving.worldObj.isRemote) {  
+		    		player.capabilities.allowFlying = true;
+		    		ItemDragonEgg.applyAbilities(player, false);
+		    		player.sendPlayerAbilities();
+		        }
+				else {
+					ItemDragonEgg.applyAbilities(player, true);				
+				}
+			}
 		}
     }
 	
+	@SubscribeEvent
+	public void onLivingJump(LivingJumpEvent event) {
+		if (event.entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) event.entity;
+			if (DragonPlayer.get(player).isDragon() && ItemDragonEgg.hasAbility(player, Abilities.FIREDRAGON)) {
+				PlayerModifiers.addJumpBoost(DragonPlayer.get(player).getLevel(), player);
+			}
+		}
+	}
+
 	// Some other events to maybe use, that are on FMLCommonHandler.bus(), so need a separate handler
 	// PlayerEvent.PlayerRespawnEvent - maybe to fix setting can fly after dying
 

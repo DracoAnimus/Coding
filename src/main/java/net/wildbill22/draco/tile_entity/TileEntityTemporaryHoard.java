@@ -16,8 +16,8 @@ import net.wildbill22.draco.blocks.TemporaryHoard;
 import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
 import net.wildbill22.draco.entities.player.DragonPlayer;
-import net.wildbill22.draco.items.ItemDragonEgg;
 import net.wildbill22.draco.items.ModItems;
+import net.wildbill22.draco.items.dragoneggs.ItemDragonEgg;
 
 /**
  * 
@@ -31,9 +31,11 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	 */
 	public static class HoardContainer extends ContainerChest {
 		private static ItemStack justAdded = null;
+		private int numSlots;
 		
 		public HoardContainer(IInventory player, IInventory chest) {
 			super(player, chest);
+			numSlots = 27;
 		}
 		
 		@Override
@@ -91,21 +93,25 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	    /**
 	     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
 	     * Override to use our slot, which won't accept moving stuff not allowed!
+	     * Only allows gold coins and dragon eggs to be shift-clicked
 	     */
 		@Override
 	    public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
-			int numRows = this.inventorySlots.size() / 9;
-	        ItemStack itemstack = null;
+			int hoardRows = this.numSlots / 9;
+	        ItemStack copyOfItemstack = null;
 	        Slot slot = (Slot)this.inventorySlots.get(slotNum);
-	        if (slot != null && slot.getHasStack()) {
+	        if (slot != null && slot.getHasStack() 
+	        		&& (slot.getStack().getItem().equals(ModItems.goldCoin) || slot.getStack().getItem() instanceof ItemDragonEgg)) {
 	            ItemStack itemstack1 = slot.getStack();
-	            itemstack = itemstack1.copy();
-	            if (slotNum < numRows * 9) {
-	                if (!this.mergeItemStack(itemstack1, numRows * 9, this.inventorySlots.size(), true)) {
+	            copyOfItemstack = itemstack1.copy();
+	            // Copy out of the hoard if one of the slots in the hoard 
+	            if (slotNum < hoardRows * 9) {
+	                if (!this.mergeItemStack(itemstack1, hoardRows * 9, this.inventorySlots.size(), true)) {
 	                    return null;
 	                }
 	            }
-	            else if (!this.mergeItemStack(itemstack1, 0, numRows * 9, false)) {
+	            // Otherwise copy into the hoard
+	            else if (!this.mergeItemStack(itemstack1, 0, hoardRows * 9, false)) {
 	                return null;
 	            }
 	            if (itemstack1.stackSize == 0) {
@@ -115,9 +121,10 @@ public class TileEntityTemporaryHoard extends TileEntityChest {
 	                slot.onSlotChanged();
 	            }
 	        }
-	        return itemstack;
+        	justAdded = copyOfItemstack; // So onContainerClosed can drop a staff if this is an egg!
+	        return copyOfItemstack;
 	    }
-	}
+	} // End of Class HoardContainer
 
 	private String customName;
 	private ItemStack[] chestContents = new ItemStack[36];

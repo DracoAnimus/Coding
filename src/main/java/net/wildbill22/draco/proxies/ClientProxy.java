@@ -18,7 +18,20 @@ import net.wildbill22.draco.items.*;
 import net.wildbill22.draco.items.weapons.ModWeapons;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.models.*;
+import net.wildbill22.draco.models.dragons.ModelDracoAqua;
+import net.wildbill22.draco.models.dragons.ModelCreeperDragon;
+import net.wildbill22.draco.models.dragons.ModelDracoMortem;
+import net.wildbill22.draco.models.dragons.ModelDracoTenebrosus;
+import net.wildbill22.draco.models.dragons.ModelDracoIgnis;
+import net.wildbill22.draco.models.dragons.ModelSilverDragon;
+import net.wildbill22.draco.models.dragons.ModelWildFireDragon;
 import net.wildbill22.draco.render.*;
+import net.wildbill22.draco.render.dragons.RenderCreeperDragon;
+import net.wildbill22.draco.render.dragons.RenderDracoMortem;
+import net.wildbill22.draco.render.dragons.RenderDracoTenebrosus;
+import net.wildbill22.draco.render.dragons.RenderDracoIgnis;
+import net.wildbill22.draco.render.dragons.RenderSilverDragon;
+import net.wildbill22.draco.render.dragons.RenderWildFireDragon;
 import net.wildbill22.draco.render.item.ItemRendererTemporaryHoard;
 import net.wildbill22.draco.render.item.ItemRendererSpear;
 import net.wildbill22.draco.tile_entity.*;
@@ -44,12 +57,14 @@ public class ClientProxy extends CommonProxy
 				new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 0)); // Silver
 		RenderingRegistry.registerEntityRenderingHandler(EntityDracoMortem.class, 
 				new RenderDracoMortem(new ModelDracoMortem(), 0.5F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityAquaDraco.class, 
-				new RenderDracoMortem(new ModelAquaDraco(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDracoAqua.class, 
+				new RenderDracoMortem(new ModelDracoAqua(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySilverDragon.class, 
 				new RenderSilverDragon(new ModelSilverDragon(), 0.5F, 1)); // Gold
 		RenderingRegistry.registerEntityRenderingHandler(EntityDracoTenebrosus.class, 
 				new RenderDracoTenebrosus(new ModelDracoTenebrosus(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDracoIgnis.class, 
+				new RenderDracoIgnis(new ModelDracoIgnis(), 0.5F));
 		
 		// Other entities
 		RenderingRegistry.registerEntityRenderingHandler(EntityGuard.class,	new RenderGuard(new ModelBiped(), 0.5F));
