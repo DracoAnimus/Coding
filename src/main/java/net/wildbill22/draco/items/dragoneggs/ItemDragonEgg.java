@@ -75,12 +75,15 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 			clientCountdown--;
 
 			if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.FIREDRAGON)) {
+				// Smoke particles
 				Random rand = player.worldObj.rand;
 				if (!player.isWet() && rand.nextInt(2) == 0) {
 					player.worldObj.spawnParticle("largesmoke", player.posX + (rand.nextDouble() - 0.5D) * (double)player.width, 
 							player.posY + rand.nextDouble() * (double)player.height, player.posZ + (rand.nextDouble() - 0.5D) 
 							* (double)player.width, 0.0D, 0.0D, 0.0D);
 				}
+	    		// Step over stuff
+	    		player.stepHeight = 1.0F;
 			}
 			
 			return;
@@ -164,7 +167,8 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.FIREDRAGON)) {
 			// Remove Flying
     		player.capabilities.allowFlying = false;
-			// Damage if wet, otherwise heal
+
+            // Damage if wet, otherwise heal
     		if (serverCountdown == 10) {
 	            if (player.isWet()) {
 	            	// 0.75F to 2.0F damage

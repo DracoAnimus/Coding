@@ -21,7 +21,7 @@ public class RenderDracoIgnis extends RendererLivingEntity  implements IDragonRe
 	}
 
 	private void setEntityTexture() {
-		dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/ignisDraco.png");
+		dragonTexture = new ResourceLocation(REFERENCE.MODID + ":textures/models/dracoIgnis.png");
 	}
 
 	@Override
