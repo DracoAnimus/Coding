@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.wildbill22.draco.Creative_Tab;
+import net.wildbill22.draco.blocks.dragoneggs.BlockEagleDragonEgg;
 import net.wildbill22.draco.blocks.dragoneggs.BlockEarthDragonEgg;
 import net.wildbill22.draco.blocks.dragoneggs.BlockFireDragonEgg;
 import net.wildbill22.draco.blocks.dragoneggs.BlockGoldDragonEgg;
@@ -26,6 +27,7 @@ public class ModBlocks extends Block {
  	public static Block earthDragonEgg;
  	public static Block nightDragonEgg;
  	public static Block fireDragonEgg;
+ 	public static Block eagleDragonEgg;
 	
 	public static void preInit() {			
 		// Misc 
@@ -44,6 +46,7 @@ public class ModBlocks extends Block {
 		earthDragonEgg = new BlockEarthDragonEgg();
 		nightDragonEgg = new BlockNightDragonEgg();
 		fireDragonEgg = new BlockFireDragonEgg();
+		eagleDragonEgg = new BlockEagleDragonEgg();
 		GameRegistry.registerBlock(goldDragonEgg, BlockGoldDragonEgg.name);
 		GameRegistry.registerBlock(silverDragonEgg, BlockSilverDragonEgg.name);
 		GameRegistry.registerBlock(skeletonDragonEgg, BlockSkeletonDragonEgg.name);
@@ -51,6 +54,7 @@ public class ModBlocks extends Block {
 		GameRegistry.registerBlock(earthDragonEgg, BlockEarthDragonEgg.name);		
 		GameRegistry.registerBlock(nightDragonEgg, BlockNightDragonEgg.name);		
 		GameRegistry.registerBlock(fireDragonEgg, BlockFireDragonEgg.name);		
+		GameRegistry.registerBlock(eagleDragonEgg, BlockEagleDragonEgg.name);		
 	}
 
 	public static void init() {

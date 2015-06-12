@@ -23,9 +23,13 @@ public abstract class PlayerModifiers {
 	}
 
 	public static void applyModifiers(int level, EntityPlayer p, boolean isDragon) {
-		if (ItemDragonEgg.hasAbility(p, Abilities.FIREDRAGON)) {
+		if (ItemDragonEgg.hasAbility(p, Abilities.FASTONGROUND) && !p.capabilities.isFlying) {
 			// 3 X Speed boost
 			PlayerModifiers.applyModifiers(level, p, isDragon, 3.0F, 1.0F, 1.0F);			
+		}
+		else if (ItemDragonEgg.hasAbility(p, Abilities.FASTFLYING) && p.capabilities.isFlying) {
+			// 2 X Speed boost
+			PlayerModifiers.applyModifiers(level, p, isDragon, 2.5F, 1.0F, 1.0F);			
 		}
 		else {
 			applyModifiers(level, p, isDragon, 1.0F, 1.0F, 1.0F);

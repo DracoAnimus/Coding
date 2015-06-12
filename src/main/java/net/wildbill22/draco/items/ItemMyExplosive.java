@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntityMyExplosive;
 import cpw.mods.fml.relauncher.Side;
@@ -51,7 +52,7 @@ public class ItemMyExplosive extends ModItems
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Explosive Fireball.");
-		list.add("Explodes on impact!");
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.explosiveFireball"));
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.explodesOnImpact"));
 	}
 }

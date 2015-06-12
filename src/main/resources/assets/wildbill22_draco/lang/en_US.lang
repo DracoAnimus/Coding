@@ -1,6 +1,89 @@
+< en_US.lang - English localization file for Draco Animus >
+
+#Dragon Eggs
+egg.wildbill22_draco_putThisEgg=Put this egg in the hoard
+egg.wildbill22_draco_youWillGetStaff=You will get a staff that turns you 
+egg.wildbill22_draco_intoWaterDragon=into a Water Dragon!
+egg.wildbill22_draco_intoSkeletonDragon=into a Skeleton Dragon!
+egg.wildbill22_draco_intoSilverDragon=into a Silver Dragon!
+egg.wildbill22_draco_intoNightDragon=into an Night Dragon!
+egg.wildbill22_draco_intoGoldenDragon=into a Golden Dragon!
+egg.wildbill22_draco_intoFireDragon=into an Fire Dragon!
+egg.wildbill22_draco_intoEarthDragon=into an Earth Dragon!
+egg.wildbill22_draco_intoEagleDragon=into an Eagle Dragon!
+
+#Chat Messages
+chat.wildbill22_draco.StaffUpdateTeleportThroughWall=Only solid blocks in that direction for the next %f meters! 
+chat.wildbill22_draco.teleportInDark=You can only teleport in the dark.
+chat.wildbill22_draco.NoEggInHoard=No egg in hoard for this staff!
+chat.wildbill22_draco.noStrongholdChestsNearby=No stronghold chests nearby
+chat.wildbill22_draco.chestIsLocated=Chest is located at: %d,%d,%d!
+chat.wildbill22_draco.foundPossibleStrongholdChest=Found possible stronghold chest with a villager skull in it!
+chat.wildbill22_draco.staffInMode=Staff in mode: %s!
+chat.wildbill22_draco.thisStaffIsOnlyFor=This staff is only for %s!
+chat.wildbill22_draco.chnagedToHuman=Changed to human!
+chat.wildbill22_draco.changedToDragon=Changed to dragon!
+chat.wildbill22_draco.sillyHumanOnlyDragonsHavePowers=Silly human, only dragons have powers!
+chat.wildbill22_draco.youCanOnlySpitBoilingWater=You can only spit boiling water in the water.
+chat.wildbill22_draco.foundGoldCoinsAt=Found gold coins at: %d,%d,%d!
+chat.wildbill22_draco.noGoldCoinsFound=No gold coins found nearby
+chat.wildbill22_draco.moreGoldCoinsYouAdd=The more gold coins you add, the higher your dragon level.
+chat.wildbill22_draco.youHavePlacedAHoard=You have placed a hoard, you can now add gold coins!
+chat.wildbill22_draco.youAreNotTheOwnder=You are not the owner of this hoard!
+chat.wildbill22_draco.youCanBreakIt=You can break it and place it again to become the owner.
+chat.wildbill22_draco.hoardsOnlyWorkInOverWorld=Hoards only work in the OverWorld!
+chat.wildbill22_draco.tameDragonWithGunpowder=Tame the dragon with gunpowder
+
+#Dragon Mode Names
+staff.wildbill22_draco_Change_form.name=Change form
+staff.wildbill22_draco_Spawns_Fireballs.name=Spawns Fireballs
+staff.wildbill22_draco_Spawn_Explosive_Fireballs.name=Spawn Explosive Fireballs
+staff.wildbill22_draco_Teleport.name=Teleport
+staff.wildbill22_draco_Invisible.name=Invisible
+staff.wildbill22_draco_Swiftness.name=Swiftness
+staff.wildbill22_draco_Breaks_blocks_faster.name=Breaks blocks faster
+staff.wildbill22_draco_Regeneration_-_heal_yourself.name=Regeneration - heal yourself
+staff.wildbill22_draco_Fire_breathing.name=Fire breathing
+staff.wildbill22_draco_Sound_wave.name=Sound wave
+staff.wildbill22_draco_Golden_Eye.name=Golden Eye
+staff.wildbill22_draco_Wither_Effect.name=Wither Effect
+staff.wildbill22_draco_Poison.name=Poison
+staff.wildbill22_draco_Spit_Boiling_Water.name=Spit Boiling Water
+staff.wildbill22_draco_Teleport_through_walls.name=Teleport through walls
+staff.wildbill22_draco_Locate_strongholds.name=Locate Strongholds
+staff.wildbill22_draco_Teleport_through_walls_in_the_dark.name=Teleport through walls in the dark
+
+#Weapon's Add Information
+staff.wildbill22_draco_mode= mode: 
+staff.wildbill22_draco.staffThatAllowsChange=Staff that allows you to change
+staff.wildbill22_draco.fromHumanTo=from human to %s .
+staff.wildbill22_draco.useShiftRightClick=Use shift + right click to change modes.
+weapon.wildbill22_draco.hitsRemaining=%d Hits Remaining
+sword.wildbill22_draco.attackDamage=%f Attack Damage
+staff.wildbill22_draco.currentAbility=Current ability: %s !
+weapon.wildbill22_draco.causesHitDamage=Causes hit damage.
+weapon.wildbill22_draco.causesThrownDamage=Causes thrown damage.
+weapon.wildbill22_draco.causesFloatThrowDamage=Causes %f throw damage.
+weapon.wildbill22_draco.mace=Mace.
+weapon.wildbill22_draco.longSword=Long Sword.
+weapon.wildbill22_draco.canKillVillageEnemies=Can kill village enemies.
+weapon.wildbill22_draco.longBow=Long Bow.
+weapon.wildbill22_draco.moreDamageToDragons=More damage to dragons.
+weapon.wildbill22_draco.dragonSlayerSword=Dragon Slayer Sword.
+weapon.wildbill22_draco.crossbow=Crossbow.
+weapon.wildbill22_draco.battleAxe=Battle Axe.
+weapon.wildbill22_draco.spearHeldByVillageGuards=Spear held by village guards.
+weapon.wildbill22_draco.rock=Rock.
+weapon.wildbill22_draco.onImpactItCatchesEntitiesOnFire=On impact it catches entities on fire.
+weapon.wildbill22_draco.fireball=Fireball.
+weapon.wildbill22_draco.explodesOnImpact=Explodes on impact!
+weapon.wildbill22_draco.explosiveFireball=Explosive Fireball.
+
 #Items
 item.wildbill22_draco_dragonSlayerSword.name=Dragon Slayer Sword
 item.wildbill22_draco_dragonScales.name=Dragon Scales
+item.wildbill22_draco_dragonScales.info1=Dragon Scales
+item.wildbill22_draco_dragonScales.info2=Dropped when a dragon is killed.
 item.wildbill22_draco_fireball.name=Fireball
 item.wildbill22_draco_explosiveFireball.name=Explosive Fireball
 item.wildbill22_draco_spear.name=Spear
@@ -8,6 +91,8 @@ item.wildbill22_draco_longSword.name=Long Sword
 item.wildbill22_draco_battleAxe.name=Battle Axe
 item.wildbill22_draco_mace.name=Mace
 item.wildbill22_draco_goldCoin.name=Gold Coin
+item.wildbill22_draco_goldCoin.info1=Store these in the dragon
+item.wildbill22_draco_goldCoin.info2=hoard to increase your powers!
 item.wildbill22_draco_longBow.name=Long Bow
 item.wildbill22_draco_crossbow.name=Crossbow
 item.wildbill22_draco_rock.name=Rock
@@ -25,6 +110,8 @@ item.wildbill22_draco_nightDragonStaff.name=Night Dragon Staff
 item.wildbill22_draco_nightDragonEgg.name=Night Dragon Egg
 item.wildbill22_draco_fireDragonStaff.name=Fire Dragon Staff
 item.wildbill22_draco_fireDragonEgg.name=Fire Dragon Egg
+item.wildbill22_draco_eagleDragonStaff.name=Eagle Dragon Staff
+item.wildbill22_draco_eagleDragonEgg.name=Eagle Dragon Egg
 
 #Food Items
 item.wildbill22_draco_villagerHeart.name=Villager Heart
@@ -42,6 +129,7 @@ tile.waterDragonEggBlock.name=Water Dragon Egg
 tile.earthDragonEggBlock.name=Earth Dragon Egg
 tile.nightDragonEggBlock.name=Night Dragon Egg
 tile.fireDragonEggBlock.name=Fire Dragon Egg
+tile.eagleDragonEggBlock.name=Eagle Dragon Egg
 
 #Dragons
 entity.wildbill22_draco.mcSilverDragon.name=Silver Dragon
@@ -52,6 +140,7 @@ entity.wildbill22_draco.dracoMortem.name=Draco Mortem
 entity.wildbill22_draco.aquaDragon.name=Aqua Draco
 entity.wildbill22_draco.terraDraco.name=Terra Draco
 entity.wildbill22_draco.tenebrosusDraco.name=Tenebrosus Draco
+entity.wildbill22_draco.aquilaDraco.name=Aquila Draco
 
 #Entities
 entity.wildbill22_draco.spearGuard.name=Spear Guard

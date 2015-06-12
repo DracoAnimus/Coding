@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.wildbill22.draco.entities.dragons.EntityDracoTenebrosus;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
@@ -29,9 +30,9 @@ public class ItemNightDragonEgg extends ItemDragonEgg {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Put this egg in the hoard");
-		list.add("You will get a staff that turns"); 
-		list.add("you into an Night Dragon!");
+		list.add(StatCollector.translateToLocal("egg.wildbill22_draco_putThisEgg"));
+		list.add(StatCollector.translateToLocal("egg.wildbill22_draco_youWillGetStaff")); 
+		list.add(StatCollector.translateToLocal("egg.wildbill22_draco_intoNightDragon"));
 	}
 	
 	@Override

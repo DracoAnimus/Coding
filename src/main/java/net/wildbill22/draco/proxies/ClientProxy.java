@@ -27,6 +27,7 @@ import net.wildbill22.draco.models.dragons.ModelSilverDragon;
 import net.wildbill22.draco.models.dragons.ModelWildFireDragon;
 import net.wildbill22.draco.render.*;
 import net.wildbill22.draco.render.dragons.RenderCreeperDragon;
+import net.wildbill22.draco.render.dragons.RenderDracoAquila;
 import net.wildbill22.draco.render.dragons.RenderDracoMortem;
 import net.wildbill22.draco.render.dragons.RenderDracoTenebrosus;
 import net.wildbill22.draco.render.dragons.RenderDracoIgnis;
@@ -65,6 +66,8 @@ public class ClientProxy extends CommonProxy
 				new RenderDracoTenebrosus(new ModelDracoTenebrosus(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityDracoIgnis.class, 
 				new RenderDracoIgnis(new ModelDracoIgnis(), 0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityDracoAquila.class, 
+				new RenderDracoAquila(new ModelDracoIgnis(), 0.5F));
 		
 		// Other entities
 		RenderingRegistry.registerEntityRenderingHandler(EntityGuard.class,	new RenderGuard(new ModelBiped(), 0.5F));

@@ -12,6 +12,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
@@ -38,9 +39,9 @@ public class ItemCrossbow extends ItemBow {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
-		list.add("Crossbow.");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("Can kill village enemies.");
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.crossbow"));
+		list.add(StatCollector.translateToLocalFormatted("weapon.wildbill22_draco.hitsRemaining", stack.getMaxDamage() - stack.getItemDamage()));
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.canKillVillageEnemies"));
 	}
 
     /**

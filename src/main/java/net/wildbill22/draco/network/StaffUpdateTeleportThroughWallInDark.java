@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.wildbill22.draco.lib.LogHelper;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -52,7 +53,8 @@ public class StaffUpdateTeleportThroughWallInDark implements IMessage {
 			EntityPlayer player = ctx.getServerHandler().playerEntity;
 			if (player != null) {
 				if (player.worldObj.getBlockLightValue((int)Math.floor(player.posX), (int)Math.floor(player.posY), (int)Math.floor(player.posZ)) > 7) {	
-					player.addChatMessage(new ChatComponentText("You can only teleport in the dark."));
+					player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.teleportInDark")));
+//					player.addChatMessage(new ChatComponentText("You can only teleport in the dark."));
 					return null;
 				}
 				double minD = 3.0D;
@@ -69,7 +71,9 @@ public class StaffUpdateTeleportThroughWallInDark implements IMessage {
 					    }
 				    }
 				}
-				player.addChatMessage(new ChatComponentText("Only solid blocks or daylight in that direction for the next " + message.maxD + " meters!"));
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.StaffUpdateTeleportThroughWall", message.maxD)));				
+//				player.addChatMessage(new ChatComponentText("Only solid blocks or daylight in that direction for the next " + message.maxD + " meters!"));
 			}
 			return null;
 		}

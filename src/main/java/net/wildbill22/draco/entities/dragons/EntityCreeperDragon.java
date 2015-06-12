@@ -31,6 +31,7 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.ai.EntityAIAvoidDragon;
 import net.wildbill22.draco.items.ModItems;
@@ -338,7 +339,7 @@ public class EntityCreeperDragon extends EntityTameable {
             return true;
         }
         else {
-			player.addChatMessage(new ChatComponentText("Tame the dragon with gunpowder"));
+			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.tameDragonWithGunpowder")));
         }
         return super.interact(player);
     }

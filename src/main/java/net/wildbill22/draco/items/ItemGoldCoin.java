@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 public class ItemGoldCoin extends ModItems {
 	public static final String name = "goldCoin";
@@ -24,7 +25,7 @@ public class ItemGoldCoin extends ModItems {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Store these in the dragon");
-		list.add("hoard to increase your powers!");
+		list.add(StatCollector.translateToLocal("item.wildbill22_draco_goldCoin.info1"));
+		list.add(StatCollector.translateToLocal("item.wildbill22_draco_goldCoin.info2"));
 	}
 }

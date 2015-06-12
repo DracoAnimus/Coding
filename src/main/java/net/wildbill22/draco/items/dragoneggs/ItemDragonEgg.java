@@ -84,15 +84,29 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 				}
 	    		// Step over stuff
 	    		player.stepHeight = 1.0F;
+	    		
+	    		// Hearts if healing
+            	if (player.prevHealth != player.getHealth() && rand.nextInt(4) == 0) {
+					player.worldObj.spawnParticle("heart", player.posX + (rand.nextDouble() - 0.5D) * (double)player.width, 
+							player.posY + rand.nextDouble() * (double)player.height, player.posZ + (rand.nextDouble() - 0.5D) 
+							* (double)player.width, 0.0D, 0.0D, 0.0D);
+					player.prevHealth = player.getHealth();
+            	}
+			}
+			// Pickup Entities
+			if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.EAGLEDRAGON) && player.capabilities.isFlying) {
+				// Climbing
+				if (player.prevPosY <= player.posY) {
+					
+				}
 			}
 			
 			return;
 		}
 
-		// Server abilities
-		// 20 is once a second
+		// *** Server abilities ***
 		if (serverCountdown <= 0)
-			serverCountdown = 20;
+			serverCountdown = 20; // 20 is once a second
 		serverCountdown--;
 
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.INVISIBLE)) {
@@ -167,6 +181,10 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.FIREDRAGON)) {
 			// Remove Flying
     		player.capabilities.allowFlying = false;
+    		
+    		// No fall damage
+    		if (!player.onGround)
+    			player.fallDistance = 1.0F;
 
             // Damage if wet, otherwise heal
     		if (serverCountdown == 10) {
@@ -371,6 +389,16 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
      */
 	protected void addFireDragonAbilities(String dragonName) {
 		Abilities.addAbility(dragonName, Abilities.FIREDRAGON);
+		Abilities.addAbility(dragonName, Abilities.FASTONGROUND);
+	}
+
+	/**
+     * Sets dragon to have fast flying
+     * 
+     * @param dragonName unlocalizedName or any unique string 
+     */
+	protected void addEagleDragonAbilities(String dragonName) {
+		Abilities.addAbility(dragonName, Abilities.FASTFLYING);
 	}
 
 	public static class Abilities {
@@ -391,6 +419,9 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		public static final int INVISIBLEINDARK = 13;
 		public static final int STEALTH = 14;
 		public static final int FIREDRAGON = 15;
+		public static final int EAGLEDRAGON = 16;
+		public static final int FASTFLYING = 17;
+		public static final int FASTONGROUND = 18;
 
 		protected static void addAbility(String dragonName, Integer ability) {
 			dragonAbilities.put(dragonName, ability);

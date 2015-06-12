@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import net.wildbill22.draco.Core;
@@ -275,7 +276,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	public boolean calculateHoardSize(World world) {
 		// Only look for hoards in OverWorld!
 		if (world.provider.dimensionId != 0) {
-			this.player.addChatMessage(new ChatComponentText("Hoards only work in the OverWorld!"));
+			this.player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.hoardsOnlyWorkInOverWorld")));
 			return false;
 		}
 		hoardSize = 0;

@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.wildbill22.draco.Creative_Tab;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
@@ -24,8 +25,8 @@ public class ItemMace extends ItemAxe {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4){
-		list.add("Mace.");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining.");
-		list.add("Causes hit damage.");
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.mace"));
+		list.add(StatCollector.translateToLocalFormatted("weapon.wildbill22_draco.hitsRemaining", stack.getMaxDamage() - stack.getItemDamage()));
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.causesHitDamage"));
 	}
 }

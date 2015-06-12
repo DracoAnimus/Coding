@@ -12,6 +12,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent.SetArmorModel;
@@ -136,8 +137,8 @@ public class DragonPlayerEventHandler {
 			DragonPlayer.get((EntityPlayer) event.player).addHoard(event.x, event.y, event.z);
 			setOwner(event.world, event.player, event.x, event.y, event.z);
 			LogHelper.info("DragonPlayerEventHandler: Set owner to " + event.player.getDisplayName() + "!");
-			event.player.addChatMessage(new ChatComponentText("You have placed a hoard, you can now add gold coins!"));
-			event.player.addChatMessage(new ChatComponentText("The more gold coins you add, the higher your dragon level."));
+			event.player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.youHavePlacedAHoard")));
+			event.player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.moreGoldCoinsYouAdd")));
 //			DragonPlayer.saveProxyData(event.player);
 		}
 	}
@@ -166,8 +167,8 @@ public class DragonPlayerEventHandler {
 			if (player.getDisplayName().compareTo(owner) != 0) {
 				LogHelper.info("DragonPlayerEventHandler: You are " + player.getDisplayName() + "!");
 				LogHelper.info("DragonPlayerEventHandler: Owner is " + owner + "!");
-				player.addChatMessage(new ChatComponentText("You are not the owner of this hoard!"));
-				player.addChatMessage(new ChatComponentText("You can break it and place it again to become the owner."));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.youAreNotTheOwnder")));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.youCanBreakIt")));
 			}
 		}
 	}

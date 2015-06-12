@@ -11,6 +11,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.Creative_Tab;
 import net.wildbill22.draco.entities.dragons.DragonRegistry;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonEggHandler;
+import net.wildbill22.draco.items.dragoneggs.ItemEagleDragonEgg;
 import net.wildbill22.draco.items.dragoneggs.ItemEarthDragonEgg;
 import net.wildbill22.draco.items.dragoneggs.ItemFireDragonEgg;
 import net.wildbill22.draco.items.dragoneggs.ItemGoldDragonEgg;
@@ -40,6 +41,7 @@ public class ModItems extends Item {
 	public static Item earthDragonEgg;
 	public static Item nightDragonEgg;
 	public static Item fireDragonEgg;
+	public static Item eagleDragonEgg;
 
 	// Food
 	public static ItemDragonFood villagerHeart; 
@@ -85,6 +87,7 @@ public class ModItems extends Item {
 		earthDragonEgg = new ItemEarthDragonEgg();
 		nightDragonEgg = new ItemNightDragonEgg();
 		fireDragonEgg = new ItemFireDragonEgg();
+		eagleDragonEgg = new ItemEagleDragonEgg();
 		GameRegistry.registerItem(goldDragonEgg, ItemGoldDragonEgg.name);
 		GameRegistry.registerItem(skeletonDragonEgg, ItemSkeletonDragonEgg.name);
 		GameRegistry.registerItem(silverDragonEgg, ItemSilverDragonEgg.name);
@@ -92,6 +95,7 @@ public class ModItems extends Item {
 		GameRegistry.registerItem(earthDragonEgg, ItemEarthDragonEgg.name);
 		GameRegistry.registerItem(nightDragonEgg, ItemNightDragonEgg.name);
 		GameRegistry.registerItem(fireDragonEgg, ItemFireDragonEgg.name);
+		GameRegistry.registerItem(eagleDragonEgg, ItemEagleDragonEgg.name);
 
 		// Dragon Egg Registry
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) silverDragonEgg);
@@ -101,6 +105,7 @@ public class ModItems extends Item {
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) earthDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) nightDragonEgg);		
 		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) fireDragonEgg);		
+		DragonRegistry.instance().registerDragonEgg((IDragonEggHandler) eagleDragonEgg);		
 	}
 
 	public static void init() {

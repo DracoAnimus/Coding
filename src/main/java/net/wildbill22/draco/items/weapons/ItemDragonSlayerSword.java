@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.StatCollector;
 import net.wildbill22.draco.Creative_Tab;
 import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.relauncher.Side;
@@ -46,8 +47,8 @@ public class ItemDragonSlayerSword extends ItemSword {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)
 	{
-		list.add("Dragon Slayer Sword.");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add("More damage to dragons.");
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.dragonSlayerSword"));
+		list.add(StatCollector.translateToLocalFormatted("weapon.wildbill22_draco.hitsRemaining", stack.getMaxDamage() - stack.getItemDamage()));
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.moreDamageToDragons"));
 	}
 }

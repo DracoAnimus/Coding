@@ -9,6 +9,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.wildbill22.draco.lib.BALANCE;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.wildbill22.draco.items.weapons.ItemDragonSlayerSword;
+import net.wildbill22.draco.items.weapons.staffs.ItemEagleDragonStaff;
 import net.wildbill22.draco.items.weapons.staffs.ItemEarthDragonStaff;
 import net.wildbill22.draco.items.weapons.staffs.ItemFireDragonStaff;
 import net.wildbill22.draco.items.weapons.staffs.ItemGoldDragonStaff;
@@ -40,6 +41,7 @@ public class ModWeapons {
 	public static Item earthDragonStaff = new ItemEarthDragonStaff(STAFF);
 	public static Item nightDragonStaff = new ItemNightDragonStaff(STAFF);
 	public static Item fireDragonStaff = new ItemFireDragonStaff(STAFF);
+	public static Item eagleDragonStaff = new ItemEagleDragonStaff(STAFF);
 	
 	public static void preInit() {
 		GameRegistry.registerItem(dragonSlayerSword, ItemDragonSlayerSword.name);
@@ -55,6 +57,7 @@ public class ModWeapons {
 		GameRegistry.registerItem(earthDragonStaff, ItemEarthDragonStaff.name);
 		GameRegistry.registerItem(nightDragonStaff, ItemNightDragonStaff.name);
 		GameRegistry.registerItem(fireDragonStaff, ItemFireDragonStaff.name);
+		GameRegistry.registerItem(eagleDragonStaff, ItemEagleDragonStaff.name);
 		
 		// Dragon Staff Registry
 //		DragonRegistry.instance().registerDragonStaff((IDragonStaffHandler) goldDragonStaff);

@@ -5,12 +5,14 @@ import java.util.Map;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.wildbill22.draco.models.dragons.ModelDracoAqua;
+import net.wildbill22.draco.models.dragons.ModelDracoAquila;
 import net.wildbill22.draco.models.dragons.ModelDracoIgnis;
 import net.wildbill22.draco.models.dragons.ModelDracoMortem;
 import net.wildbill22.draco.models.dragons.ModelDracoTenebrosus;
 import net.wildbill22.draco.models.dragons.ModelDracoTerra;
 import net.wildbill22.draco.models.dragons.ModelSilverDragon;
 import net.wildbill22.draco.render.dragons.RenderDracoAqua;
+import net.wildbill22.draco.render.dragons.RenderDracoAquila;
 import net.wildbill22.draco.render.dragons.RenderDracoIgnis;
 import net.wildbill22.draco.render.dragons.RenderDracoMortem;
 import net.wildbill22.draco.render.dragons.RenderDracoTenebrosus;
@@ -47,6 +49,8 @@ public class DragonRegistry {
 		DragonRegistry.instance().registerDragonRendererCreationHandler(dtHandler);
 		RenderDracoIgnis idHandler = new RenderDracoIgnis(new ModelDracoIgnis(), 0.5F);          // Fire Dragon
 		DragonRegistry.instance().registerDragonRendererCreationHandler(idHandler);
+		RenderDracoAquila daHandler = new RenderDracoAquila(new ModelDracoAquila(), 0.5F);        // Eagle Dragon
+		DragonRegistry.instance().registerDragonRendererCreationHandler(daHandler);
 	}
 	
 	public void registerDragonRendererCreationHandler(IDragonRendererCreationHandler handler) {

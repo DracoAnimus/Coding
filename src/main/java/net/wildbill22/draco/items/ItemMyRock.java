@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntityMyRock;
 import net.wildbill22.draco.lib.BALANCE;
@@ -45,7 +46,7 @@ public class ItemMyRock extends ModItems
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Rock.");
-		list.add("Causes " + rockDamage + " throw damage.");
+		list.add(StatCollector.translateToLocal("weapon.wildbill22_draco.rock"));
+		list.add(StatCollector.translateToLocalFormatted("weapon.wildbill22_draco.causesFloatThrowDamage", rockDamage));
 	}
 }

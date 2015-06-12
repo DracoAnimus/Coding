@@ -26,6 +26,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.wildbill22.draco.Core;
@@ -81,7 +82,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			// Staff doesn't do anything if no egg for it in hoard
 			if (!DragonPlayer.get(player).isEggInHoard(this.getEggName())) {
 				setNoEggInHoard(itemStack);
-				player.addChatMessage(new ChatComponentText("No egg in hoard for this staff!"));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.NoEggInHoard")));
 //				setActive(itemStack, false);
 				return itemStack;
 			}
@@ -94,14 +95,16 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			// Change mode if Alt key is pressed
 			if (KeyBindings.staffChange.getIsKeyPressed()) {
 				abilities.nextMode(itemStack);
-				player.addChatMessage(new ChatComponentText("Staff in mode: " + abilities.getModeName(itemStack) + "!"));
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack))));
 				return itemStack;				
 			}
 			
 			// Change mode if shift key pressed
 			if (player.isSneaking()) {
 				abilities.nextMode(itemStack);
-				player.addChatMessage(new ChatComponentText("Staff in mode: " + abilities.getModeName(itemStack) + "!"));
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack))));
 				return itemStack;
 			}
 
@@ -110,11 +113,11 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 				if (DragonPlayer.get(player).isDragon()) {
 					DragonPlayer.get(player).setDragon(false, true);
 					ItemDragonEgg.setHumanAbilities(player);  // Set some things that got changed!
-					player.addChatMessage(new ChatComponentText("Changed to human!"));					
+					player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.chnagedToHuman")));					
 				} else {
 					DragonPlayer.get(player).setDragonName(abilities.dragonTextureName);
 					DragonPlayer.get(player).setDragon(true, true);
-					player.addChatMessage(new ChatComponentText("Changed to dragon!"));
+					player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.changedToDragon")));
 				}
 				return itemStack;
 			}
@@ -123,12 +126,12 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			}
 			// No powers for humans!
 			else if (!DragonPlayer.get(player).isDragon()) {
-				player.addChatMessage(new ChatComponentText("Silly human, only dragons have powers!"));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.sillyHumanOnlyDragonsHavePowers")));
 //				setActive(itemStack, false);
 				return itemStack;
 			}
 			else if (DragonPlayer.get(player).getDragonName().compareTo(abilities.dragonTextureName) != 0) {
-				player.addChatMessage(new ChatComponentText("This staff is only for " + abilities.dragonDisplayName + "!"));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.wildbill22_draco.thisStaffIsOnlyFor", abilities.dragonDisplayName)));
 //				setActive(itemStack, false);
 				return itemStack;				
 			}
@@ -256,7 +259,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			// Spit Boiling Water
 			else if (abilities.getModeNumber(itemStack) == abilities.SPITBOILINGWATER) {
 				if (!player.isInWater()) {
-					player.addChatMessage(new ChatComponentText("You can only spit boiling water in the water."));
+					player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.youCanOnlySpitBoilingWater")));
 					return itemStack;
 				}
 				int amplifier = DragonPlayer.get(player).getLevel();
@@ -473,12 +476,14 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			if (closestChest != null){
 				// TODO: Animate with a beeping sound (or flashing) when pointing to chest!
 				LogHelper.info("Nearest chest at: " + closestChest.xCoord + "," + closestChest.yCoord + "," + closestChest.zCoord + "!");
-				player.addChatMessage(new ChatComponentText("Found possible stronghold chest with a villager skull in it!"));				
-				player.addChatMessage(new ChatComponentText("Chest is located at: " + closestChest.xCoord + "," + closestChest.yCoord + "," + closestChest.zCoord + "!"));				
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocal("chat.wildbill22_draco.foundPossibleStrongholdChest")));				
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.chestIsLocated", closestChest.xCoord, closestChest.yCoord, closestChest.zCoord)));				
 			}
 			else { 
 				LogHelper.info("No stronghold chests nearby");
-				player.addChatMessage(new ChatComponentText("No stronghold chests nearby"));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.noStrongholdChestsNearby")));
 			}
 		}		
     }
@@ -524,11 +529,12 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			if (closestChest != null){
 				// TODO: Animate with a beeping sound (or flashing) when pointing to chest!
 				LogHelper.info("Nearest chest at: " + closestChest.xCoord + "," + closestChest.yCoord + "," + closestChest.zCoord + "!");
-				player.addChatMessage(new ChatComponentText("Found gold coins at: " + closestChest.xCoord + "," + closestChest.yCoord + "," + closestChest.zCoord + "!"));				
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.foundGoldCoinsAt", closestChest.xCoord, closestChest.yCoord, closestChest.zCoord)));				
 			}
 			else { 
 				LogHelper.info("No gold coins found nearby");
-				player.addChatMessage(new ChatComponentText("No gold coins found nearby"));
+				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.noGoldCoinsFound")));
 			}
 		}		
     }
@@ -645,19 +651,22 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-		return super.getItemStackDisplayName(stack) + " mode: " + abilities.getModeName(stack) + "!";
+		return super.getItemStackDisplayName(stack) + 
+				StatCollector.translateToLocalFormatted("staff.wildbill22_draco_mode") + abilities.getLocalizedModeName(stack) + "!";
+
+//		return super.getItemStackDisplayName(stack) + " mode: " + abilities.getModeName(stack) + "!";
     }
     
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		list.add("Staff that allows you to change");
-		list.add("from human to " + abilities.dragonDisplayName + ".");
-		list.add("Use shift + right click to change modes.");
-		list.add(stack.getMaxDamage() - stack.getItemDamage() + " Hits Remaining");
-		list.add(((ItemDragonStaff)stack.getItem()).field_150934_a + " Attack Damage");
-		list.add("Current ability: " + abilities.getModeName(stack) + "!");
+		list.add(StatCollector.translateToLocal("staff.wildbill22_draco.staffThatAllowsChange"));
+		list.add(StatCollector.translateToLocalFormatted("staff.wildbill22_draco.fromHumanTo", abilities.dragonDisplayName));
+		list.add(StatCollector.translateToLocal("staff.wildbill22_draco.useShiftRightClick"));
+		list.add(StatCollector.translateToLocalFormatted("weapon.wildbill22_draco.hitsRemaining", stack.getMaxDamage() - stack.getItemDamage()));
+		list.add(StatCollector.translateToLocalFormatted("sword.wildbill22_draco.attackDamage", ((ItemDragonStaff)stack.getItem()).field_150934_a));
+		list.add(StatCollector.translateToLocalFormatted("staff.wildbill22_draco.currentAbility", abilities.getLocalizedModeName(stack)));
 	}
 
     // Stuff below for modes
@@ -803,6 +812,12 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		
 	    public String getModeName(ItemStack stack) {
 	    	return staffModes.get(getModeNumber(stack));
+	    }
+    
+	    // Localized key is name with underscores
+	    public String getLocalizedModeName(ItemStack stack) {
+	    	String modeName = staffModes.get(getModeNumber(stack));
+	    	return StatCollector.translateToLocal("staff.wildbill22_draco_" + modeName.replace(" ", "_") + ".name");
 	    }
     
 	    private int getModeNumber(ItemStack stack) {

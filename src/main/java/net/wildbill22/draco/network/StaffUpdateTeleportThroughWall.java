@@ -6,6 +6,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
@@ -74,7 +75,9 @@ public class StaffUpdateTeleportThroughWall implements IMessage {
 					    }
 				    }
 				}
-				player.addChatMessage(new ChatComponentText("Only solid blocks in that direction for the next " + message.maxD + " meters!"));
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.StaffUpdateTeleportThroughWall", message.maxD)));				
+//				player.addChatMessage(new ChatComponentText("Only solid blocks in that direction for the next " + message.maxD + " meters!"));
 			}
 			return null;
 		}
