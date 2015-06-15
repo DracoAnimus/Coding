@@ -1,5 +1,26 @@
 < en_US.lang - English localization file for Draco Animus >
 
+#Dragon Mode Names
+staff.wildbill22_draco_Change_form.name=Change form
+staff.wildbill22_draco_Spawns_Fireballs.name=Spawns Fireballs
+staff.wildbill22_draco_Spawn_Explosive_Fireballs.name=Spawn Explosive Fireballs
+staff.wildbill22_draco_Teleport.name=Teleport
+staff.wildbill22_draco_Invisible.name=Invisible
+staff.wildbill22_draco_Swiftness.name=Swiftness
+staff.wildbill22_draco_Breaks_blocks_faster.name=Breaks blocks faster
+staff.wildbill22_draco_Regeneration_-_heal_yourself.name=Regeneration - heal yourself
+staff.wildbill22_draco_Fire_breathing.name=Fire breathing
+staff.wildbill22_draco_Kill_entities_with_Sound_Wave.name=Kill entities with Sound Wave
+staff.wildbill22_draco_Golden_Eye.name=Golden Eye
+staff.wildbill22_draco_Wither_Effect.name=Wither Effect
+staff.wildbill22_draco_Poison.name=Poison
+staff.wildbill22_draco_Spit_Boiling_Water.name=Spit Boiling Water
+staff.wildbill22_draco_Teleport_through_walls.name=Teleport through walls
+staff.wildbill22_draco_Locate_strongholds.name=Locate Strongholds
+staff.wildbill22_draco_Teleport_through_walls_in_the_dark.name=Teleport through walls in the dark
+staff.wildbill22_draco_Pick_up_mob.name=Pick up mob
+staff.wildbill22_draco_Break_blocks_with_Sound_Wave.name=Break blocks with Sound Wave
+
 #Dragon Eggs
 egg.wildbill22_draco_putThisEgg=Put this egg in the hoard
 egg.wildbill22_draco_youWillGetStaff=You will get a staff that turns you 
@@ -33,25 +54,6 @@ chat.wildbill22_draco.youAreNotTheOwnder=You are not the owner of this hoard!
 chat.wildbill22_draco.youCanBreakIt=You can break it and place it again to become the owner.
 chat.wildbill22_draco.hoardsOnlyWorkInOverWorld=Hoards only work in the OverWorld!
 chat.wildbill22_draco.tameDragonWithGunpowder=Tame the dragon with gunpowder
-
-#Dragon Mode Names
-staff.wildbill22_draco_Change_form.name=Change form
-staff.wildbill22_draco_Spawns_Fireballs.name=Spawns Fireballs
-staff.wildbill22_draco_Spawn_Explosive_Fireballs.name=Spawn Explosive Fireballs
-staff.wildbill22_draco_Teleport.name=Teleport
-staff.wildbill22_draco_Invisible.name=Invisible
-staff.wildbill22_draco_Swiftness.name=Swiftness
-staff.wildbill22_draco_Breaks_blocks_faster.name=Breaks blocks faster
-staff.wildbill22_draco_Regeneration_-_heal_yourself.name=Regeneration - heal yourself
-staff.wildbill22_draco_Fire_breathing.name=Fire breathing
-staff.wildbill22_draco_Sound_wave.name=Sound wave
-staff.wildbill22_draco_Golden_Eye.name=Golden Eye
-staff.wildbill22_draco_Wither_Effect.name=Wither Effect
-staff.wildbill22_draco_Poison.name=Poison
-staff.wildbill22_draco_Spit_Boiling_Water.name=Spit Boiling Water
-staff.wildbill22_draco_Teleport_through_walls.name=Teleport through walls
-staff.wildbill22_draco_Locate_strongholds.name=Locate Strongholds
-staff.wildbill22_draco_Teleport_through_walls_in_the_dark.name=Teleport through walls in the dark
 
 #Weapon's Add Information
 staff.wildbill22_draco_mode= mode: 

@@ -9,7 +9,8 @@ public class ItemEagleDragonStaff extends ItemDragonStaff {
 	public ItemEagleDragonStaff(ToolMaterial material) {
 		super(material, name);
 		abilities.addChangeForm(EntityDracoAquila.name, "Eagle dragon");
-		abilities.addSoundWave(); // TODO: Change to version that breaks blocks
+		abilities.addSoundWaveEntities();
+		abilities.addPickUpMobs();
 	}
 	
 	// Used to find if egg is in hoard

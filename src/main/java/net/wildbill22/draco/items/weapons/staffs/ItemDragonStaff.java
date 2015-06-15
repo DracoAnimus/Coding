@@ -26,6 +26,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -43,6 +44,9 @@ import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.NBTCoordinates;
 import net.wildbill22.draco.lib.REFERENCE;
 import net.wildbill22.draco.network.StaffUpdateDamageTarget;
+import net.wildbill22.draco.network.StaffUpdateDestroyBlock;
+import net.wildbill22.draco.network.StaffUpdateDropEntity;
+import net.wildbill22.draco.network.StaffUpdateMountEntity;
 import net.wildbill22.draco.network.StaffUpdatePoisonTarget;
 import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
 import net.wildbill22.draco.network.StaffUpdateTeleportThroughWall;
@@ -71,13 +75,24 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		
 		minReach = (float) BALANCE.DRAGON_PLAYER_ABILITIES.MIN_EXTENDED_REACH - 2.0F;
 	}
-	
+
+    /**
+     * called when the player releases the use item button. Args: itemstack, world, entityplayer, itemInUseCount
+     */
+    public void onPlayerStoppedUsing(ItemStack itemStack, World world, EntityPlayer player, int p_77615_4_) {
+		if (world.isRemote) {
+			if (abilities.getModeNumber(itemStack) == abilities.PICKUPMOBS) {
+				dropMob(player);
+			}
+		}	
+    }
+
 	/**
 	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
 	 */
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-		// Only spawn new entities on the server!
+	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {        
+        // Only spawn new entities on the server!
 		if (!world.isRemote) {
 			// Staff doesn't do anything if no egg for it in hoard
 			if (!DragonPlayer.get(player).isEggInHoard(this.getEggName())) {
@@ -126,13 +141,13 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			}
 			// No powers for humans!
 			else if (!DragonPlayer.get(player).isDragon()) {
-				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.sillyHumanOnlyDragonsHavePowers")));
-//				setActive(itemStack, false);
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocal("chat.wildbill22_draco.sillyHumanOnlyDragonsHavePowers")));
 				return itemStack;
 			}
 			else if (DragonPlayer.get(player).getDragonName().compareTo(abilities.dragonTextureName) != 0) {
-				player.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.wildbill22_draco.thisStaffIsOnlyFor", abilities.dragonDisplayName)));
-//				setActive(itemStack, false);
+				player.addChatMessage(new ChatComponentText(
+						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.thisStaffIsOnlyFor", abilities.dragonDisplayName)));
 				return itemStack;				
 			}
 		}
@@ -203,6 +218,11 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 				LogHelper.info("ItemDragonStaff: Amplifier = " + amplifier);
 				locateStrongholds(player, amplifier);
 			}
+			else if (abilities.getModeNumber(itemStack) == abilities.PICKUPMOBS) {
+				// From overriden onItemRightClick method
+		        player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+			}
+			
 			
 		// **** On client *****
 		// Only allow the following powers if a dragon
@@ -225,15 +245,31 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		        	Core.modChannel.sendToServer(new StaffUpdateSetTargetOnFire(entity.posX, entity.posY, entity.posZ));
 		    	}
 			}
-			// Sound Wave
-			else if (abilities.getModeNumber(itemStack) == abilities.SOUNDWAVE) {
+			// Sound Wave that attacks entities
+			else if (abilities.getModeNumber(itemStack) == abilities.SOUNDWAVEENTITIES) {
 				int amplifier = DragonPlayer.get(player).getLevel();
-		    	spawnSoundWave(world, player, 2.0F, amplifier);
+		    	spawnSoundWaveEntityHit(world, player, 2.0F, amplifier);
 		    	Entity entity = getMouseOver(world, amplifier * 2.0F + minReach);  // normal reach is 4.5F in survival
 				world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 				if (entity instanceof EntityLivingBase) {
 					LogHelper.info("Hit entity at: " + entity.posX + "," + entity.posY + "," + entity.posZ);
 		        	Core.modChannel.sendToServer(new StaffUpdateDamageTarget(entity.posX, entity.posY, entity.posZ));
+		    	}				
+			}
+			// Sound Wave that destroys blocks
+			else if (abilities.getModeNumber(itemStack) == abilities.SOUNDWAVEBLOCKS) {
+				int amplifier = DragonPlayer.get(player).getLevel();
+		    	spawnSoundWaveBlockHit(world, player, 2.0F, amplifier);
+				Vec3 look = player.getLookVec();
+				float d = 10.0F;  // Maximum distance to destroy block
+				Vec3 end = Vec3.createVectorHelper(player.posX + look.xCoord * d, player.posY + player.getEyeHeight() + look.yCoord * d, 
+						player.posZ + look.zCoord * d);
+				Vec3 start = Vec3.createVectorHelper(player.posX, player.posY + player.getEyeHeight(), player.posZ);
+		    	MovingObjectPosition mop = world.rayTraceBlocks(start, end);
+				if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
+					world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+					LogHelper.info("Hit block at: " + mop.blockX + "," + mop.blockY + "," + mop.blockZ);
+		        	Core.modChannel.sendToServer(new StaffUpdateDestroyBlock(mop.blockX, mop.blockY, mop.blockZ));
 		    	}				
 			}
 			// Wither Effect
@@ -280,10 +316,37 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			else if (abilities.getModeNumber(itemStack) == abilities.TELEPORTTHROUGHWALLATNIGHT) {
 				teleportThroughWalls(world, player, true);
 		    }
+			else if (abilities.getModeNumber(itemStack) == abilities.PICKUPMOBS) {
+				int amplifier = DragonPlayer.get(player).getLevel();
+				if (player.riddenByEntity != null) {
+			        player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+				}
+				else if (pickUpMob(world, player, amplifier)) {
+					// From overriden onItemRightClick method
+			        player.setItemInUse(itemStack, this.getMaxItemUseDuration(itemStack));
+				}
+			}
 		}
 		return itemStack;
 	}
 	
+	private boolean pickUpMob(World world, EntityPlayer player, int amplifier) {
+    	Entity entity = getMouseOver(world, amplifier * 0.5F + 4.0F);  // normal reach is 4.5F in survival
+    	if (entity != null) {
+        	Core.modChannel.sendToServer(new StaffUpdateMountEntity(entity.posX, entity.posY, entity.posZ));
+			LogHelper.info("Picked up mob!");
+			return true;
+    	}
+    	return false;
+	}
+
+	private void dropMob(EntityPlayer player) {
+		if (player.riddenByEntity != null) {
+        	Core.modChannel.sendToServer(new StaffUpdateDropEntity(true));
+			LogHelper.info("Dropped mob!");
+		}
+	}
+
 	// Teleport through walls, teleport to the first location where the player does not collide with a block
 	private void teleportThroughWalls(World world, EntityPlayer player, boolean onlyAtNight) {
 		float amplifier = (float) Math.max(2, DragonPlayer.get(player).getLevel() / 2);
@@ -330,7 +393,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
     }
 	
     // spawn particle name, position x,y,z velocity x,y,z
-	private void spawnSoundWave(World world, EntityPlayer player, float minD, int amplifier) {
+	private void spawnSoundWaveEntityHit(World world, EntityPlayer player, float minD, int amplifier) {
 		Vec3 look = player.getLookVec();
     	for (int i = 0; i < 4; i++) {
     		float dx = (world.rand.nextFloat() - 0.5F) / 3;
@@ -342,7 +405,21 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
             world.spawnParticle("crit", dxMin, dyMin, dzMin, look.xCoord * 0.05 * amplifier, look.yCoord * 0.05 * amplifier, 
             		look.zCoord * 0.05 * amplifier);
     	}
-//        world.spawnParticle("crit", entity.posX + d0, entity.posY + d0, entity.posZ + d0, 0, 0, 0);		    		
+    }
+	
+    // spawn particle name, position x,y,z velocity x,y,z
+	private void spawnSoundWaveBlockHit(World world, EntityPlayer player, float minD, int amplifier) {
+		Vec3 look = player.getLookVec();
+    	for (int i = 0; i < 4; i++) {
+    		float dx = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dy = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dz = (world.rand.nextFloat() - 0.5F) / 3;
+            double dxMin = (double)((float)player.posX + dx + look.xCoord * minD);
+            double dyMin = (double)((float)player.posY + dy + look.yCoord * minD);
+            double dzMin = (double)((float)player.posZ + dz + look.zCoord * minD);
+            world.spawnParticle("smoke", dxMin, dyMin, dzMin, look.xCoord * 0.05 * amplifier, look.yCoord * 0.05 * amplifier, 
+            		look.zCoord * 0.05 * amplifier);
+    	}
     }
 	
     // spawn particle name, position x,y,z velocity x,y,z
@@ -365,7 +442,9 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
     }
 	
     /**
-     * Finds what block or object the mouse is over at the specified partial tick time. Args: partialTickTime
+     * Original function: Finds what block or object the mouse is over at the specified partial tick time. Args: partialTickTime
+     * 
+     * Now: Returns the closest entity you are looking at within a specified reach
      */
     public Entity getMouseOver(World world, float reach)  {
     	Minecraft mc = Minecraft.getMinecraft();
@@ -438,7 +517,6 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		final NBTCoordinates playerLocation;
 		TileEntityChest closestChest = null;
 		float distance;
-//		float closestDistance = 1000000.0F; // Show direction to chests closer than this distance (up to 1000 blocks away)
 		// Show direction to chests closer than this distance (up to 1000 blocks away with level 10 dragon)
 		float closestDistance = 10000.0F * amplifier * amplifier; 
 		boolean foundVillagerSkull = false;
@@ -446,7 +524,6 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		if (player != null){
 			playerLocation = new NBTCoordinates((int)player.posX, (int)player.posY, (int)player.posZ);	
 			
-//			for (Object tileEntity : Minecraft.getMinecraft().theWorld.loadedTileEntityList){
 			for (Object tileEntity : player.worldObj.loadedTileEntityList){
 				foundVillagerSkull = false;
 				if (tileEntity instanceof TileEntityChest){
@@ -492,7 +569,6 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		final NBTCoordinates playerLocation;
 		TileEntityChest closestChest = null;
 		float distance;
-//		float closestDistance = 1000000.0F; // Show direction to chests closer than this distance (up to 1000 blocks away)
 		// Show direction to chests closer than this distance (up to 1000 blocks away with level 10 dragon)
 		float closestDistance = 10000.0F * amplifier * amplifier; 
 		boolean foundCoins = false;
@@ -599,7 +675,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 //    	NBTTagCompound tagCompound = getTagCompound(itemStack);
 //		return tagCompound.getBoolean("active");
 //    }
-//        
+        
 //    private int getUses(ItemStack itemStack) {
 //    	NBTTagCompound tagCompound = getTagCompound(itemStack);
 //    	return tagCompound.getInteger("uses");
@@ -686,7 +762,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		private int HASTE = 8;
 		private int REGENERATION = 9;
 		private int FIREBREATHING = 10;
-		private int SOUNDWAVE = 11;
+		private int SOUNDWAVEENTITIES = 11;
 		private int GOLDENEYE = 12;
 		private int WITHEREFFECT = 13;
 		private int POISON = 14;
@@ -694,7 +770,9 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		private int TELEPORTTHROUGHWALL = 16;
 		private int LOCATESTRONGHOLDS = 17;
 		private int TELEPORTTHROUGHWALLATNIGHT = 18;
-		private int NUM_MODES = 19;
+		private int PICKUPMOBS = 19;
+		private int SOUNDWAVEBLOCKS = 20;
+		private int NUM_MODES = 21;
 
 		/**
 	     * Adds ability to staff to change between dragon and human.
@@ -705,7 +783,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		public void addChangeForm(String dragonTextureName, String dragonDisplayName) {
 			this.dragonTextureName = dragonTextureName;
 			this.dragonDisplayName = dragonDisplayName;
-			addMode(CHANGE_FORM, "Change form");
+			addMode(CHANGE_FORM, "Change_form");
 		}
 		/**
 	     * Adds ability to staff to throw fireballs.
@@ -756,12 +834,6 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			addMode(this.FIREBREATHING, "Fire breathing");
 		}
 		/**
-	     * Adds ability to harm with sound.
-	     */
-		public void addSoundWave() {
-			addMode(this.SOUNDWAVE, "Sound wave");
-		}
-		/**
 	     * Adds ability to find gold coins.
 	     */
 		public void addGoldenEye() {
@@ -804,6 +876,25 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	     */
 		public void addTeleportThroughWallsAtNight() {
 			addMode(this.TELEPORTTHROUGHWALLATNIGHT, "Teleport through walls in the dark");
+		}
+		/**
+	     * Adds ability to teleport through walls.
+	     * Always use this together with the dragon NoBlockDamage ability
+	     */
+		public void addPickUpMobs() {
+			addMode(this.PICKUPMOBS, "Pick up mob");
+		}
+		/**
+	     * Adds ability to harm entities with sound.
+	     */
+		public void addSoundWaveEntities() {
+			addMode(this.SOUNDWAVEENTITIES, "Kill entities with Sound Wave");
+		}
+		/**
+	     * Adds ability to destroy blocks with sound.
+	     */
+		public void addSoundWaveBlocks() {
+			addMode(this.SOUNDWAVEBLOCKS, "Break blocks with Sound Wave");
 		}
 
 		private void addMode(int mode, String text) {

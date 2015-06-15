@@ -83,7 +83,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 							* (double)player.width, 0.0D, 0.0D, 0.0D);
 				}
 	    		// Step over stuff
-	    		player.stepHeight = 1.0F;
+	    		player.stepHeight = 1.0F; // Same as a horse, but normally 0.0F for player
 	    		
 	    		// Hearts if healing
             	if (player.prevHealth != player.getHealth() && rand.nextInt(4) == 0) {
@@ -94,12 +94,12 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
             	}
 			}
 			// Pickup Entities
-			if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.EAGLEDRAGON) && player.capabilities.isFlying) {
-				// Climbing
-				if (player.prevPosY <= player.posY) {
-					
-				}
-			}
+//			if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.EAGLEDRAGON) && player.capabilities.isFlying) {
+//				// Climbing
+//				if (player.prevPosY <= player.posY) {
+//					
+//				}
+//			}
 			
 			return;
 		}
@@ -245,11 +245,13 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
             }
         }
     }
-	
+
+    // Resets anything the dragon may have changed
 	public static void setHumanAbilities(EntityPlayer player) {
-		player.clearActivePotions();
+		player.clearActivePotions();  // TODO: Clear them all except for hunger and poison
         player.noClip = false;
         player.capabilities.isFlying = false;		
+		player.stepHeight = 0.0F; // Normally 0.0F for player
 	}
 	
 	/**

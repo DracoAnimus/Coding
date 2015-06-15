@@ -192,14 +192,15 @@ public class DragonPlayerEventHandler {
 //		}
 		if (event.entityLiving instanceof EntityVillager) {
 			if (!((EntityVillager)event.entityLiving).isChild()) {				
-				// 50% chance to drop the heart
+				// 75% chance to drop the heart
 				LogHelper.info("DragonPlayerEventHandler: Villager died!");
-				if (event.entity.worldObj.rand.nextInt(2) == 0) {
+				if (event.entity.worldObj.rand.nextInt(4) < 3) {
 					LogHelper.info("DragonPlayerEventHandler: Villager dropped a heart!");
 					event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
 							new ItemStack(ModItems.villagerHeart)));
 				}
-				if (event.entity.worldObj.rand.nextInt(2) == 0) {
+				// 25% chance to drop the skull
+				if (event.entity.worldObj.rand.nextInt(4) == 0) {
 					LogHelper.info("DragonPlayerEventHandler: Villager dropped a skull!");
 					event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ,
 							new ItemStack(ModItems.villagerSkull)));
@@ -286,6 +287,10 @@ public class DragonPlayerEventHandler {
 	        }
 			else if (event.source.equals(DamageSource.fall)) {
 				event.setCanceled(true);
+			}
+			// Prevent damage from entities that are picked up (that ride the dragon)
+			else if (event.entity.riddenByEntity != null) {
+				event.setCanceled(true);				
 			}
 		}
 	}

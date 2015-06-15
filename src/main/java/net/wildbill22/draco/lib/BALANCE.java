@@ -180,7 +180,7 @@ public final class BALANCE {
 	@DefaultBoolean(value = false, name = "Player as silver dragon initially?", 
 			comment = "Whether player should spawn initially as a silver dragon")
 	public static boolean PLAYER_AS_SILVER_DRAGON_INITIALLY;
-	@DefaultInt(value = 100, minValue = 0, maxValue = 1000, name = "Dragon egg spawn chance", 
+	@DefaultInt(value = 25, minValue = 0, maxValue = 1000, name = "Dragon egg spawn chance", 
 			comment = "n in 1000 chance of spawning dragon eggs")
 	public static int DRAGON_EGG_SPAWN_CHANCE;
 	@DefaultInt(value = 20, minValue = 20, maxValue = 31, name = "Bow Position Data Watcher", 

@@ -90,28 +90,14 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 
 	private void addSurfaceStructures(World world, Random random, int x, int z) {
 		int chance = random.nextInt(1000);
-		boolean generatedStructure = false; // needed when a 2nd structure is
-											// added
-		int spawnChance = 0;
 		BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
 
-		spawnChance += BALANCE.DRAGON_EGG_SPAWN_CHANCE;
-		if (generatedStructure == false && chance < spawnChance) {
-			if (biome == BiomeGenBase.swampland) {
-				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.skeletonDragonEgg))
-					LogHelper.info("WorldGenDracoAnimus: Spawned a Skeleton Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
-			}
-			else if (biome == BiomeGenBase.river || biome == BiomeGenBase.ocean) {
-				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.waterDragonEgg))
-					LogHelper.info("WorldGenDracoAnimus: Spawned a Water Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
-			}
-			else if (biome == BiomeGenBase.jungle) {
+		// Eggs with the normal spawn chance from the configuration
+		int spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE;
+		if (chance < spawnChance) {
+			if (biome == BiomeGenBase.jungle) {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.earthDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Earth Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
-			}
-			else if (biome == BiomeGenBase.roofedForest) {
-				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.nightDragonEgg))
-					LogHelper.info("WorldGenDracoAnimus: Spawned a Night Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
 			else if (biome == BiomeGenBase.desert) {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.fireDragonEgg))
@@ -120,6 +106,24 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 			else if (biome == BiomeGenBase.extremeHills || biome == BiomeGenBase.extremeHillsEdge || biome == BiomeGenBase.extremeHillsPlus) {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.eagleDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Eagle Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
+			else if (chance < spawnChance) {
+				if (biome == BiomeGenBase.swampland) {
+					if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.skeletonDragonEgg))
+						LogHelper.info("WorldGenDracoAnimus: Spawned a Skeleton Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+				}
+			}
+			else if (biome == BiomeGenBase.roofedForest) {
+				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.nightDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Night Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
+		}
+		// Eggs with double the spawn chance in the configuration
+		spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE * 2;
+		if (chance < spawnChance) {
+			if (biome == BiomeGenBase.river || biome == BiomeGenBase.ocean) {
+				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.waterDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Water Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
 		}
 	}
@@ -155,8 +159,10 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
             int chunkY = y + random.nextInt(4) - random.nextInt(4);
             int chunkZ = z + random.nextInt(8) - random.nextInt(8);
 
-            if (world.isAirBlock(chunkX, chunkY, chunkZ) && world.getBlock(chunkX, chunkY - 1, chunkZ) == Blocks.grass 
-            		&& eggBlock.canPlaceBlockAt(world, chunkX, chunkY, chunkZ)) {
+//            if (world.isAirBlock(chunkX, chunkY, chunkZ) && world.getBlock(chunkX, chunkY - 1, chunkZ) == Blocks.grass 
+//            		&& eggBlock.canPlaceBlockAt(world, chunkX, chunkY, chunkZ)) {
+            if ((world.isAirBlock(chunkX, chunkY, chunkZ) || world.getBlock(chunkX, chunkY, chunkZ) == Blocks.water) 
+            		&& eggBlock.canPlaceBlockAt(world, chunkX, chunkY, chunkZ) && !world.isAirBlock(chunkX, chunkY-1, chunkZ)) {
 //                world.setBlock(chunkX, chunkY, chunkZ, egg, random.nextInt(4), 2);
                 world.setBlock(chunkX, chunkY, chunkZ, eggBlock);
                 return true;

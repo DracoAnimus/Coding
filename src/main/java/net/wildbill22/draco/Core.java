@@ -28,6 +28,9 @@ import net.wildbill22.draco.network.DragonPlayerUpdateDragonName;
 import net.wildbill22.draco.network.DragonPlayerUpdateIsDragon;
 import net.wildbill22.draco.network.DragonPlayerUpdateLevel;
 import net.wildbill22.draco.network.StaffUpdateDamageTarget;
+import net.wildbill22.draco.network.StaffUpdateDestroyBlock;
+import net.wildbill22.draco.network.StaffUpdateDropEntity;
+import net.wildbill22.draco.network.StaffUpdateMountEntity;
 import net.wildbill22.draco.network.StaffUpdatePoisonTarget;
 import net.wildbill22.draco.network.StaffUpdateSetTargetOnFire;
 import net.wildbill22.draco.network.StaffUpdateTeleportThroughWall;
@@ -146,5 +149,8 @@ public class Core {
 		modChannel.registerMessage(DragonAbilityLavaToObsidian.Handler.class, DragonAbilityLavaToObsidian.class, id++, Side.CLIENT);
 		modChannel.registerMessage(StaffUpdateTeleportThroughWall.Handler.class, StaffUpdateTeleportThroughWall.class, id++, Side.SERVER);
 		modChannel.registerMessage(StaffUpdateTeleportThroughWallInDark.Handler.class, StaffUpdateTeleportThroughWallInDark.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdateDropEntity.Handler.class, StaffUpdateDropEntity.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdateMountEntity.Handler.class, StaffUpdateMountEntity.class, id++, Side.SERVER);
+		modChannel.registerMessage(StaffUpdateDestroyBlock.Handler.class, StaffUpdateDestroyBlock.class, id++, Side.SERVER);
 	}
 }

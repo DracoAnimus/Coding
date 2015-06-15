@@ -35,10 +35,10 @@ public class EntityMyExplosive extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
-		if (!this.worldObj.isRemote)
+		if (!this.worldObj.isRemote) {
 			LogHelper.info("EntityMyExplosive landed!");
-
-		doExplosionDamage(movObjPos);
+			doExplosionDamage(movObjPos);
+		}
 		
 		// Get rid of the used fireball
 		if (!this.worldObj.isRemote)
