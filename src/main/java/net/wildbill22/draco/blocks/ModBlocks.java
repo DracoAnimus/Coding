@@ -4,14 +4,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.wildbill22.draco.Creative_Tab;
-import net.wildbill22.draco.blocks.dragoneggs.BlockEagleDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockEarthDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockFireDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockGoldDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockNightDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockSilverDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockSkeletonDragonEgg;
-import net.wildbill22.draco.blocks.dragoneggs.BlockWaterDragonEgg;
+import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.REFERENCE;
 
 public class ModBlocks extends Block {
@@ -39,22 +32,30 @@ public class ModBlocks extends Block {
 		GameRegistry.registerBlock(temporaryHoard, TemporaryHoard.textureName);
 		
 		// Eggs
-		goldDragonEgg = new BlockGoldDragonEgg();
-		silverDragonEgg = new BlockSilverDragonEgg();
-		skeletonDragonEgg = new BlockSkeletonDragonEgg();
-		waterDragonEgg = new BlockWaterDragonEgg();
-		earthDragonEgg = new BlockEarthDragonEgg();
-		nightDragonEgg = new BlockNightDragonEgg();
-		fireDragonEgg = new BlockFireDragonEgg();
-		eagleDragonEgg = new BlockEagleDragonEgg();
-		GameRegistry.registerBlock(goldDragonEgg, BlockGoldDragonEgg.name);
-		GameRegistry.registerBlock(silverDragonEgg, BlockSilverDragonEgg.name);
-		GameRegistry.registerBlock(skeletonDragonEgg, BlockSkeletonDragonEgg.name);
-		GameRegistry.registerBlock(waterDragonEgg, BlockWaterDragonEgg.name);		
-		GameRegistry.registerBlock(earthDragonEgg, BlockEarthDragonEgg.name);		
-		GameRegistry.registerBlock(nightDragonEgg, BlockNightDragonEgg.name);		
-		GameRegistry.registerBlock(fireDragonEgg, BlockFireDragonEgg.name);		
-		GameRegistry.registerBlock(eagleDragonEgg, BlockEagleDragonEgg.name);		
+//		goldDragonEgg = new BlockGoldDragonEgg();
+//		silverDragonEgg = new BlockSilverDragonEgg();
+//		skeletonDragonEgg = new BlockSkeletonDragonEgg();
+//		waterDragonEgg = new BlockWaterDragonEgg();
+//		earthDragonEgg = new BlockEarthDragonEgg();
+//		nightDragonEgg = new BlockNightDragonEgg();
+//		fireDragonEgg = new BlockFireDragonEgg();
+//		eagleDragonEgg = new BlockEagleDragonEgg();
+		goldDragonEgg = new BlockDracoEgg("goldDragonEggBlock", ModItems.goldDragonEgg);
+		silverDragonEgg = new BlockDracoEgg("silverDragonEggBlock", ModItems.silverDragonEgg);
+		skeletonDragonEgg = new BlockDracoEgg("skeletonDragonEggBlock", ModItems.skeletonDragonEgg);
+		waterDragonEgg = new BlockDracoEgg("waterDragonEggBlock", ModItems.waterDragonEgg);
+		earthDragonEgg = new BlockDracoEgg("earthDragonEggBlock", ModItems.earthDragonEgg);
+		nightDragonEgg = new BlockDracoEgg("nightDragonEggBlock", ModItems.nightDragonEgg);
+		fireDragonEgg = new BlockDracoEgg("fireDragonEggBlock", ModItems.fireDragonEgg);
+		eagleDragonEgg = new BlockDracoEgg("eagleDragonEggBlock", ModItems.eagleDragonEgg);
+		GameRegistry.registerBlock(goldDragonEgg, "goldDragonEggBlock");
+		GameRegistry.registerBlock(silverDragonEgg, "silverDragonEggBlock");
+		GameRegistry.registerBlock(skeletonDragonEgg, "skeletonDragonEggBlock");
+		GameRegistry.registerBlock(waterDragonEgg, "waterDragonEggBlock");		
+		GameRegistry.registerBlock(earthDragonEgg, "earthDragonEggBlock");		
+		GameRegistry.registerBlock(nightDragonEgg, "nightDragonEggBlock");		
+		GameRegistry.registerBlock(fireDragonEgg, "fireDragonEggBlock");		
+		GameRegistry.registerBlock(eagleDragonEgg, "eagleDragonEggBlock");		
 	}
 
 	public static void init() {

@@ -54,6 +54,7 @@ chat.wildbill22_draco.youAreNotTheOwnder=You are not the owner of this hoard!
 chat.wildbill22_draco.youCanBreakIt=You can break it and place it again to become the owner.
 chat.wildbill22_draco.hoardsOnlyWorkInOverWorld=Hoards only work in the OverWorld!
 chat.wildbill22_draco.tameDragonWithGunpowder=Tame the dragon with gunpowder
+chat.wildbill22_draco.blockIsTooHard=Block is too hard!
 
 #Weapon's Add Information
 staff.wildbill22_draco_mode= mode: 
@@ -62,7 +63,7 @@ staff.wildbill22_draco.fromHumanTo=from human to %s .
 staff.wildbill22_draco.useShiftRightClick=Use shift + right click to change modes.
 weapon.wildbill22_draco.hitsRemaining=%d Hits Remaining
 sword.wildbill22_draco.attackDamage=%f Attack Damage
-staff.wildbill22_draco.currentAbility=Current ability: %s !
+staff.wildbill22_draco.currentAbility=Current ability: %s!
 weapon.wildbill22_draco.causesHitDamage=Causes hit damage.
 weapon.wildbill22_draco.causesThrownDamage=Causes thrown damage.
 weapon.wildbill22_draco.causesFloatThrowDamage=Causes %f throw damage.

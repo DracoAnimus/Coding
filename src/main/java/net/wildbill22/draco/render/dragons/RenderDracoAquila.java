@@ -8,10 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.wildbill22.draco.entities.dragons.DragonRegistry.IDragonRendererCreationHandler;
 import net.wildbill22.draco.entities.dragons.EntityDracoAquila;
 import net.wildbill22.draco.lib.REFERENCE;
-import net.wildbill22.draco.models.dragons.ModelDracoTerra;
 
 public class RenderDracoAquila extends RendererLivingEntity  implements IDragonRendererCreationHandler {
-	protected ModelDracoTerra model;
 	protected ResourceLocation dragonTexture;
 	
 	public RenderDracoAquila(ModelBase par1ModelBase, float par2) {

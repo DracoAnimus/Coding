@@ -99,10 +99,6 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.earthDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Earth Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
-			else if (biome == BiomeGenBase.desert) {
-				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.fireDragonEgg))
-					LogHelper.info("WorldGenDracoAnimus: Spawned a Fire Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
-			}
 			else if (biome == BiomeGenBase.extremeHills || biome == BiomeGenBase.extremeHillsEdge || biome == BiomeGenBase.extremeHillsPlus) {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.eagleDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Eagle Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
@@ -124,6 +120,14 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 			if (biome == BiomeGenBase.river || biome == BiomeGenBase.ocean) {
 				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.waterDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Water Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
+		}
+		// Eggs with 1/2 the spawn chance in the configuration
+		spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE / 2;
+		if (chance < spawnChance) {
+			if (biome == BiomeGenBase.desert) {
+				if (generateDragonEgg(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.fireDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Fire Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
 		}
 	}

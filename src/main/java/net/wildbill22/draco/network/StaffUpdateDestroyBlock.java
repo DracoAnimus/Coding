@@ -4,6 +4,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -52,9 +54,13 @@ public class StaffUpdateDestroyBlock implements IMessage {
 					float minHardness = Math.max(1.0F, 1.0F + amplifier);
 					float hardness = block.getBlockHardness(player.worldObj, message.x, message.y, message.z);
 	            	LogHelper.info("Block hardness is " + hardness);
-					if (hardness < minHardness) {
+					if (hardness >= 0 && hardness < minHardness) {
 						player.worldObj.setBlock(message.x, message.y, message.z, Blocks.air, 0, 3);
 		            	LogHelper.info("Destroyed a block!");
+					}
+					else {
+						player.addChatMessage(new ChatComponentText(
+								StatCollector.translateToLocal("chat.wildbill22_draco.blockIsTooHard")));						
 					}
 				}
 			}

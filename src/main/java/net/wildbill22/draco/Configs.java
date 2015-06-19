@@ -15,6 +15,7 @@ import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class Configs {
+	public static final String CATEGORY_HIDDEN = "hidden";
 	public static final String CATEGORY_GENERAL = Configuration.CATEGORY_GENERAL;
 	public static final String CATEGORY_BALANCE = "balance";
 	public static final String CATEGORY_BALANCE_LEVELING = "balance_leveling";
@@ -37,6 +38,9 @@ public class Configs {
 	 */
 	private static void loadConfiguration() {
 
+		// Hidden settings used to control the configuration updating
+		String conf_version=config.get(CATEGORY_HIDDEN, "config_mod_version", REFERENCE.VERSION).getString();
+
 		// Village
 		villageConfiguration();
 
@@ -55,6 +59,11 @@ public class Configs {
 		if (config.hasChanged()) {
 			LogHelper.info("Configs: Configuration has changed, saving.");
 			config.save();
+		}
+		if(!conf_version.equals(REFERENCE.VERSION)){
+			LogHelper.info("Configs: Configuration version changed, setting some defaults.");
+			
+			// Not sure what to do here!
 		}
 	}
 	

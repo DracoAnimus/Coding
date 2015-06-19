@@ -60,6 +60,21 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
     protected Abilities abilities;
     MovingObjectPosition mop;
     private float minReach;
+
+	public ItemDragonStaff(ToolMaterial material, String name, String modid) {
+		super(material);
+        this.field_150934_a = 4.0F + material.getDamageVsEntity();
+
+        this.setCreativeTab(Creative_Tab.TabDraco_Animus);
+		this.setUnlocalizedName(modid + "_" + name);
+		this.setTextureName(modid + ":" + name);
+
+		setMaxStackSize(1);
+		abilities = new Abilities();
+		abilities.addFireballs();
+		
+		minReach = (float) BALANCE.DRAGON_PLAYER_ABILITIES.MIN_EXTENDED_REACH - 2.0F;
+	}
     
 	public ItemDragonStaff(ToolMaterial material, String name) {
 		super(material);
@@ -727,8 +742,8 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-		return super.getItemStackDisplayName(stack) + 
-				StatCollector.translateToLocalFormatted("staff.wildbill22_draco_mode") + abilities.getLocalizedModeName(stack) + "!";
+   		return super.getItemStackDisplayName(stack) + 
+			StatCollector.translateToLocalFormatted("staff.wildbill22_draco_mode") + abilities.getLocalizedModeName(stack) + "!";
 
 //		return super.getItemStackDisplayName(stack) + " mode: " + abilities.getModeName(stack) + "!";
     }
@@ -778,7 +793,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	     * Adds ability to staff to change between dragon and human.
 	     * 
 	     * @param dragonTextureName unlocalizedName or any unique string 
-		 * @param dragonDisplayName - Like "Water Dragon"
+		 * @param dragonDisplayName - Like "Water Dragon", this is never displayed, so can be unlocalized
 	     */
 		public void addChangeForm(String dragonTextureName, String dragonDisplayName) {
 			this.dragonTextureName = dragonTextureName;
@@ -908,7 +923,10 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	    // Localized key is name with underscores
 	    public String getLocalizedModeName(ItemStack stack) {
 	    	String modeName = staffModes.get(getModeNumber(stack));
-	    	return StatCollector.translateToLocal("staff.wildbill22_draco_" + modeName.replace(" ", "_") + ".name");
+	    	if (modeName != null)
+	    		return StatCollector.translateToLocal("staff.wildbill22_draco_" + modeName.replace(" ", "_") + ".name");
+	    	else
+	    		return "none";
 	    }
     
 	    private int getModeNumber(ItemStack stack) {

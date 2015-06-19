@@ -139,6 +139,20 @@ public class ModItems extends Item {
 	}
 	
 	/**
+	 * Makes a item and sets most of its properties (used when calling API)
+	 * @param unlocalizedname
+	 * @param texturename
+	 * @param modid
+	 */
+	public ModItems(String unlocalizedname, String texturename, String modid){
+		super();
+		
+		this.setCreativeTab(Creative_Tab.TabDraco_Animus);
+		this.setUnlocalizedName(modid + "_" + unlocalizedname);
+		this.setTextureName(modid + ":" + texturename);
+	}
+	
+	/**
 	 * Makes a item and sets most of its properties
 	 * @param unlocalizedname
 	 * @param texturename

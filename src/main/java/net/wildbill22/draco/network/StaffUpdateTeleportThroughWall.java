@@ -77,7 +77,6 @@ public class StaffUpdateTeleportThroughWall implements IMessage {
 				}
 				player.addChatMessage(new ChatComponentText(
 						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.StaffUpdateTeleportThroughWall", message.maxD)));				
-//				player.addChatMessage(new ChatComponentText("Only solid blocks in that direction for the next " + message.maxD + " meters!"));
 			}
 			return null;
 		}

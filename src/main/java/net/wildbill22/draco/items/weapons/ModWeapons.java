@@ -25,7 +25,7 @@ public class ModWeapons {
 	static ToolMaterial LONGSWORD = EnumHelper.addToolMaterial("LONGSWORD", 3, 1000, 9.5F, 5.5F, 10);
 	static ToolMaterial BATTLEAXE = EnumHelper.addToolMaterial("BATTLEAXE", 3, 1000, 9.5F, 3.5F, 10);
 	static ToolMaterial MACE = EnumHelper.addToolMaterial("MACE", 3, 1000, 9.5F, 3.5F, 10);
-	static ToolMaterial STAFF = EnumHelper.addToolMaterial("STAFF", 3, 2000, 9.5F, 1.5F, 10);
+	public static ToolMaterial STAFF = EnumHelper.addToolMaterial("STAFF", 3, 2000, 9.5F, 1.5F, 10);
 	
 	// Weapons
 	public static Item dragonSlayerSword = new ItemDragonSlayerSword(dragonsBreath);
