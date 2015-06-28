@@ -9,11 +9,8 @@ public class ItemSilverDragonStaff extends ItemDragonStaff {
 	public ItemSilverDragonStaff(ToolMaterial material) {
 		super(material, name);
 		abilities.addChangeForm(EntitySilverDragon.name, "Silver dragon");
-//		abilities.explosiveFireballs();
 		abilities.addTeleporting();
-//		abilities.addHaste();
-		abilities.addFireBreathing();
-//		abilities.addTeleportThroughWalls();
+		abilities.addPoison();
 	}
 	
 	// Used to find if egg is in hoard

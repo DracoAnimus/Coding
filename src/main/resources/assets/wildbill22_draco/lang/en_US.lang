@@ -20,6 +20,7 @@ staff.wildbill22_draco_Locate_strongholds.name=Locate Strongholds
 staff.wildbill22_draco_Teleport_through_walls_in_the_dark.name=Teleport through walls in the dark
 staff.wildbill22_draco_Pick_up_mob.name=Pick up mob
 staff.wildbill22_draco_Break_blocks_with_Sound_Wave.name=Break blocks with Sound Wave
+staff.wildbill22_draco_Kill_entities_with_dust.name=Kill entities with dust
 
 #Dragon Eggs
 egg.wildbill22_draco_putThisEgg=Put this egg in the hoard
@@ -42,7 +43,8 @@ chat.wildbill22_draco.chestIsLocated=Chest is located at: %d,%d,%d!
 chat.wildbill22_draco.foundPossibleStrongholdChest=Found possible stronghold chest with a villager skull in it!
 chat.wildbill22_draco.staffInMode=Staff in mode: %s!
 chat.wildbill22_draco.thisStaffIsOnlyFor=This staff is only for %s!
-chat.wildbill22_draco.chnagedToHuman=Changed to human!
+chat.wildbill22_draco.changedToHuman=Changed to human!
+chat.wildbill22_draco.canNotChangeToHumanFlying=Can not change to human while flying!
 chat.wildbill22_draco.changedToDragon=Changed to dragon!
 chat.wildbill22_draco.sillyHumanOnlyDragonsHavePowers=Silly human, only dragons have powers!
 chat.wildbill22_draco.youCanOnlySpitBoilingWater=You can only spit boiling water in the water.
@@ -118,12 +120,13 @@ item.wildbill22_draco_eagleDragonEgg.name=Eagle Dragon Egg
 
 #Food Items
 item.wildbill22_draco_villagerHeart.name=Villager Heart
-item.wildbill22_draco_squid.name=Squid meat
+item.wildbill22_draco_squid.name=Squid Meat
 item.wildbill22_draco_villagerSkull.name=Villager Skull
 
 #Blocks (tiles)
 tile.charredGround.name=Charred Ground
 tile.scorchedCobblestone.name=Scorched Cobblestone
+tile.scorchedWall.name=Scorched Cobblestone Wall
 tile.temporaryHoard.name=Temporary Hoard
 tile.goldDragonEggBlock.name=Gold Dragon Egg
 tile.skeletonDragonEggBlock.name=Skeleton Dragon Egg

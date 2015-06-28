@@ -13,6 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -32,12 +33,22 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
     private static int serverCountdown = 0;
 
     // Use this only when calling API
-	public ItemDragonEgg(String name, String modid) {
+	public ItemDragonEgg(String name, String dragonName, String modid) {
 		super(name, name, modid);
+		
+		 // All dragons can eat these
+		this.addDragonFood(name, ModItems.villagerHeart);
+		this.addDragonFood(name, Items.golden_apple);
+		this.addDragonFood(name, Items.golden_carrot);
 	}
 	
-	public ItemDragonEgg(String name) {
+	public ItemDragonEgg(String name, String dragonName) {
 		super(name, name);
+
+		// All dragons can eat these
+		this.addDragonFood(name, ModItems.villagerHeart);
+		this.addDragonFood(name, Items.golden_apple);
+		this.addDragonFood(name, Items.golden_carrot);
 	}
 	
 	// Add this if you want the "enchanted" look in the inventory
@@ -120,7 +131,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SWIMMING) && player.isInWater()) {
 			amplifier = amplifier / 2;
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5, amplifier));
+            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 10, amplifier));
             player.addPotionEffect(new PotionEffect(Potion.waterBreathing.getId(), 5, 3));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWNESS) && !player.capabilities.isFlying) {
@@ -144,6 +155,10 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 			collideWithEntities(player.worldObj, player, amplifier);
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWINLIGHT) && player.getBrightness(0) > 5) {
+            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));			
+		}
+		// Slow in rain (but not in water)
+		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWINRAIN) && player.isWet() && !player.isInWater()) {
             player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));			
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.NIGHTDRAGON)) {
@@ -365,12 +380,14 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 	}
 
 	/**
-     * Sets dragon made of water ability (turns lava to obsidian)
+     * Sets dragon made of water ability (turns lava to obsidian) 
+     * and slow in rain (wet)
      * 
      * @param dragonName unlocalizedName or any unique string 
      */
 	protected void addIsMadeOfWaterAbilities(String dragonName) {
 		Abilities.addAbility(dragonName, Abilities.ISMADEOFWATER);
+		Abilities.addAbility(dragonName, Abilities.SLOWINRAIN);
 	}
 	
 	/**
@@ -393,12 +410,13 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 	}
 
 	/**
-     * Sets dragon to have fast flying
+     * Sets dragon to have fast flying and slow in rain (wet)
      * 
      * @param dragonName unlocalizedName or any unique string 
      */
 	protected void addEagleDragonAbilities(String dragonName) {
 		Abilities.addAbility(dragonName, Abilities.FASTFLYING);
+		Abilities.addAbility(dragonName, Abilities.SLOWINRAIN);
 	}
 
 	public static class Abilities {
@@ -422,6 +440,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		public static final int EAGLEDRAGON = 16;
 		public static final int FASTFLYING = 17;
 		public static final int FASTONGROUND = 18;
+		public static final int SLOWINRAIN = 19;
 
 		public static void addAbility(String dragonName, Integer ability) {
 			dragonAbilities.put(dragonName, ability);

@@ -10,6 +10,7 @@ public class ItemEarthDragonStaff extends ItemDragonStaff {
 		super(material, name);
 		abilities.addChangeForm(EntityDracoTerra.name, "Earth dragon");
 		abilities.addSoundWaveBlocks();
+		abilities.addSpitDustEntities();
 	}
 	
 	// Used to find if egg is in hoard

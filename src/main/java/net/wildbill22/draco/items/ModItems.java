@@ -74,9 +74,9 @@ public class ModItems extends Item {
 		GameRegistry.registerItem(villagerHeart = new ItemDragonFood("villagerHeart", 6, 1.2f, false, 
 				new PotionEffect(Potion.poison.id, 5, 0)), "villagerHeart");
 		villagerHeart.setAlwaysEdible();
-		GameRegistry.registerItem(squid = new ItemDragonFood("squid", 6, 1.2f, false, 
+		GameRegistry.registerItem(squid = new ItemDragonFood("squid", 4, 0.6f, false, 
 				new PotionEffect(Potion.poison.id, 5, 0)), "squid");
-		GameRegistry.registerItem(villagerSkull = new ItemDragonFood("villagerSkull", 6, 1.2f, false, 
+		GameRegistry.registerItem(villagerSkull = new ItemDragonFood("villagerSkull", 4, 0.6f, false, 
 				new PotionEffect(Potion.poison.id, 5, 0)), "villagerSkull");
 
 		// Eggs created after food has been registered (else null pointer exception)

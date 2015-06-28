@@ -12,18 +12,21 @@ import net.minecraft.util.StatCollector;
 import net.wildbill22.draco.entities.dragons.EntityDracoTenebrosus;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.items.weapons.ModWeapons;
+import net.wildbill22.draco.lib.BALANCE;
 
 public class ItemNightDragonEgg extends ItemDragonEgg {
 	public static final String name = "nightDragonEgg";
+	private final static String dragonName = EntityDracoTenebrosus.name;
 
 	public ItemNightDragonEgg() {
-		super(name);
-		String dragonName = EntityDracoTenebrosus.name;
-		this.addDragonFood(dragonName, ModItems.villagerHeart);
+		super(name, dragonName);
+//		String dragonName = EntityDracoTenebrosus.name;
+//		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, Items.beef);
 		this.addDragonFood(dragonName, Items.cooked_beef);
 		this.addNightDragonAbilities(dragonName);
-		this.addInvisibleInTheDark(dragonName);
+		if (BALANCE.DRAGON_PLAYER_ABILITIES.NIGHT_DRAGON_INVISIBILITY)
+			this.addInvisibleInTheDark(dragonName);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

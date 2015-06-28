@@ -15,16 +15,23 @@ import net.wildbill22.draco.items.weapons.ModWeapons;
 
 public class ItemWaterDragonEgg extends ItemDragonEgg {
 	public static final String name = "waterDragonEgg";
+	private final static String dragonName = EntityDracoAqua.name;
 
 	public ItemWaterDragonEgg() {
-		super(name);
-		String dragonName = EntityDracoAqua.name;
-		this.addDragonFood(dragonName, ModItems.villagerHeart);
+		super(name, dragonName);
+//		String dragonName = EntityDracoAqua.name;
+//		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, ModItems.squid);
 		this.addDragonFood(dragonName, Items.fish);
 		this.addSwimmingUnderWater(dragonName);
 		this.addCollideWithEntities(dragonName);
 		this.addIsMadeOfWaterAbilities(dragonName);
+		
+		// Stuff from Mariculture
+//		if (Core.isMCModLoaded) {
+//			this.addDragonFood(dragonName, mariculture.core.items.ItemFood.getItemById(FoodMeta.CALAMARI));			
+//			this.addDragonFood(dragonName, mariculture.core.items.ItemFood.getItemById(FoodMeta.KELP_WRAP));			
+//		}
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

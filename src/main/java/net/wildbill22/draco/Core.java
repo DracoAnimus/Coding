@@ -57,6 +57,7 @@ import cpw.mods.fml.relauncher.Side;
  */
 @Mod(modid = REFERENCE.MODID, name = REFERENCE.NAME, version = REFERENCE.VERSION, 
 	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory")
+//	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory", dependencies = "required-after: MCVanillaTweaks")
 public class Core {
 
 	@SidedProxy(clientSide = "net.wildbill22.draco.proxies.ClientProxy", serverSide = "net.wildbill22.draco.proxies.CommonProxy")
@@ -67,6 +68,8 @@ public class Core {
 
 	@Instance(REFERENCE.MODID)
 	public static Core instance;
+	
+//	public static boolean isMCModLoaded;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
@@ -130,6 +133,9 @@ public class Core {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		VillageBiomes.postInit(event);
+//		isMCModLoaded = Loader.isModLoaded("MCVanillaTweaks");
+//		if (isMCModLoaded)
+//			LogHelper.info("MCVanillaTweaks is loaded!");
 	}
 	
 	// For future use:

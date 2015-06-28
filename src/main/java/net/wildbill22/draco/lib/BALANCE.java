@@ -130,6 +130,9 @@ public final class BALANCE {
 		@DefaultDouble(value = 10.0D, minValue = 4.5D, maxValue = 20.0D, name = "Extended reach for level 1 dragon", 
 				comment = "A level 10 dragon get this value + 20")
 		public static double MIN_EXTENDED_REACH;
+		@DefaultBoolean(value = true, name = "Night Dragon is invisible at night?", 
+				comment = "Whether the Night Dragon has invisibility in the dark")
+		public static boolean NIGHT_DRAGON_INVISIBILITY;
 	}
 
 	/**

@@ -15,13 +15,15 @@ import net.wildbill22.draco.items.weapons.ModWeapons;
 
 public class ItemSilverDragonEgg extends ItemDragonEgg {
 	public static final String name = "silverDragonEgg";
+	private final static String dragonName = EntitySilverDragon.name;
 
 	public ItemSilverDragonEgg() {
-		super(name);
-		String dragonName = EntitySilverDragon.name;
-		this.addDragonFood(dragonName, ModItems.villagerHeart);
+		super(name, dragonName);
+//		String dragonName = EntitySilverDragon.name;
+//		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, Items.rotten_flesh);
-		// this.addNoBlockDamage(dragonName);
+		this.addDragonFood(dragonName, Items.iron_ingot);
+		this.addImmuneToPoison(dragonName);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -6,6 +6,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -39,6 +40,7 @@ import net.wildbill22.draco.lib.BALANCE;
 import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 
 // All events in this class are type MinecraftForge.EVENT_BUS
 public class DragonPlayerEventHandler {
@@ -75,14 +77,19 @@ public class DragonPlayerEventHandler {
 		DragonPlayer.get(event.entityPlayer).copy(DragonPlayer.get(event.original));
 	}
 
-	// This doesn't work for some stuff. Player drops from flying when game started with this.
+	// This doesn't work for some stuff. Player drops from flying when game started with this instead of LivingUpdateEvent.
 //	@SubscribeEvent
 //	public void onPlayerTickEvent(PlayerTickEvent event) {
-//    	if (DragonPlayer.get(event.player).isDragon()) {
-//    		event.player.capabilities.allowFlying = true;
-//    		ItemDragonEgg.applyAbilities(event.player);
-//    		event.player.sendPlayerAbilities();
-//        }
+//		if (!event.player.worldObj.isRemote && DragonPlayer.get(event.player).isDragon()) {
+//			if (Mouse.isButtonDown(2)) {
+//				LogHelper.info("onPlayerTickEvent: You just clicked something!");			
+//			}
+//			String dragonName = DragonPlayer.get(event.player).getDragonName();
+//			Item food = event.player.getHeldItem().getItem();
+//			if (ItemDragonEgg.isDragonFood(dragonName, food)) {
+//				
+//			}
+//		}
 //    }
 
 	// Need to call this until I figure out how to detect switching from creative to survival mode (makes you not fly)
@@ -261,15 +268,6 @@ public class DragonPlayerEventHandler {
 		}
 	}
 
-//	@SubscribeEvent
-//	public void onLivingAttackEvent(LivingAttackEvent event) {
-//		if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
-//			if (((EntityPlayer)event.entity).getItemInUse().getItem() instanceof ItemDragonStaff) {
-//				event.source.
-//			}
-//		}		
-//	}
-	
 	// To prevent death by lava for a dragon
 	@SubscribeEvent
 	public void onLivingHurtEvent(LivingHurtEvent event) {
@@ -323,6 +321,9 @@ public class DragonPlayerEventHandler {
 					}
 					if (player.isPotionActive(Potion.hunger.id)) {
 						player.removePotionEffect(Potion.hunger.getId());
+					}
+					if (event.item.getItem() == Items.rotten_flesh) {
+						player.getFoodStats().addStats(0, 0.5F); // Add more saturation to rotten flesh, 0.1F normally, 0.6F is cooked chicken
 					}
 				}
 			}

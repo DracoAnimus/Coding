@@ -15,12 +15,13 @@ import net.wildbill22.draco.items.weapons.ModWeapons;
 
 public class ItemFireDragonEgg extends ItemDragonEgg {
 	public static final String name = "fireDragonEgg";
+	private final static String dragonName = EntityDracoIgnis.name;
 
 	public ItemFireDragonEgg() {
-		super(name);
-		String dragonName = EntityDracoIgnis.name;
+		super(name, dragonName);
+//		String dragonName = EntityDracoIgnis.name;
 		this.addFireDragonAbilities(dragonName);
-		this.addDragonFood(dragonName, ModItems.villagerHeart);
+//		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, Items.chicken);
 		this.addDragonFood(dragonName, Items.cooked_chicken);
 	}

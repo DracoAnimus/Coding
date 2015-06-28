@@ -11,6 +11,7 @@ public class ModBlocks extends Block {
 	public static Block charredGround;
  	public static Block scorchedCobblestone;
  	public static Block temporaryHoard;
+ 	public static Block scorchedWall;
  	
  	// Eggs
  	public static Block goldDragonEgg;
@@ -30,6 +31,10 @@ public class ModBlocks extends Block {
 		GameRegistry.registerBlock(charredGround, BlockCharredGround.name);
 		GameRegistry.registerBlock(scorchedCobblestone, BlockScorchedCobblestone.name);
 		GameRegistry.registerBlock(temporaryHoard, TemporaryHoard.textureName);
+
+		// New in 0.3.0
+		scorchedWall = new BlockScorchedWall(); 
+		GameRegistry.registerBlock(scorchedWall, BlockScorchedWall.name);
 		
 		// Eggs
 //		goldDragonEgg = new BlockGoldDragonEgg();

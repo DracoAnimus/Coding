@@ -8,6 +8,7 @@ import com.google.common.collect.Multimap;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -17,6 +18,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +27,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.StatCollector;
@@ -123,27 +126,30 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			}
 			
 			// Change mode if Alt key is pressed
-			if (KeyBindings.staffChange.getIsKeyPressed()) {
-				abilities.nextMode(itemStack);
-				player.addChatMessage(new ChatComponentText(
-						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack))));
-				return itemStack;				
-			}
+//			if (KeyBindings.staffChange.getIsKeyPressed()) {
+//				abilities.nextMode(itemStack);
+//				player.addChatMessage(new ChatComponentText(
+//						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack))));
+//				return itemStack;				
+//			}
 			
-			// Change mode if shift key pressed
-			if (player.isSneaking()) {
+			// Change mode if shift key or Alt key pressed
+			if (player.isSneaking() || KeyBindings.staffChange.getIsKeyPressed()) {
 				abilities.nextMode(itemStack);
-				player.addChatMessage(new ChatComponentText(
-						StatCollector.translateToLocalFormatted("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack))));
+				player.addChatMessage(new ChatComponentTranslation("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack)));
 				return itemStack;
 			}
 
 			// Change between dragon and human
 			if (abilities.getModeNumber(itemStack) == abilities.CHANGE_FORM) {
 				if (DragonPlayer.get(player).isDragon()) {
-					DragonPlayer.get(player).setDragon(false, true);
-					ItemDragonEgg.setHumanAbilities(player);  // Set some things that got changed!
-					player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.chnagedToHuman")));					
+		    		if (player.onGround) {
+		    			DragonPlayer.get(player).setDragon(false, true);
+		    			ItemDragonEgg.setHumanAbilities(player);  // Set some things that got changed!
+		    			player.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.wildbill22_draco.changedToHuman")));
+		    		} else {
+		    			player.addChatMessage(new ChatComponentTranslation("chat.wildbill22_draco.canNotChangeToHumanFlying"));	
+		    		}
 				} else {
 					DragonPlayer.get(player).setDragonName(abilities.dragonTextureName);
 					DragonPlayer.get(player).setDragon(true, true);
@@ -323,6 +329,17 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		        	Core.modChannel.sendToServer(new StaffUpdateDamageTarget(entity.posX, entity.posY, entity.posZ));
 		    	}				
 			}
+			// Spit Dust
+			else if (abilities.getModeNumber(itemStack) == abilities.SPITDUST) {
+				int amplifier = DragonPlayer.get(player).getLevel();
+				spawnSpitDust(world, player, 2.0F, amplifier);
+		    	Entity entity = getMouseOver(world, amplifier * 2.0F + minReach);  // normal reach is 4.5F in survival
+				world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+				if (entity instanceof EntityLivingBase) {
+					LogHelper.info("Hit entity at: " + entity.posX + "," + entity.posY + "," + entity.posZ);
+		        	Core.modChannel.sendToServer(new StaffUpdateDamageTarget(entity.posX, entity.posY, entity.posZ));
+		    	}				
+			}
 			// Teleport through walls
 			else if (abilities.getModeNumber(itemStack) == abilities.TELEPORTTHROUGHWALL) {
 				teleportThroughWalls(world, player, false);
@@ -387,6 +404,22 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
             double dzMin = (double)((float)player.posZ + dz + look.zCoord * minD);
             float v = 0.09F * amplifier; // Velocity
             world.spawnParticle("depthsuspend", dxMin, dyMin, dzMin, look.xCoord * v, look.yCoord * v, look.zCoord * v);
+    	}
+    }
+
+    // spawn particle name, position x,y,z velocity x,y,z
+	private void spawnSpitDust(World world, EntityPlayer player, float minD, int amplifier) {
+		Vec3 look = player.getLookVec();
+    	for (int i = 0; i < 4; i++) {
+    		float dx = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dy = (world.rand.nextFloat() - 0.5F) / 3;
+    		float dz = (world.rand.nextFloat() - 0.5F) / 3;
+            double dxMin = (double)((float)player.posX + dx + look.xCoord * minD);
+            double dyMin = (double)((float)player.posY + dy + look.yCoord * minD);
+            double dzMin = (double)((float)player.posZ + dz + look.zCoord * minD);
+            float v = 0.09F * amplifier; // Velocity
+            // particle when sprinting
+            world.spawnParticle("blockcrack_" + Block.getIdFromBlock(Blocks.dirt) + "_0", dxMin, dyMin, dzMin, look.xCoord * v, look.yCoord * v, look.zCoord * v);
     	}
     }
 
@@ -787,7 +820,8 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		private int TELEPORTTHROUGHWALLATNIGHT = 18;
 		private int PICKUPMOBS = 19;
 		private int SOUNDWAVEBLOCKS = 20;
-		private int NUM_MODES = 21;
+		private int SPITDUST = 21;
+		private int NUM_MODES = 22;
 
 		/**
 	     * Adds ability to staff to change between dragon and human.
@@ -911,6 +945,12 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 		public void addSoundWaveBlocks() {
 			addMode(this.SOUNDWAVEBLOCKS, "Break blocks with Sound Wave");
 		}
+		/**
+	     * Adds ability to harm entities with dust.
+	     */
+		public void addSpitDustEntities() {
+			addMode(this.SPITDUST, "Kill entities with dust");
+		}
 
 		private void addMode(int mode, String text) {
 			staffModes.put(mode, text);
@@ -939,7 +979,6 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 			return stack.getTagCompound().getInteger("mode") % NUM_MODES; // Ensure mode is < NUM_MODES
 	    }
 	    
-	    // TODO: Use an iterator
 	    private void nextMode(ItemStack stack) {
 	    	int mode = getModeNumber(stack) + 1;
 	    	for (; mode < NUM_MODES; mode++) {
@@ -951,5 +990,15 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 	    		mode = FIREBALLS; // set to 0
 			stack.getTagCompound().setInteger("mode", mode);
 	    }
-    }    
-}
+
+	    // Needs to start at current position, can't really do that with an iterator!
+//	    private void nextMode(ItemStack stack) {
+//	        Iterator<Entry<Integer, String>> it = staffModes.entrySet().iterator();
+//	        if (it.hasNext()) {
+//	        	stack.getTagCompound().setInteger("mode", it.next().getKey());
+//	        } else {
+//	        	stack.getTagCompound().setInteger("mode", FIREBALLS); // set to 0
+//	        }
+//	    }
+    }        
+}    
