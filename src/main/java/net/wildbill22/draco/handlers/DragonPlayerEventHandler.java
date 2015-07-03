@@ -66,26 +66,10 @@ public class DragonPlayerEventHandler {
 			} else { // On server
 				EntityPlayer player = (EntityPlayer) event.entity;
 				DragonPlayer.onPlayerJoinWorld(player);
-				LogHelper.info("DragonPlayerEventHandler: Server syncing client.");
-				
-//				if (Core.isEnchiridionModLoaded && event.world.getTotalWorldTime() < 100) {
-//					LogHelper.info("WorldTotalTime: " + event.world.getTotalWorldTime());
-//					copyBookToInventory(player);
-//				}
+				LogHelper.info("DragonPlayerEventHandler: Server syncing client.");				
 			}
 		}
 	}
-
-	// For survival mode
-//	private void copyBookToInventory(EntityPlayer player) {
-//		ItemBook itemBook = (ItemBook) GameRegistry.findItem("Enchiridion2", "book");
-//		ItemStack stack = new ItemStack(itemBook, 1, 0);
-//		if (!player.inventory.hasItem(itemBook)) {
-//			stack.setTagCompound(new NBTTagCompound());
-//	        stack.stackTagCompound.setString("identifier", "Draco_Animus");
-//			player.inventory.addItemStackToInventory(stack);
-//		}
-//	}
 
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone event) {

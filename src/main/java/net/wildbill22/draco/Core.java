@@ -2,6 +2,7 @@ package net.wildbill22.draco;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
+import net.wildbill22.draco.api.EnchiridionAPI;
 import net.wildbill22.draco.biome.ModBiomes;
 import net.wildbill22.draco.blocks.ModBlocks;
 import net.wildbill22.draco.crafting.ModCraftingRecipes;
@@ -39,6 +40,7 @@ import net.wildbill22.draco.network.StaffUpdateWitherTarget;
 import net.wildbill22.draco.proxies.CommonProxy;
 import net.wildbill22.draco.tile_entity.ModTileEntities;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -56,9 +58,10 @@ import cpw.mods.fml.relauncher.Side;
  *
  */
 @Mod(modid = REFERENCE.MODID, name = REFERENCE.NAME, version = REFERENCE.VERSION, 
-	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory")
-//	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory", dependencies = "required-after: MCVanillaTweaks")
-//	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory", dependencies = "required-after: Enchiridion2")
+dependencies = "required-after: Enchiridion2",
+//dependencies = "required-after: MCVanillaTweaks",
+guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory"
+)
 public class Core {
 	@SidedProxy(clientSide = "net.wildbill22.draco.proxies.ClientProxy", serverSide = "net.wildbill22.draco.proxies.CommonProxy")
 	public static CommonProxy dracoProxy;
@@ -71,8 +74,7 @@ public class Core {
 	
 //	public static boolean isMCModLoaded;
 
-//	public static boolean isEnchiridionModLoaded;
-//	public static EnchiridionAPI enchiridionAPI;
+	public static boolean isEnchiridionModLoaded;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
@@ -140,14 +142,11 @@ public class Core {
 //		if (isMCModLoaded)
 //			LogHelper.info("MCVanillaTweaks is loaded!");
 		
-//		isEnchiridionModLoaded = Loader.isModLoaded("Enchiridion2");
-//		if (isEnchiridionModLoaded) {
-//			LogHelper.info("Enchiridion 2 is loaded!");
-//			enchiridionAPI = new EnchiridionAPI();
-//			enchiridionAPI.registerModBooks(REFERENCE.MODID + ":" + "wildbill22_draco");
-//			enchiridionAPI.registerBookHandler(new BookHandler());
-//			// TODO: Register a recipe handler
-//		}
+		isEnchiridionModLoaded = Loader.isModLoaded(REFERENCE.EAPIMODID);
+		if (isEnchiridionModLoaded) {
+			EnchiridionAPI.init();
+			LogHelper.info("Enchiridion 2 is loaded!");
+		}
 	}
 	
 	// For future use:

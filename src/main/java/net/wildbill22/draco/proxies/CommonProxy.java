@@ -5,6 +5,8 @@ import java.util.Map;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
+import net.wildbill22.draco.Core;
+import net.wildbill22.draco.api.EnchiridionAPIEventHandler;
 import net.wildbill22.draco.handlers.DragonPlayerEventHandler;
 import net.wildbill22.draco.handlers.EntityGuardEventHandler;
 import net.wildbill22.draco.handlers.StructureEventHandler;
