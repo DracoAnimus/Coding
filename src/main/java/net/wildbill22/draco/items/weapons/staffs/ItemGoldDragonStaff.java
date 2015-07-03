@@ -8,7 +8,8 @@ public class ItemGoldDragonStaff extends ItemDragonStaff {
 	
 	public ItemGoldDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityGoldDragon.name, "Gold dragon");
+//		abilities.addChangeForm(EntityGoldDragon.name, "Gold dragon");
+		abilities.addChangeForm(EntityGoldDragon.name, "Draco Aurum");
 		abilities.addExplosiveFireballs();
 		abilities.addGoldenEye();
 	}

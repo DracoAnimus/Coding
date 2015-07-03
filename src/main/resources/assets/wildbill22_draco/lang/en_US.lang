@@ -25,14 +25,22 @@ staff.wildbill22_draco_Kill_entities_with_dust.name=Kill entities with dust
 #Dragon Eggs
 egg.wildbill22_draco_putThisEgg=Put this egg in the hoard
 egg.wildbill22_draco_youWillGetStaff=You will get a staff that turns you 
-egg.wildbill22_draco_intoWaterDragon=into a Water Dragon!
-egg.wildbill22_draco_intoSkeletonDragon=into a Skeleton Dragon!
-egg.wildbill22_draco_intoSilverDragon=into a Silver Dragon!
-egg.wildbill22_draco_intoNightDragon=into an Night Dragon!
-egg.wildbill22_draco_intoGoldenDragon=into a Golden Dragon!
-egg.wildbill22_draco_intoFireDragon=into an Fire Dragon!
-egg.wildbill22_draco_intoEarthDragon=into an Earth Dragon!
-egg.wildbill22_draco_intoEagleDragon=into an Eagle Dragon!
+egg.wildbill22_draco_intoWaterDragon=into Draco Aqua!
+egg.wildbill22_draco_intoSkeletonDragon=into Draco Mortem!
+egg.wildbill22_draco_intoSilverDragon=into Draco Argentum!
+egg.wildbill22_draco_intoNightDragon=into Draco Tenebrosus!
+egg.wildbill22_draco_intoGoldenDragon=into Draco Aurum!
+egg.wildbill22_draco_intoFireDragon=into Draco Ignis!
+egg.wildbill22_draco_intoEarthDragon=into Draco Terra!
+egg.wildbill22_draco_intoEagleDragon=into Draco Aquila!
+#egg.wildbill22_draco_intoWaterDragon=into a Water Dragon!
+#egg.wildbill22_draco_intoSkeletonDragon=into a Skeleton Dragon!
+#egg.wildbill22_draco_intoSilverDragon=into a Silver Dragon!
+#egg.wildbill22_draco_intoNightDragon=into an Night Dragon!
+#egg.wildbill22_draco_intoGoldenDragon=into a Golden Dragon!
+#egg.wildbill22_draco_intoFireDragon=into an Fire Dragon!
+#egg.wildbill22_draco_intoEarthDragon=into an Earth Dragon!
+#egg.wildbill22_draco_intoEagleDragon=into an Eagle Dragon!
 
 #Chat Messages
 chat.wildbill22_draco.StaffUpdateTeleportThroughWall=Only solid blocks in that direction for the next %f meters! 
@@ -61,7 +69,7 @@ chat.wildbill22_draco.blockIsTooHard=Block is too hard!
 #Weapon's Add Information
 staff.wildbill22_draco_mode= mode: 
 staff.wildbill22_draco.staffThatAllowsChange=Staff that allows you to change
-staff.wildbill22_draco.fromHumanTo=from human to %s .
+staff.wildbill22_draco.fromHumanTo=from human to %s.
 staff.wildbill22_draco.useShiftRightClick=Use shift + right click to change modes.
 weapon.wildbill22_draco.hitsRemaining=%d Hits Remaining
 sword.wildbill22_draco.attackDamage=%f Attack Damage
@@ -101,12 +109,21 @@ item.wildbill22_draco_goldCoin.info2=hoard to increase your powers!
 item.wildbill22_draco_longBow.name=Long Bow
 item.wildbill22_draco_crossbow.name=Crossbow
 item.wildbill22_draco_rock.name=Rock
-item.wildbill22_draco_silverDragonEgg.name=Silver Dragon Egg
-item.wildbill22_draco_silverDragonStaff.name=Silver Dragon Staff
-item.wildbill22_draco_skeletonDragonEgg.name=Skeleton Dragon Egg
-item.wildbill22_draco_skeletonDragonStaff.name=Skeleton Dragon Staff
-item.wildbill22_draco_goldDragonEgg.name=Gold Dragon Egg
-item.wildbill22_draco_goldDragonStaff.name=Gold Dragon Staff
+
+item.wildbill22_draco_silverDragonEgg.name=Ovum de Draco Argentum
+item.wildbill22_draco_silverDragonStaff.name=Draco Argentum Baculum
+item.wildbill22_draco_skeletonDragonEgg.name=Ovum de Draco Mortem
+item.wildbill22_draco_skeletonDragonStaff.name=Draco Mortem Baculum
+item.wildbill22_draco_goldDragonEgg.name=Ovum de Draco Aurum
+item.wildbill22_draco_goldDragonStaff.name=Draco Aurum Baculum
+
+#item.wildbill22_draco_silverDragonEgg.name=Silver Dragon Egg
+#item.wildbill22_draco_silverDragonStaff.name=Silver Dragon Staff
+#item.wildbill22_draco_skeletonDragonEgg.name=Skeleton Dragon Egg
+#item.wildbill22_draco_skeletonDragonStaff.name=Skeleton Dragon Staff
+#item.wildbill22_draco_goldDragonEgg.name=Gold Dragon Egg
+#item.wildbill22_draco_goldDragonStaff.name=Gold Dragon Staff
+
 item.wildbill22_draco_waterDragonEgg.name=Water Dragon Egg
 item.wildbill22_draco_waterDragonStaff.name=Water Dragon Staff
 item.wildbill22_draco_earthDragonStaff.name=Earth Dragon Staff

@@ -8,7 +8,8 @@ public class ItemEagleDragonStaff extends ItemDragonStaff {
 	
 	public ItemEagleDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityDracoAquila.name, "Eagle dragon");
+//		abilities.addChangeForm(EntityDracoAquila.name, "Eagle dragon");
+		abilities.addChangeForm(EntityDracoAquila.name, "Draco Aquila");
 		abilities.addSoundWaveEntities();
 		abilities.addPickUpMobs();
 	}

@@ -223,11 +223,13 @@ public class DragonPlayer implements IExtendedEntityProperties {
 
 	public void setDragon(boolean isDragon, boolean syncClient) {
 		this.isDragon = isDragon;
+		// Dragon
 		if (isDragon()) {
     		// TODO: Add a clear abilities per dragon type
 			player.fireResistance = 1200;  // Not immune, but can stand in fire 1 minute
     		player.capabilities.allowFlying = true;
 		}
+		// Human
     	else {
     		// TODO: Add a set abilities per dragon type
 			player.fireResistance = 0;
@@ -384,6 +386,7 @@ public class DragonPlayer implements IExtendedEntityProperties {
 	        LogHelper.info("DragonPlayer syncClient: About to send player level of " + level + " to client.");
 	        if (player != null) {
         		Core.modChannel.sendTo(new DragonPlayerUpdateLevel(level), (EntityPlayerMP)player);
+        		// Sets to isDragon, plus some human defaults is human
         		Core.modChannel.sendTo(new DragonPlayerUpdateIsDragon(isDragon), (EntityPlayerMP)player);
         		Core.modChannel.sendTo(new DragonPlayerUpdateDragonName(dragonName), (EntityPlayerMP)player);
 		        LogHelper.info("DragonPlayer sync: Sent player level of " + level + " to client.");

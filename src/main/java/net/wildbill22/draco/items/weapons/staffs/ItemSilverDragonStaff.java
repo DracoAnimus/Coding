@@ -8,7 +8,8 @@ public class ItemSilverDragonStaff extends ItemDragonStaff {
 	
 	public ItemSilverDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntitySilverDragon.name, "Silver dragon");
+//		abilities.addChangeForm(EntitySilverDragon.name, "Silver dragon");
+		abilities.addChangeForm(EntitySilverDragon.name, "Draco Argentum");
 		abilities.addTeleporting();
 		abilities.addPoison();
 	}

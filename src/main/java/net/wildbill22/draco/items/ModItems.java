@@ -47,7 +47,7 @@ public class ModItems extends Item {
 	public static ItemDragonFood villagerHeart; 
 	public static ItemDragonFood squid;
 	public static ItemDragonFood villagerSkull;
-
+	
 	public static void preInit() {
 		dragonScales = new ItemDragonScales();
 		GameRegistry.registerItem(dragonScales, ItemDragonScales.name);

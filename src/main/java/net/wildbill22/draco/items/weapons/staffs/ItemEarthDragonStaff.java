@@ -8,7 +8,8 @@ public class ItemEarthDragonStaff extends ItemDragonStaff {
 	
 	public ItemEarthDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityDracoTerra.name, "Earth dragon");
+//		abilities.addChangeForm(EntityDracoTerra.name, "Earth dragon");
+		abilities.addChangeForm(EntityDracoTerra.name, "Draco Terra");
 		abilities.addSoundWaveBlocks();
 		abilities.addSpitDustEntities();
 	}

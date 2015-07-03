@@ -22,7 +22,7 @@ public class ItemSilverDragonEgg extends ItemDragonEgg {
 //		String dragonName = EntitySilverDragon.name;
 //		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, Items.rotten_flesh);
-		this.addDragonFood(dragonName, Items.iron_ingot);
+//		this.addDragonFood(dragonName, Items.iron_ingot);
 		this.addImmuneToPoison(dragonName);
 	}
 	

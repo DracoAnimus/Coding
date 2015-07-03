@@ -22,7 +22,7 @@ public class ItemGoldDragonEgg extends ItemDragonEgg {
 //		String dragonName = EntityGoldDragon.name;
 		this.addDragonFood(dragonName, ModItems.villagerHeart);
 		this.addDragonFood(dragonName, Items.rotten_flesh);
-		this.addDamageBoost(dragonName);
+		this.addDamageBoostOnGround(dragonName);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

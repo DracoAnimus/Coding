@@ -8,7 +8,8 @@ public class ItemNightDragonStaff extends ItemDragonStaff {
 	
 	public ItemNightDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityDracoTenebrosus.name, "Night dragon");
+//		abilities.addChangeForm(EntityDracoTenebrosus.name, "Night dragon");
+		abilities.addChangeForm(EntityDracoTenebrosus.name, "Draco Tenebrosus");
 		abilities.addTeleportThroughWallsAtNight();
 		abilities.addWitherEffect();
 	}

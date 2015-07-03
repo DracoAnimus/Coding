@@ -47,6 +47,11 @@ public class DragonPlayerUpdateIsDragon implements IMessage {
 				if (player != null) {
 					DragonPlayer dragonPlayer = DragonPlayer.get(player);
 					dragonPlayer.setDragon(message.value, false);
+					if (!message.value) {
+						// Some other human defaults
+//				        player.noClip = false;
+						player.stepHeight = 0.5F; // Normally 0.5F for player
+					}
 				}
 
 			}

@@ -8,7 +8,8 @@ public class ItemWaterDragonStaff extends ItemDragonStaff {
 	
 	public ItemWaterDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityDracoAqua.name, "Water dragon");
+//		abilities.addChangeForm(EntityDracoAqua.name, "Water dragon");
+		abilities.addChangeForm(EntityDracoAqua.name, "Draco Aqua");
 		abilities.addTeleporting();
 		abilities.addSpitBoilingWater();
 	}

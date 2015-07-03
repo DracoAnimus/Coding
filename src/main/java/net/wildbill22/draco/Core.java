@@ -50,7 +50,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
-	
+
 /** 
  * @author WILLIAM
  *
@@ -58,8 +58,8 @@ import cpw.mods.fml.relauncher.Side;
 @Mod(modid = REFERENCE.MODID, name = REFERENCE.NAME, version = REFERENCE.VERSION, 
 	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory")
 //	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory", dependencies = "required-after: MCVanillaTweaks")
+//	guiFactory = "net.wildbill22.draco.client.gui.ModGuiFactory", dependencies = "required-after: Enchiridion2")
 public class Core {
-
 	@SidedProxy(clientSide = "net.wildbill22.draco.proxies.ClientProxy", serverSide = "net.wildbill22.draco.proxies.CommonProxy")
 	public static CommonProxy dracoProxy;
 
@@ -70,6 +70,9 @@ public class Core {
 	public static Core instance;
 	
 //	public static boolean isMCModLoaded;
+
+//	public static boolean isEnchiridionModLoaded;
+//	public static EnchiridionAPI enchiridionAPI;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event){
@@ -136,6 +139,15 @@ public class Core {
 //		isMCModLoaded = Loader.isModLoaded("MCVanillaTweaks");
 //		if (isMCModLoaded)
 //			LogHelper.info("MCVanillaTweaks is loaded!");
+		
+//		isEnchiridionModLoaded = Loader.isModLoaded("Enchiridion2");
+//		if (isEnchiridionModLoaded) {
+//			LogHelper.info("Enchiridion 2 is loaded!");
+//			enchiridionAPI = new EnchiridionAPI();
+//			enchiridionAPI.registerModBooks(REFERENCE.MODID + ":" + "wildbill22_draco");
+//			enchiridionAPI.registerBookHandler(new BookHandler());
+//			// TODO: Register a recipe handler
+//		}
 	}
 	
 	// For future use:

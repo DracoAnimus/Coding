@@ -8,7 +8,8 @@ public class ItemSkeletonDragonStaff extends ItemDragonStaff {
 	
 	public ItemSkeletonDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityDracoMortem.name, "Skeleton dragon");
+//		abilities.addChangeForm(EntityDracoMortem.name, "Skeleton dragon");
+		abilities.addChangeForm(EntityDracoMortem.name, "Draco Mortem");
 		abilities.addInvisible();
 		abilities.addRegeneration();
 		abilities.addLocateStrongholds();

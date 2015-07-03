@@ -8,7 +8,8 @@ public class ItemFireDragonStaff extends ItemDragonStaff {
 	
 	public ItemFireDragonStaff(ToolMaterial material) {
 		super(material, name);
-		abilities.addChangeForm(EntityDracoIgnis.name, "Fire dragon");
+//		abilities.addChangeForm(EntityDracoIgnis.name, "Fire dragon");
+		abilities.addChangeForm(EntityDracoIgnis.name, "Draco Ignis");
 		abilities.addFireBreathing();
 	}
 	

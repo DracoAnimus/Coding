@@ -41,7 +41,6 @@ import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.tile_entity.TileEntityTemporaryHoard;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
-
 // All events in this class are type MinecraftForge.EVENT_BUS
 public class DragonPlayerEventHandler {
 
@@ -65,32 +64,34 @@ public class DragonPlayerEventHandler {
 //				Core.modChannel.sendToServer(new RequestDragonPlayerUpdatePacket(1));
 //				LogHelper.info("DragonPlayerEventHandler: Client requesting sync.");
 			} else { // On server
-				DragonPlayer.onPlayerJoinWorld((EntityPlayer) event.entity);
+				EntityPlayer player = (EntityPlayer) event.entity;
+				DragonPlayer.onPlayerJoinWorld(player);
 				LogHelper.info("DragonPlayerEventHandler: Server syncing client.");
+				
+//				if (Core.isEnchiridionModLoaded && event.world.getTotalWorldTime() < 100) {
+//					LogHelper.info("WorldTotalTime: " + event.world.getTotalWorldTime());
+//					copyBookToInventory(player);
+//				}
 			}
 		}
 	}
+
+	// For survival mode
+//	private void copyBookToInventory(EntityPlayer player) {
+//		ItemBook itemBook = (ItemBook) GameRegistry.findItem("Enchiridion2", "book");
+//		ItemStack stack = new ItemStack(itemBook, 1, 0);
+//		if (!player.inventory.hasItem(itemBook)) {
+//			stack.setTagCompound(new NBTTagCompound());
+//	        stack.stackTagCompound.setString("identifier", "Draco_Animus");
+//			player.inventory.addItemStackToInventory(stack);
+//		}
+//	}
 
 	@SubscribeEvent
 	public void onClonePlayer(PlayerEvent.Clone event) {
 		LogHelper.info("DragonPlayerEventHandler: Cloning player extended properties");
 		DragonPlayer.get(event.entityPlayer).copy(DragonPlayer.get(event.original));
 	}
-
-	// This doesn't work for some stuff. Player drops from flying when game started with this instead of LivingUpdateEvent.
-//	@SubscribeEvent
-//	public void onPlayerTickEvent(PlayerTickEvent event) {
-//		if (!event.player.worldObj.isRemote && DragonPlayer.get(event.player).isDragon()) {
-//			if (Mouse.isButtonDown(2)) {
-//				LogHelper.info("onPlayerTickEvent: You just clicked something!");			
-//			}
-//			String dragonName = DragonPlayer.get(event.player).getDragonName();
-//			Item food = event.player.getHeldItem().getItem();
-//			if (ItemDragonEgg.isDragonFood(dragonName, food)) {
-//				
-//			}
-//		}
-//    }
 
 	// Need to call this until I figure out how to detect switching from creative to survival mode (makes you not fly)
 	@SubscribeEvent
@@ -104,7 +105,7 @@ public class DragonPlayerEventHandler {
 				if (!event.entityLiving.worldObj.isRemote) {  
 		    		player.capabilities.allowFlying = true;
 		    		ItemDragonEgg.applyAbilities(player, false);
-		    		player.sendPlayerAbilities();
+//		    		player.sendPlayerAbilities(); // 7/2/15 Removed as a test, don't think this is needed!
 		        }
 				else {
 					ItemDragonEgg.applyAbilities(player, true);				
@@ -180,23 +181,8 @@ public class DragonPlayerEventHandler {
 		}
 	}
 	
-	// Gives fireballs or explosive fireball each time you kill something when a dragon
 	@SubscribeEvent
 	public void onLivingDropsEvent(LivingDropsEvent event) {
-//		Entity entity = event.source.getSourceOfDamage();
-//		if (entity != null && !entity.worldObj.isRemote && entity instanceof EntityPlayer) {
-//			LogHelper.info("DragonPlayerEventHandler: Player killed something!");
-//			EntityPlayer player = (EntityPlayer) entity;
-//			if (DragonPlayer.get(player).isDragon()) {
-//				int chance  = Math.max((DragonPlayer.get(player).getLevel() / 2), 1);
-//				int num = new Random().nextInt(chance) + 1;
-//				LogHelper.info("DragonPlayerEventHandler: Player killed something! Adding " + num + " Fireballs!");
-//				for (int i = 0; i < num; i++) {
-//					if (!addItemToHotbar(player.inventory, ModItems.fireball))
-//						addItemToHotbar(player.inventory, ModItems.explosiveFireball);
-//				}
-//			}
-//		}
 		if (event.entityLiving instanceof EntityVillager) {
 			if (!((EntityVillager)event.entityLiving).isChild()) {				
 				// 75% chance to drop the heart
@@ -224,31 +210,6 @@ public class DragonPlayerEventHandler {
 			}
 		}
 	}
-	
-	// FIXME: Could this use addItemStackToInventory(itemstack)? 
-//	private static boolean addItemToHotbar(InventoryPlayer hotbar, Item item) {
-//		int hotbarSize = InventoryPlayer.getHotbarSize();
-//		if (hotbar.hasItem(item)) {
-//			for (int i = 0; i < hotbarSize; i++) {
-//				ItemStack itemStack = hotbar.getStackInSlot(i);
-//				if (itemStack != null && itemStack.getItem().equals(item)) {
-//					if (itemStack.stackSize < itemStack.getMaxStackSize()) {
-//						itemStack.stackSize++;
-//						return true;
-//					}
-//				}					
-//			}
-//		}
-//		else {
-//			int slot = hotbar.getFirstEmptyStack();
-//			if (slot >= 0) {
-//				ItemStack items = new ItemStack(item);
-//				hotbar.setInventorySlotContents(slot, items);
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 	
 	// On MinecraftForge.EVENT_BUS
 //	@SubscribeEvent
