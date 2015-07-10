@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import net.wildbill22.draco.entities.EntityMyRock;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
 /**
@@ -211,6 +210,6 @@ public class EntityCatapult extends EntityMob {
 			 return;
 		
         this.dataWatcher.updateObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte) armPosition));
-        LogHelper.info("EntityBallista sync: Set bow position of " + armPosition + ".");
+//        LogHelper.info("EntityBallista sync: Set bow position of " + armPosition + ".");
 	}    
 }

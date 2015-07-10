@@ -11,7 +11,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.wildbill22.draco.items.ItemMyRock;
 import net.wildbill22.draco.items.ModItems;
-import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityMyRock extends EntityThrowable {
     public Entity shootingEntity;
@@ -62,8 +61,8 @@ public class EntityMyRock extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
-		if (!this.worldObj.isRemote)
-			LogHelper.info("EntityRock landed!");
+//		if (!this.worldObj.isRemote)
+//			LogHelper.info("EntityRock landed!");
 			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {

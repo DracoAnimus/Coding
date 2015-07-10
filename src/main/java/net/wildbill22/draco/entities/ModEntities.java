@@ -47,7 +47,7 @@ public class ModEntities {
 //    	EntityRegistry.registerModEntity(EntityMCSilverDragon.class, EntityMCSilverDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 		EntityRegistry.registerModEntity(EntityWildFireDragon.class, EntityWildFireDragon.name, ++modEntityID, Core.instance, 80, 3, true);
 
-		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 20, true);
+		EntityRegistry.registerModEntity(EntitySpear.class, ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityMyFireball.class, ItemMyFireball.name, ++modEntityID, Core.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityMyExplosive.class, ItemMyExplosive.name, ++modEntityID, Core.instance, 64, 10, true);
 
@@ -67,6 +67,7 @@ public class ModEntities {
 		EntityRegistry.registerModEntity(EntityDracoTenebrosus.class, EntityDracoTenebrosus.name, ++modEntityID, Core.instance, 80, 3, true); // Night dragon
 		EntityRegistry.registerModEntity(EntityDracoIgnis.class, EntityDracoIgnis.name, ++modEntityID, Core.instance, 80, 3, true);   // Fire dragon
 		EntityRegistry.registerModEntity(EntityDracoAquila.class, EntityDracoAquila.name, ++modEntityID, Core.instance, 80, 3, true); // Eagle dragon
+		EntityRegistry.registerModEntity(EntityBallistaSpear.class, "ballista_" + ItemSpear.name, ++modEntityID, Core.instance, 64, 10, true);
 
 		addMobSpawns();
 

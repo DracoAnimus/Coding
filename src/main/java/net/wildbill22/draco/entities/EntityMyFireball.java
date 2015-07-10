@@ -8,7 +8,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ItemMyFireball;
-import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityMyFireball extends EntityThrowable {
 	EntityPlayer player;
@@ -31,8 +30,8 @@ public class EntityMyFireball extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
-		if (!this.worldObj.isRemote)
-			LogHelper.info("EntityMyFireball landed!");
+//		if (!this.worldObj.isRemote)
+//			LogHelper.info("EntityMyFireball landed!");
 
 		doThrowAndFireDamage(movObjPos);
 

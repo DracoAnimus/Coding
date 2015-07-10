@@ -12,7 +12,6 @@ import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.items.ItemMyExplosive;
 import net.wildbill22.draco.items.ItemMyFireball;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityMyExplosive extends EntityThrowable {
 	EntityPlayer player;
@@ -36,7 +35,7 @@ public class EntityMyExplosive extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
 		if (!this.worldObj.isRemote) {
-			LogHelper.info("EntityMyExplosive landed!");
+//			LogHelper.info("EntityMyExplosive landed!");
 			doExplosionDamage(movObjPos);
 		}
 		
@@ -82,7 +81,7 @@ public class EntityMyExplosive extends EntityThrowable {
 				* BALANCE.DRAGON_PLAYER_ABILITIES.EXPLODING_FIREBALL_MULTIPLIER);
 		else
 			explosionSize = ItemMyExplosive.explosionSize;
-		LogHelper.info("Explosion of size: " + explosionSize + " at: " + movObjPos.blockX + "," + movObjPos.blockY + "," + movObjPos.blockZ);
+//		LogHelper.info("Explosion of size: " + explosionSize + " at: " + movObjPos.blockX + "," + movObjPos.blockY + "," + movObjPos.blockZ);
 		Explosion explosion = this.worldObj.newExplosion(this, movObjPos.blockX, movObjPos.blockY, movObjPos.blockZ, explosionSize, true, true);
 		if (movObjPos.entityHit != null) {
 			movObjPos.entityHit.attackEntityFrom(DamageSource.setExplosionSource(explosion), explosionSize);

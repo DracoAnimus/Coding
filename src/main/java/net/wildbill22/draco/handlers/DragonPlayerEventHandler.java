@@ -92,6 +92,7 @@ public class DragonPlayerEventHandler {
 //		    		player.sendPlayerAbilities(); // 7/2/15 Removed as a test, don't think this is needed!
 		        }
 				else {
+		    		player.capabilities.allowFlying = true;
 					ItemDragonEgg.applyAbilities(player, true);				
 				}
 			}
@@ -268,7 +269,9 @@ public class DragonPlayerEventHandler {
 						player.removePotionEffect(Potion.hunger.getId());
 					}
 					if (event.item.getItem() == Items.rotten_flesh) {
-						player.getFoodStats().addStats(0, 0.5F); // Add more saturation to rotten flesh, 0.1F normally, 0.6F is cooked chicken
+						float prevSat = player.getFoodStats().getSaturationLevel();
+						player.getFoodStats().addStats(2, 1.0F); // Add more saturation to rotten flesh, 0.1F normally, 0.6F is cooked chicken
+						LogHelper.info("Saturation was: " + prevSat + " is now: " + player.getFoodStats().getSaturationLevel());
 					}
 				}
 			}

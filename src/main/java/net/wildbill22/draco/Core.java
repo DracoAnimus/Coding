@@ -144,6 +144,9 @@ public class Core {
 		
 		isEnchiridionModLoaded = Loader.isModLoaded(REFERENCE.EAPIMODID);
 		if (isEnchiridionModLoaded) {
+	        /** Register this mod as containing books **/
+//	        FMLInterModComms.sendMessage("Enchiridion2", "registerBookMod", REFERENCE.MODID + ":" + "assets/books");
+//	        EnchiridionAPI.registerBookItem(REFERENCE.dracoAnimusBookName, 0);
 			EnchiridionAPI.init();
 			LogHelper.info("Enchiridion 2 is loaded!");
 		}

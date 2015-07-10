@@ -26,7 +26,16 @@ import cpw.mods.fml.common.Optional;
 @Optional.Interface(iface="joshie.enchiridion.api.IEnchiridionAPI", modid=REFERENCE.EAPIMODID, striprefs=true)
 public class EnchiridionAPI implements IEnchiridionAPI {
 	public static EnchiridionAPI instance;
+//	public static Item guides;
 
+//	public static void registerBookItem(String name, int meta) {
+//        guides = new ItemGuide().setUnlocalizedName("guide");
+//        NBTTagCompound tag = new NBTTagCompound();
+//        tag.setString("book", name);
+//        new ItemStack(guides, 1, meta).writeToNBT(tag);
+//        FMLInterModComms.sendMessage("Enchiridion2", "registerBookItem", tag);
+//    }
+	
 	public static void init() {
 		instance = new EnchiridionAPI();
 		instance.registerModBooks(REFERENCE.MODID + ":" + "wildbill22_draco");

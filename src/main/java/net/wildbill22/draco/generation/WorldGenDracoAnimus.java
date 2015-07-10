@@ -92,14 +92,19 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 		int chance = random.nextInt(1000);
 		BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
 
-		// Eggs with the normal spawn chance from the configuration
-		int spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE;
+		// Eggs with the 2 * spawn chance from the configuration
+		int spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE * 2;
 		if (chance < spawnChance) {
-			if (biome == BiomeGenBase.jungle) {
+			if (biome == BiomeGenBase.jungle || biome == BiomeGenBase.jungleEdge || biome == BiomeGenBase.jungleHills) {
 				if (generateDragonEggOnLandOnly(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.earthDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned an Earth Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
-			else if (biome == BiomeGenBase.swampland) {
+		}
+		
+		// Eggs with the normal spawn chance from the configuration
+		spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE;
+		if (chance < spawnChance) {
+			if (biome == BiomeGenBase.swampland) {
 				if (generateDragonEggInWaterToo(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.skeletonDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Skeleton Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
@@ -121,8 +126,8 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 			}
 		}
 
-		// Eggs with 1/4 the spawn chance in the configuration
-		spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE / 4;
+		// Eggs with 1/6 the spawn chance in the configuration
+		spawnChance = BALANCE.DRAGON_EGG_SPAWN_CHANCE / 6;
 		if (chance < spawnChance) {
 			if (biome == BiomeGenBase.desert) {
 				if (generateDragonEggOnLandOnly(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.fireDragonEgg))

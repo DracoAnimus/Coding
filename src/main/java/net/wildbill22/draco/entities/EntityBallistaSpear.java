@@ -6,7 +6,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.LogHelper;
 
 public class EntityBallistaSpear extends EntitySpear {
 
@@ -29,8 +28,8 @@ public class EntityBallistaSpear extends EntitySpear {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
-		if (!this.worldObj.isRemote)
-			LogHelper.info("EntityBallistaSpear landed!");
+//		if (!this.worldObj.isRemote)
+//			LogHelper.info("EntityBallistaSpear landed!");
 			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {

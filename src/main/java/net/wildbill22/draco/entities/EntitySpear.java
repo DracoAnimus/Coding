@@ -11,7 +11,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.wildbill22.draco.items.ItemSpear;
 import net.wildbill22.draco.items.ModItems;
-import net.wildbill22.draco.lib.LogHelper;
 
 public class EntitySpear extends EntityThrowable {
     public Entity shootingEntity;
@@ -62,8 +61,8 @@ public class EntitySpear extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition movObjPos) {
-		if (!this.worldObj.isRemote)
-			LogHelper.info("EntitySpear landed!");
+//		if (!this.worldObj.isRemote)
+//			LogHelper.info("EntitySpear landed!");
 			
 		if (movObjPos != null) {
 			if (movObjPos.entityHit instanceof Entity) {

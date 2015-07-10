@@ -15,7 +15,6 @@ import net.wildbill22.draco.entities.EntityBallistaSpear;
 import net.wildbill22.draco.entities.EntitySpear;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.LogHelper;
 import net.wildbill22.draco.lib.REFERENCE;
 
 /**
@@ -189,6 +188,6 @@ public class EntityBallista extends EntityMob {
 			 return;
 		
         this.dataWatcher.updateObject(BALANCE.BOW_POSITION_WATCHER, Byte.valueOf((byte) bowPosition));
-        LogHelper.info("EntityBallista sync: Set bow position of " + bowPosition + ".");
+//        LogHelper.info("EntityBallista sync: Set bow position of " + bowPosition + ".");
 	}    
 }

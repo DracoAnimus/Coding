@@ -213,8 +213,8 @@ public abstract class EntityGuard extends EntityMob {
 		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(v.getCenter().posX - r, surfaceY - 20, v.getCenter().posZ - r, 
 				v.getCenter().posX + r,	surfaceY + 35, v.getCenter().posZ + r);
 		int spawnedGuards = world.getEntitiesWithinAABB(EntityGuard.class, box).size();
-		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
-				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
+//		LogHelper.info("GuardSpawn: Found village at: " + v.getCenter().posX + " " + v.getCenter().posY
+//				+ " " + v.getCenter().posZ + " with " + spawnedGuards + " Guards");
 		if (v.isInRange(x, surfaceY, z) && spawnedGuards < BALANCE.MOBPROP.GUARD_MAX_PER_VILLAGE) {
 			setHomeArea(v.getCenter().posX, v.getCenter().posY, v.getCenter().posZ, r);
 			setFoundHome();

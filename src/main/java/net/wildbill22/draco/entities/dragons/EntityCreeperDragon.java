@@ -36,7 +36,6 @@ import net.minecraft.world.World;
 import net.wildbill22.draco.entities.ai.EntityAIAvoidDragon;
 import net.wildbill22.draco.items.ModItems;
 import net.wildbill22.draco.lib.BALANCE;
-import net.wildbill22.draco.lib.LogHelper;
 
 /**
  * @author WILLIAM
@@ -143,7 +142,7 @@ public class EntityCreeperDragon extends EntityTameable {
                 }
 
                 if (set) {
-                	LogHelper.info("Found creeper who doesn't know to fear the dragon :-)");
+//                	LogHelper.info("Found creeper who doesn't know to fear the dragon :-)");
                     creeper.tasks.addTask(3, task);
                 }
             }
