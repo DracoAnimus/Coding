@@ -106,7 +106,7 @@ public abstract class MyVillageComponents extends StructureVillagePieces.Village
 //		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
 //		new WeightedRandomChestContent(new ItemStack(Items.enchanted_book), 1, 1, 30),
 //		new WeightedRandomChestContent(new ItemStack(ModItems.skeletonDragonEgg), 1, 1, 60),
-		new WeightedRandomChestContent(new ItemStack(ModItems.goldDragonEgg), 1, 1, 30)
+		new WeightedRandomChestContent(new ItemStack(ModItems.goldDragonEgg), 1, 1, 15)  // Was 30, but showed up too often
     };
 
     public MyVillageComponents() {}

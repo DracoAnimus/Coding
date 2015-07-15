@@ -99,6 +99,10 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 				if (generateDragonEggOnLandOnly(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.earthDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned an Earth Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
+			else if (biome == BiomeGenBase.roofedForest) {
+				if (generateDragonEggOnLandOnly(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.nightDragonEgg))
+					LogHelper.info("WorldGenDracoAnimus: Spawned a Night Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
+			}
 		}
 		
 		// Eggs with the normal spawn chance from the configuration
@@ -107,10 +111,6 @@ public class WorldGenDracoAnimus implements IWorldGenerator {
 			if (biome == BiomeGenBase.swampland) {
 				if (generateDragonEggInWaterToo(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.skeletonDragonEgg))
 					LogHelper.info("WorldGenDracoAnimus: Spawned a Skeleton Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
-			}
-			else if (biome == BiomeGenBase.roofedForest) {
-				if (generateDragonEggOnLandOnly(world, random, x, world.getTopSolidOrLiquidBlock(x, z), z, ModBlocks.nightDragonEgg))
-					LogHelper.info("WorldGenDracoAnimus: Spawned a Night Dragon Egg at: " + x + "," + world.getTopSolidOrLiquidBlock(x, z) + "," + z); 
 			}
 		}
 

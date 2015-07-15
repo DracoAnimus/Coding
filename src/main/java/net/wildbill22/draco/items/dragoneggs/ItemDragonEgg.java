@@ -100,6 +100,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 				}
 	    		// Step over stuff
 	    		player.stepHeight = 1.0F; // Same as a horse, but normally 0.0F for player
+	    		player.capabilities.allowFlying = false;
 	    		
 	    		// Hearts if healing
             	if (player.prevHealth != player.getHealth() && rand.nextInt(4) == 0) {

@@ -17,17 +17,20 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.1.0"
+version = "0.2.10"
 group= "net.wildbill22.draco" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "DracoAnimus-1.7.10"
 
 minecraft {
+//    version = "1.7.10-10.13.4.1448"
     version = "1.7.10-10.13.2.1291"
-    runDir = "."
-    assetDir = "bin/assets"
+    runDir = "bin/assets"
 }
 
 dependencies {
+//	"../libs/Enchiridion 2-1.7.10-2.0.2a-73-dev.jar"
+	compile files ( "../libs/Enchiridion 2-1.7.10-2.0.2a.jar" )
+//	"../mods/Enchiridion 2-1.7.10-2.0.2a.jar"
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
@@ -42,6 +45,18 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
 }
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+tasks.build.dependsOn('deobfJar')
 
 processResources
 {
@@ -61,4 +76,10 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+artifacts {
+	archives deobfJar
+	archives sourceJar
+	archives jar
 }

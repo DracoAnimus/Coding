@@ -18,13 +18,12 @@ public class BlockScorchedWall extends BlockWall {
 
 	public BlockScorchedWall() {
 		super(Blocks.cobblestone_wall);
+		setBlockName(name);
 		setHardness(50.0F);                     // Same as obsidian
 		setResistance(2000.0F);                 // Same as obsidian
 		setHarvestLevel("pickaxe", 3);          // Needs diamond axe
+		setBlockTextureName("Minecraft" + ":" + "cobblestone_wall");
 		setCreativeTab(Creative_Tab.TabDraco_Animus);
-		setBlockName(name);
-
-//		Blocks.fire.setFireInfo(this, 60, 100); // Same as grass
 	}
 	
 	/**
@@ -58,6 +57,7 @@ public class BlockScorchedWall extends BlockWall {
      * @param z Z position
      * @return True if the block should deal damage
      */
+	@Override
     public boolean isBurning(IBlockAccess world, int x, int y, int z) {
         return true;  // Added to burn players and entities
     }
@@ -74,9 +74,10 @@ public class BlockScorchedWall extends BlockWall {
      * @return A number ranging from 0 to 300 relating used to determine if the block will be consumed by fire
      */
     // Hmm, if set to 0, will not catch fire. If set to 100, it gets consumed
+	@Override
     public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
     	if (face == ForgeDirection.UP)
-    		return 0; // Tall grass is 100
+    		return 1; // Tall grass is 100
     	else
     		return 0; // Tall grass is 100    		
     }
@@ -92,6 +93,7 @@ public class BlockScorchedWall extends BlockWall {
      * @param face The face that the fire is coming from
      * @return True if the face can be on fire, false otherwise.
      */
+//	@Override
 //    public boolean isFlammable(IBlockAccess world, int x, int y, int z, ForgeDirection face)
 //    {
 //        return getFlammability(world, x, y, z, face) > 0;
@@ -108,9 +110,10 @@ public class BlockScorchedWall extends BlockWall {
      * @param face The face that the fire is coming from
      * @return A number that is used to determine the speed of fire growth around the block
      */
-    public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
-        return 30;   // Tall grass is 60
-    }
+//	@Override
+//    public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
+//        return 60;   // Tall grass is 60
+//    }
 
     /**
      * Currently only called by fire when it is on top of this block.
@@ -125,6 +128,7 @@ public class BlockScorchedWall extends BlockWall {
      * @param side The face that the fire is coming from
      * @return True if this block sustains fire, meaning it will never go out.
      */
+	@Override
     public boolean isFireSource(World world, int x, int y, int z, ForgeDirection side) {
     	if (side == ForgeDirection.UP)
     		return true;
@@ -162,8 +166,8 @@ public class BlockScorchedWall extends BlockWall {
      * @param z Z Position
      * @return True to allow the torch to be placed
      */
+	@Override
     public boolean canPlaceTorchOnTop(World world, int x, int y, int z) {
     	return true;
     }
-
 }

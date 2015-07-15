@@ -210,10 +210,10 @@ public class Configs {
 		public static boolean village_bakery_enabled;		
 		@DefaultBoolean(value = true, name = "Enable Baron Castle", comment = "Should Baron's Castle be added to villages?")
 		public static boolean village_barons_castle_enabled;		
-		@DefaultInt(value = 20, minValue = 0, maxValue = 100, name = "City Probability", 
+		@DefaultInt(value = 15, minValue = 0, maxValue = 100, name = "City Probability", 
 				comment = "Controls how often cities can appear, 10 would be an average value.")
 		public static int city_weight;
-		@DefaultInt(value = 30, minValue = 0, maxValue = 100, name = "Town Probability", 
+		@DefaultInt(value = 15, minValue = 0, maxValue = 100, name = "Town Probability", 
 				comment = "Controls how often towns can appear, 10 would be an average value.")
 		public static int town_weight;
 	}
