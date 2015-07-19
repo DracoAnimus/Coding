@@ -11,6 +11,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
+import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -70,7 +71,8 @@ public class StaffUpdateDamageTarget implements IMessage {
 		            if (entity instanceof EntityLivingBase) {
 						// Attack
 		            	entity.attackEntityFrom(DamageSource.causeMobDamage(player), 4.5F + amplifier);
-						player.worldObj.playSoundAtEntity(entity, "minecraft:mob.ghast.scream", 0.4F, 1.0F);
+//						player.worldObj.playSoundAtEntity(entity, "minecraft:mob.ghast.scream", 0.4F, 1.0F);
+						player.worldObj.playSoundAtEntity(entity, REFERENCE.MODID + ":" + "soundWaveImpact", 1.8F, 1.0F);
 		            	LogHelper.info("Attacked an entity!");
 		            }
 		        }

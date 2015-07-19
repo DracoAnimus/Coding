@@ -25,14 +25,6 @@ staff.wildbill22_draco_Kill_entities_with_dust.name=Kill entities with dust
 #Dragon Eggs
 egg.wildbill22_draco_putThisEgg=Put this egg in the hoard
 egg.wildbill22_draco_youWillGetStaff=You will get a staff that turns you 
-#egg.wildbill22_draco_intoWaterDragon=into Draco Aqua!
-#egg.wildbill22_draco_intoSkeletonDragon=into Draco Mortem!
-#egg.wildbill22_draco_intoSilverDragon=into Draco Argentum!
-#egg.wildbill22_draco_intoNightDragon=into Draco Tenebrosus!
-#egg.wildbill22_draco_intoGoldenDragon=into Draco Aurum!
-#egg.wildbill22_draco_intoFireDragon=into Draco Ignis!
-#egg.wildbill22_draco_intoEarthDragon=into Draco Terra!
-#egg.wildbill22_draco_intoEagleDragon=into Draco Aquila!
 egg.wildbill22_draco_intoWaterDragon=into a Water Dragon!
 egg.wildbill22_draco_intoSkeletonDragon=into a Skeleton Dragon!
 egg.wildbill22_draco_intoSilverDragon=into a Silver Dragon!
@@ -111,20 +103,12 @@ item.wildbill22_draco_longBow.name=Long Bow
 item.wildbill22_draco_crossbow.name=Crossbow
 item.wildbill22_draco_rock.name=Rock
 
-#item.wildbill22_draco_silverDragonEgg.name=Ovum de Draco Argentum
-#item.wildbill22_draco_silverDragonStaff.name=Draco Argentum Baculum
-#item.wildbill22_draco_skeletonDragonEgg.name=Ovum de Draco Mortem
-#item.wildbill22_draco_skeletonDragonStaff.name=Draco Mortem Baculum
-#item.wildbill22_draco_goldDragonEgg.name=Ovum de Draco Aurum
-#item.wildbill22_draco_goldDragonStaff.name=Draco Aurum Baculum
-
 item.wildbill22_draco_silverDragonEgg.name=Silver Dragon Egg
 item.wildbill22_draco_silverDragonStaff.name=Silver Dragon Staff
 item.wildbill22_draco_skeletonDragonEgg.name=Skeleton Dragon Egg
 item.wildbill22_draco_skeletonDragonStaff.name=Skeleton Dragon Staff
 item.wildbill22_draco_goldDragonEgg.name=Gold Dragon Egg
 item.wildbill22_draco_goldDragonStaff.name=Gold Dragon Staff
-
 item.wildbill22_draco_waterDragonEgg.name=Water Dragon Egg
 item.wildbill22_draco_waterDragonStaff.name=Water Dragon Staff
 item.wildbill22_draco_earthDragonStaff.name=Earth Dragon Staff
@@ -140,6 +124,7 @@ item.wildbill22_draco_eagleDragonEgg.name=Eagle Dragon Egg
 item.wildbill22_draco_villagerHeart.name=Villager Heart
 item.wildbill22_draco_squid.name=Squid Meat
 item.wildbill22_draco_villagerSkull.name=Villager Skull
+#item.wildbill22_draco_bone.name=Bone - Dragon Food
 
 #Blocks (tiles)
 tile.charredGround.name=Charred Ground

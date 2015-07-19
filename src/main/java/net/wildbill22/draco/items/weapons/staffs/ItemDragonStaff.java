@@ -134,7 +134,7 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 //			}
 			
 			// Change mode if shift key or Alt key pressed
-			if (player.isSneaking() || KeyBindings.staffChange.getIsKeyPressed()) {
+			if (KeyBindings.staffChange.getIsKeyPressed() || (BALANCE.DRAGON_PLAYER_ABILITIES.USE_SHIFT_KEY_CHANGE_MODE && player.isSneaking())) {
 				abilities.nextMode(itemStack);
 				player.addChatMessage(new ChatComponentTranslation("chat.wildbill22_draco.staffInMode", abilities.getLocalizedModeName(itemStack)));
 				return itemStack;
@@ -271,7 +271,11 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 				int amplifier = DragonPlayer.get(player).getLevel();
 		    	spawnSoundWaveEntityHit(world, player, 2.0F, amplifier);
 		    	Entity entity = getMouseOver(world, amplifier * 2.0F + minReach);  // normal reach is 4.5F in survival
-				world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		    	// Roaring sound
+//				world.playSoundAtEntity(player, REFERENCE.MODID + ":" + "soundWave", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+		    	player.playSound(REFERENCE.MODID + ":" + "soundWave", 1.0F, world.rand.nextFloat() * 0.2F + 0.4F);
+//				world.playSoundAtEntity(player, REFERENCE.MODID + ":" + "soundWave", 1.0F, (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1.0F);		    	
+				// world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 				if (entity instanceof EntityLivingBase) {
 					LogHelper.info("Hit entity at: " + entity.posX + "," + entity.posY + "," + entity.posZ);
 		        	Core.modChannel.sendToServer(new StaffUpdateDamageTarget(entity.posX, entity.posY, entity.posZ));

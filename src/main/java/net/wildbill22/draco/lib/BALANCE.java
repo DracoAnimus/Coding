@@ -121,6 +121,9 @@ public final class BALANCE {
 
 	// Setting values for the special abilities for different dragons and their staffs
 	public static class DRAGON_PLAYER_ABILITIES {
+		@DefaultBoolean(value = false, name = "Use shift key to change staff ability", 
+				comment = "Alt key only if you set to false")
+		public static boolean USE_SHIFT_KEY_CHANGE_MODE;
 		@DefaultDouble(value = 1.0F, minValue = 0.5D, maxValue = 4.0D, name = "Exploding Fireball Damage", 
 				comment = "1.0 is normal, this is multiplied by base value")
 		public static double EXPLODING_FIREBALL_MULTIPLIER;

@@ -1,3 +1,5 @@
 {
-    "crank-01": {"category": "hostile", "sounds": [{"name": "crank-01", "stream": false}]}
+    "crank-01": {"category": "hostile", "sounds": [{"name": "crank-01", "stream": false}]},
+    "soundWave": {"category": "hostile", "sounds": [{"name": "soundWave", "stream": false}]},
+    "soundWaveImpact": {"category": "hostile", "sounds": [{"name": "soundWaveImpact", "stream": false}]}
 }
