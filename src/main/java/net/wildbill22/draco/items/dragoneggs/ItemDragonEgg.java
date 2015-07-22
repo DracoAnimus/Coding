@@ -31,6 +31,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
     private static Multimap<String, String> dragonFoods = ArrayListMultimap.create();
     private static int clientCountdown = 0;
     private static int serverCountdown = 0;
+    private static boolean hasNightVision = false;
 
     // Use this only when calling API
 	public ItemDragonEgg(String name, String dragonName, String modid) {
@@ -81,7 +82,8 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 			return;
 			
 		String dragonName = DragonPlayer.get(player).getDragonName();
-		int amplifier = Math.max(1, DragonPlayer.get(player).getLevel());
+		int dragonLevel = Math.max(1, DragonPlayer.get(player).getLevel());
+		int amplifier = Math.min(3, dragonLevel / 3);
 
 		// Client
 		if (isRemote ) {
@@ -118,21 +120,24 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		if (serverCountdown <= 0)
 			serverCountdown = 20; // 20 is once a second
 		serverCountdown--;
-
+		hasNightVision = false;
+		
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.INVISIBLE)) {
-			amplifier = Math.min(3, amplifier / 3);
+//			amplifier = Math.min(3, dragonLevel / 3);
             player.addPotionEffect(new PotionEffect(Potion.invisibility.getId(), 5, amplifier));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.NIGHTVISION)) {
-			amplifier = Math.min(3, amplifier / 3);
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5, amplifier));
+//			amplifier = Math.min(3, amplifier / 3);
+			hasNightVision = true;
+//            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 600, amplifier));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.WATERBREATHING) && player.isInWater()) {
             player.addPotionEffect(new PotionEffect(Potion.waterBreathing.getId(), 5, 3));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SWIMMING) && player.isInWater()) {
-			amplifier = Math.min(3, amplifier / 3);
-            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 10, amplifier));
+//			amplifier = Math.min(3, amplifier / 3);
+			hasNightVision = true;
+//            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 10, amplifier));
             player.addPotionEffect(new PotionEffect(Potion.waterBreathing.getId(), 5, 3));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWNESS) && !player.capabilities.isFlying) {
@@ -147,7 +152,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
             player.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 5, amplifier));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.DAMAGEBOOSTONGROUND)) {
-			amplifier = Math.min(3, amplifier / 3);
+//			amplifier = Math.min(3, amplifier / 3);
     		if (player.onGround)
     			player.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(), 5, amplifier));
 		}
@@ -157,8 +162,8 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 //            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5, amplifier));
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.COLLIDEWITHENTITIES)) {
-			amplifier = amplifier / 2;
-			collideWithEntities(player.worldObj, player, amplifier);
+			int collisionAmplifier = dragonLevel / 2;
+			collideWithEntities(player.worldObj, player, collisionAmplifier);
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.SLOWINLIGHT) && player.getBrightness(0) > 5) {
             player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));			
@@ -172,8 +177,9 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 	            player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 5, 3));
 			}
 			else {
-				amplifier = Math.min(3, amplifier / 3);
-				player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5, amplifier));
+//				amplifier = Math.min(3, amplifier / 3);
+				hasNightVision = true;
+//				player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 5, amplifier));
 			}
 		}		
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.IMMUNETOPOISON)) {
@@ -190,13 +196,13 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.INVISIBLEINDARK) &&
 				player.worldObj.getBlockLightValue((int)Math.floor(player.posX), (int)Math.floor(player.posY), (int)Math.floor(player.posZ)) < 8) {
-			amplifier = amplifier / 2;
-            player.addPotionEffect(new PotionEffect(Potion.invisibility.getId(), 5, amplifier));
+//			amplifier = amplifier / 2;
+            player.addPotionEffect(new PotionEffect(Potion.invisibility.getId(), 10, amplifier));
 		}
-		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.STEALTH)) {
-			amplifier = amplifier / 2;
-            player.setInvisible(true);
-		}
+//		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.STEALTH)) {
+//			amplifier = amplifier / 2;
+//            player.setInvisible(true);
+//		}
 		if (Abilities.dragonAbilities.containsEntry(dragonName, Abilities.FIREDRAGON)) {
 			// Remove Flying
     		player.capabilities.allowFlying = false;
@@ -216,6 +222,12 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 	            	player.heal(0.25F);
 	            }
     		}
+		}
+		if (hasNightVision) {
+            player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(), 1210, amplifier));
+		}
+		else {
+			player.removePotionEffect(Potion.nightVision.getId());
 		}
 	}
 	

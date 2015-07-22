@@ -8,6 +8,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.wildbill22.draco.entities.player.DragonPlayer;
 import net.wildbill22.draco.lib.LogHelper;
+import net.wildbill22.draco.lib.REFERENCE;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
@@ -56,6 +57,8 @@ public class StaffUpdateDestroyBlock implements IMessage {
 	            	LogHelper.info("Block hardness is " + hardness);
 					if (hardness >= 0 && hardness < minHardness) {
 						player.worldObj.setBlock(message.x, message.y, message.z, Blocks.air, 0, 3);
+						player.worldObj.playSoundEffect(message.x + 0.5D, message.y + 0.5D, message.z + 0.5D, 
+								REFERENCE.MODID + ":" + "soundWaveImpact", 1.8F, 1.0F);
 		            	LogHelper.info("Destroyed a block!");
 					}
 					else {

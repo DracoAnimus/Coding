@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.2.10"
+version = "0.3.0"
 group= "net.wildbill22.draco" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "DracoAnimus-1.7.10"
 

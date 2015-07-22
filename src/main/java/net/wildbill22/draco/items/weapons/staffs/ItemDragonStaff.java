@@ -291,8 +291,9 @@ public abstract class ItemDragonStaff extends ItemSword implements IDragonStaffH
 						player.posZ + look.zCoord * d);
 				Vec3 start = Vec3.createVectorHelper(player.posX, player.posY + player.getEyeHeight(), player.posZ);
 		    	MovingObjectPosition mop = world.rayTraceBlocks(start, end);
+		    	player.playSound(REFERENCE.MODID + ":" + "soundWave", 1.0F, world.rand.nextFloat() * 0.2F + 0.4F);
 				if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
-					world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+//					world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 					LogHelper.info("Hit block at: " + mop.blockX + "," + mop.blockY + "," + mop.blockZ);
 		        	Core.modChannel.sendToServer(new StaffUpdateDestroyBlock(mop.blockX, mop.blockY, mop.blockZ));
 		    	}				
