@@ -31,7 +31,6 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
     private static Multimap<String, String> dragonFoods = ArrayListMultimap.create();
     private static int clientCountdown = 0;
     private static int serverCountdown = 0;
-    private static boolean hasNightVision = false;
 
     // Use this only when calling API
 	public ItemDragonEgg(String name, String dragonName, String modid) {
@@ -84,6 +83,7 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 		String dragonName = DragonPlayer.get(player).getDragonName();
 		int dragonLevel = Math.max(1, DragonPlayer.get(player).getLevel());
 		int amplifier = Math.min(3, dragonLevel / 3);
+	    boolean hasNightVision;
 
 		// Client
 		if (isRemote ) {
@@ -101,16 +101,16 @@ public abstract class ItemDragonEgg extends ModItems implements IDragonEggHandle
 							* (double)player.width, 0.0D, 0.0D, 0.0D);
 				}
 	    		// Step over stuff
-	    		player.stepHeight = 1.0F; // Same as a horse, but normally 0.0F for player
+	    		player.stepHeight = 1.0F; // Same as a horse, but normally 0.5F for player
 	    		player.capabilities.allowFlying = false;
 	    		
 	    		// Hearts if healing
-            	if (player.prevHealth != player.getHealth() && rand.nextInt(4) == 0) {
+            	if (player.prevHealth < player.getHealth() && rand.nextInt(2) == 0) {
 					player.worldObj.spawnParticle("heart", player.posX + (rand.nextDouble() - 0.5D) * (double)player.width, 
 							player.posY + rand.nextDouble() * (double)player.height, player.posZ + (rand.nextDouble() - 0.5D) 
 							* (double)player.width, 0.0D, 0.0D, 0.0D);
-					player.prevHealth = player.getHealth();
-            	}
+               	}
+				player.prevHealth = player.getHealth();
 			}
 			
 			return;
